@@ -46,14 +46,14 @@ uint16 renderProjectile(game* Game)
 {
     SDL_Rect Object;
 
-    for (uint64 i = 0; Game->Projectiles[i] != NULL; i++)
+    for (uint64 i = 0; i < Game->Projectiles->Length; i++)
     {
-        Object.x = (sint32)round(Game->Projectiles[i]->X);
-        Object.y = (sint32)round(Game->Projectiles[i]->Y);
-        Object.w = Game->Projectiles[i]->Width;
-        Object.h = Game->Projectiles[i]->Height;
+        Object.x = (sint32)round(((projectile*)Game->Projectiles->Values[i])->X);
+        Object.y = (sint32)round(((projectile*)Game->Projectiles->Values[i])->Y);
+        Object.w = ((projectile*)Game->Projectiles->Values[i])->Width;
+        Object.h = ((projectile*)Game->Projectiles->Values[i])->Height;
 
-        SDL_SetRenderDrawColor(Game->Display->Renderer, Game->Projectiles[i]->ColorR, Game->Projectiles[i]->ColorG, Game->Projectiles[i]->ColorB, 255);
+        SDL_SetRenderDrawColor(Game->Display->Renderer, ((projectile*)Game->Projectiles->Values[i])->ColorR, ((projectile*)Game->Projectiles->Values[i])->ColorG, ((projectile*)Game->Projectiles->Values[i])->ColorB, 255);
         SDL_RenderFillRect(Game->Display->Renderer, &Object);
     }
 

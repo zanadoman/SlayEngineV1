@@ -73,7 +73,7 @@ typedef struct
 
     platform* *Platforms;
     player* Player;
-    projectile* *Projectiles;
+    array Projectiles;
 } game;
 
 //Update queue

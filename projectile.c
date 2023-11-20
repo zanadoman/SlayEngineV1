@@ -37,55 +37,35 @@ uint16 updateProjectile(game* Game)
     Projectiles = malloc(1);
     Projectiles[0] = NULL;
     projectileCount = 1;
-    for (uint64 i = 0; Game->Projectiles[i] != NULL; i++)
+    for (uint64 i = 0; i < Game->Projectiles->Length; i++)
     {
         //Horizontal movement
-        Game->Projectiles[i]->X += Game->Projectiles[i]->Speed * Game->Projectiles[i]->Facing * Game->DeltaTime;
+        ((projectile*)Game->Projectiles->Values[i])->X += ((projectile*)Game->Projectiles->Values[i])->Speed * ((projectile*)Game->Projectiles->Values[i])->Facing * Game->DeltaTime;
 
         //Collision and deletion handling
         for (j = 0; Game->Platforms[j] != NULL; j++)
         {
-            collision = slayCollision(Game->Projectiles[i]->Hitbox, Game->Platforms[j]->Hitbox);
+            collision = slayCollision(((projectile*)Game->Projectiles->Values[i])->Hitbox, Game->Platforms[j]->Hitbox);
 
-            if (collision > 0 || Game->Projectiles[i]->X < 0 || Game->Projectiles[i]->X > Game->Display->X - Game->Projectiles[i]->Width)
+            if (collision > 0 || ((projectile*)Game->Projectiles->Values[i])->X < 0 || ((projectile*)Game->Projectiles->Values[i])->X > Game->Display->X - ((projectile*)Game->Projectiles->Values[i])->Width)
             {
-                free(Game->Projectiles[i]->Hitbox);
-                free(Game->Projectiles[i]);
+                free(((projectile*)Game->Projectiles->Values[i])->Hitbox);
+                arrRemove(Game->Projectiles, i);
+                i--;
                 break;
             }
         }
-        //Undestroyed projectile handling
-        if (Game->Platforms[j] == NULL)
-        {
-            Projectiles = realloc(Projectiles, sizeof(projectile) * (projectileCount + 1));
-            Projectiles[projectileCount] = NULL;
-            Projectiles[projectileCount - 1] = Game->Projectiles[i];
-            projectileCount++;
-        }
     }
-    //End of deletion handling
-    free(Game->Projectiles);
-    Game->Projectiles = Projectiles;
 
     return 0;
 }
 
 uint16 playerProjectile(game* Game)
 {
-    uint64 projectileCount;
-
     if (slayKey(Game->Display, Game->Player->KeyFire) && SDL_GetTicks64() > Game->Player->ReloadTick + Game->Player->ReloadTime)
     {
         Game->Player->ReloadTick = SDL_GetTicks64();
-
-        projectileCount = 1;
-        for (uint64 i = 0; Game->Projectiles[i] != NULL; i++)
-        {
-            projectileCount++;
-        }
-        Game->Projectiles = realloc(Game->Projectiles, sizeof(projectile) * (projectileCount + 1));
-        Game->Projectiles[projectileCount] = NULL;
-        Game->Projectiles[projectileCount - 1] = newProjectile(Game->Player->X + 10 + 20 * Game->Player->Facing, Game->Player->Y + 14, 10, 4, 0.75, Game->Player->Facing, 255, 0, 0);
+        arrInsert(Game->Projectiles, Game->Projectiles->Length, newProjectile(Game->Player->X + 10 + 20 * Game->Player->Facing, Game->Player->Y + 14, 10, 4, 0.75, Game->Player->Facing, 255, 0, 0));
     }
 
     return 0;
