@@ -1,12 +1,12 @@
 #include "NeoTypes.h"
 
-array arrNew()
+array arrNew(uint64 Length)
 {
     array Array;
 
     Array = malloc(sizeof(array));
-    Array->Values = NULL;
-    Array->Length = 0;
+    Array->Values = calloc(Length, sizeof(void*));
+    Array->Length = Length;
 
     return Array;
 }

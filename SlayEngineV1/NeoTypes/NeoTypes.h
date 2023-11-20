@@ -22,7 +22,7 @@ typedef struct
     void* *Values;
     uint64 Length;
 }* array;
-array arrNew();
+array arrNew(uint64 Length);
 uint16 arrInit(array Array, uint64 Length, void* Values, ...);
 uint16 arrInsert(array Array, uint64 Index, void* Value);
 uint16 arrRemove(array Array, uint64 Index);
