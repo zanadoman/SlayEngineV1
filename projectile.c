@@ -30,12 +30,9 @@ uint16 updateProjectile(game* Game)
 {
     uint8 collision;
     uint64 j;
-    projectile* *Projectiles;
 
     playerProjectile(Game);
 
-    Projectiles = malloc(1);
-    Projectiles[0] = NULL;
     for (uint64 i = 0; i < Game->Projectiles->Length; i++)
     {
         //Horizontal movement
