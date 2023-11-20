@@ -67,7 +67,7 @@ typedef struct
 typedef struct
 {
     display* Display;
-    pthread_t* *Threads;
+    array Threads;
     uint64 DeltaTime;
     uint64 DisplayPrevTick;
 

@@ -11,9 +11,8 @@ int main(int argc, char *argv[])
 
     Game->Display = slayNew("Graphical User Interface", 800, 600);
     
-    Game->Threads = malloc(sizeof(pthread_t) * 2);
-    Game->Threads[0] = malloc(sizeof(pthread_t));
-    Game->Threads[1] = malloc(sizeof(pthread_t));
+    Game->Threads = arrNew();
+    arrInit(Game->Threads, 2, malloc(sizeof(pthread_t)), malloc(sizeof(pthread_t)));
 
     Game->DisplayPrevTick = 0;
 
