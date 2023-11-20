@@ -1,7 +1,5 @@
 #include "game.h"
 
-int displayEvent(display Display);
-
 int main(int argc, char *argv[])
 {
     game* Game = malloc(sizeof(game));
