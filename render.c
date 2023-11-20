@@ -28,14 +28,14 @@ uint16 renderPlatform(game* Game)
 {
     SDL_Rect Object;
 
-    for (uint64 i = 0; Game->Platforms[i] != NULL; i++)
+    for (uint64 i = 0; i < Game->Platforms->Length; i++)
     {
-        Object.x = (sint32)round(Game->Platforms[i]->X);
-        Object.y = (sint32)round(Game->Platforms[i]->Y);
-        Object.w = Game->Platforms[i]->Width;
-        Object.h = Game->Platforms[i]->Height;
+        Object.x = (sint32)round(((platform*)Game->Platforms->Values[i])->X);
+        Object.y = (sint32)round(((platform*)Game->Platforms->Values[i])->Y);
+        Object.w = ((platform*)Game->Platforms->Values[i])->Width;
+        Object.h = ((platform*)Game->Platforms->Values[i])->Height;
 
-        SDL_SetRenderDrawColor(Game->Display->Renderer, Game->Platforms[i]->ColorR, Game->Platforms[i]->ColorG, Game->Platforms[i]->ColorB, 255);
+        SDL_SetRenderDrawColor(Game->Display->Renderer, ((platform*)Game->Platforms->Values[i])->ColorR, ((platform*)Game->Platforms->Values[i])->ColorG, ((platform*)Game->Platforms->Values[i])->ColorB, 255);
         SDL_RenderFillRect(Game->Display->Renderer, &Object);
     }
 

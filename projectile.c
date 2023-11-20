@@ -29,23 +29,22 @@ projectile* newProjectile(double SpawnX, double SpawnY, uint16 Width, uint16 Hei
 uint16 updateProjectile(game* Game)
 {
     uint8 collision;
-    uint64 projectileCount, j;
+    uint64 j;
     projectile* *Projectiles;
 
     playerProjectile(Game);
 
     Projectiles = malloc(1);
     Projectiles[0] = NULL;
-    projectileCount = 1;
     for (uint64 i = 0; i < Game->Projectiles->Length; i++)
     {
         //Horizontal movement
         ((projectile*)Game->Projectiles->Values[i])->X += ((projectile*)Game->Projectiles->Values[i])->Speed * ((projectile*)Game->Projectiles->Values[i])->Facing * Game->DeltaTime;
 
         //Collision and deletion handling
-        for (j = 0; Game->Platforms[j] != NULL; j++)
+        for (j = 0; j < Game->Platforms->Length; j++)
         {
-            collision = slayCollision(((projectile*)Game->Projectiles->Values[i])->Hitbox, Game->Platforms[j]->Hitbox);
+            collision = slayCollision(((projectile*)Game->Projectiles->Values[i])->Hitbox, ((platform*)Game->Platforms->Values[j])->Hitbox);
 
             if (collision > 0 || ((projectile*)Game->Projectiles->Values[i])->X < 0 || ((projectile*)Game->Projectiles->Values[i])->X > Game->Display->X - ((projectile*)Game->Projectiles->Values[i])->Width)
             {

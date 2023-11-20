@@ -71,7 +71,7 @@ typedef struct
     uint64 DeltaTime;
     uint64 DisplayPrevTick;
 
-    platform* *Platforms;
+    array Platforms;
     player* Player;
     array Projectiles;
 } game;

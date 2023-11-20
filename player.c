@@ -88,20 +88,20 @@ uint16 updatePlayer(game* Game)
     //Vertical movement
     Game->Player->Y += GRAVITY * Game->Player->AccelerationY * Game->DeltaTime;
     falling = true;
-    for (uint64 i = 0; Game->Platforms[i] != NULL; i++)
+    for (uint64 i = 0; i < Game->Platforms->Length; i++)
     {
-        collision = slayCollision(Game->Player->Hitbox, Game->Platforms[i]->Hitbox);
+        collision = slayCollision(Game->Player->Hitbox, ((platform*)Game->Platforms->Values[i])->Hitbox);
 
         if (collision == BOTTOMLEFT || collision == BOTTOM || collision == BOTTOMRIGHT)
         {
-            Game->Player->Y = Game->Platforms[i]->Y - Game->Player->Height;
+            Game->Player->Y = ((platform*)Game->Platforms->Values[i])->Y - Game->Player->Height;
             Game->Player->AccelerationY = 0;
             falling = false;
             break;
         }
         else if (collision == TOPLEFT || collision == TOP || collision == TOPRIGHT)
         {
-            Game->Player->Y = Game->Platforms[i]->Y + Game->Platforms[i]->Height + 1;
+            Game->Player->Y = ((platform*)Game->Platforms->Values[i])->Y + ((platform*)Game->Platforms->Values[i])->Height + 1;
             Game->Player->AccelerationY = 0;
             break;
         }
