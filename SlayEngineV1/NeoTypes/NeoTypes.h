@@ -69,11 +69,20 @@ typedef struct
 }* list;
 
 typedef struct listNodeStruct* listNode;
-typedef struct
+struct listNodeStruct
 {
     listNode Next;
     void* Value;
-}* listNodeStruct;
+};
+
+
+list listNew();
+uint16 listAppend(list List, void* Value);
+listNode listGet(list List, uint64 Index);
+uint16 listCache(list List, uint64 Cache);
+//Insert
+//Remove
+//Purge
 
 //_______________NeoConvert.c______________
 
