@@ -94,9 +94,23 @@ uint16 updatePlayer(game* Game)
 
         if (collision == BOTTOMLEFT || collision == BOTTOM || collision == BOTTOMRIGHT)
         {
-            Game->Player->Y = ((platform*)Game->Platforms->Values[i])->Y - Game->Player->Height;
-            Game->Player->AccelerationY = 0;
-            falling = false;
+            if (Game->Player->AccelerationY >= 0)
+            {
+                Game->Player->Y = ((platform*)Game->Platforms->Values[i])->Y - Game->Player->Height;
+                Game->Player->AccelerationY = 0;
+                falling = false;
+            }
+            else if (collision == BOTTOMLEFT)
+            {
+                Game->Player->X = ((platform*)Game->Platforms->Values[i])->X + ((platform*)Game->Platforms->Values[i])->Width;
+                Game->Player->AccelerationX = 0;
+            }
+            else if (collision == BOTTOMRIGHT)
+            {
+                Game->Player->X = ((platform*)Game->Platforms->Values[i])->X - Game->Player->Width;
+                Game->Player->AccelerationX = 0;
+            }
+            
             break;
         }
         else if (collision == TOPLEFT || collision == TOP || collision == TOPRIGHT)
