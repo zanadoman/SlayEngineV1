@@ -5,6 +5,10 @@ array arrNew(uint64 Length)
     array Array;
 
     Array = malloc(sizeof(array));
+    if (Array == NULL)
+    {
+        return NULL;
+    }
     Array->Values = calloc(Length, sizeof(void*));
     Array->Length = Length;
 
@@ -62,6 +66,14 @@ uint16 arrRemove(array Array, uint64 Index)
 
     Array->Values = realloc(Array->Values, sizeof(void*) * (Array->Length - 1));
     Array->Length--;
+
+    return 0;
+}
+
+uint16 arrPurge(array Array)
+{
+    free(Array->Values);
+    free(Array);
 
     return 0;
 }

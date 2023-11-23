@@ -3,7 +3,7 @@
 #include <stdarg.h>
 #include <math.h>
 
-//________________NeoTypes.h_______________
+//________________NeoTypes.h_______________//
 
 #define true 1
 #define false 0
@@ -17,12 +17,12 @@ typedef signed int sint32;
 typedef unsigned long uint64;
 typedef signed long sint64;
 
-//________________NeoCast.c________________
+//________________NeoCast.c________________// COMPLETED
 
 uint64 asInt(double Value);
 double asDouble(sint64 Value);
 
-//________________NeoArray.c_______________
+//________________NeoArray.c_______________// COMPLETED
 
 typedef struct
 {
@@ -35,10 +35,11 @@ array arrNew(uint64 Length);
 uint16 arrInit(array Array, uint64 Length, void* Values, ...);
 
 uint16 arrInsert(array Array, uint64 Index, void* Value);
-
 uint16 arrRemove(array Array, uint64 Index);
 
-//_______________NeoString.c_______________
+uint16 arrPurge(array Array);
+
+//_______________NeoString.c_______________ //HANDLE STRNEW() ERRORS
 
 typedef struct
 {
@@ -59,7 +60,9 @@ uint16 strRead(string String);
 uint16 strSplit(array Array, string String, char Character);
 boolean strCompare(char* Characters1, char* Characters2);
 
-//________________NeoList.c________________
+uint16 strPurge(string String);
+
+//________________NeoList.c________________ //UNCOMPLETED
 
 typedef struct listCacheStruct* listCache_t;
 typedef struct listNodeStruct* listNode;
@@ -82,14 +85,17 @@ struct listNodeStruct
 
 
 list listNew();
+
 uint16 listAppend(list List, void* Value);
+uint16 listInsert(list List, uint64 Index, void* Value); //UNCOMPLETED
+uint16 listRemove(list List, uint64 Index); //UNCOMPLETED
+
 listNode listGet(list List, uint64 Index);
 uint16 listCache(list List, uint64 CacheCoverage);
-//Insert
-//Remove
-//Purge
 
-//_______________NeoConvert.c______________
+uint16 listPurge(list List);
+
+//_______________NeoConvert.c______________ //HANDLE STRNEW() ERRORS
 
 uint64 STRtoUINT(char* Characters, boolean* Success);
 uint16 UINTtoSTR(uint64 Number, string String);
