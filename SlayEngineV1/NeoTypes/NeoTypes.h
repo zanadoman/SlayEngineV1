@@ -94,13 +94,13 @@ uint16 listCache(list List, uint64 CacheCoverage);
 
 uint16 listPurge(list List);
 
-//_______________NeoConvert.c______________ // COMPLETED
+//_______________NeoConvert.c______________ // BROKEN
 
 uint64 STRtoUINT(char* Characters, boolean* Success);
-uint16 UINTtoSTR(uint64 Number, string String);
+uint16 UINTtoSTR(uint64 Number, string String); //BROKEN
 
 sint64 STRtoSINT(char* Characters, boolean* Success);
-uint16 SINTtoSTR(sint64 Number, string String);
+uint16 SINTtoSTR(sint64 Number, string String); //BROKEN
 
 double STRtoDOUBLE(char* Characters, boolean* Success);
-uint16 DOUBLEtoSTR(double Number, string String);
+uint16 DOUBLEtoSTR(double Number, string String); //BROKEN

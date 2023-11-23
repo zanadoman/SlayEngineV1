@@ -104,7 +104,7 @@ uint16 strConcat(string String, uint64 Count, char* Characters, ...)
             current++;
         }
     }
-    String->String[String->Lenght - 1] = '\0';
+    StringTMP[String->Lenght - 1] = '\0';
     va_end(CharactersArgs);
 
     free(String->String);
