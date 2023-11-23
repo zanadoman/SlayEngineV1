@@ -128,19 +128,26 @@ uint16 strRead(string String)
     return 0;
 }
 
-uint16 strSplit(array Array, string String, char Character)
+uint16 strSplit(array Array, char* Characters, char Character)
 {
     free(Array->Values);
+
+    string StringTMP;
 
     Array->Values = NULL;
     Array->Length = 0;
 
-    arrInsert(Array, Array->Length, strNew());
-    for (uint64 i = 0; i < String->Lenght - 1; i++)
+    StringTMP = strNew();
+    if (StringTMP == NULL)
     {
-        if (String->String[i] != Character)
+        return 1;
+    }
+    arrInsert(Array, Array->Length, StringTMP);
+    for (uint64 i = 0; i < strLength(Characters) - 1; i++)
+    {
+        if (Characters[i] != Character)
         {
-            if (strAppend((string)Array->Values[Array->Length - 1], String->String[i]) == 1)
+            if (strAppend((string)Array->Values[Array->Length - 1], Characters[i]) == 1)
             {
                 return 1;
             }
@@ -151,7 +158,12 @@ uint16 strSplit(array Array, string String, char Character)
             {
                 return 1;
             }
-            arrInsert(Array, Array->Length, strNew());
+            StringTMP = strNew();
+            if (StringTMP == NULL)
+            {
+                return 1;
+            }
+            arrInsert(Array, Array->Length, StringTMP);
         }
     }
 

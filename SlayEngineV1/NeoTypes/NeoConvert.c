@@ -33,6 +33,10 @@ uint16 UINTtoSTR(uint64 Number, string String)
     uint64 i;
 
     String = strNew();
+    if (String == NULL)
+    {
+        return 1;
+    }
 
     for (i = 1; Number / i > 10; i *= 10);
     for (; i > 0; i /= 10)
@@ -96,6 +100,10 @@ uint16 SINTtoSTR(sint64 Number, string String)
     uint64 i;
 
     String = strNew();
+    if (String == NULL)
+    {
+        return 1;
+    }
 
     if (Number < 0)
     {
@@ -190,6 +198,10 @@ uint16 DOUBLEtoSTR(double Number, string String)
     double fraction;
 
     String = strNew();
+    if (String == NULL)
+    {
+        return 1;
+    }
 
     if (Number < 0)
     {

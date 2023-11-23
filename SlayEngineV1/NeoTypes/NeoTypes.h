@@ -39,7 +39,7 @@ uint16 arrRemove(array Array, uint64 Index);
 
 uint16 arrPurge(array Array);
 
-//_______________NeoString.c_______________ //HANDLE STRNEW() ERRORS
+//_______________NeoString.c_______________ // COMPLETED
 
 typedef struct
 {
@@ -57,12 +57,12 @@ uint16 strAppend(string String, char Character);
 uint16 strConcat(string String, uint64 Count, char* Characters, ...);
 
 uint16 strRead(string String);
-uint16 strSplit(array Array, string String, char Character);
+uint16 strSplit(array Array, char* Characters, char Character);
 boolean strCompare(char* Characters1, char* Characters2);
 
 uint16 strPurge(string String);
 
-//________________NeoList.c________________ //UNCOMPLETED
+//________________NeoList.c________________ // COMPLETED
 
 typedef struct listCacheStruct* listCache_t;
 typedef struct listNodeStruct* listNode;
@@ -86,16 +86,15 @@ struct listNodeStruct
 
 list listNew();
 
-uint16 listAppend(list List, void* Value);
-uint16 listInsert(list List, uint64 Index, void* Value); //UNCOMPLETED
-uint16 listRemove(list List, uint64 Index); //UNCOMPLETED
+uint16 listInsert(list List, uint64 Index, void* Value);
+uint16 listRemove(list List, uint64 Index);
 
 listNode listGet(list List, uint64 Index);
 uint16 listCache(list List, uint64 CacheCoverage);
 
 uint16 listPurge(list List);
 
-//_______________NeoConvert.c______________ //HANDLE STRNEW() ERRORS
+//_______________NeoConvert.c______________ // COMPLETED
 
 uint64 STRtoUINT(char* Characters, boolean* Success);
 uint16 UINTtoSTR(uint64 Number, string String);
