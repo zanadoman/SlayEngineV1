@@ -61,14 +61,19 @@ boolean strCompare(char* Characters1, char* Characters2);
 
 //________________NeoList.c________________
 
+typedef struct listCacheStruct* listCache_t;
+typedef struct listNodeStruct* listNode;
 typedef struct
 {
-    array List;
+    listCache_t Cache;
     uint64 Length;
-    boolean Cache;
 }* list;
-
-typedef struct listNodeStruct* listNode;
+struct listCacheStruct
+{
+    listNode* Nodes;
+    uint64 Size;
+    uint64 Coverage;
+};
 struct listNodeStruct
 {
     listNode Next;
@@ -79,7 +84,7 @@ struct listNodeStruct
 list listNew();
 uint16 listAppend(list List, void* Value);
 listNode listGet(list List, uint64 Index);
-uint16 listCache(list List, uint64 Cache);
+uint16 listCache(list List, uint64 CacheCoverage);
 //Insert
 //Remove
 //Purge

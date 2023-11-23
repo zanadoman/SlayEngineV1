@@ -1,116 +1,117 @@
 #include "NeoTypes.h"
 
-uint16 listCacheInit(array Array, uint64 Length, listNode First, listNode Last);
-uint16 listCacheInit(array Array, uint64 Length, listNode First, listNode Last)
-{
-    free(Array->Values);
-
-    Array->Values = malloc(sizeof(void*) * Length);
-    Array->Length = Length;
-    
-    Array->Values[0] = First;
-    Array->Values[Array->Length - 1] = Last;
-    
-    return 0;
-}
-
-list listNew()
+list listNew() //APPROVED
 {
     list result;
 
     result = malloc(sizeof(list));
-    result->List = arrNew(0);
+    result->Cache = malloc(sizeof(listCache_t));
+    result->Cache->Nodes = NULL;
+    result->Cache->Size = 0;
+    result->Cache->Coverage = 0;
     result->Length = 0;
-    result->Cache = false;
 
     return result;
 }
 
-uint16 listAppend(list List, void* Value)
+uint16 listAppend(list List, void* Value) //APPROVED
 {
-    if (List->List->Length == 0)
+    listNode first;
+    listNode last;
+
+    if (List->Length == 0)
     {
-        listCacheInit(List->List, 2, NULL, NULL);
+        first = malloc(sizeof(listNode));
+        first->Value = Value;
+        first->Next = NULL;
 
-        List->List->Values[0] = malloc(sizeof(listNode));
-        ((listNode)List->List->Values[0])->Value = Value;
-        ((listNode)List->List->Values[0])->Next = NULL;
+        last = first;
+    }
+    else
+    {
+        List->Cache->Nodes[List->Cache->Size - 1]->Next = malloc(sizeof(listNode));
+        List->Cache->Nodes[List->Cache->Size - 1]->Next->Value = Value;
+        List->Cache->Nodes[List->Cache->Size - 1]->Next->Next = NULL;
 
-        List->List->Values[1] = List->List->Values[0];
-        List->Length++;
-        List->Cache = true;
+        List->Cache->Nodes[List->Cache->Size - 1] = List->Cache->Nodes[List->Cache->Size - 1]->Next;
 
-        return 0;
+        first = List->Cache->Nodes[0];
+        last = List->Cache->Nodes[List->Cache->Size - 1];
     }
 
-    ((listNode)List->List->Values[List->List->Length - 1])->Next = malloc(sizeof(listNode));
-    ((listNode)List->List->Values[List->List->Length - 1])->Next->Value = Value;
-    ((listNode)List->List->Values[List->List->Length - 1])->Next->Next = NULL;
-
-    List->List->Values[List->List->Length - 1] = ((listNode)List->List->Values[List->List->Length - 1])->Next;
     List->Length++;
-    List->Cache = false;
+
+    free(List->Cache->Nodes);
+    List->Cache->Nodes = malloc(sizeof(listNode) * 2);
+    List->Cache->Nodes[0] = first;
+    List->Cache->Nodes[1] = last;
+
+    List->Cache->Size = 2;
+    List->Cache->Coverage = List->Length;
 
     return 0;
 }
 
-listNode listGet(list List, uint64 Index)
+listNode listGet(list List, uint64 Index) //APPROVED
 {
     listNode result;
 
-    uint64 CacheCoverage, CacheSection;
+    uint64 CacheSection;
 
-    if (List->Cache)
-    {
-        CacheCoverage = List->Length / (List->List->Length - 1);
-        CacheSection = Index / CacheCoverage;
+    CacheSection = Index / List->Cache->Coverage;
 
-        result = List->List->Values[CacheSection];
-        for (uint64 i = 0; i < Index - CacheSection * CacheCoverage; i++)
-        {
-            result = result->Next;
-        }
-    }
-    else
+    result = List->Cache->Nodes[CacheSection];
+    for (int i = 0; i < Index - CacheSection * List->Cache->Coverage; i++)
     {
-        result = List->List->Values[0];
-        for (uint64 i = 0; i < Index; i++)
-        {
-            result = result->Next;
-        }
+        result = result->Next;
     }
 
     return result;
 }
 
-uint16 listCache(list List, uint64 Cache)
+uint16 listCache(list List, uint64 CacheCoverage) //APPROVED
 {
-    listNode node;
-    uint64 CacheCoverage;
+    listNode first;
+    listNode last;
 
-    if (Cache == 0 || List->Length < 3)
+    //Set the cache coverage
+    if (CacheCoverage < 1)
     {
-        return 1;
+        CacheCoverage = 1;
+    }
+    else if (List->Length < CacheCoverage)
+    {
+        CacheCoverage = List->Length;
+    }
+    List->Cache->Coverage = CacheCoverage;
+
+    //Save the first and last node
+    first = List->Cache->Nodes[0];
+    last = List->Cache->Nodes[List->Cache->Size - 1];
+
+    //Calculate the size of the cache
+    List->Cache->Size = 1;
+    for (uint64 i = 0; i < List->Length; i += List->Cache->Coverage)
+    {
+        List->Cache->Size++;
     }
 
-    if (Cache > List->Length / 3)
-    {
-        Cache = List->Length / 3;
-    }
+    //Initialize the cache
+    free(List->Cache->Nodes);
+    List->Cache->Nodes = malloc(sizeof(listNode) * List->Cache->Size);
+    List->Cache->Nodes[0] = first;
+    List->Cache->Nodes[List->Cache->Size - 1] = last;
 
-    listCacheInit(List->List, Cache + 1, List->List->Values[0], List->List->Values[List->List->Length - 1]);
-
-    CacheCoverage = List->Length / Cache;
-    node = ((listNode)List->List->Values[0])->Next;
-    for (uint64 i = 1; i < List->Length - 1; i++)
+    //Fill the cache
+    for (uint64 i = 0; i < List->Length; i++)
     {
-        if (i % CacheCoverage == 0)
+        if (i % List->Cache->Coverage == 0)
         {
-            List->List->Values[i / CacheCoverage] = node;
+            List->Cache->Nodes[i / List->Cache->Coverage] = first;
         }
-        node = node->Next;
+        
+        first = first->Next;
     }
-    List->Cache = true;
 
     return 0;
 }
