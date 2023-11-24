@@ -20,7 +20,7 @@ typedef signed long sint64;
 //________________NeoCast.c________________// COMPLETED
 
 uint64 asInt(double Value);
-double asDouble(sint64 Value);
+double asDouble(uint64 Value);
 
 //________________NeoArray.c_______________// COMPLETED
 
