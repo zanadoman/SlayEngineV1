@@ -205,7 +205,6 @@ uint16 strPurge(string String)
 {
     free(String->String);
     free(String);
-    String = NULL;
 
     return 0;
 }

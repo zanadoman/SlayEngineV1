@@ -76,6 +76,7 @@ uint16 listInsert(list List, uint64 Index, void* Value)
         first->Next = malloc(sizeof(listNode));
         if (first->Next == NULL)
         {
+            first->Next = last;
             return 1;
         }
         first->Next->Value = Value;
@@ -91,6 +92,9 @@ uint16 listInsert(list List, uint64 Index, void* Value)
     List->Cache->Nodes = malloc(sizeof(listNode) * 2);
     if (List->Cache->Nodes == NULL)
     {
+        List->Cache->Size = 0;
+        List->Cache->Coverage = 0;
+        List->Length = 0;
         return 1;
     }
     List->Cache->Nodes[0] = first;
@@ -153,6 +157,9 @@ uint16 listRemove(list List, uint64 Index)
     List->Cache->Nodes = malloc(sizeof(listNode) * 2);
     if (List->Cache->Nodes == NULL)
     {
+        List->Cache->Size = 0;
+        List->Cache->Coverage = 0;
+        List->Length = 0;
         return 1;
     }
     List->Cache->Nodes[0] = first;
@@ -213,6 +220,9 @@ uint16 listCache(list List, uint64 CacheCoverage)
     List->Cache->Nodes = malloc(sizeof(listNode) * List->Cache->Size);
     if (List->Cache->Nodes == NULL)
     {
+        List->Cache->Size = 0;
+        List->Cache->Coverage = 0;
+        List->Length = 0;
         return 1;
     }
     List->Cache->Nodes[0] = first;
@@ -247,7 +257,6 @@ uint16 listPurge(list List)
     free(List->Cache->Nodes);
     free(List->Cache);
     free(List);
-    List = NULL;
 
     return 0;
 }
