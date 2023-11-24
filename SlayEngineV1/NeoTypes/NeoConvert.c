@@ -27,16 +27,17 @@ uint64 STRtoUINT(char* Characters, boolean* Success)
 }
 uint16 UINTtoSTR(uint64 Number, string String)
 {
-    free(String->String);
-    free(String);
-
     uint64 i;
 
-    String = strNew();
-    if (String == NULL)
+    free(String->String);
+    String->String = malloc(sizeof(char) * 1);
+    if (String->String == NULL)
     {
+        String->Lenght = 0;
         return 1;
     }
+    String->String[0] = '\0';
+    String->Lenght = 1;
 
     for (i = 1; Number / i > 10; i *= 10);
     for (; i > 0; i /= 10)
@@ -94,16 +95,17 @@ sint64 STRtoSINT(char* Characters, boolean* Success)
 }
 uint16 SINTtoSTR(sint64 Number, string String)
 {
-    free(String->String);
-    free(String);
-
     uint64 i;
 
-    String = strNew();
-    if (String == NULL)
+    free(String->String);
+    String->String = malloc(sizeof(char) * 1);
+    if (String->String == NULL)
     {
+        String->Lenght = 0;
         return 1;
     }
+    String->String[0] = '\0';
+    String->Lenght = 1;
 
     if (Number < 0)
     {
@@ -191,17 +193,18 @@ double STRtoDOUBLE(char* Characters, boolean* Success)
 }
 uint16 DOUBLEtoSTR(double Number, string String)
 {
-    free(String->String);
-    free(String);
-
     uint64 i, whole;
     double fraction;
 
-    String = strNew();
-    if (String == NULL)
+    free(String->String);
+    String->String = malloc(sizeof(char) * 1);
+    if (String->String == NULL)
     {
+        String->Lenght = 0;
         return 1;
     }
+    String->String[0] = '\0';
+    String->Lenght = 1;
 
     if (Number < 0)
     {
