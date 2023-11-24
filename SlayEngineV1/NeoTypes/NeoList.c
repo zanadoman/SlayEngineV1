@@ -12,7 +12,7 @@ list listNew()
     result->Cache = malloc(sizeof(listCache_t));
     if (result->Cache == NULL)
     {
-        result->Length = 0;
+        free(result);
         return NULL;
     }
     result->Cache->Nodes = NULL;

@@ -10,6 +10,11 @@ array arrNew(uint64 Length)
         return NULL;
     }
     Array->Values = calloc(Length, sizeof(void*));
+    if (Length != 0 && Array->Values == NULL)
+    {
+        free(Array);
+        return NULL;
+    }
     Array->Length = Length;
 
     return Array;

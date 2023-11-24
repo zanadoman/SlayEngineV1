@@ -25,7 +25,7 @@ string strNew()
     String->String = malloc(sizeof(char) * 1);
     if (String->String == NULL)
     {
-        String->Lenght = 0;
+        free(String);
         return NULL;
     }
     String->String[0] = '\0';
