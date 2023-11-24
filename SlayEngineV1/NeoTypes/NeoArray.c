@@ -18,12 +18,14 @@ array arrNew(uint64 Length)
 uint16 arrInit(array Array, uint64 Length, void* Values, ...)
 {
     free(Array->Values);
+    Array->Values = NULL;
 
     va_list ValuesArgs;
 
     Array->Values = malloc(sizeof(void*) * Length);
     if (Array->Values == NULL)
     {
+        Array->Length = 0;
         return 1;
     }
     Array->Length = Length;
@@ -44,6 +46,7 @@ uint16 arrInsert(array Array, uint64 Index, void* Value)
     Array->Values = realloc(Array->Values, sizeof(void*) * (Array->Length + 1));
     if (Array->Values == NULL)
     {
+        Array->Length = 0;
         return 1;
     }
     Array->Length++;
@@ -73,7 +76,9 @@ uint16 arrRemove(array Array, uint64 Index)
 uint16 arrPurge(array Array)
 {
     free(Array->Values);
+    Array->Values = NULL;
     free(Array);
+    Array = NULL;
 
     return 0;
 }
