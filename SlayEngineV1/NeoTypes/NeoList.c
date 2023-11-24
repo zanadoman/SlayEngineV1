@@ -12,6 +12,7 @@ list listNew()
     result->Cache = malloc(sizeof(listCache_t));
     if (result->Cache == NULL)
     {
+        result->Length = 0;
         return NULL;
     }
     result->Cache->Nodes = NULL;
@@ -110,8 +111,12 @@ uint16 listRemove(list List, uint64 Index)
     {
         if (List->Length == 1)
         {
-            listPurge(List);
-            List = listNew();
+            free(List->Cache->Nodes[0]);
+            free(List->Cache->Nodes);
+            List->Cache->Nodes = NULL;
+            List->Cache->Size = 0;
+            List->Cache->Coverage = 0;
+            List->Length = 0;
 
             return 0;
         }
@@ -242,6 +247,7 @@ uint16 listPurge(list List)
     free(List->Cache->Nodes);
     free(List->Cache);
     free(List);
+    List = NULL;
 
     return 0;
 }

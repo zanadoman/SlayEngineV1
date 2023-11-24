@@ -35,11 +35,9 @@ string strNew()
 }
 
 uint16 strInit(string String, char* Characters)
-{
-    free(String->String);
-    String->String = NULL;
-    
+{   
     String->Lenght = strLength(Characters);
+    free(String->String);
     String->String = malloc(sizeof(char) * String->Lenght);
     if (String->String == NULL)
     {
@@ -113,8 +111,6 @@ uint16 strConcat(string String, uint64 Count, char* Characters, ...)
     va_end(CharactersArgs);
 
     free(String->String);
-    String->String = NULL;
-    
     String->String = StringTMP;
     String->Lenght = StringLengthTMP;
 
@@ -182,7 +178,6 @@ uint16 strSplit(array Array, char* Characters, char Character)
     Array->Values = result->Values;
     Array->Length = result->Length;
     free(result);
-    result = NULL;
 
     return 0;
 }
@@ -209,7 +204,6 @@ boolean strCompare(char* Characters1, char* Characters2)
 uint16 strPurge(string String)
 {
     free(String->String);
-    String->String = NULL;
     free(String);
     String = NULL;
 

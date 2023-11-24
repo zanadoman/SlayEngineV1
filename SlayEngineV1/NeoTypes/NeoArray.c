@@ -17,11 +17,9 @@ array arrNew(uint64 Length)
 
 uint16 arrInit(array Array, uint64 Length, void* Values, ...)
 {
-    free(Array->Values);
-    Array->Values = NULL;
-
     va_list ValuesArgs;
 
+    free(Array->Values);
     Array->Values = malloc(sizeof(void*) * Length);
     if (Array->Values == NULL)
     {
@@ -76,7 +74,6 @@ uint16 arrRemove(array Array, uint64 Index)
 uint16 arrPurge(array Array)
 {
     free(Array->Values);
-    Array->Values = NULL;
     free(Array);
     Array = NULL;
 
