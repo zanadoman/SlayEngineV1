@@ -4,14 +4,9 @@ int main(int argc, char *argv[])
 {
     game* Game = malloc(sizeof(game));
 
-    pthread_t Thread;
     player* Player1;
 
     Game->Display = slayNew("Graphical User Interface", 800, 600);
-    
-    Game->Threads = arrNew(2);
-    Game->Threads->Values[0] = malloc(sizeof(pthread_t));
-    Game->Threads->Values[1] = malloc(sizeof(pthread_t));
 
     Game->DisplayPrevTick = 0;
 

@@ -4,7 +4,6 @@ int main(int argc, char *argv[])
 {
     game* Game = malloc(sizeof(game));
 
-    pthread_t Thread;
     player* Player1;
 
     Game->Display = slayNew("Graphical User Interface", 800, 600);

@@ -1,5 +1,4 @@
 #include <SDL2/SDL.h>
-#include <pthread.h>
 #include "NeoTypes/NeoTypes.h"
 
 #define TOP 3
