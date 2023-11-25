@@ -1,0 +1,40 @@
+#include "inc/SDL.h"
+#include "NeoTypes/NeoTypes.h"
+
+#define TOP 3
+#define RIGHT 10
+#define BOTTOM 12
+#define LEFT 5
+#define TOPLEFT 1
+#define TOPRIGHT 2
+#define BOTTOMLEFT 4
+#define BOTTOMRIGHT 8
+#define ALL 15
+
+typedef struct
+{
+    uint16 X;
+    uint16 Y;
+    SDL_Window *Window;
+    SDL_Renderer *Renderer;
+    SDL_Event Event;
+} display;
+
+typedef struct
+{
+    double* ObjectX;
+    double* ObjectY;
+    sint32 UpperLeftX;
+    sint32 UpperLeftY;
+    sint32 LowerRightX;
+    sint32 LowerRightY;
+} slayHitbox;
+
+display* slayNew(char* Title, int X, int Y);
+sint64 slayEvent(display* Display);
+uint8 slayKey(display* Display, uint64 Key);
+uint64 slayDeltaTime(uint64 *DisplayPrevTick);
+uint16 slayFPS(uint64 FPS, uint64 DisplayPrevTick);
+uint8 slayCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2);
+slayHitbox* slayNewHitbox(double* ObjectX, double* ObjectY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY);
+uint64 slayRandom(uint64 Min, uint64 Max, double Seed);
