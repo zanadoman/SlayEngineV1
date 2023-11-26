@@ -1,6 +1,6 @@
 #include "NeoTypes.h"
 
-uint64 STRtoUINT(char* Characters, boolean* Success)
+uint64 STRtoUINT(char* Characters, logic* Success)
 {
     uint64 result;
 
@@ -51,7 +51,7 @@ uint16 UINTtoSTR(uint64 Number, string String)
 
 //######################################################################################
 
-sint64 STRtoSINT(char* Characters, boolean* Success)
+sint64 STRtoSINT(char* Characters, logic* Success)
 {
     sint64 result;
 
@@ -125,7 +125,7 @@ uint16 SINTtoSTR(sint64 Number, string String)
 
 //######################################################################################
 
-double STRtoDOUBLE(char* Characters, boolean* Success)
+double STRtoDOUBLE(char* Characters, logic* Success)
 {
     double result;
 

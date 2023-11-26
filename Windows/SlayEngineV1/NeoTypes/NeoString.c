@@ -182,7 +182,7 @@ uint16 strSplit(array Array, char* Characters, char Character)
     return 0;
 }
 
-boolean strCompare(char* Characters1, char* Characters2)
+logic strCompare(char* Characters1, char* Characters2)
 {
     uint64 Characters1Length;
 

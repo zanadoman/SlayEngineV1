@@ -7,7 +7,7 @@
 
 #define true 1
 #define false 0
-typedef char boolean;
+typedef char logic;
 typedef unsigned char uint8;
 typedef signed char sint8;
 typedef unsigned short uint16;
@@ -58,7 +58,7 @@ uint16 strConcat(string String, uint64 Count, char* Characters, ...);
 
 uint16 strRead(string String);
 uint16 strSplit(array Array, char* Characters, char Character);
-boolean strCompare(char* Characters1, char* Characters2);
+logic strCompare(char* Characters1, char* Characters2);
 
 uint16 strPurge(string String);
 
@@ -96,11 +96,11 @@ uint16 listPurge(list List);
 
 //_______________NeoConvert.c______________ // COMPLETED
 
-uint64 STRtoUINT(char* Characters, boolean* Success);
+uint64 STRtoUINT(char* Characters, logic* Success);
 uint16 UINTtoSTR(uint64 Number, string String);
 
-sint64 STRtoSINT(char* Characters, boolean* Success);
+sint64 STRtoSINT(char* Characters, logic* Success);
 uint16 SINTtoSTR(sint64 Number, string String);
 
-double STRtoDOUBLE(char* Characters, boolean* Success);
+double STRtoDOUBLE(char* Characters, logic* Success);
 uint16 DOUBLEtoSTR(double Number, string String);
