@@ -1,6 +1,6 @@
 #include "game.h"
 
-#undef main
+#undef main //WINDOWS PORT
 
 int main(int argc, char *argv[])
 {
@@ -9,6 +9,10 @@ int main(int argc, char *argv[])
     player* Player1;
 
     Game->Display = slayNew("Graphical User Interface", 800, 600);
+    
+    Game->Threads = arrNew(2);
+    Game->Threads->Values[0] = malloc(sizeof(pthread_t));
+    Game->Threads->Values[1] = malloc(sizeof(pthread_t));
 
     Game->DisplayPrevTick = 0;
 

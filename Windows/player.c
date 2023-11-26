@@ -37,7 +37,7 @@ player* newPlayer(double SpawnX, double SpawnY, uint16 Width, uint16 Height, dou
 uint16 updatePlayer(game* Game)
 {
     uint8 collision;
-    boolean falling;
+    logic falling;
 
     //Horizontal movement
     if (slayKey(Game->Display, Game->Player->KeyLeft))

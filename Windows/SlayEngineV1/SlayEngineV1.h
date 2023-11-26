@@ -1,4 +1,5 @@
-#include "inc/SDL.h"
+#include "inc/SDL.h" //WINDOWS PORT
+#include <pthread.h>
 #include "NeoTypes/NeoTypes.h"
 
 #define TOP 3
