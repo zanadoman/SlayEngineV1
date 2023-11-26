@@ -1,5 +1,7 @@
 #include "game.h"
 
+//#undef main //WINDOWS PORT
+
 int main(int argc, char *argv[])
 {
     game* Game = malloc(sizeof(game));

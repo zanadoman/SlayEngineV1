@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "neotypes.h": "c",
+        "pthread.h": "c"
+    }
+}
