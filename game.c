@@ -1,6 +1,6 @@
 #include "game.h"
 
-//#undef main //WINDOWS PORT
+#undef main
 
 int main(int argc, char *argv[])
 {
