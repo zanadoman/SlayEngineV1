@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     Game->Platforms->Values[3] = newPlatform(350, 250, 100, 30, 0, 0, 0);
     Game->Platforms->Values[4] = newPlatform(500, 150, 100, 30, 0, 0, 0);
 
-    Game->Player = newPlayer(100, 100, 30, 30, 0.4, 1.1, 200, SDL_SCANCODE_LEFT, SDL_SCANCODE_RIGHT, SDL_SCANCODE_UP, SDL_SCANCODE_LCTRL, 0, 0, 255);
+    Game->Player = newPlayer(100, 100, 28, 40, 0.4, 1.1, 200, SDL_SCANCODE_LEFT, SDL_SCANCODE_RIGHT, SDL_SCANCODE_UP, SDL_SCANCODE_LCTRL);
 
     Game->Projectiles = arrNew(0);
 

@@ -23,11 +23,8 @@ typedef struct
     uint64 KeyJump;
     uint64 KeyFire;
 
-    SDL_Texture* Texture;
-
-    uint8 ColorR;
-    uint8 ColorG;
-    uint8 ColorB;
+    SDL_Texture* TextureLeft;
+    SDL_Texture* TextureRight;
 
     slayHitbox* Hitbox;
 } player;
@@ -88,7 +85,7 @@ uint16 updateQueue(game* Game);
 uint16 renderQueue(game* Game);
 
 //Player
-player* newPlayer(double SpawnX, double SpawnY, uint16 Width, uint16 Height, double Speed, double JumpHeight, uint64 ReloadTime, uint64 LeftKey, uint64 RightKey, uint64 KeyJump, uint8 KeyFire, uint8 ColorR, uint8 ColorG, uint8 ColorB);
+player* newPlayer(double SpawnX, double SpawnY, uint16 Width, uint16 Height, double Speed, double JumpHeight, uint64 ReloadTime, uint64 LeftKey, uint64 RightKey, uint64 KeyJump, uint8 KeyFire);
 uint16 updatePlayer(game* Game);
 
 //Platform

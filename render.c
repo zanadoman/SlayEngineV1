@@ -68,9 +68,16 @@ uint16 renderPlayer(game* Game)
     Object.y = (sint32)round(Game->Player->Y);
     Object.w = Game->Player->Width;
     Object.h = Game->Player->Height;
-    
-    SDL_SetRenderDrawColor(Game->Display->Renderer, Game->Player->ColorR, Game->Player->ColorG, Game->Player->ColorB, 255);
-    SDL_RenderFillRect(Game->Display->Renderer, &Object);
+
+
+    if (Game->Player->Facing == 1)
+    {
+        SDL_RenderCopy(Game->Display->Renderer, Game->Player->TextureRight, NULL, &Object);
+    }
+    else
+    {
+        SDL_RenderCopy(Game->Display->Renderer, Game->Player->TextureLeft, NULL, &Object);
+    }
 
     return 0;
 }

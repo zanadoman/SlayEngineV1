@@ -1,6 +1,6 @@
 #include "game.h"
 
-player* newPlayer(double SpawnX, double SpawnY, uint16 Width, uint16 Height, double Speed, double JumpHeight, uint64 ReloadTime, uint64 LeftKey, uint64 RightKey, uint64 KeyJump, uint8 KeyFire, uint8 ColorR, uint8 ColorG, uint8 ColorB)
+player* newPlayer(double SpawnX, double SpawnY, uint16 Width, uint16 Height, double Speed, double JumpHeight, uint64 ReloadTime, uint64 LeftKey, uint64 RightKey, uint64 KeyJump, uint8 KeyFire)
 {
     player* result;
 
@@ -24,10 +24,6 @@ player* newPlayer(double SpawnX, double SpawnY, uint16 Width, uint16 Height, dou
     result->KeyRight = RightKey;
     result->KeyJump = KeyJump;
     result->KeyFire = KeyFire;
-
-    result->ColorR = ColorR;
-    result->ColorG = ColorG;
-    result->ColorB = ColorB;
 
     result->Hitbox = slayNewHitbox(&result->X, &result->Y, 0, 0, result->Width, result->Height);
 
