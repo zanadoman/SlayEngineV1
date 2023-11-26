@@ -61,7 +61,7 @@ uint16 playerProjectile(game* Game)
     if (slayKey(Game->Display, Game->Player->KeyFire) && SDL_GetTicks64() > Game->Player->ReloadTick + Game->Player->ReloadTime)
     {
         Game->Player->ReloadTick = SDL_GetTicks64();
-        arrInsert(Game->Projectiles, Game->Projectiles->Length, newProjectile(Game->Player->X + 10 + 20 * Game->Player->Facing, Game->Player->Y + 14, 10, 4, 0.75, Game->Player->Facing, 255, 0, 0));
+        arrInsert(Game->Projectiles, Game->Projectiles->Length, newProjectile(Game->Player->X + 10 + 20 * Game->Player->Facing, Game->Player->Y + 14, 10, 4, 0.75, Game->Player->Facing, 192, 192, 192));
     }
 
     return 0;

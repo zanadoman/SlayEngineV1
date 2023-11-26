@@ -4,6 +4,15 @@ uint16 loadTextures(game* Game)
 {
     SDL_Surface* surface;
 
+    surface = IMG_Load("assets/background.jpg");
+    if (surface == NULL)
+    {
+        printf("ERROR Cannot find background.jpg\n");
+        SDL_Quit();
+        return 1;
+    }
+    Game->TextureBackground = SDL_CreateTextureFromSurface(Game->Display->Renderer, surface);
+
     surface = IMG_Load("assets/player_left.png");
     if (surface == NULL)
     {

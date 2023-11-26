@@ -18,8 +18,16 @@ uint16 renderQueue(game* Game)
 
 uint16 renderBackground(game* Game)
 {
+    SDL_Rect Object;
+
+    Object.x = 0;
+    Object.y = 0;
+    Object.w = Game->Display->X;
+    Object.h = Game->Display->Y;
+
     SDL_SetRenderDrawColor(Game->Display->Renderer, 255, 255, 255, 255);
     SDL_RenderClear(Game->Display->Renderer);
+    SDL_RenderCopy(Game->Display->Renderer, Game->TextureBackground, NULL, &Object);
 
     return 0;
 }

@@ -73,6 +73,8 @@ typedef struct
     array Platforms;
     player* Player;
     array Projectiles;
+
+    SDL_Texture* TextureBackground;
 } game;
 
 //Load queue
