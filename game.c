@@ -41,4 +41,6 @@ int main(int argc, char *argv[])
 
         slayFPS(165, Game->DisplayPrevTick);
     }
+
+    return 0;
 }
