@@ -23,6 +23,8 @@ typedef struct
     uint64 KeyJump;
     uint64 KeyFire;
 
+    SDL_Texture* Texture;
+
     uint8 ColorR;
     uint8 ColorG;
     uint8 ColorB;
@@ -75,6 +77,9 @@ typedef struct
     player* Player;
     array Projectiles;
 } game;
+
+//Load queue
+uint16 loadTextures(game* Game);
 
 //Update queue
 uint16 updateQueue(game* Game);

@@ -27,6 +27,11 @@ int main(int argc, char *argv[])
 
     Game->Projectiles = arrNew(0);
 
+    if (loadTextures(Game) != 0)
+    {
+        return 1;
+    }
+
     while(slayEvent(Game->Display) != 0)
     {   
         Game->DeltaTime = slayDeltaTime(&Game->DisplayPrevTick);
