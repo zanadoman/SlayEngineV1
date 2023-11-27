@@ -1,6 +1,5 @@
 #include "SlayEngineV1.h"
 
-//Creates a window with the specified title and size
 slayDisplay* slayNew(char* Title, int Width, int Height)
 {
     slayDisplay* result;

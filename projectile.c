@@ -1,9 +1,3 @@
-/*
-Creates a new projectile object.
-Updates the projectiles, describes how the projectiles should behave.
-Handles the shooting event of the player.
-*/
-
 #include "game.h"
 
 uint16 playerProjectile(game* Game);
@@ -44,16 +38,12 @@ uint16 updateProjectile(game* Game)
 
     for (uint64 i = 0; i < Game->Projectiles->Length; i++)
     {
-        //Horizontal movement
         ((projectile*)Game->Projectiles->Values[i])->X += ((projectile*)Game->Projectiles->Values[i])->Speed * ((projectile*)Game->Projectiles->Values[i])->Facing * Game->DeltaTime;
 
-        //Collision and deletion handling
         for (j = 0; j < Game->Platforms->Length; j++)
         {
-            //Store the current collision state
             collision = slayCollision(((projectile*)Game->Projectiles->Values[i])->Hitbox, ((platform*)Game->Platforms->Values[j])->Hitbox);
 
-            //Destroys the projectile if it collides with a platform or leaves the display area
             if (collision > 0 || ((projectile*)Game->Projectiles->Values[i])->X < ((projectile*)Game->Projectiles->Values[i])->MinX || ((projectile*)Game->Projectiles->Values[i])->X > ((projectile*)Game->Projectiles->Values[i])->MaxX - ((projectile*)Game->Projectiles->Values[i])->Width)
             {
                 free(((projectile*)Game->Projectiles->Values[i])->Hitbox);
@@ -69,7 +59,6 @@ uint16 updateProjectile(game* Game)
 
 uint16 playerProjectile(game* Game)
 {
-    //If the player reloaded and pressed the fire key it will create a new projectile and sets the reload tick
     if (slayKey(Game->Display, Game->Player->KeyFire) && SDL_GetTicks64() > Game->Player->ReloadTick + Game->Player->ReloadTime)
     {
         Game->Player->ReloadTick = SDL_GetTicks64();

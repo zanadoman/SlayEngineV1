@@ -1,6 +1,5 @@
 #include "SlayEngineV1.h"
 
-//Creates a new hitbox
 slayHitbox* slayNewHitbox(double* ObjectX, double* ObjectY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY)
 {
     slayHitbox* result;
@@ -17,7 +16,6 @@ slayHitbox* slayNewHitbox(double* ObjectX, double* ObjectY, sint32 UpperLeftX, s
     return result;
 }
 
-//Check for collision between two rectangle hitboxes
 uint8 slayCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2)
 {
     uint8 result;

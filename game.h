@@ -84,7 +84,6 @@ typedef struct
     slayHitbox* Hitbox;
 } projectile;
 
-//Unifying structure for common data
 typedef struct
 {
     slayDisplay* Display;
