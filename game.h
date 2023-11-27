@@ -62,7 +62,7 @@ typedef struct
     slayHitbox* Hitbox;
 } projectile;
 
-
+//Unifying structure for common data
 typedef struct
 {
     display* Display;
@@ -78,7 +78,7 @@ typedef struct
 } game;
 
 //Load queue
-uint16 loadTextures(game* Game);
+uint16 loadGame(game* Game);
 
 //Update queue
 uint16 updateQueue(game* Game);

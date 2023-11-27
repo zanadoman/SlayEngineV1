@@ -1,5 +1,6 @@
 #include "SlayEngineV1.h"
 
+//Creates a window with the specified title and size
 display* slayNew(char* Title, int X, int Y)
 {
     display* result;
@@ -14,6 +15,7 @@ display* slayNew(char* Title, int X, int Y)
     return result;
 }
 
+//Maintains the main game loop
 sint64 slayEvent(display* Display)
 {
     while (SDL_PollEvent(&Display->Event) != 0)
@@ -29,6 +31,7 @@ sint64 slayEvent(display* Display)
     return -1;
 }
 
+//Returns the state of the specified key
 uint8 slayKey(display* Display, uint64 Key)
 {
     SDL_PollEvent(&Display->Event);
@@ -37,6 +40,7 @@ uint8 slayKey(display* Display, uint64 Key)
     return state[Key];
 }
 
+//Calculates the delta time for the current frame
 uint64 slayDeltaTime(uint64* DisplayPrevTick)
 {
     uint64 DeltaTime;
@@ -47,6 +51,7 @@ uint64 slayDeltaTime(uint64* DisplayPrevTick)
     return DeltaTime;
 }
 
+//Caps the fps to the specified value also takes DeltaTime into account
 uint16 slayFPS(uint64 FPS, uint64 DisplayPrevTick)
 {
     sint64 delay;
@@ -60,6 +65,7 @@ uint16 slayFPS(uint64 FPS, uint64 DisplayPrevTick)
     return 0;
 }
 
+//Check for collision between two rectangle hitboxes
 uint8 slayCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2)
 {
     uint8 result;
@@ -105,6 +111,7 @@ uint8 slayCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2)
     return result;
 }
 
+//Creates a new hitbox
 slayHitbox* slayNewHitbox(double* ObjectX, double* ObjectY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY)
 {
     slayHitbox* result;
@@ -121,6 +128,7 @@ slayHitbox* slayNewHitbox(double* ObjectX, double* ObjectY, sint32 UpperLeftX, s
     return result;
 }
 
+//Generates random numbers from ticks / seed
 uint64 slayRandom(uint64 Min, uint64 Max, double Seed)
 {
     return (uint64)round(SDL_GetTicks64() / Seed) % (Max - Min) + Min;
