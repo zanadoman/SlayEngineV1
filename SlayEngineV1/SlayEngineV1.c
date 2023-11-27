@@ -23,6 +23,10 @@ uint64 slayDeltaTime(uint64* DisplayPrevTick)
     uint64 DeltaTime;
     
     DeltaTime = SDL_GetTicks() - *DisplayPrevTick;
+    if (DeltaTime > 40)
+    {
+        DeltaTime = 40;
+    }
     *DisplayPrevTick = SDL_GetTicks();
 
     return DeltaTime;
