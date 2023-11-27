@@ -1,3 +1,10 @@
+/*
+Contains the update queue for the object in the game that needs to be updated.
+The queue is split to phases and phases are split to threads.
+Each phase starts multiple threads and wait for them to finish.
+A thread will always call the corresponding update function from the object's code.
+*/
+
 #include "game.h"
 
 void* updatePlayerThread(void* Game);

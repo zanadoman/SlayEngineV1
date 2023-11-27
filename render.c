@@ -1,3 +1,10 @@
+/*
+Contains the render queue for the object in the game that needs to be rendered.
+The order of the render dictates who goes into which layer on the screen.
+No one can be in the same layer. The first one is always the backround (bottom layer),
+and the last one will be the top layer.
+*/
+
 #include "game.h"
 
 uint16 renderBackground(game* Game);
@@ -7,11 +14,13 @@ uint16 renderPlayer(game* Game);
 
 uint16 renderQueue(game* Game)
 {
+    //Bottom layer
     renderBackground(Game);
     renderPlatform(Game);
     renderProjectile(Game);
     renderPlayer(Game);
     SDL_RenderPresent(Game->Display->Renderer);
+    //Top layer
 
     return 0;
 }

@@ -1,11 +1,35 @@
+/*
+Initializes the game struct.
+Loads assets into the game.
+*/
+
 #include "game.h"
 
+uint16 loadRequiredElements(game* Game);
+uint16 loadAdditionalElements(game* Game);
 uint16 loadTextures(game* Game);
 
 uint16 loadGame(game* Game)
 {
+    loadAdditionalElements(Game);
+    loadRequiredElements(Game);
+
+    //Loading the textures
+    if (loadTextures(Game) != 0)
+    {
+        return 1;
+    }
+
+    return 0;
+}
+
+uint16 loadRequiredElements(game* Game)
+{
     //Creating the game window
     Game->Display = slayNew("SlayEngineV1 Demo", 800, 600);
+
+    //Initializing the previous tick to 0
+    Game->DisplayPrevTick = 0;
     
     //Threads & Thread init
     Game->Threads = arrNew(2);
@@ -14,12 +38,13 @@ uint16 loadGame(game* Game)
         Game->Threads->Values[i] = malloc(sizeof(pthread_t));
     }
 
-    //Initializing the previous tick to 0
-    Game->DisplayPrevTick = 0;
+    return 0;
+}
 
+uint16 loadAdditionalElements(game* Game)
+{
     //Creating platforms
     Game->Platforms = arrNew(5);
-    //X, Y, Width, Height, R, G, B
     Game->Platforms->Values[0] = newPlatform(0, 550, 800, 50, 64, 64, 128);
     Game->Platforms->Values[1] = newPlatform(300, 450, 200, 30, 16, 16, 32);
     Game->Platforms->Values[2] = newPlatform(200, 350, 100, 30, 16, 16, 32);
@@ -27,17 +52,10 @@ uint16 loadGame(game* Game)
     Game->Platforms->Values[4] = newPlatform(500, 150, 100, 30, 16, 16, 32);
 
     //Creating the player
-    //SpawnX, SpawnY, Width, Height, Speed, JumpHeight, ReloadTime, KeyLeft, KeyRight, KeyJumpt, KeyFire
     Game->Player = newPlayer(100, 100, 28, 40, 0.4, 1.1, 200, SDL_SCANCODE_LEFT, SDL_SCANCODE_RIGHT, SDL_SCANCODE_UP, SDL_SCANCODE_LCTRL);
 
     //Initializing the array for projectiles
     Game->Projectiles = arrNew(0);
-
-    //Loadint the textures
-    if (loadTextures(Game) != 0)
-    {
-        return 1;
-    }
 
     return 0;
 }

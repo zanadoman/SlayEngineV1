@@ -1,3 +1,8 @@
+/*
+Creates a new player object.
+Updates the player object, describes how the player should behave.
+*/
+
 #include "game.h"
 
 player* newPlayer(double SpawnX, double SpawnY, uint16 Width, uint16 Height, double Speed, double JumpHeight, uint64 ReloadTime, uint64 LeftKey, uint64 RightKey, uint64 KeyJump, uint8 KeyFire)
@@ -62,6 +67,7 @@ uint16 updatePlayer(game* Game)
     }
     else
     {
+        //Deacceleration the handler
         if (Game->Player->AccelerationX < 0)
         {
             Game->Player->AccelerationX += 0.005 * Game->DeltaTime;
@@ -79,23 +85,31 @@ uint16 updatePlayer(game* Game)
             }
         }
     }
+    //Applies movement
     Game->Player->X += Game->Player->Speed * Game->Player->AccelerationX * Game->DeltaTime;
 
     //Vertical movement
+    //Preapplies gravity
     Game->Player->Y += GRAVITY * Game->Player->AccelerationY * Game->DeltaTime;
+    //Assumes the player is falling
     falling = true;
     for (uint64 i = 0; i < Game->Platforms->Length; i++)
     {
+        //Stores the current collision data
         collision = slayCollision(Game->Player->Hitbox, ((platform*)Game->Platforms->Values[i])->Hitbox);
 
+        //If the player collides with a platform from the top
         if (collision == BOTTOMLEFT || collision == BOTTOM || collision == BOTTOMRIGHT)
         {
+            //If the player falling it stops the falling and places the player on the top of the platform
             if (Game->Player->AccelerationY >= 0)
             {
                 Game->Player->Y = ((platform*)Game->Platforms->Values[i])->Y - Game->Player->Height;
                 Game->Player->AccelerationY = 0;
                 falling = false;
             }
+            /*If the the player is not falling (jumping) but still collides with one of its bottom corners
+            it handles the side collision with the platform*/
             else if (collision == BOTTOMLEFT)
             {
                 Game->Player->X = ((platform*)Game->Platforms->Values[i])->X + ((platform*)Game->Platforms->Values[i])->Width;
@@ -109,13 +123,16 @@ uint16 updatePlayer(game* Game)
             
             break;
         }
+        //If the player collides with a platform from the bottom
         else if (collision == TOPLEFT || collision == TOP || collision == TOPRIGHT)
         {
+            //Places the player under the platform and stops the jump by resetting the gravity acceleration
             Game->Player->Y = ((platform*)Game->Platforms->Values[i])->Y + ((platform*)Game->Platforms->Values[i])->Height + 1;
             Game->Player->AccelerationY = 0;
             break;
         }
     }
+    //If the player is midair this will apply gravity acceleration to the player in a specific rate until 1
     if (falling)
     {
         Game->Player->AccelerationY += 0.003 * Game->DeltaTime;
@@ -124,6 +141,7 @@ uint16 updatePlayer(game* Game)
             Game->Player->AccelerationY = 1;
         }
     }
+    //Starts the jump by reversing gravity acceleration
     else if (slayKey(Game->Display, Game->Player->KeyJump))
     {
         Game->Player->AccelerationY = -Game->Player->JumpHeight;
