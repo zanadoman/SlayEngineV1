@@ -5,51 +5,43 @@ Updates the player object, describes how the player should behave.
 
 #include "game.h"
 
-player* newPlayer(double SpawnX, double SpawnY, double MinX, double MaxX, double MinY, double MaxY, uint8 Facing, uint16 Width, uint16 Height, double AccelerationRateX, double DeaccelerationRateX, double AccelerationRateY, double DeaccelerationRateY, double Speed, double JumpHeight, uint64 ReloadTime, uint64 LeftKey, uint64 RightKey, uint64 KeyJump, uint8 KeyFire, double ProjectileRelativeX, double ProjectileRelativeY, uint16 ProjectileWidth, uint16 ProjectileHeight, double ProjectileSpeed, uint8 ProjectileColorR, uint8 ProjectileColorG, uint8 ProjectileColorB)
+player* newPlayer()
 {
     player* result;
 
     result = malloc(sizeof(player));
 
-    result->X = SpawnX;
-    result->Y = SpawnY;
-
-    result->MinX = MinX;
-    result->MaxX = MaxX;
-    result->MinY = MinY;
-    result->MaxY = MaxY;
-
-    result->Width = Width;
-    result->Height = Height;
+    result->Width = 28;
+    result->Height = 40;
 
     result->AccelerationX = 0;
-    result->AccelerationRateX = AccelerationRateX;
-    result->DeaccelerationRateX = DeaccelerationRateX;
+    result->AccelerationRateX = 0.003;
+    result->DeaccelerationRateX = 0.005;
     result->AccelerationY = 0;
-    result->AccelerationRateY = AccelerationRateY;
-    result->DeaccelerationRateY = DeaccelerationRateY;
+    result->AccelerationRateY = 0;
+    result->DeaccelerationRateY = 0.003;
 
-    result->Speed = Speed;
-    result->JumpHeight = JumpHeight;
-    result->Facing = Facing;
-    result->ReloadTime = ReloadTime;
+    result->Speed = 0.4;
+    result->JumpHeight = 1.1;
+    result->Facing = 1;
+    result->ReloadTime = 200;
     result->ReloadTick = 0;
 
-    result->KeyLeft = LeftKey;
-    result->KeyRight = RightKey;
-    result->KeyJump = KeyJump;
-    result->KeyFire = KeyFire;
+    result->KeyLeft = SDL_SCANCODE_LEFT;
+    result->KeyRight = SDL_SCANCODE_RIGHT;
+    result->KeyJump = SDL_SCANCODE_UP;
+    result->KeyFire = SDL_SCANCODE_LCTRL;
 
     result->Hitbox = slayNewHitbox(&result->X, &result->Y, 0, 0, result->Width, result->Height);
 
-    result->ProjectileRelativeX = ProjectileRelativeX;
-    result->ProjectileRelativeY = ProjectileRelativeY;
-    result->ProjectileWidth = ProjectileWidth;
-    result->ProjectileHeight = ProjectileHeight;
-    result->ProjectileSpeed = ProjectileSpeed;
-    result->ProjectileColorR = ProjectileColorR;
-    result->ProjectileColorG = ProjectileColorG;
-    result->ProjectileColorB = ProjectileColorB;
+    result->ProjectileRelativeX = 30;
+    result->ProjectileRelativeY = 14;
+    result->ProjectileWidth = 10;
+    result->ProjectileHeight = 4;
+    result->ProjectileSpeed = 0.75;
+    result->ProjectileColorR = 192;
+    result->ProjectileColorG = 192;
+    result->ProjectileColorB = 192;
 
     return result;
 }

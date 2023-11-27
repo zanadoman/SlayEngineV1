@@ -17,10 +17,7 @@ int main(int argc, char *argv[])
     game* Game;
 
     Game = malloc(sizeof(game));
-    if (loadGame(Game) != 0)
-    {
-        return 1;
-    }
+    loadGame(Game);
 
     while(slayEvent(Game->Display) != 0)
     {

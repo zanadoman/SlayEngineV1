@@ -14,11 +14,7 @@ uint16 loadGame(game* Game)
     loadRequiredElements(Game);
     loadAdditionalElements(Game);
 
-    //Loading the textures
-    if (loadTextures(Game) != 0)
-    {
-        return 1;
-    }
+    loadTextures(Game);
 
     return 0;
 }
@@ -52,7 +48,11 @@ uint16 loadAdditionalElements(game* Game)
     Game->Platforms->Values[4] = newPlatform(2500, 2150, 100, 30, 24, 24, 48);
 
     //Creating the player
-    Game->Player = newPlayer(2386, 2410, 1800, 3000, 0, 0, 1, 28, 40, 0.003, 0.005, 0, 0.003, 0.4, 1.1, 200, SDL_SCANCODE_LEFT, SDL_SCANCODE_RIGHT, SDL_SCANCODE_UP, SDL_SCANCODE_LCTRL, 30, 14, 10, 4, 0.75, 192, 192, 192);
+    Game->Player = newPlayer();
+    Game->Player->X = 2386;
+    Game->Player->Y = 2410;
+    Game->Player->MinX = 1800;
+    Game->Player->MaxX = 3000;
 
     //Init the camera
     Game->Camera = slayNewCamera(&Game->Player->X, &Game->Player->Y, -386, -400);
@@ -65,36 +65,12 @@ uint16 loadAdditionalElements(game* Game)
 
 uint16 loadTextures(game* Game)
 {
-    SDL_Surface* surface;
-
     //Background texture
-    surface = IMG_Load("assets/background.jpg");
-    if (surface == NULL)
-    {
-        printf("ERROR Cannot find background.jpg\n");
-        SDL_Quit();
-        return 1;
-    }
-    Game->TextureBackground = SDL_CreateTextureFromSurface(Game->Display->Renderer, surface);
+    Game->TextureBackground = slayLoadTexture(Game->Display, "assets/background.jpg");
 
     //Player textures
-    surface = IMG_Load("assets/player_left.png");
-    if (surface == NULL)
-    {
-        printf("ERROR Cannot find player_left.png\n");
-        SDL_Quit();
-        return 1;
-    }
-    Game->Player->TextureLeft = SDL_CreateTextureFromSurface(Game->Display->Renderer, surface);
-    surface = IMG_Load("assets/player_right.png");
-    if (surface == NULL)
-    {
-        printf("ERROR Cannot find player_right.png\n");
-        SDL_Quit();
-        return 1;
-    }
-    Game->Player->TextureRight = SDL_CreateTextureFromSurface(Game->Display->Renderer, surface);
+    Game->Player->TextureLeft = slayLoadTexture(Game->Display, "assets/player_left.png");
+    Game->Player->TextureRight = slayLoadTexture(Game->Display, "assets/player_right.png");
 
-    SDL_FreeSurface(surface);
     return 0;
 }

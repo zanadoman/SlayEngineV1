@@ -27,6 +27,7 @@ typedef struct
 } slayDisplay;
 
 slayDisplay* slayNew(char* Title, int Width, int Height);
+SDL_Texture* slayLoadTexture(slayDisplay* Display, char* Path);
 
 //Control____________________________________________________________
 
