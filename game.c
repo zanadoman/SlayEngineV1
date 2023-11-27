@@ -19,13 +19,15 @@ int main(int argc, char *argv[])
     }
 
     while(slayEvent(Game->Display) != 0)
-    {   
+    {
+        //DeltaTime always needs to be the first thing done
         Game->DeltaTime = slayDeltaTime(&Game->DisplayPrevTick);
 
         updateQueue(Game);
         slayUpdateCamera(Game->Camera);
         renderQueue(Game);
 
+        //slayFPS is always the last thing done
         slayFPS(165, Game->DisplayPrevTick);
     }
 
