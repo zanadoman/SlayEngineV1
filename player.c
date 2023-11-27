@@ -5,7 +5,7 @@ Updates the player object, describes how the player should behave.
 
 #include "game.h"
 
-player* newPlayer(double SpawnX, double SpawnY, double MinX, double MaxX, double MinY, double MaxY, uint8 Facing, uint16 Width, uint16 Height, double AccelerationRateX, double DeaccelerationRateX, double AccelerationRateY, double DeaccelerationRateY, double Speed, double JumpHeight, uint64 ReloadTime, uint64 LeftKey, uint64 RightKey, uint64 KeyJump, uint8 KeyFire)
+player* newPlayer(double SpawnX, double SpawnY, double MinX, double MaxX, double MinY, double MaxY, uint8 Facing, uint16 Width, uint16 Height, double AccelerationRateX, double DeaccelerationRateX, double AccelerationRateY, double DeaccelerationRateY, double Speed, double JumpHeight, uint64 ReloadTime, uint64 LeftKey, uint64 RightKey, uint64 KeyJump, uint8 KeyFire, double ProjectileRelativeX, double ProjectileRelativeY, uint16 ProjectileWidth, uint16 ProjectileHeight, double ProjectileSpeed, uint8 ProjectileColorR, uint8 ProjectileColorG, uint8 ProjectileColorB)
 {
     player* result;
 
@@ -41,6 +41,15 @@ player* newPlayer(double SpawnX, double SpawnY, double MinX, double MaxX, double
     result->KeyFire = KeyFire;
 
     result->Hitbox = slayNewHitbox(&result->X, &result->Y, 0, 0, result->Width, result->Height);
+
+    result->ProjectileRelativeX = ProjectileRelativeX;
+    result->ProjectileRelativeY = ProjectileRelativeY;
+    result->ProjectileWidth = ProjectileWidth;
+    result->ProjectileHeight = ProjectileHeight;
+    result->ProjectileSpeed = ProjectileSpeed;
+    result->ProjectileColorR = ProjectileColorR;
+    result->ProjectileColorG = ProjectileColorG;
+    result->ProjectileColorB = ProjectileColorB;
 
     return result;
 }
