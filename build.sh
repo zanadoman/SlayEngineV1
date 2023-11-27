@@ -12,11 +12,11 @@ then
         echo "Run successful, copying assets"
         cp -r assets ./build
         echo "Assets copied"
-    else
-        echo "Run failed"
+        exit 0
     fi
-
-    exit 0
+    
+    echo "Run failed"
+    exit 1
 fi
 
 echo -e "\nBuild failed"
