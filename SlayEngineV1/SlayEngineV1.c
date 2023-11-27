@@ -170,4 +170,5 @@ uint16 slayApplyCamera(SDL_Rect* Object, slayCamera* Camera, double X, double Y)
     Object->h = Object->h;
 
     return 0;
+    szar
 }
