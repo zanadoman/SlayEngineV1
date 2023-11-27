@@ -60,6 +60,7 @@ uint64 slayRandom(uint64 Min, uint64 Max, double Seed);
 //Render_____________________________________________________________
 
 SDL_Texture* slayLoadTexture(slayDisplay* Display, char* Path);
+TTF_Font* slayLoadFont(char* Path, int Size);
 uint16 slayRenderStart(slayDisplay* Display, uint8 ColorR, uint8 ColorG, uint8 ColorB);
 uint16 slayRenderEnd(slayDisplay* Display);
 uint16 slayRenderColor(slayDisplay* Display, double X, double Y, uint16 Width, uint16 Height, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA);

@@ -3,6 +3,7 @@
 uint16 loadRequiredElements(game* Game);
 uint16 loadAdditionalElements(game* Game);
 uint16 loadTextures(game* Game);
+uint16 loadFonts(game* Game);
 
 uint16 loadGame(game* Game)
 {
@@ -10,6 +11,7 @@ uint16 loadGame(game* Game)
     loadAdditionalElements(Game);
 
     loadTextures(Game);
+    loadFonts(Game);
 
     return 0;
 }
@@ -57,6 +59,13 @@ uint16 loadTextures(game* Game)
 
     Game->Player->TextureLeft = slayLoadTexture(Game->Display, "assets/player_left.png");
     Game->Player->TextureRight = slayLoadTexture(Game->Display, "assets/player_right.png");
+
+    return 0;
+}
+
+uint16 loadFonts(game* Game)
+{
+    Game->FontCrazyPixel12 = slayLoadFont("assets/crazy-pixel.ttf", 48);
 
     return 0;
 }

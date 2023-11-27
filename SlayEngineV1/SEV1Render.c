@@ -10,10 +10,28 @@ SDL_Texture* slayLoadTexture(slayDisplay* Display, char* Path)
     if (surface == NULL)
     {
         printf("ERROR Unable to load texture: %s\n", Path);
+        SDL_Quit();
+        TTF_Quit();
         exit(1);
     }
     result = SDL_CreateTextureFromSurface(Display->Renderer, surface);
     SDL_FreeSurface(surface);
+
+    return result;
+}
+
+TTF_Font* slayLoadFont(char* Path, int Size)
+{
+    TTF_Font* result;
+
+    result = TTF_OpenFont(Path, Size);
+    if (result == NULL)
+    {
+        printf("ERROR Unable to load font: %s\n", Path);
+        SDL_Quit();
+        TTF_Quit();
+        exit(1);
+    }
 
     return result;
 }
@@ -87,7 +105,7 @@ uint16 slayRenderTextureCamera(slayDisplay* Display, double X, double Y, uint16 
 
 uint16 slayRenderText(slayDisplay* Display, double X, double Y, uint16 Width, uint16 Height, SDL_Texture* Texture)
 {
-    
+
 
     return 0;
 }
