@@ -7,43 +7,28 @@ uint16 renderPlayer(game* Game);
 
 uint16 renderQueue(game* Game)
 {
+    slayRenderStart(Game->Display, 255, 255, 255);
     renderBackground(Game);
     renderPlatform(Game);
     renderProjectile(Game);
     renderPlayer(Game);
-    SDL_RenderPresent(Game->Display->Renderer);
+    slayRenderEnd(Game->Display);
 
     return 0;
 }
 
 uint16 renderBackground(game* Game)
 {
-    SDL_Rect Object;
-
-    Object.x = 0;
-    Object.y = 0;
-    Object.w = Game->Display->Width;
-    Object.h = Game->Display->Height;
-
-    SDL_SetRenderDrawColor(Game->Display->Renderer, 255, 255, 255, 255);
-    SDL_RenderClear(Game->Display->Renderer);
-    SDL_RenderCopy(Game->Display->Renderer, Game->TextureBackground, NULL, &Object);
+    slayRenderTexture(Game->Display, 0, 0, Game->Display->Width, Game->Display->Height, Game->TextureBackground);
 
     return 0;
 }
 
 uint16 renderPlatform(game* Game)
 {
-    SDL_Rect Object;
-
     for (uint64 i = 0; i < Game->Platforms->Length; i++)
     {
-        slayApplyCamera(&Object, Game->Camera, ((platform*)Game->Platforms->Values[i])->X, ((platform*)Game->Platforms->Values[i])->Y);
-        Object.w = ((platform*)Game->Platforms->Values[i])->Width;
-        Object.h = ((platform*)Game->Platforms->Values[i])->Height;
-
-        SDL_SetRenderDrawColor(Game->Display->Renderer, ((platform*)Game->Platforms->Values[i])->ColorR, ((platform*)Game->Platforms->Values[i])->ColorG, ((platform*)Game->Platforms->Values[i])->ColorB, 255);
-        SDL_RenderFillRect(Game->Display->Renderer, &Object);
+        slayRenderColorCamera(Game->Display, ((platform*)Game->Platforms->Values[i])->X, ((platform*)Game->Platforms->Values[i])->Y, ((platform*)Game->Platforms->Values[i])->Width, ((platform*)Game->Platforms->Values[i])->Height, ((platform*)Game->Platforms->Values[i])->ColorR, ((platform*)Game->Platforms->Values[i])->ColorG, ((platform*)Game->Platforms->Values[i])->ColorB, 255, Game->Camera);
     }
 
     return 0;
@@ -51,16 +36,9 @@ uint16 renderPlatform(game* Game)
 
 uint16 renderProjectile(game* Game)
 {
-    SDL_Rect Object;
-
     for (uint64 i = 0; i < Game->Projectiles->Length; i++)
     {
-        slayApplyCamera(&Object, Game->Camera, ((projectile*)Game->Projectiles->Values[i])->X, ((projectile*)Game->Projectiles->Values[i])->Y);
-        Object.w = ((projectile*)Game->Projectiles->Values[i])->Width;
-        Object.h = ((projectile*)Game->Projectiles->Values[i])->Height;
-
-        SDL_SetRenderDrawColor(Game->Display->Renderer, ((projectile*)Game->Projectiles->Values[i])->ColorR, ((projectile*)Game->Projectiles->Values[i])->ColorG, ((projectile*)Game->Projectiles->Values[i])->ColorB, 255);
-        SDL_RenderFillRect(Game->Display->Renderer, &Object);
+        slayRenderColorCamera(Game->Display, ((projectile*)Game->Projectiles->Values[i])->X, ((projectile*)Game->Projectiles->Values[i])->Y, ((projectile*)Game->Projectiles->Values[i])->Width, ((projectile*)Game->Projectiles->Values[i])->Height, ((projectile*)Game->Projectiles->Values[i])->ColorR, ((projectile*)Game->Projectiles->Values[i])->ColorG, ((projectile*)Game->Projectiles->Values[i])->ColorB, 255, Game->Camera);
     }
 
     return 0;
@@ -70,11 +48,11 @@ uint16 renderPlayer(game* Game)
 {
     if (Game->Player->Facing == 1)
     {
-        slayRender(Game->Display, Game->Player->X, Game->Player->Y, Game->Player->Width, Game->Player->Height, Game->Player->TextureRight, Game->Camera);
+        slayRenderTextureCamera(Game->Display, Game->Player->X, Game->Player->Y, Game->Player->Width, Game->Player->Height, Game->Player->TextureRight, Game->Camera);
     }
     else
     {
-        slayRender(Game->Display, Game->Player->X, Game->Player->Y, Game->Player->Width, Game->Player->Height, Game->Player->TextureLeft, Game->Camera);
+        slayRenderTextureCamera(Game->Display, Game->Player->X, Game->Player->Y, Game->Player->Width, Game->Player->Height, Game->Player->TextureLeft, Game->Camera);
     }
 
     return 0;
