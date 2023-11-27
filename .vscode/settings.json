@@ -2,6 +2,9 @@
     "files.associations": {
         "neotypes.h": "c",
         "pthread.h": "c",
-        "game.h": "c"
+        "game.h": "c",
+        "slayenginev1.h": "c",
+        "chrono": "c",
+        "functional": "c"
     }
 }
