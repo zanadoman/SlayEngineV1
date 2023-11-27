@@ -7,13 +7,23 @@ typedef struct
     double X;
     double Y;
 
+    double MinX;
+    double MaxX;
+    double MinY;
+    double MaxY;
+
     uint16 Width;
     uint16 Height;
 
+    double AccelerationX;
+    double AccelerationRateX;
+    double DeaccelerationRateX;
+    double AccelerationY;
+    double AccelerationRateY;
+    double DeaccelerationRateY;
+
     double Speed;
     double JumpHeight;
-    double AccelerationX;
-    double AccelerationY;
     sint8 Facing;
     uint64 ReloadTime;
     uint64 ReloadTick;
@@ -88,7 +98,7 @@ uint16 updateQueue(game* Game);
 uint16 renderQueue(game* Game);
 
 //Player
-player* newPlayer(double SpawnX, double SpawnY, uint16 Width, uint16 Height, double Speed, double JumpHeight, uint64 ReloadTime, uint64 LeftKey, uint64 RightKey, uint64 KeyJump, uint8 KeyFire);
+player* newPlayer(double SpawnX, double SpawnY, double MinX, double MaxX, double MinY, double MaxY, uint8 Facing, uint16 Width, uint16 Height, double AccelerationRateX, double DeaccelerationRateX, double AccelerationRateY, double DeaccelerationRateY, double Speed, double JumpHeight, uint64 ReloadTime, uint64 LeftKey, uint64 RightKey, uint64 KeyJump, uint8 KeyFire);
 uint16 updatePlayer(game* Game);
 
 //Platform

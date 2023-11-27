@@ -5,7 +5,7 @@ Updates the player object, describes how the player should behave.
 
 #include "game.h"
 
-player* newPlayer(double SpawnX, double SpawnY, uint16 Width, uint16 Height, double Speed, double JumpHeight, uint64 ReloadTime, uint64 LeftKey, uint64 RightKey, uint64 KeyJump, uint8 KeyFire)
+player* newPlayer(double SpawnX, double SpawnY, double MinX, double MaxX, double MinY, double MaxY, uint8 Facing, uint16 Width, uint16 Height, double AccelerationRateX, double DeaccelerationRateX, double AccelerationRateY, double DeaccelerationRateY, double Speed, double JumpHeight, uint64 ReloadTime, uint64 LeftKey, uint64 RightKey, uint64 KeyJump, uint8 KeyFire)
 {
     player* result;
 
@@ -14,14 +14,24 @@ player* newPlayer(double SpawnX, double SpawnY, uint16 Width, uint16 Height, dou
     result->X = SpawnX;
     result->Y = SpawnY;
 
+    result->MinX = MinX;
+    result->MaxX = MaxX;
+    result->MinY = MinY;
+    result->MaxY = MaxY;
+
     result->Width = Width;
     result->Height = Height;
 
+    result->AccelerationX = 0;
+    result->AccelerationRateX = AccelerationRateX;
+    result->DeaccelerationRateX = DeaccelerationRateX;
+    result->AccelerationY = 0;
+    result->AccelerationRateY = AccelerationRateY;
+    result->DeaccelerationRateY = DeaccelerationRateY;
+
     result->Speed = Speed;
     result->JumpHeight = JumpHeight;
-    result->AccelerationX = 0;
-    result->AccelerationY = 0;
-    result->Facing = 1;
+    result->Facing = Facing;
     result->ReloadTime = ReloadTime;
     result->ReloadTick = 0;
 
@@ -45,7 +55,7 @@ uint16 updatePlayer(game* Game)
     {
         if (Game->Player->AccelerationX > -1)
         {
-            Game->Player->AccelerationX -= 0.003 * Game->DeltaTime;
+            Game->Player->AccelerationX -= Game->Player->AccelerationRateX * Game->DeltaTime;
             if (Game->Player->AccelerationX < -1)
             {
                 Game->Player->AccelerationX = -1;
@@ -57,7 +67,7 @@ uint16 updatePlayer(game* Game)
     {
         if (Game->Player->AccelerationX < 1)
         {
-            Game->Player->AccelerationX += 0.003 * Game->DeltaTime;
+            Game->Player->AccelerationX += Game->Player->AccelerationRateX * Game->DeltaTime;
             if (Game->Player->AccelerationX > 1)
             {
                 Game->Player->AccelerationX = 1;
@@ -70,7 +80,7 @@ uint16 updatePlayer(game* Game)
         //Deacceleration the handler
         if (Game->Player->AccelerationX < 0)
         {
-            Game->Player->AccelerationX += 0.005 * Game->DeltaTime;
+            Game->Player->AccelerationX += Game->Player->DeaccelerationRateX * Game->DeltaTime;
             if (Game->Player->AccelerationX > 0)
             {
                 Game->Player->AccelerationX = 0;
@@ -78,7 +88,7 @@ uint16 updatePlayer(game* Game)
         }
         else if (Game->Player->AccelerationX > 0)
         {
-            Game->Player->AccelerationX -= 0.005 * Game->DeltaTime;
+            Game->Player->AccelerationX -= Game->Player->DeaccelerationRateX * Game->DeltaTime;
             if (Game->Player->AccelerationX < 0)
             {
                 Game->Player->AccelerationX = 0;
@@ -135,7 +145,7 @@ uint16 updatePlayer(game* Game)
     //If the player is midair this will apply gravity acceleration to the player in a specific rate until 1
     if (falling)
     {
-        Game->Player->AccelerationY += 0.003 * Game->DeltaTime;
+        Game->Player->AccelerationY += Game->Player->DeaccelerationRateY * Game->DeltaTime;
         if (Game->Player->AccelerationY > 1)
         {
             Game->Player->AccelerationY = 1;
@@ -148,13 +158,13 @@ uint16 updatePlayer(game* Game)
     }
 
     //Clamp player position
-    if (Game->Player->X < 0)
+    if (Game->Player->X < Game->Player->MinX)
     {
-        Game->Player->X = 0;
+        Game->Player->X = Game->Player->MinX;
     }
-    else if (Game->Player->X > 800 - Game->Player->Width)
+    else if (Game->Player->X > Game->Player->MaxX)
     {
-        Game->Player->X = 800 - Game->Player->Width;
+        Game->Player->X = Game->Player->MaxX;
     }
 
     return 0;
