@@ -34,7 +34,9 @@ uint16 renderBackground(game* Game)
     Object.w = Game->Display->Width;
     Object.h = Game->Display->Height;
 
+    //Draws a basic white background
     SDL_SetRenderDrawColor(Game->Display->Renderer, 255, 255, 255, 255);
+    //Clears the previous frame from the screen
     SDL_RenderClear(Game->Display->Renderer);
     SDL_RenderCopy(Game->Display->Renderer, Game->TextureBackground, NULL, &Object);
 
