@@ -1,7 +1,3 @@
-/*
-Feladat: amit lehet elrejteni az engine-be
-*/
-
 #include "game.h"
 
 #undef main
