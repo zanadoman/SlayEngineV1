@@ -162,9 +162,9 @@ uint16 updatePlayer(game* Game)
     {
         Game->Player->X = Game->Player->MinX;
     }
-    else if (Game->Player->X > Game->Player->MaxX)
+    else if (Game->Player->X > Game->Player->MaxX - Game->Player->Width)
     {
-        Game->Player->X = Game->Player->MaxX;
+        Game->Player->X = Game->Player->MaxX - Game->Player->Width;
     }
 
     return 0;

@@ -59,6 +59,9 @@ typedef struct
     double X;
     double Y;
 
+    double MinX;
+    double MaxX;
+
     uint16 Width;
     uint16 Height;
 
@@ -105,5 +108,5 @@ uint16 updatePlayer(game* Game);
 platform* newPlatform(double X, double Y, uint16 Width, uint16 Height, uint8 R, uint8 G, uint8 B);
 
 //Projectile
-projectile* newProjectile(double SpawnX, double SpawnY, uint16 Width, uint16 Height, double Speed, uint8 Facing, uint8 ColorR, uint8 ColorG, uint8 ColorB);
+projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX, uint16 Width, uint16 Height, double Speed, uint8 Facing, uint8 ColorR, uint8 ColorG, uint8 ColorB);
 uint16 updateProjectile(game* Game);
