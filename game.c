@@ -4,6 +4,10 @@ Updates the DeltaTime and calls the updateQueue and renderQueue functions.
 After everything done waits until slayFPS delays the game.
 */
 
+/*
+Feladat: amit lehet elrejteni az engine-be
+*/
+
 #include "game.h"
 
 #undef main
