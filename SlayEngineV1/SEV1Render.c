@@ -84,3 +84,10 @@ uint16 slayRenderTextureCamera(slayDisplay* Display, double X, double Y, uint16 
 
     return 0;
 }
+
+uint16 slayRenderText(slayDisplay* Display, double X, double Y, uint16 Width, uint16 Height, SDL_Texture* Texture)
+{
+    
+
+    return 0;
+}

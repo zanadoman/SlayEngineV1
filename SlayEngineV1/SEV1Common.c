@@ -5,6 +5,7 @@ slayDisplay* slayNew(char* Title, int Width, int Height)
     slayDisplay* result;
 
     SDL_Init(SDL_INIT_VIDEO);
+    TTF_Init();
     result = malloc(sizeof(slayDisplay));
     result->Width = Width;
     result->Height = Height;
