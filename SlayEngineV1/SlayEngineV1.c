@@ -1,12 +1,12 @@
 #include "SlayEngineV1.h"
 
 //Creates a window with the specified title and size
-display* slayNew(char* Title, int Width, int Height)
+slayDisplay* slayNew(char* Title, int Width, int Height)
 {
-    display* result;
+    slayDisplay* result;
 
     SDL_Init(SDL_INIT_VIDEO);
-    result = malloc(sizeof(display));
+    result = malloc(sizeof(slayDisplay));
     result->Width = Width;
     result->Height = Height;
     result->Window = SDL_CreateWindow(Title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, result->Width, result->Height, 0);
@@ -16,7 +16,7 @@ display* slayNew(char* Title, int Width, int Height)
 }
 
 //Maintains the main game loop
-sint64 slayEvent(display* Display)
+sint64 slayEvent(slayDisplay* Display)
 {
     while (SDL_PollEvent(&Display->Event) != 0)
     {
@@ -32,7 +32,7 @@ sint64 slayEvent(display* Display)
 }
 
 //Returns the state of the specified key
-uint8 slayKey(display* Display, uint64 Key)
+uint8 slayKey(slayDisplay* Display, uint64 Key)
 {
     SDL_PollEvent(&Display->Event);
     const uint8 *state = SDL_GetKeyboardState(NULL);
@@ -132,4 +132,35 @@ slayHitbox* slayNewHitbox(double* ObjectX, double* ObjectY, sint32 UpperLeftX, s
 uint64 slayRandom(uint64 Min, uint64 Max, double Seed)
 {
     return (uint64)round(SDL_GetTicks64() / Seed) % (Max - Min) + Min;
+}
+
+slayCamera* slayNewCamera(double* OriginX, double* OriginY, double RelativeX, double RelativeY)
+{
+    slayCamera* result;
+
+    result = malloc(sizeof(slayCamera));
+    result->OriginX = OriginX;
+    result->OriginY = OriginY;
+    result->RelativeX = RelativeX;
+    result->RelativeY = RelativeY;
+    result->CurrentX = *OriginX + RelativeX;
+    result->CurrentY = *OriginY + RelativeY;
+
+    return result;
+}
+uint16 slayUpdateCamera(slayCamera* Camera)
+{
+    Camera->CurrentX = *Camera->OriginX + Camera->RelativeX;
+    Camera->CurrentY = *Camera->OriginY + Camera->RelativeY;
+
+    return 0;
+}
+uint16 slayApplyCamera(SDL_Rect* Object, slayCamera* Camera, double X, double Y)
+{
+    Object->x = (sint32)round(X - Camera->CurrentX);
+    Object->y = (sint32)round(Y - Camera->CurrentY);
+    Object->w = Object->w;
+    Object->h = Object->h;
+
+    return 0;
 }

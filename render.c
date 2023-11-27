@@ -49,8 +49,7 @@ uint16 renderPlatform(game* Game)
 
     for (uint64 i = 0; i < Game->Platforms->Length; i++)
     {
-        Object.x = (sint32)round(((platform*)Game->Platforms->Values[i])->X);
-        Object.y = (sint32)round(((platform*)Game->Platforms->Values[i])->Y);
+        slayApplyCamera(&Object, Game->Camera, ((platform*)Game->Platforms->Values[i])->X, ((platform*)Game->Platforms->Values[i])->Y);
         Object.w = ((platform*)Game->Platforms->Values[i])->Width;
         Object.h = ((platform*)Game->Platforms->Values[i])->Height;
 
@@ -67,8 +66,7 @@ uint16 renderProjectile(game* Game)
 
     for (uint64 i = 0; i < Game->Projectiles->Length; i++)
     {
-        Object.x = (sint32)round(((projectile*)Game->Projectiles->Values[i])->X);
-        Object.y = (sint32)round(((projectile*)Game->Projectiles->Values[i])->Y);
+        slayApplyCamera(&Object, Game->Camera, ((projectile*)Game->Projectiles->Values[i])->X, ((projectile*)Game->Projectiles->Values[i])->Y);
         Object.w = ((projectile*)Game->Projectiles->Values[i])->Width;
         Object.h = ((projectile*)Game->Projectiles->Values[i])->Height;
 
@@ -83,8 +81,7 @@ uint16 renderPlayer(game* Game)
 {
     SDL_Rect Object;
 
-    Object.x = (sint32)round(Game->Player->X);
-    Object.y = (sint32)round(Game->Player->Y);
+    slayApplyCamera(&Object, Game->Camera, Game->Player->X, Game->Player->Y);
     Object.w = Game->Player->Width;
     Object.h = Game->Player->Height;
 

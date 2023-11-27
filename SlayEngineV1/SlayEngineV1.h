@@ -22,7 +22,17 @@ typedef struct
     SDL_Window *Window;
     SDL_Renderer *Renderer;
     SDL_Event Event;
-} display;
+} slayDisplay;
+
+typedef struct
+{
+    double* OriginX;
+    double* OriginY;
+    double RelativeX;
+    double RelativeY;
+    double CurrentX;
+    double CurrentY;
+} slayCamera;
 
 typedef struct
 {
@@ -34,11 +44,15 @@ typedef struct
     sint32 LowerRightY;
 } slayHitbox;
 
-display* slayNew(char* Title, int Width, int Height);
-sint64 slayEvent(display* Display);
-uint8 slayKey(display* Display, uint64 Key);
+slayDisplay* slayNew(char* Title, int Width, int Height);
+sint64 slayEvent(slayDisplay* Display);
+uint8 slayKey(slayDisplay* Display, uint64 Key);
 uint64 slayDeltaTime(uint64 *DisplayPrevTick);
 uint16 slayFPS(uint64 FPS, uint64 DisplayPrevTick);
 uint8 slayCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2);
 slayHitbox* slayNewHitbox(double* ObjectX, double* ObjectY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY);
 uint64 slayRandom(uint64 Min, uint64 Max, double Seed);
+
+slayCamera* slayNewCamera(double* OriginX, double* OriginY, double RelativeX, double RelativeY);
+uint16 slayUpdateCamera(slayCamera* Camera);
+uint16 slayApplyCamera(SDL_Rect* Object, slayCamera* Camera, double X, double Y);

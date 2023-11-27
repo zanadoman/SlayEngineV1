@@ -65,11 +65,12 @@ typedef struct
 //Unifying structure for common data
 typedef struct
 {
-    display* Display;
+    slayDisplay* Display;
     array Threads;
     uint64 DeltaTime;
     uint64 DisplayPrevTick;
 
+    slayCamera* Camera;
     array Platforms;
     player* Player;
     array Projectiles;

@@ -11,8 +11,8 @@ uint16 loadTextures(game* Game);
 
 uint16 loadGame(game* Game)
 {
-    loadAdditionalElements(Game);
     loadRequiredElements(Game);
+    loadAdditionalElements(Game);
 
     //Loading the textures
     if (loadTextures(Game) != 0)
@@ -52,7 +52,10 @@ uint16 loadAdditionalElements(game* Game)
     Game->Platforms->Values[4] = newPlatform(500, 150, 100, 30, 16, 16, 32);
 
     //Creating the player
-    Game->Player = newPlayer(100, 100, 28, 40, 0.4, 1.1, 200, SDL_SCANCODE_LEFT, SDL_SCANCODE_RIGHT, SDL_SCANCODE_UP, SDL_SCANCODE_LCTRL);
+    Game->Player = newPlayer(386, 510, 28, 40, 0.4, 1.1, 200, SDL_SCANCODE_LEFT, SDL_SCANCODE_RIGHT, SDL_SCANCODE_UP, SDL_SCANCODE_LCTRL);
+
+    //Init the camera
+    Game->Camera = slayNewCamera(&Game->Player->X, &Game->Player->Y, -386, -400);
 
     //Initializing the array for projectiles
     Game->Projectiles = arrNew(0);
