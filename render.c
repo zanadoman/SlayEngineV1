@@ -8,10 +8,12 @@ uint16 renderPlayer(game* Game);
 uint16 renderQueue(game* Game)
 {
     slayRenderStart(Game->Display, 255, 255, 255);
+
     renderBackground(Game);
     renderPlatform(Game);
     renderProjectile(Game);
     renderPlayer(Game);
+    
     slayRenderEnd(Game->Display);
 
     return 0;
