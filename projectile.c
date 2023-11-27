@@ -43,7 +43,7 @@ uint16 updateProjectile(game* Game)
         {
             collision = slayCollision(((projectile*)Game->Projectiles->Values[i])->Hitbox, ((platform*)Game->Platforms->Values[j])->Hitbox);
 
-            if (collision > 0 || ((projectile*)Game->Projectiles->Values[i])->X < 0 || ((projectile*)Game->Projectiles->Values[i])->X > Game->Display->X - ((projectile*)Game->Projectiles->Values[i])->Width)
+            if (collision > 0 || ((projectile*)Game->Projectiles->Values[i])->X < 0 || ((projectile*)Game->Projectiles->Values[i])->X > Game->Display->Width - ((projectile*)Game->Projectiles->Values[i])->Width)
             {
                 free(((projectile*)Game->Projectiles->Values[i])->Hitbox);
                 arrRemove(Game->Projectiles, i);

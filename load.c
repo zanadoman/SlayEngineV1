@@ -27,6 +27,7 @@ uint16 loadGame(game* Game)
     Game->Platforms->Values[4] = newPlatform(500, 150, 100, 30, 16, 16, 32);
 
     //Creating the player
+    //SpawnX, SpawnY, Width, Height, Speed, JumpHeight, ReloadTime, KeyLeft, KeyRight, KeyJumpt, KeyFire
     Game->Player = newPlayer(100, 100, 28, 40, 0.4, 1.1, 200, SDL_SCANCODE_LEFT, SDL_SCANCODE_RIGHT, SDL_SCANCODE_UP, SDL_SCANCODE_LCTRL);
 
     //Initializing the array for projectiles

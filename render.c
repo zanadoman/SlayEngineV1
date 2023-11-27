@@ -22,8 +22,8 @@ uint16 renderBackground(game* Game)
 
     Object.x = 0;
     Object.y = 0;
-    Object.w = Game->Display->X;
-    Object.h = Game->Display->Y;
+    Object.w = Game->Display->Width;
+    Object.h = Game->Display->Height;
 
     SDL_SetRenderDrawColor(Game->Display->Renderer, 255, 255, 255, 255);
     SDL_RenderClear(Game->Display->Renderer);

@@ -134,9 +134,9 @@ uint16 updatePlayer(game* Game)
     {
         Game->Player->X = 0;
     }
-    else if (Game->Player->X > Game->Display->X - Game->Player->Width)
+    else if (Game->Player->X > Game->Display->Width - Game->Player->Width)
     {
-        Game->Player->X = Game->Display->X - Game->Player->Width;
+        Game->Player->X = Game->Display->Width - Game->Player->Width;
     }
     if (Game->Player->Y < 0)
     {

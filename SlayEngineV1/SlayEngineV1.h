@@ -17,8 +17,8 @@
 
 typedef struct
 {
-    uint16 X;
-    uint16 Y;
+    uint16 Width;
+    uint16 Height;
     SDL_Window *Window;
     SDL_Renderer *Renderer;
     SDL_Event Event;
@@ -34,7 +34,7 @@ typedef struct
     sint32 LowerRightY;
 } slayHitbox;
 
-display* slayNew(char* Title, int X, int Y);
+display* slayNew(char* Title, int Width, int Height);
 sint64 slayEvent(display* Display);
 uint8 slayKey(display* Display, uint64 Key);
 uint64 slayDeltaTime(uint64 *DisplayPrevTick);
