@@ -68,20 +68,13 @@ uint16 renderProjectile(game* Game)
 
 uint16 renderPlayer(game* Game)
 {
-    SDL_Rect Object;
-
-    slayApplyCamera(&Object, Game->Camera, Game->Player->X, Game->Player->Y);
-    Object.w = Game->Player->Width;
-    Object.h = Game->Player->Height;
-
-
     if (Game->Player->Facing == 1)
     {
-        SDL_RenderCopy(Game->Display->Renderer, Game->Player->TextureRight, NULL, &Object);
+        slayRender(Game->Display, Game->Player->X, Game->Player->Y, Game->Player->Width, Game->Player->Height, Game->Player->TextureRight, Game->Camera);
     }
     else
     {
-        SDL_RenderCopy(Game->Display->Renderer, Game->Player->TextureLeft, NULL, &Object);
+        slayRender(Game->Display, Game->Player->X, Game->Player->Y, Game->Player->Width, Game->Player->Height, Game->Player->TextureLeft, Game->Camera);
     }
 
     return 0;

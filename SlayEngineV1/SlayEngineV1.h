@@ -15,8 +15,6 @@
 #define BOTTOMRIGHT 8
 #define ALL 15
 
-//Common_____________________________________________________________
-
 typedef struct
 {
     uint16 Width;
@@ -26,21 +24,15 @@ typedef struct
     SDL_Event Event;
 } slayDisplay;
 
-slayDisplay* slayNew(char* Title, int Width, int Height);
-SDL_Texture* slayLoadTexture(slayDisplay* Display, char* Path);
-
-//Control____________________________________________________________
-
-sint64 slayEvent(slayDisplay* Display);
-uint64 slayDeltaTime(uint64 *DisplayPrevTick);
-uint16 slayFPS(uint64 FPS, uint64 DisplayPrevTick);
-uint64 slayRandom(uint64 Min, uint64 Max, double Seed);
-
-//Inputs_____________________________________________________________
-
-uint8 slayKey(slayDisplay* Display, uint64 Key);
-
-//Hitbox_____________________________________________________________
+typedef struct
+{
+    double* OriginX;
+    double* OriginY;
+    double RelativeX;
+    double RelativeY;
+    double AbsoluteX;
+    double AbsoluteY;
+} slayCamera;
 
 typedef struct
 {
@@ -52,20 +44,32 @@ typedef struct
     sint32 LowerRightY;
 } slayHitbox;
 
+//Common_____________________________________________________________
+
+slayDisplay* slayNew(char* Title, int Width, int Height);
+
+//Control____________________________________________________________
+
+sint64 slayEvent(slayDisplay* Display);
+uint64 slayDeltaTime(uint64 *DisplayPrevTick);
+uint16 slayFPS(uint64 FPS, uint64 DisplayPrevTick);
+uint64 slayRandom(uint64 Min, uint64 Max, double Seed);
+
+//Render_____________________________________________________________
+
+SDL_Texture* slayLoadTexture(slayDisplay* Display, char* Path);
+uint16 slayRender(slayDisplay* Display, double X, double Y, uint16 Width, uint16 Height, SDL_Texture* Texture, slayCamera* Camera);
+
+//Inputs_____________________________________________________________
+
+uint8 slayKey(slayDisplay* Display, uint64 Key);
+
+//Hitbox_____________________________________________________________
+
 slayHitbox* slayNewHitbox(double* ObjectX, double* ObjectY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY);
 uint8 slayCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2);
 
 //Camera_____________________________________________________________
-
-typedef struct
-{
-    double* OriginX;
-    double* OriginY;
-    double RelativeX;
-    double RelativeY;
-    double AbsoluteX;
-    double AbsoluteY;
-} slayCamera;
 
 slayCamera* slayNewCamera(double* OriginX, double* OriginY, double RelativeX, double RelativeY);
 uint16 slayUpdateCamera(slayCamera* Camera);
