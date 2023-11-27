@@ -78,7 +78,7 @@ uint16 renderDeltaTime(game* Game)
     string text;
 
     text = strNew();
-    DOUBLEtoSTR(Game->DeltaTime, text);
+    UINTtoSTR(Game->DeltaTime, text);
     strConcat(text, 2, "DeltaTime: ", text->String);
     slayRenderText(Game->Display, Game->FontCrazyPixel, text->String, 10, -10, 0.75, 255, 255, 255, 255);
     strPurge(text);
