@@ -103,11 +103,11 @@ uint16 slayRenderTextureCamera(slayDisplay* Display, double X, double Y, uint16 
     return 0;
 }
 
-SDL_Texture* slayTextTexture(slayDisplay* Display, TTF_Font* Font, char* Characters, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA)
+uint16 slayRenderText(slayDisplay* Display, TTF_Font* Font, char* Characters, double X, double Y,double Size, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA)
 {
-    SDL_Texture* result;
-
+    SDL_Rect Object;
     SDL_Surface* surface;
+    SDL_Texture* texture;
     SDL_Color color;
 
     color.r = ColorR;
@@ -116,8 +116,41 @@ SDL_Texture* slayTextTexture(slayDisplay* Display, TTF_Font* Font, char* Charact
     color.a = ColorA;
 
     surface = TTF_RenderText_Blended(Font, Characters, color);
-    result = SDL_CreateTextureFromSurface(Display->Renderer, surface);
+    texture = SDL_CreateTextureFromSurface(Display->Renderer, surface);
+
+    Object.x = X;
+    Object.y = Y;
+    Object.w = surface->w * Size;
+    Object.h = surface->h * Size;
+    SDL_RenderCopy(Display->Renderer, texture, NULL, &Object);
+
     SDL_FreeSurface(surface);
 
-    return result;
+    return 0;
+}
+
+uint16 slayRenderTextCamera(slayDisplay* Display, TTF_Font* Font, char* Characters, double X, double Y,double Size, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA, slayCamera* Camera)
+{
+    SDL_Rect Object;
+    SDL_Surface* surface;
+    SDL_Texture* texture;
+    SDL_Color color;
+
+    color.r = ColorR;
+    color.g = ColorG;
+    color.b = ColorB;
+    color.a = ColorA;
+
+    surface = TTF_RenderText_Blended(Font, Characters, color);
+    texture = SDL_CreateTextureFromSurface(Display->Renderer, surface);
+
+    slayApplyCamera(&Object, Camera, X, Y);
+    Object.w = surface->w * Size;
+    Object.h = surface->h * Size;
+    SDL_RenderCopy(Display->Renderer, texture, NULL, &Object);
+
+    SDL_FreeSurface(surface);
+    SDL_DestroyTexture(texture);
+
+    return 0;
 }

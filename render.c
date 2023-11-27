@@ -1,20 +1,22 @@
 #include "game.h"
 
 uint16 renderBackground(game* Game);
+uint16 renderHint(game* Game);
 uint16 renderPlatform(game* Game);
 uint16 renderProjectile(game* Game);
 uint16 renderPlayer(game* Game);
-uint16 renderDeltaTime(game* Game);
+uint16 renderTitle(game* Game);
 
 uint16 renderQueue(game* Game)
 {
     slayRenderStart(Game->Display, 255, 255, 255);
 
     renderBackground(Game);
+    renderHint(Game);
     renderPlatform(Game);
     renderProjectile(Game);
     renderPlayer(Game);
-    renderDeltaTime(Game);
+    renderTitle(Game);
     
     slayRenderEnd(Game->Display);
 
@@ -24,6 +26,15 @@ uint16 renderQueue(game* Game)
 uint16 renderBackground(game* Game)
 {
     slayRenderTexture(Game->Display, 0, 0, Game->Display->Width, Game->Display->Height, Game->TextureBackground);
+
+    return 0;
+}
+
+uint16 renderHint(game* Game)
+{
+    slayRenderTextCamera(Game->Display, Game->FontCrazyPixel, "Movement: Left/Right arrow", 1850, 2200, 0.75, 255, 255, 255, 255, Game->Camera);
+    slayRenderTextCamera(Game->Display, Game->FontCrazyPixel, "Jump: Up arrow", 1850, 2230, 0.75, 255, 255, 255, 255, Game->Camera);
+    slayRenderTextCamera(Game->Display, Game->FontCrazyPixel, "Shoot: LCTRL", 1850, 2260, 0.75, 255, 255, 255, 255, Game->Camera);
 
     return 0;
 }
@@ -62,7 +73,9 @@ uint16 renderPlayer(game* Game)
     return 0;
 }
 
-uint16 renderDeltaTime(game* Game)
+uint16 renderTitle(game* Game)
 {
-    slayRenderTexture(Game->Display, 10, 10, 70, 50, slayTextTexture(Game->Display, Game->FontCrazyPixel, "teszt", 255, 255, 255, 255));
+    slayRenderText(Game->Display, Game->FontCrazyPixel, "SlayEngineV1 Demo", 10, -10, 0.75, 255, 255, 255, 255);
+
+    return 0;
 }
