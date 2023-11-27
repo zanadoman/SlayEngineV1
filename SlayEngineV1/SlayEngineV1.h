@@ -15,6 +15,8 @@
 #define BOTTOMRIGHT 8
 #define ALL 15
 
+//Common_____________________________________________________________
+
 typedef struct
 {
     uint16 Width;
@@ -24,15 +26,20 @@ typedef struct
     SDL_Event Event;
 } slayDisplay;
 
-typedef struct
-{
-    double* OriginX;
-    double* OriginY;
-    double RelativeX;
-    double RelativeY;
-    double AbsoluteX;
-    double AbsoluteY;
-} slayCamera;
+slayDisplay* slayNew(char* Title, int Width, int Height);
+
+//Control____________________________________________________________
+
+sint64 slayEvent(slayDisplay* Display);
+uint64 slayDeltaTime(uint64 *DisplayPrevTick);
+uint16 slayFPS(uint64 FPS, uint64 DisplayPrevTick);
+uint64 slayRandom(uint64 Min, uint64 Max, double Seed);
+
+//Inputs_____________________________________________________________
+
+uint8 slayKey(slayDisplay* Display, uint64 Key);
+
+//Hitbox_____________________________________________________________
 
 typedef struct
 {
@@ -44,24 +51,21 @@ typedef struct
     sint32 LowerRightY;
 } slayHitbox;
 
-
-//Common
-slayDisplay* slayNew(char* Title, int Width, int Height);
-
-//Control
-sint64 slayEvent(slayDisplay* Display);
-uint64 slayDeltaTime(uint64 *DisplayPrevTick);
-uint16 slayFPS(uint64 FPS, uint64 DisplayPrevTick);
-uint64 slayRandom(uint64 Min, uint64 Max, double Seed);
-
-//Inputs
-uint8 slayKey(slayDisplay* Display, uint64 Key);
-
-//Hitbox
 slayHitbox* slayNewHitbox(double* ObjectX, double* ObjectY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY);
 uint8 slayCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2);
 
-//Camera
+//Camera_____________________________________________________________
+
+typedef struct
+{
+    double* OriginX;
+    double* OriginY;
+    double RelativeX;
+    double RelativeY;
+    double AbsoluteX;
+    double AbsoluteY;
+} slayCamera;
+
 slayCamera* slayNewCamera(double* OriginX, double* OriginY, double RelativeX, double RelativeY);
 uint16 slayUpdateCamera(slayCamera* Camera);
 uint16 slayApplyCamera(SDL_Rect* Object, slayCamera* Camera, double X, double Y);
