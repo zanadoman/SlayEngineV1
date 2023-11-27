@@ -4,6 +4,7 @@ uint16 renderBackground(game* Game);
 uint16 renderPlatform(game* Game);
 uint16 renderProjectile(game* Game);
 uint16 renderPlayer(game* Game);
+uint16 renderDeltaTime(game* Game);
 
 uint16 renderQueue(game* Game)
 {
@@ -13,6 +14,7 @@ uint16 renderQueue(game* Game)
     renderPlatform(Game);
     renderProjectile(Game);
     renderPlayer(Game);
+    renderDeltaTime(Game);
     
     slayRenderEnd(Game->Display);
 
@@ -58,4 +60,9 @@ uint16 renderPlayer(game* Game)
     }
 
     return 0;
+}
+
+uint16 renderDeltaTime(game* Game)
+{
+    slayRenderTexture(Game->Display, 10, 10, 70, 50, slayTextTexture(Game->Display, Game->FontCrazyPixel, "teszt", 255, 255, 255, 255));
 }

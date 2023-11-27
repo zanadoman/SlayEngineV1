@@ -91,7 +91,7 @@ typedef struct
     uint64 DeltaTime;
     uint64 DisplayPrevTick;
 
-    TTF_Font* FontCrazyPixel12;
+    TTF_Font* FontCrazyPixel;
     slayCamera* Camera;
     array Platforms;
     player* Player;

@@ -65,7 +65,7 @@ uint16 loadTextures(game* Game)
 
 uint16 loadFonts(game* Game)
 {
-    Game->FontCrazyPixel12 = slayLoadFont("assets/crazy-pixel.ttf", 12);
+    Game->FontCrazyPixel = slayLoadFont("assets/crazy-pixel.ttf", 48);
 
     return 0;
 }
