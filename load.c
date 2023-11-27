@@ -45,11 +45,11 @@ uint16 loadAdditionalElements(game* Game)
 {
     //Creating platforms
     Game->Platforms = arrNew(5);
-    Game->Platforms->Values[0] = newPlatform(1800, 2550, 1200, 500, 32, 32, 64);
-    Game->Platforms->Values[1] = newPlatform(2300, 2450, 200, 30, 32, 32, 64);
-    Game->Platforms->Values[2] = newPlatform(2200, 2350, 100, 30, 32, 32, 64);
-    Game->Platforms->Values[3] = newPlatform(2350, 2250, 100, 30, 32, 32, 64);
-    Game->Platforms->Values[4] = newPlatform(2500, 2150, 100, 30, 32, 32, 64);
+    Game->Platforms->Values[0] = newPlatform(1800, 2550, 1200, 500, 24, 24, 48);
+    Game->Platforms->Values[1] = newPlatform(2300, 2450, 200, 30, 24, 24, 48);
+    Game->Platforms->Values[2] = newPlatform(2200, 2350, 100, 30, 24, 24, 48);
+    Game->Platforms->Values[3] = newPlatform(2350, 2250, 100, 30, 24, 24, 48);
+    Game->Platforms->Values[4] = newPlatform(2500, 2150, 100, 30, 24, 24, 48);
 
     //Creating the player
     Game->Player = newPlayer(2386, 2510, 1800, 3000, 0, 0, 1, 28, 40, 0.003, 0.005, 0, 0.003, 0.4, 1.1, 200, SDL_SCANCODE_LEFT, SDL_SCANCODE_RIGHT, SDL_SCANCODE_UP, SDL_SCANCODE_LCTRL, 30, 14, 10, 4, 0.75, 192, 192, 192);
