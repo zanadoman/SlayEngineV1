@@ -1,5 +1,22 @@
 #include "SlayEngineV1.h"
 
+//Creates a new hitbox
+slayHitbox* slayNewHitbox(double* ObjectX, double* ObjectY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY)
+{
+    slayHitbox* result;
+
+    result = malloc(sizeof(slayHitbox));
+
+    result->ObjectX = ObjectX;
+    result->ObjectY = ObjectY;
+    result->UpperLeftX = UpperLeftX;
+    result->UpperLeftY = UpperLeftY;
+    result->LowerRightX = LowerRightX;
+    result->LowerRightY = LowerRightY;
+
+    return result;
+}
+
 //Check for collision between two rectangle hitboxes
 uint8 slayCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2)
 {
@@ -42,22 +59,6 @@ uint8 slayCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2)
     {
         result = result | 8;
     }
-
-    return result;
-}
-//Creates a new hitbox
-slayHitbox* slayNewHitbox(double* ObjectX, double* ObjectY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY)
-{
-    slayHitbox* result;
-
-    result = malloc(sizeof(slayHitbox));
-
-    result->ObjectX = ObjectX;
-    result->ObjectY = ObjectY;
-    result->UpperLeftX = UpperLeftX;
-    result->UpperLeftY = UpperLeftY;
-    result->LowerRightX = LowerRightX;
-    result->LowerRightY = LowerRightY;
 
     return result;
 }

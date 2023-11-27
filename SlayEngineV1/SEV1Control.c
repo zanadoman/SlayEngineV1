@@ -1,5 +1,21 @@
 #include "SlayEngineV1.h"
 
+//Maintains the main game loop
+sint64 slayEvent(slayDisplay* Display)
+{
+    while (SDL_PollEvent(&Display->Event) != 0)
+    {
+        switch (Display->Event.type)
+        {
+            case SDL_QUIT:
+                SDL_Quit();
+                return 0;
+        }
+    }
+
+    return 1;
+}
+
 //Calculates the delta time for the current frame
 uint64 slayDeltaTime(uint64* DisplayPrevTick)
 {
@@ -14,6 +30,7 @@ uint64 slayDeltaTime(uint64* DisplayPrevTick)
 
     return DeltaTime;
 }
+
 //Caps the fps to the specified value also takes DeltaTime into account
 uint16 slayFPS(uint64 FPS, uint64 DisplayPrevTick)
 {
@@ -27,6 +44,7 @@ uint16 slayFPS(uint64 FPS, uint64 DisplayPrevTick)
 
     return 0;
 }
+
 //Generates random numbers from ticks / seed
 uint64 slayRandom(uint64 Min, uint64 Max, double Seed)
 {

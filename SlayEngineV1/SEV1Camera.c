@@ -10,24 +10,26 @@ slayCamera* slayNewCamera(double* OriginX, double* OriginY, double RelativeX, do
     result->OriginY = OriginY;
     result->RelativeX = RelativeX;
     result->RelativeY = RelativeY;
-    result->CurrentX = *OriginX + RelativeX;
-    result->CurrentY = *OriginY + RelativeY;
+    result->AbsoluteX = *OriginX + RelativeX;
+    result->AbsoluteY = *OriginY + RelativeY;
 
     return result;
 }
+
 //Updates the camera position
 uint16 slayUpdateCamera(slayCamera* Camera)
 {
-    Camera->CurrentX = *Camera->OriginX + Camera->RelativeX;
-    Camera->CurrentY = *Camera->OriginY + Camera->RelativeY;
+    Camera->AbsoluteX = *Camera->OriginX + Camera->RelativeX;
+    Camera->AbsoluteY = *Camera->OriginY + Camera->RelativeY;
 
     return 0;
 }
+
 //Calculates the position of the elements for the renderer relative to the camera
 uint16 slayApplyCamera(SDL_Rect* Object, slayCamera* Camera, double X, double Y)
 {
-    Object->x = (sint32)round(X - Camera->CurrentX);
-    Object->y = (sint32)round(Y - Camera->CurrentY);
+    Object->x = (sint32)round(X - Camera->AbsoluteX);
+    Object->y = (sint32)round(Y - Camera->AbsoluteY);
     Object->w = Object->w;
     Object->h = Object->h;
 
