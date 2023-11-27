@@ -15,6 +15,39 @@ slayDisplay* slayNew(char* Title, int Width, int Height)
     return result;
 }
 
+//-------------------------------------------------------------------------------
+
+//Calculates the delta time for the current frame
+uint64 slayDeltaTime(uint64* DisplayPrevTick)
+{
+    uint64 DeltaTime;
+    
+    DeltaTime = SDL_GetTicks() - *DisplayPrevTick;
+    *DisplayPrevTick = SDL_GetTicks();
+
+    return DeltaTime;
+}
+//Caps the fps to the specified value also takes DeltaTime into account
+uint16 slayFPS(uint64 FPS, uint64 DisplayPrevTick)
+{
+    sint64 delay;
+
+    delay = (sint64)round((DisplayPrevTick + 1000.0 / FPS) - SDL_GetTicks());
+    if (delay > 0)
+    {
+        SDL_Delay(delay);
+    }
+
+    return 0;
+}
+//Generates random numbers from ticks / seed
+uint64 slayRandom(uint64 Min, uint64 Max, double Seed)
+{
+    return (uint64)round(SDL_GetTicks64() / Seed) % (Max - Min) + Min;
+}
+
+//-------------------------------------------------------------------------------
+
 //Maintains the main game loop
 sint64 slayEvent(slayDisplay* Display)
 {
@@ -30,7 +63,6 @@ sint64 slayEvent(slayDisplay* Display)
 
     return -1;
 }
-
 //Returns the state of the specified key
 uint8 slayKey(slayDisplay* Display, uint64 Key)
 {
@@ -40,30 +72,7 @@ uint8 slayKey(slayDisplay* Display, uint64 Key)
     return state[Key];
 }
 
-//Calculates the delta time for the current frame
-uint64 slayDeltaTime(uint64* DisplayPrevTick)
-{
-    uint64 DeltaTime;
-    
-    DeltaTime = SDL_GetTicks() - *DisplayPrevTick;
-    *DisplayPrevTick = SDL_GetTicks();
-
-    return DeltaTime;
-}
-
-//Caps the fps to the specified value also takes DeltaTime into account
-uint16 slayFPS(uint64 FPS, uint64 DisplayPrevTick)
-{
-    sint64 delay;
-
-    delay = (sint64)round((DisplayPrevTick + 1000.0 / FPS) - SDL_GetTicks());
-    if (delay > 0)
-    {
-        SDL_Delay(delay);
-    }
-
-    return 0;
-}
+//-------------------------------------------------------------------------------
 
 //Check for collision between two rectangle hitboxes
 uint8 slayCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2)
@@ -110,7 +119,6 @@ uint8 slayCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2)
 
     return result;
 }
-
 //Creates a new hitbox
 slayHitbox* slayNewHitbox(double* ObjectX, double* ObjectY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY)
 {
@@ -128,12 +136,9 @@ slayHitbox* slayNewHitbox(double* ObjectX, double* ObjectY, sint32 UpperLeftX, s
     return result;
 }
 
-//Generates random numbers from ticks / seed
-uint64 slayRandom(uint64 Min, uint64 Max, double Seed)
-{
-    return (uint64)round(SDL_GetTicks64() / Seed) % (Max - Min) + Min;
-}
+//-------------------------------------------------------------------------------
 
+//Creates a new camera
 slayCamera* slayNewCamera(double* OriginX, double* OriginY, double RelativeX, double RelativeY)
 {
     slayCamera* result;
@@ -148,6 +153,7 @@ slayCamera* slayNewCamera(double* OriginX, double* OriginY, double RelativeX, do
 
     return result;
 }
+//Updates the camera position
 uint16 slayUpdateCamera(slayCamera* Camera)
 {
     Camera->CurrentX = *Camera->OriginX + Camera->RelativeX;
@@ -155,6 +161,7 @@ uint16 slayUpdateCamera(slayCamera* Camera)
 
     return 0;
 }
+//Calculates the position of the elements for the renderer relative to the camera
 uint16 slayApplyCamera(SDL_Rect* Object, slayCamera* Camera, double X, double Y)
 {
     Object->x = (sint32)round(X - Camera->CurrentX);
