@@ -20,8 +20,8 @@ slayCamera* slayNewCamera(double* OriginX, double* OriginY, double RelativeX, do
 
 uint16 slayUpdateCamera(slayCamera* Camera)
 {
-    Camera->AbsoluteX = *Camera->OriginX + Camera->RelativeX * 1 / Camera->Zoom;
-    Camera->AbsoluteY = *Camera->OriginY + Camera->RelativeY * 1 / Camera->Zoom;
+    Camera->AbsoluteX = *Camera->OriginX + Camera->RelativeX / Camera->Zoom;
+    Camera->AbsoluteY = *Camera->OriginY + Camera->RelativeY / Camera->Zoom;
 
     return 0;
 }
