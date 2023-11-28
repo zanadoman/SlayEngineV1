@@ -62,8 +62,12 @@ uint16 slayRenderColor(slayDisplay* Display, double X, double Y, uint16 Width, u
     Object.y = Y;
     Object.w = Width;
     Object.h = Height;
-    SDL_SetRenderDrawColor(Display->Renderer, ColorR, ColorG, ColorB, ColorA);
-    SDL_RenderFillRect(Display->Renderer, &Object);
+    
+    if ((-Object.w <= Object.x && Object.x <= Display->Width) && (-Object.h <= Object.y && Object.y <= Display->Height))
+    {
+        SDL_SetRenderDrawColor(Display->Renderer, ColorR, ColorG, ColorB, ColorA);
+        SDL_RenderFillRect(Display->Renderer, &Object);
+    }
 
     return 0;
 }
@@ -75,8 +79,12 @@ uint16 slayRenderColorCamera(slayDisplay* Display, double X, double Y, uint16 Wi
     slayApplyCamera(&Object, Camera, X, Y);
     Object.w = Width;
     Object.h = Height;
-    SDL_SetRenderDrawColor(Display->Renderer, ColorR, ColorG, ColorB, ColorA);
-    SDL_RenderFillRect(Display->Renderer, &Object);
+
+    if ((-Object.w <= Object.x && Object.x <= Display->Width) && (-Object.h <= Object.y && Object.y <= Display->Height))
+    {
+        SDL_SetRenderDrawColor(Display->Renderer, ColorR, ColorG, ColorB, ColorA);
+        SDL_RenderFillRect(Display->Renderer, &Object);
+    }
 
     return 0;
 }
@@ -89,7 +97,11 @@ uint16 slayRenderTexture(slayDisplay* Display, double X, double Y, uint16 Width,
     Object.y = Y;
     Object.w = Width;
     Object.h = Height;
-    SDL_RenderCopy(Display->Renderer, Texture, NULL, &Object);
+    
+    if ((-Object.w <= Object.x && Object.x <= Display->Width) && (-Object.h <= Object.y && Object.y <= Display->Height))
+    {
+        SDL_RenderCopy(Display->Renderer, Texture, NULL, &Object);
+    }
 
     return 0;
 }
@@ -101,7 +113,11 @@ uint16 slayRenderTextureCamera(slayDisplay* Display, double X, double Y, uint16 
     slayApplyCamera(&Object, Camera, X, Y);
     Object.w = Width;
     Object.h = Height;
-    SDL_RenderCopy(Display->Renderer, Texture, NULL, &Object);
+
+    if ((-Object.w <= Object.x && Object.x <= Display->Width) && (-Object.h <= Object.y && Object.y <= Display->Height))
+    {
+        SDL_RenderCopy(Display->Renderer, Texture, NULL, &Object);
+    }
 
     return 0;
 }
@@ -125,7 +141,11 @@ uint16 slayRenderText(slayDisplay* Display, TTF_Font* Font, char* Characters, do
     Object.y = Y;
     Object.w = surface->w * Size;
     Object.h = surface->h * Size;
-    SDL_RenderCopy(Display->Renderer, texture, NULL, &Object);
+    
+    if ((-Object.w <= Object.x && Object.x <= Display->Width) && (-Object.h <= Object.y && Object.y <= Display->Height))
+    {
+        SDL_RenderCopy(Display->Renderer, texture, NULL, &Object);
+    }
 
     SDL_FreeSurface(surface);
     SDL_DestroyTexture(texture);
@@ -151,7 +171,11 @@ uint16 slayRenderTextCamera(slayDisplay* Display, TTF_Font* Font, char* Characte
     slayApplyCamera(&Object, Camera, X, Y);
     Object.w = surface->w * Size;
     Object.h = surface->h * Size;
-    SDL_RenderCopy(Display->Renderer, texture, NULL, &Object);
+    
+    if ((-Object.w <= Object.x && Object.x <= Display->Width) && (-Object.h <= Object.y && Object.y <= Display->Height))
+    {
+        SDL_RenderCopy(Display->Renderer, texture, NULL, &Object);
+    }
 
     SDL_FreeSurface(surface);
     SDL_DestroyTexture(texture);
