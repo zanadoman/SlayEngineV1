@@ -5,6 +5,7 @@ slayCamera* slayNewCamera(double* OriginX, double* OriginY, double RelativeX, do
     slayCamera* result;
 
     result = malloc(sizeof(slayCamera));
+    
     result->OriginX = OriginX;
     result->OriginY = OriginY;
     result->RelativeX = RelativeX;
