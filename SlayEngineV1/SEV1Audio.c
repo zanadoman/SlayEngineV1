@@ -10,6 +10,7 @@ Mix_Chunk* slayLoadSound(char* Path)
         printf("ERROR Unable to load sound: %s\n", Path);
         SDL_Quit();
         TTF_Quit();
+        SDL_CloseAudio();
         exit(1);
     }
 
