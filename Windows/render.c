@@ -9,7 +9,7 @@ uint16 renderFPSCounter(game* Game);
 
 uint16 renderQueue(game* Game)
 {
-    slayRenderStart(Game->Display, 255, 255, 255);
+    slayRenderStart(Game->Display);
 
     renderBackground(Game);
     renderHint(Game);
