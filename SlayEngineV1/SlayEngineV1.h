@@ -75,7 +75,9 @@ uint16 slayRenderTextCamera(slayDisplay* Display, TTF_Font* Font, char* Characte
 //Audio______________________________________________________________
 
 Mix_Chunk* slayLoadSound(char* Path);
-uint16 slayPlaySound(Mix_Chunk* Sound, uint8 Volume, sint16 Loops);
+uint16 slayPlaySound(Mix_Chunk* Sound, sint16 Channel, uint8 Volume, uint8 Left, uint8 Right, sint16 Loops);
+uint16 slayPlaySoundTicks(Mix_Chunk* Sound, sint16 Channel, uint8 Volume, uint8 Left, uint8 Right, sint16 Loops, uint64 Ticks);
+uint16 slayStopSound(sint16 Channel);
 
 //Inputs_____________________________________________________________
 

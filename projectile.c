@@ -63,7 +63,14 @@ uint16 playerProjectile(game* Game)
     {
         Game->Player->ReloadTick = SDL_GetTicks64();
         arrInsert(Game->Projectiles, Game->Projectiles->Length, newProjectile(Game->Player->X + Game->Player->ProjectileRelativeX * Game->Player->Facing, Game->Player->Y + Game->Player->ProjectileRelativeY, Game->Player->MinX, Game->Player->MaxX, Game->Player->ProjectileWidth, Game->Player->ProjectileHeight, Game->Player->ProjectileSpeed, Game->Player->Facing, Game->Player->ProjectileColorR, Game->Player->ProjectileColorG, Game->Player->ProjectileColorB));
-        slayPlaySound(Game->Player->SoundFire, Game->Volume, 0);
+        if (Game->Player->Facing == 1)
+        {
+            slayPlaySound(Game->Player->SoundFire, 1, Game->Volume, 32, 255, 0);
+        }
+        else
+        {
+            slayPlaySound(Game->Player->SoundFire, 1, Game->Volume, 255, 32, 0);
+        }
     }
 
     return 0;
