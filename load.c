@@ -4,6 +4,7 @@ uint16 loadRequiredElements(game* Game);
 uint16 loadAdditionalElements(game* Game);
 uint16 loadTextures(game* Game);
 uint16 loadFonts(game* Game);
+uint16 loadSounds(game* Game);
 
 uint16 loadGame(game* Game)
 {
@@ -12,6 +13,7 @@ uint16 loadGame(game* Game)
 
     loadTextures(Game);
     loadFonts(Game);
+    loadSounds(Game);
 
     return 0;
 }
@@ -27,6 +29,8 @@ uint16 loadRequiredElements(game* Game)
     {
         Game->Threads->Values[i] = malloc(sizeof(pthread_t));
     }
+
+    Game->Volume = 10;
 
     return 0;
 }
@@ -66,6 +70,13 @@ uint16 loadTextures(game* Game)
 uint16 loadFonts(game* Game)
 {
     Game->FontCrazyPixel = slayLoadFont("assets/crazy-pixel.ttf", 48);
+
+    return 0;
+}
+
+uint16 loadSounds(game* Game)
+{
+    Game->Player->SoundFire = slayLoadSound("assets/player_fire.wav");
 
     return 0;
 }

@@ -1,9 +1,11 @@
 #include <SDL2/SDL.h> //UNIX PORT
 #include <SDL2/SDL_image.h> //UNIX PORT
 #include <SDL2/SDL_ttf.h> //UNIX PORT
+#include <SDL2/SDL_mixer.h> //UNIX PORT
 //#include "inc/SDL.h" //WINDOWS PORT
 //#include "inc/SDL_image.h" //WINDOWS PORT
 //#include "inc/SDL_ttf.h" //WINDOWS PORT
+//#include "inc/SDL_mixer.h" //WINDOWS PORT
 #include <pthread.h>
 #include "NeoTypes/NeoTypes.h"
 
@@ -69,6 +71,11 @@ uint16 slayRenderTexture(slayDisplay* Display, double X, double Y, uint16 Width,
 uint16 slayRenderTextureCamera(slayDisplay* Display, double X, double Y, uint16 Width, uint16 Height, SDL_Texture* Texture, slayCamera* Camera);
 uint16 slayRenderText(slayDisplay* Display, TTF_Font* Font, char* Characters, double X, double Y,double Size, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA);
 uint16 slayRenderTextCamera(slayDisplay* Display, TTF_Font* Font, char* Characters, double X, double Y,double Size, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA, slayCamera* Camera);
+
+//Audio______________________________________________________________
+
+Mix_Chunk* slayLoadSound(char* Path);
+uint16 slayPlaySound(Mix_Chunk* Sound, uint8 Volume, sint16 Loops);
 
 //Inputs_____________________________________________________________
 

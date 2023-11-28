@@ -36,6 +36,8 @@ typedef struct
     SDL_Texture* TextureLeft;
     SDL_Texture* TextureRight;
 
+    Mix_Chunk* SoundFire;
+
     slayHitbox* Hitbox;
 
     double ProjectileRelativeX;
@@ -90,6 +92,7 @@ typedef struct
     array Threads;
     uint64 DeltaTime;
     uint64 DisplayPrevTick;
+    uint8 Volume;
 
     TTF_Font* FontCrazyPixel;
     slayCamera* Camera;
