@@ -1,11 +1,11 @@
-//#include <SDL2/SDL.h> //UNIX PORT
-//#include <SDL2/SDL_image.h> //UNIX PORT
-//#include <SDL2/SDL_ttf.h> //UNIX PORT
-//#include <SDL2/SDL_mixer.h> //UNIX PORT
-#include "inc/SDL.h" //WINDOWS PORT
-#include "inc/SDL_image.h" //WINDOWS PORT
-#include "inc/SDL_ttf.h" //WINDOWS PORT
-#include "inc/SDL_mixer.h" //WINDOWS PORT
+#include <SDL2/SDL.h> //UNIX PORT
+#include <SDL2/SDL_image.h> //UNIX PORT
+#include <SDL2/SDL_ttf.h> //UNIX PORT
+#include <SDL2/SDL_mixer.h> //UNIX PORT
+//#include "inc/SDL.h" //WINDOWS PORT
+//#include "inc/SDL_image.h" //WINDOWS PORT
+//#include "inc/SDL_ttf.h" //WINDOWS PORT
+//#include "inc/SDL_mixer.h" //WINDOWS PORT
 #include <pthread.h>
 #include "NeoTypes/NeoTypes.h"
 
@@ -36,6 +36,8 @@ typedef struct
     double RelativeY;
     double AbsoluteX;
     double AbsoluteY;
+
+    double Zoom;
 } slayCamera;
 
 typedef struct
@@ -90,6 +92,6 @@ uint8 slayCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2);
 
 //Camera_____________________________________________________________
 
-slayCamera* slayNewCamera(double* OriginX, double* OriginY, double RelativeX, double RelativeY);
+slayCamera* slayNewCamera(double* OriginX, double* OriginY, double RelativeX, double RelativeY, double Zoom);
 uint16 slayUpdateCamera(slayCamera* Camera);
-uint16 slayApplyCamera(SDL_Rect* Object, slayCamera* Camera, double X, double Y);
+uint16 slayApplyCamera(SDL_Rect* Object, slayCamera* Camera, double X, double Y, uint16 Width, uint16 Height);

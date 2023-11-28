@@ -20,20 +20,20 @@ uint8 slayCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2)
 {
     uint8 result;
 
-    uint64 Hitbox1UpperLeftX;
-    uint64 Hitbox1UpperLeftY;
-    uint64 Hitbox1LowerRightX;
-    uint64 Hitbox1LowerRightY;
+    double Hitbox1UpperLeftX;
+    double Hitbox1UpperLeftY;
+    double Hitbox1LowerRightX;
+    double Hitbox1LowerRightY;
 
-    uint64 Hitbox2UpperLeftX;
-    uint64 Hitbox2UpperLeftY;
-    uint64 Hitbox2LowerRightX;
-    uint64 Hitbox2LowerRightY;
+    double Hitbox2UpperLeftX;
+    double Hitbox2UpperLeftY;
+    double Hitbox2LowerRightX;
+    double Hitbox2LowerRightY;
 
-    Hitbox1UpperLeftX = Hitbox1->UpperLeftX + (sint32)round(*Hitbox1->ObjectX);
-    Hitbox1UpperLeftY = Hitbox1->UpperLeftY + (sint32)round(*Hitbox1->ObjectY);
-    Hitbox1LowerRightX = Hitbox1->LowerRightX + (sint32)round(*Hitbox1->ObjectX);
-    Hitbox1LowerRightY = Hitbox1->LowerRightY + (sint32)round(*Hitbox1->ObjectY);
+    Hitbox1UpperLeftX = Hitbox1->UpperLeftX + *Hitbox1->ObjectX;
+    Hitbox1UpperLeftY = Hitbox1->UpperLeftY + *Hitbox1->ObjectY;
+    Hitbox1LowerRightX = Hitbox1->LowerRightX + *Hitbox1->ObjectX;
+    Hitbox1LowerRightY = Hitbox1->LowerRightY + *Hitbox1->ObjectY;
 
     Hitbox2UpperLeftX = Hitbox2->UpperLeftX + (sint32)round(*Hitbox2->ObjectX);
     Hitbox2UpperLeftY = Hitbox2->UpperLeftY + (sint32)round(*Hitbox2->ObjectY);

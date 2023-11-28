@@ -32,9 +32,9 @@ uint16 renderBackground(game* Game)
 
 uint16 renderHint(game* Game)
 {
-    slayRenderTextCamera(Game->Display, Game->FontCrazyPixel, "Movement: Left/Right arrow", 1850, 2200, 0.75, 255, 255, 255, 255, Game->Camera);
-    slayRenderTextCamera(Game->Display, Game->FontCrazyPixel, "Jump: Up arrow", 1850, 2230, 0.75, 255, 255, 255, 255, Game->Camera);
-    slayRenderTextCamera(Game->Display, Game->FontCrazyPixel, "Shoot: LCTRL", 1850, 2260, 0.75, 255, 255, 255, 255, Game->Camera);
+    slayRenderTextCamera(Game->Display, Game->FontCrazyPixel, "Movement: Left/Right arrow", -150, 200, 0.75, 255, 255, 255, 255, Game->Camera);
+    slayRenderTextCamera(Game->Display, Game->FontCrazyPixel, "Jump: Up arrow", -150, 230, 0.75, 255, 255, 255, 255, Game->Camera);
+    slayRenderTextCamera(Game->Display, Game->FontCrazyPixel, "Shoot: LCTRL", -150, 260, 0.75, 255, 255, 255, 255, Game->Camera);
 
     return 0;
 }

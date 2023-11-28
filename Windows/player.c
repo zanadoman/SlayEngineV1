@@ -45,6 +45,7 @@ uint16 updatePlayer(game* Game)
 {
     uint8 collision;
     logic falling;
+    double zoom;
 
     //Horizontal movement
     if (slayKey(Game->Display, Game->Player->KeyLeft))
