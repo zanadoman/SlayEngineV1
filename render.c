@@ -5,7 +5,7 @@ uint16 renderHint(game* Game);
 uint16 renderPlatform(game* Game);
 uint16 renderProjectile(game* Game);
 uint16 renderPlayer(game* Game);
-uint16 renderDeltaTime(game* Game);
+uint16 renderFPSCounter(game* Game);
 
 uint16 renderQueue(game* Game)
 {
@@ -16,7 +16,7 @@ uint16 renderQueue(game* Game)
     renderPlatform(Game);
     renderProjectile(Game);
     renderPlayer(Game);
-    renderDeltaTime(Game);
+    renderFPSCounter(Game);
     
     slayRenderEnd(Game->Display);
 
@@ -73,13 +73,13 @@ uint16 renderPlayer(game* Game)
     return 0;
 }
 
-uint16 renderDeltaTime(game* Game)
+uint16 renderFPSCounter(game* Game)
 {
     string text;
 
     text = strNew();
-    UINTtoSTR(Game->DeltaTime, text);
-    strConcat(text, 2, "DeltaTime: ", text->String);
+    UINTtoSTR(1000 / Game->DeltaTime, text);
+    strConcat(text, 2, text->String, " FPS");
     slayRenderText(Game->Display, Game->FontCrazyPixel, text->String, 10, -10, 0.75, 255, 255, 255, 255);
     strPurge(text);
 
