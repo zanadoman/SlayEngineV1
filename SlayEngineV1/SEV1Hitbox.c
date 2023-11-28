@@ -20,15 +20,15 @@ uint8 slayCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2)
 {
     uint8 result;
 
-    uint64 Hitbox1UpperLeftX;
-    uint64 Hitbox1UpperLeftY;
-    uint64 Hitbox1LowerRightX;
-    uint64 Hitbox1LowerRightY;
+    double Hitbox1UpperLeftX;
+    double Hitbox1UpperLeftY;
+    double Hitbox1LowerRightX;
+    double Hitbox1LowerRightY;
 
-    uint64 Hitbox2UpperLeftX;
-    uint64 Hitbox2UpperLeftY;
-    uint64 Hitbox2LowerRightX;
-    uint64 Hitbox2LowerRightY;
+    double Hitbox2UpperLeftX;
+    double Hitbox2UpperLeftY;
+    double Hitbox2LowerRightX;
+    double Hitbox2LowerRightY;
 
     Hitbox1UpperLeftX = Hitbox1->UpperLeftX + (sint32)round(*Hitbox1->ObjectX);
     Hitbox1UpperLeftY = Hitbox1->UpperLeftY + (sint32)round(*Hitbox1->ObjectY);
