@@ -7,9 +7,6 @@ sint64 slayEvent(slayDisplay* Display)
         switch (Display->Event.type)
         {
             case SDL_QUIT:
-                SDL_Quit();
-                TTF_Quit();
-                SDL_CloseAudio();
                 return 0;
         }
     }
