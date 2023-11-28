@@ -1,11 +1,11 @@
 #!/bin/bash
 
 TIMEFORMAT=%R
-buildtime=$(time (gcc -o ./build/bin *.c SlayEngineV1/*.c SlayEngineV1/NeoTypes/*.c -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lm) 2>&1)
+time gcc -o ./build/bin *.c SlayEngineV1/*.c SlayEngineV1/NeoTypes/*.c -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lm
 
 if [ $? == 0 ]
 then
-    echo -e "Build successful! ${buildtime}s"
+    echo -e "Build successful!"
     ./build/bin
 
     if [ $? == 0 ]

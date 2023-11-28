@@ -33,9 +33,9 @@ TTF_Font* slayLoadFont(char* Path, int Size)
     return result;
 }
 
-uint16 slayRenderStart(slayDisplay* Display, uint8 ColorR, uint8 ColorG, uint8 ColorB)
+uint16 slayRenderStart(slayDisplay* Display)
 {
-    SDL_SetRenderDrawColor(Display->Renderer, ColorR, ColorG, ColorB, 255);
+    SDL_SetRenderDrawColor(Display->Renderer, 0, 0, 0, 255);
     SDL_RenderClear(Display->Renderer);
 
     return 0;
