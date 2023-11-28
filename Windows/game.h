@@ -7,13 +7,23 @@ typedef struct
     double X;
     double Y;
 
+    double MinX;
+    double MaxX;
+    double MinY;
+    double MaxY;
+
     uint16 Width;
     uint16 Height;
 
+    double AccelerationX;
+    double AccelerationRateX;
+    double DeaccelerationRateX;
+    double AccelerationY;
+    double AccelerationRateY;
+    double DeaccelerationRateY;
+
     double Speed;
     double JumpHeight;
-    double AccelerationX;
-    double AccelerationY;
     sint8 Facing;
     uint64 ReloadTime;
     uint64 ReloadTick;
@@ -23,11 +33,21 @@ typedef struct
     uint64 KeyJump;
     uint64 KeyFire;
 
-    uint8 ColorR;
-    uint8 ColorG;
-    uint8 ColorB;
+    SDL_Texture* TextureLeft;
+    SDL_Texture* TextureRight;
+
+    Mix_Chunk* SoundFire;
 
     slayHitbox* Hitbox;
+
+    double ProjectileRelativeX;
+    double ProjectileRelativeY;
+    uint16 ProjectileWidth;
+    uint16 ProjectileHeight;
+    double ProjectileSpeed;
+    uint8 ProjectileColorR;
+    uint8 ProjectileColorG;
+    uint8 ProjectileColorB;
 } player;
 
 typedef struct
@@ -50,6 +70,9 @@ typedef struct
     double X;
     double Y;
 
+    double MinX;
+    double MaxX;
+
     uint16 Width;
     uint16 Height;
 
@@ -63,18 +86,25 @@ typedef struct
     slayHitbox* Hitbox;
 } projectile;
 
-
 typedef struct
 {
-    display* Display;
+    slayDisplay* Display;
     array Threads;
     uint64 DeltaTime;
     uint64 DisplayPrevTick;
+    uint8 Volume;
 
+    TTF_Font* FontCrazyPixel;
+    slayCamera* Camera;
     array Platforms;
     player* Player;
     array Projectiles;
+
+    SDL_Texture* TextureBackground;
 } game;
+
+//Load queue
+uint16 loadGame(game* Game);
 
 //Update queue
 uint16 updateQueue(game* Game);
@@ -83,12 +113,12 @@ uint16 updateQueue(game* Game);
 uint16 renderQueue(game* Game);
 
 //Player
-player* newPlayer(double SpawnX, double SpawnY, uint16 Width, uint16 Height, double Speed, double JumpHeight, uint64 ReloadTime, uint64 LeftKey, uint64 RightKey, uint64 KeyJump, uint8 KeyFire, uint8 ColorR, uint8 ColorG, uint8 ColorB);
+player* newPlayer();
 uint16 updatePlayer(game* Game);
 
 //Platform
 platform* newPlatform(double X, double Y, uint16 Width, uint16 Height, uint8 R, uint8 G, uint8 B);
 
 //Projectile
-projectile* newProjectile(double SpawnX, double SpawnY, uint16 Width, uint16 Height, double Speed, uint8 Facing, uint8 ColorR, uint8 ColorG, uint8 ColorB);
+projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX, uint16 Width, uint16 Height, double Speed, uint8 Facing, uint8 ColorR, uint8 ColorG, uint8 ColorB);
 uint16 updateProjectile(game* Game);

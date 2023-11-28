@@ -1,35 +1,42 @@
 #include "game.h"
 
-player* newPlayer(double SpawnX, double SpawnY, uint16 Width, uint16 Height, double Speed, double JumpHeight, uint64 ReloadTime, uint64 LeftKey, uint64 RightKey, uint64 KeyJump, uint8 KeyFire, uint8 ColorR, uint8 ColorG, uint8 ColorB)
+player* newPlayer()
 {
     player* result;
 
     result = malloc(sizeof(player));
 
-    result->X = SpawnX;
-    result->Y = SpawnY;
+    result->Width = 28;
+    result->Height = 40;
 
-    result->Width = Width;
-    result->Height = Height;
-
-    result->Speed = Speed;
-    result->JumpHeight = JumpHeight;
     result->AccelerationX = 0;
+    result->AccelerationRateX = 0.003;
+    result->DeaccelerationRateX = 0.005;
     result->AccelerationY = 0;
+    result->AccelerationRateY = 0;
+    result->DeaccelerationRateY = 0.003;
+
+    result->Speed = 0.4;
+    result->JumpHeight = 1.1;
     result->Facing = 1;
-    result->ReloadTime = ReloadTime;
+    result->ReloadTime = 200;
     result->ReloadTick = 0;
 
-    result->KeyLeft = LeftKey;
-    result->KeyRight = RightKey;
-    result->KeyJump = KeyJump;
-    result->KeyFire = KeyFire;
-
-    result->ColorR = ColorR;
-    result->ColorG = ColorG;
-    result->ColorB = ColorB;
+    result->KeyLeft = SDL_SCANCODE_LEFT;
+    result->KeyRight = SDL_SCANCODE_RIGHT;
+    result->KeyJump = SDL_SCANCODE_UP;
+    result->KeyFire = SDL_SCANCODE_LCTRL;
 
     result->Hitbox = slayNewHitbox(&result->X, &result->Y, 0, 0, result->Width, result->Height);
+
+    result->ProjectileRelativeX = 30;
+    result->ProjectileRelativeY = 14;
+    result->ProjectileWidth = 10;
+    result->ProjectileHeight = 4;
+    result->ProjectileSpeed = 0.75;
+    result->ProjectileColorR = 192;
+    result->ProjectileColorG = 192;
+    result->ProjectileColorB = 192;
 
     return result;
 }
@@ -44,7 +51,7 @@ uint16 updatePlayer(game* Game)
     {
         if (Game->Player->AccelerationX > -1)
         {
-            Game->Player->AccelerationX -= 0.003 * Game->DeltaTime;
+            Game->Player->AccelerationX -= Game->Player->AccelerationRateX * Game->DeltaTime;
             if (Game->Player->AccelerationX < -1)
             {
                 Game->Player->AccelerationX = -1;
@@ -56,7 +63,7 @@ uint16 updatePlayer(game* Game)
     {
         if (Game->Player->AccelerationX < 1)
         {
-            Game->Player->AccelerationX += 0.003 * Game->DeltaTime;
+            Game->Player->AccelerationX += Game->Player->AccelerationRateX * Game->DeltaTime;
             if (Game->Player->AccelerationX > 1)
             {
                 Game->Player->AccelerationX = 1;
@@ -66,9 +73,10 @@ uint16 updatePlayer(game* Game)
     }
     else
     {
+        //Deacceleration
         if (Game->Player->AccelerationX < 0)
         {
-            Game->Player->AccelerationX += 0.005 * Game->DeltaTime;
+            Game->Player->AccelerationX += Game->Player->DeaccelerationRateX * Game->DeltaTime;
             if (Game->Player->AccelerationX > 0)
             {
                 Game->Player->AccelerationX = 0;
@@ -76,7 +84,7 @@ uint16 updatePlayer(game* Game)
         }
         else if (Game->Player->AccelerationX > 0)
         {
-            Game->Player->AccelerationX -= 0.005 * Game->DeltaTime;
+            Game->Player->AccelerationX -= Game->Player->DeaccelerationRateX * Game->DeltaTime;
             if (Game->Player->AccelerationX < 0)
             {
                 Game->Player->AccelerationX = 0;
@@ -94,12 +102,14 @@ uint16 updatePlayer(game* Game)
 
         if (collision == BOTTOMLEFT || collision == BOTTOM || collision == BOTTOMRIGHT)
         {
+            //Ground collision
             if (Game->Player->AccelerationY >= 0)
             {
                 Game->Player->Y = ((platform*)Game->Platforms->Values[i])->Y - Game->Player->Height;
                 Game->Player->AccelerationY = 0;
                 falling = false;
             }
+            //Side collision
             else if (collision == BOTTOMLEFT)
             {
                 Game->Player->X = ((platform*)Game->Platforms->Values[i])->X + ((platform*)Game->Platforms->Values[i])->Width;
@@ -120,9 +130,11 @@ uint16 updatePlayer(game* Game)
             break;
         }
     }
+
+    //Falling or jumping
     if (falling)
     {
-        Game->Player->AccelerationY += 0.003 * Game->DeltaTime;
+        Game->Player->AccelerationY += Game->Player->DeaccelerationRateY * Game->DeltaTime;
         if (Game->Player->AccelerationY > 1)
         {
             Game->Player->AccelerationY = 1;
@@ -134,18 +146,13 @@ uint16 updatePlayer(game* Game)
     }
 
     //Clamp player position
-    if (Game->Player->X < 0)
+    if (Game->Player->X < Game->Player->MinX)
     {
-        Game->Player->X = 0;
+        Game->Player->X = Game->Player->MinX;
     }
-    else if (Game->Player->X > Game->Display->X - Game->Player->Width)
+    else if (Game->Player->X > Game->Player->MaxX - Game->Player->Width)
     {
-        Game->Player->X = Game->Display->X - Game->Player->Width;
-    }
-    if (Game->Player->Y < 0)
-    {
-        Game->Player->Y = 0;
-        Game->Player->AccelerationY = 0;
+        Game->Player->X = Game->Player->MaxX - Game->Player->Width;
     }
 
     return 0;

@@ -2,7 +2,7 @@
 
 uint16 playerProjectile(game* Game);
 
-projectile* newProjectile(double SpawnX, double SpawnY, uint16 Width, uint16 Height, double Speed, uint8 Facing, uint8 ColorR, uint8 ColorG, uint8 ColorB)
+projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX, uint16 Width, uint16 Height, double Speed, uint8 Facing, uint8 ColorR, uint8 ColorG, uint8 ColorB)
 {
     projectile* result;
 
@@ -10,6 +10,9 @@ projectile* newProjectile(double SpawnX, double SpawnY, uint16 Width, uint16 Hei
     
     result->X = SpawnX;
     result->Y = SpawnY;
+
+    result->MinX = MinX;
+    result->MaxX = MaxX;
 
     result->Width = Width;
     result->Height = Height;
@@ -35,15 +38,13 @@ uint16 updateProjectile(game* Game)
 
     for (uint64 i = 0; i < Game->Projectiles->Length; i++)
     {
-        //Horizontal movement
         ((projectile*)Game->Projectiles->Values[i])->X += ((projectile*)Game->Projectiles->Values[i])->Speed * ((projectile*)Game->Projectiles->Values[i])->Facing * Game->DeltaTime;
 
-        //Collision and deletion handling
         for (j = 0; j < Game->Platforms->Length; j++)
         {
             collision = slayCollision(((projectile*)Game->Projectiles->Values[i])->Hitbox, ((platform*)Game->Platforms->Values[j])->Hitbox);
 
-            if (collision > 0 || ((projectile*)Game->Projectiles->Values[i])->X < 0 || ((projectile*)Game->Projectiles->Values[i])->X > Game->Display->X - ((projectile*)Game->Projectiles->Values[i])->Width)
+            if (collision > 0 || ((projectile*)Game->Projectiles->Values[i])->X < ((projectile*)Game->Projectiles->Values[i])->MinX || ((projectile*)Game->Projectiles->Values[i])->X > ((projectile*)Game->Projectiles->Values[i])->MaxX - ((projectile*)Game->Projectiles->Values[i])->Width)
             {
                 free(((projectile*)Game->Projectiles->Values[i])->Hitbox);
                 arrRemove(Game->Projectiles, i);
@@ -61,7 +62,15 @@ uint16 playerProjectile(game* Game)
     if (slayKey(Game->Display, Game->Player->KeyFire) && SDL_GetTicks64() > Game->Player->ReloadTick + Game->Player->ReloadTime)
     {
         Game->Player->ReloadTick = SDL_GetTicks64();
-        arrInsert(Game->Projectiles, Game->Projectiles->Length, newProjectile(Game->Player->X + 10 + 20 * Game->Player->Facing, Game->Player->Y + 14, 10, 4, 0.75, Game->Player->Facing, 255, 0, 0));
+        arrInsert(Game->Projectiles, Game->Projectiles->Length, newProjectile(Game->Player->X + Game->Player->ProjectileRelativeX * Game->Player->Facing, Game->Player->Y + Game->Player->ProjectileRelativeY, Game->Player->MinX, Game->Player->MaxX, Game->Player->ProjectileWidth, Game->Player->ProjectileHeight, Game->Player->ProjectileSpeed, Game->Player->Facing, Game->Player->ProjectileColorR, Game->Player->ProjectileColorG, Game->Player->ProjectileColorB));
+        if (Game->Player->Facing == 1)
+        {
+            slayPlaySound(Game->Player->SoundFire, 1, Game->Volume, 32, 255, 0);
+        }
+        else
+        {
+            slayPlaySound(Game->Player->SoundFire, 1, Game->Volume, 255, 32, 0);
+        }
     }
 
     return 0;
