@@ -125,6 +125,7 @@ uint16 slayRenderText(slayDisplay* Display, TTF_Font* Font, char* Characters, do
     SDL_RenderCopy(Display->Renderer, texture, NULL, &Object);
 
     SDL_FreeSurface(surface);
+	SDL_DestroyTexture(texture);
 
     return 0;
 }
