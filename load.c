@@ -50,7 +50,7 @@ uint16 loadAdditionalElements(game* Game)
     Game->Player->MinX = -200;
     Game->Player->MaxX = 1000;
 
-    Game->Camera = slayNewCamera(&Game->Player->X, &Game->Player->Y, -386, -400, 1);
+    Game->Camera = slayNewCamera(&Game->Player->X, &Game->Player->Y, -386, -400, 0.5);
 
     Game->Projectiles = arrNew(0);
 
