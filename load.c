@@ -38,17 +38,17 @@ uint16 loadRequiredElements(game* Game)
 uint16 loadAdditionalElements(game* Game)
 {
     Game->Platforms = arrNew(5);
-    Game->Platforms->Values[0] = newPlatform(1800, 2550, 1200, 500, 24, 24, 48);
-    Game->Platforms->Values[1] = newPlatform(2300, 2450, 200, 30, 24, 24, 48);
-    Game->Platforms->Values[2] = newPlatform(2200, 2350, 100, 30, 24, 24, 48);
-    Game->Platforms->Values[3] = newPlatform(2350, 2250, 100, 30, 24, 24, 48);
-    Game->Platforms->Values[4] = newPlatform(2500, 2150, 100, 30, 24, 24, 48);
+    Game->Platforms->Values[0] = newPlatform(-200, 550, 1200, 500, 24, 24, 48);
+    Game->Platforms->Values[1] = newPlatform(300, 450, 200, 30, 24, 24, 48);
+    Game->Platforms->Values[2] = newPlatform(200, 350, 100, 30, 24, 24, 48);
+    Game->Platforms->Values[3] = newPlatform(350, 250, 100, 30, 24, 24, 48);
+    Game->Platforms->Values[4] = newPlatform(500, 150, 100, 30, 24, 24, 48);
 
     Game->Player = newPlayer();
-    Game->Player->X = 2386;
-    Game->Player->Y = 2410;
-    Game->Player->MinX = 1800;
-    Game->Player->MaxX = 3000;
+    Game->Player->X = 386;
+    Game->Player->Y = 410;
+    Game->Player->MinX = -200;
+    Game->Player->MaxX = 1000;
 
     Game->Camera = slayNewCamera(&Game->Player->X, &Game->Player->Y, -386, -400);
 
