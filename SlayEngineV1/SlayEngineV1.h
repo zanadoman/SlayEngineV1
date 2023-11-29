@@ -52,13 +52,25 @@ typedef struct
     sint32 LowerRightY;
 } slayHitbox;
 
+typedef struct
+{
+    sint32 X;
+    sint32 Y;
+    logic LMB;
+    logic MMB;
+    logic RMB;
+    sint8 Wheel;
+} slayMouse;
+
+
 //Common_____________________________________________________________
 
 slayDisplay* slayNew(char* Title, int Width, int Height);
+slayMouse* slayNewMouse();
 
 //Control____________________________________________________________
 
-sint64 slayEvent(slayDisplay* Display);
+sint64 slayEvent(slayDisplay* Display, slayMouse* Mouse);
 uint64 slayDeltaTime(uint64 *DisplayPrevTick);
 uint16 slayFPS(uint64 FPS, uint64 DisplayPrevTick);
 uint64 slayRandom(uint64 Min, uint64 Max, double Seed);
@@ -93,7 +105,6 @@ uint16 slayStopSound(sint16 Channel);
 //Inputs_____________________________________________________________
 
 uint8 slayKey(slayDisplay* Display, uint64 Key);
-uint16 slayMouse(slayDisplay* Display, sint32* X, sint32* Y, logic* LMB, logic* MMB, logic* RMB, sint8* Wheel);
 
 //Hitbox_____________________________________________________________
 

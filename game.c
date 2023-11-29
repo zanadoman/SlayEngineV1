@@ -9,16 +9,11 @@ int main(int argc, char *argv[])
     Game = malloc(sizeof(game));
     loadGame(Game);
 
-    //sint32 x, y;
-    //logic lmb, mmb, rmb;
-    //sint8 wheel;
-
-    while(slayEvent(Game->Display) != 0)
+    while(slayEvent(Game->Display, Game->Mouse) != 0)
     {
         Game->DeltaTime = slayDeltaTime(&Game->DisplayPrevTick);
 
-        //slayMouse(Game->Display, &x, &y, &lmb, &mmb, &rmb, &wheel);
-        //printf("x: %d, y: %d, lmb: %d, mmb: %d, rmb: %d, wheel: %d\n", x, y, lmb, mmb, rmb, wheel);
+        printf("x: %d, y: %d, lmb: %d, mmb: %d, rmb: %d, wheel: %d\n", Game->Mouse->X, Game->Mouse->Y, Game->Mouse->LMB, Game->Mouse->MMB, Game->Mouse->RMB, Game->Mouse->Wheel);
 
         updateQueue(Game);
         renderQueue(Game);

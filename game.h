@@ -85,6 +85,7 @@ typedef struct
 typedef struct
 {
     slayDisplay* Display;
+    slayMouse* Mouse;
     array Threads;
     uint64 DeltaTime;
     uint64 DisplayPrevTick;

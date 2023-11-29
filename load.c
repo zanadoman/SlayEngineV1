@@ -21,6 +21,7 @@ uint16 loadGame(game* Game)
 uint16 loadRequiredElements(game* Game)
 {
     Game->Display = slayNew("SlayEngineV1 Demo", 1920, 1080);
+    Game->Mouse = slayNewMouse();
 
     Game->DisplayPrevTick = 0;
     
