@@ -32,6 +32,8 @@ typedef struct
 {
     double* OriginX;
     double* OriginY;
+    double CenterX;
+    double CenterY;
     double RelativeX;
     double RelativeY;
     double AbsoluteX;
@@ -92,6 +94,6 @@ uint8 slayCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2);
 
 //Camera_____________________________________________________________
 
-slayCamera* slayNewCamera(double* OriginX, double* OriginY, double RelativeX, double RelativeY, double Zoom);
+slayCamera* slayNewCamera(double* OriginX, double* OriginY, double CenterX, double CenterY, double RelativeX, double RelativeY, double Zoom);
 uint16 slayUpdateCamera(slayCamera* Camera);
 uint16 slayApplyCamera(SDL_Rect* Object, slayCamera* Camera, double X, double Y, uint16 Width, uint16 Height);

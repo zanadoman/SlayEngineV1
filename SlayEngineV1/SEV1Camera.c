@@ -1,6 +1,6 @@
 #include "SlayEngineV1.h"
 
-slayCamera* slayNewCamera(double* OriginX, double* OriginY, double RelativeX, double RelativeY, double Zoom)
+slayCamera* slayNewCamera(double* OriginX, double* OriginY, double CenterX, double CenterY, double RelativeX, double RelativeY, double Zoom)
 {
     slayCamera* result;
 
@@ -8,6 +8,8 @@ slayCamera* slayNewCamera(double* OriginX, double* OriginY, double RelativeX, do
 
     result->OriginX = OriginX;
     result->OriginY = OriginY;
+    result->CenterX = CenterX;
+    result->CenterY = CenterY;
     result->RelativeX = RelativeX;
     result->RelativeY = RelativeY;
     result->AbsoluteX = *OriginX + RelativeX;
@@ -20,8 +22,8 @@ slayCamera* slayNewCamera(double* OriginX, double* OriginY, double RelativeX, do
 
 uint16 slayUpdateCamera(slayCamera* Camera)
 {
-    Camera->AbsoluteX = *Camera->OriginX + (Camera->RelativeX / Camera->Zoom);
-    Camera->AbsoluteY = *Camera->OriginY + (Camera->RelativeY / Camera->Zoom);
+    Camera->AbsoluteX = *Camera->OriginX + Camera->CenterX + (Camera->RelativeX / Camera->Zoom);
+    Camera->AbsoluteY = *Camera->OriginY + Camera->CenterY + (Camera->RelativeY / Camera->Zoom);
 
     return 0;
 }

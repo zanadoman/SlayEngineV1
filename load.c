@@ -20,7 +20,7 @@ uint16 loadGame(game* Game)
 
 uint16 loadRequiredElements(game* Game)
 {
-    Game->Display = slayNew("SlayEngineV1 Demo", 800, 600);
+    Game->Display = slayNew("SlayEngineV1 Demo", 1920, 1080);
 
     Game->DisplayPrevTick = 0;
     
@@ -50,7 +50,7 @@ uint16 loadAdditionalElements(game* Game)
     Game->Player->MinX = -200;
     Game->Player->MaxX = 1000;
 
-    Game->Camera = slayNewCamera(&Game->Player->X, &Game->Player->Y, -386, -400, 1);
+    Game->Camera = slayNewCamera(&Game->Player->X, &Game->Player->Y, 14, 20, -960, -800, 1.5);
 
     Game->Projectiles = arrNew(0);
 
