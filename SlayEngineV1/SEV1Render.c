@@ -81,6 +81,16 @@ uint16 slayRenderColorCamera(slayDisplay* Display, double X, double Y, uint16 Wi
     return 0;
 }
 
+uint16 slayRender3DColorCamera(slayDisplay* Display, double X, double Y, uint16 Width, uint16 Height, double FirstLayer, double Depth, double Quality, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA, slayCamera* Camera)
+{
+    for (double i = FirstLayer; i <= FirstLayer + Depth; i += Quality)
+    {
+        slayRenderColorCamera(Display, X, Y, Width, Height, i, ColorR, ColorG, ColorB, ColorA, Camera);
+    }
+
+    return 0;
+}
+
 uint16 slayRenderTexture(slayDisplay* Display, double X, double Y, uint16 Width, uint16 Height, SDL_Texture* Texture)
 {
     SDL_Rect Object;
@@ -114,7 +124,7 @@ uint16 slayRenderTextureCamera(slayDisplay* Display, double X, double Y, uint16 
 
 uint16 slayRender3DTextureCamera(slayDisplay* Display, double X, double Y, uint16 Width, uint16 Height, double FirstLayer, double Depth, double Quality, SDL_Texture* Texture, slayCamera* Camera)
 {
-    for (double i = FirstLayer; i <= Depth; i += Quality)
+    for (double i = FirstLayer; i <= FirstLayer + Depth; i += Quality)
     {
         slayRenderTextureCamera(Display, X, Y, Width, Height, i, Texture, Camera);
     }
@@ -177,6 +187,16 @@ uint16 slayRenderTextCamera(slayDisplay* Display, TTF_Font* Font, char* Characte
 
     SDL_FreeSurface(surface);
     SDL_DestroyTexture(texture);
+
+    return 0;
+}
+
+uint16 slayRender3DTextCamera(slayDisplay* Display, TTF_Font* Font, char* Characters, double X, double Y, double Size, double FirstLayer, double Depth, double Quality, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA, slayCamera* Camera)
+{
+    for (double i = FirstLayer; i <= FirstLayer + Depth; i += Quality)
+    {
+        slayRenderTextCamera(Display, Font, Characters, X, Y, Size, i, ColorR, ColorG, ColorB, ColorA, Camera);
+    }
 
     return 0;
 }
