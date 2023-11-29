@@ -93,6 +93,7 @@ uint16 slayStopSound(sint16 Channel);
 //Inputs_____________________________________________________________
 
 uint8 slayKey(slayDisplay* Display, uint64 Key);
+uint16 slayMousePosition(slayDisplay* Display, sint32* X, sint32* Y);
 
 //Hitbox_____________________________________________________________
 
