@@ -38,11 +38,11 @@ uint16 loadRequiredElements(game* Game)
 uint16 loadAdditionalElements(game* Game)
 {
     Game->Platforms = arrNew(5);
-    Game->Platforms->Values[0] = newPlatform(-200, 550, 1200, 500, 24, 24, 48);
-    Game->Platforms->Values[1] = newPlatform(300, 450, 200, 30, 24, 24, 48);
-    Game->Platforms->Values[2] = newPlatform(200, 350, 100, 30, 24, 24, 48);
-    Game->Platforms->Values[3] = newPlatform(350, 250, 100, 30, 24, 24, 48);
-    Game->Platforms->Values[4] = newPlatform(500, 150, 100, 30, 24, 24, 48);
+    Game->Platforms->Values[0] = newPlatform(-200, 550, 1200, 180);
+    Game->Platforms->Values[1] = newPlatform(300, 450, 200, 30);
+    Game->Platforms->Values[2] = newPlatform(200, 350, 100, 30);
+    Game->Platforms->Values[3] = newPlatform(350, 250, 100, 30);
+    Game->Platforms->Values[4] = newPlatform(500, 150, 100, 30);
 
     Game->Player = newPlayer();
     Game->Player->X = 386;
@@ -60,6 +60,7 @@ uint16 loadAdditionalElements(game* Game)
 uint16 loadTextures(game* Game)
 {
     Game->TextureBackground = slayLoadTexture(Game->Display, "assets/background.jpg");
+    Game->TexturePlatform = slayLoadTexture(Game->Display, "assets/platform.png");
 
     Game->Player->TextureLeft = slayLoadTexture(Game->Display, "assets/player_left.png");
     Game->Player->TextureRight = slayLoadTexture(Game->Display, "assets/player_right.png");

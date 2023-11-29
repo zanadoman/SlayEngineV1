@@ -43,9 +43,9 @@ uint16 renderPlatform(game* Game)
 {
     for (uint64 i = 0; i < Game->Platforms->Length; i++)
     {
-        for (double j = 1.05; j > 0.95; j -= 0.001)
+        for (double j = 0.95; j < 1.05; j += 0.001)
         {
-            slayRenderColorCamera(Game->Display, ((platform*)Game->Platforms->Values[i])->X, ((platform*)Game->Platforms->Values[i])->Y, ((platform*)Game->Platforms->Values[i])->Width, ((platform*)Game->Platforms->Values[i])->Height, j, ((platform*)Game->Platforms->Values[i])->ColorR, ((platform*)Game->Platforms->Values[i])->ColorG, ((platform*)Game->Platforms->Values[i])->ColorB, 255, Game->Camera);
+            slayRenderTextureCamera(Game->Display, ((platform*)Game->Platforms->Values[i])->X, ((platform*)Game->Platforms->Values[i])->Y, ((platform*)Game->Platforms->Values[i])->Width, ((platform*)Game->Platforms->Values[i])->Height, j, Game->TexturePlatform, Game->Camera);
         }
     }
 

@@ -58,10 +58,6 @@ typedef struct
     uint16 Width;
     uint16 Height;
 
-    uint8 ColorR;
-    uint8 ColorG;
-    uint8 ColorB;
-
     slayHitbox* Hitbox;
 } platform;
 
@@ -101,6 +97,7 @@ typedef struct
     array Projectiles;
 
     SDL_Texture* TextureBackground;
+    SDL_Texture* TexturePlatform;
 } game;
 
 //Load queue
@@ -116,8 +113,8 @@ uint16 renderQueue(game* Game);
 player* newPlayer();
 uint16 updatePlayer(game* Game);
 
-//Platform
-platform* newPlatform(double X, double Y, uint16 Width, uint16 Height, uint8 R, uint8 G, uint8 B);
+//Level
+platform* newPlatform(double X, double Y, uint16 Width, uint16 Height);
 
 //Projectile
 projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX, uint16 Width, uint16 Height, double Speed, uint8 Facing, uint8 ColorR, uint8 ColorG, uint8 ColorB);
