@@ -43,7 +43,7 @@ uint16 renderPlatform(game* Game)
 {
     for (uint64 i = 0; i < Game->Platforms->Length; i++)
     {
-        slayRender3DTextureCamera(Game->Display, ((platform*)Game->Platforms->Values[i])->X, ((platform*)Game->Platforms->Values[i])->Y, ((platform*)Game->Platforms->Values[i])->Width, ((platform*)Game->Platforms->Values[i])->Height, 0.95, 0.1, 0.001, Game->TexturePlatform, Game->Camera);
+        slayRender3DTextureCamera(Game->Display, ((platform*)Game->Platforms->Values[i])->X, ((platform*)Game->Platforms->Values[i])->Y, ((platform*)Game->Platforms->Values[i])->Width, ((platform*)Game->Platforms->Values[i])->Height, 0.95, 0.1, 0.005, Game->TexturePlatform, Game->Camera);
     }
 
     return 0;
