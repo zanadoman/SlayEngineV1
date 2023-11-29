@@ -33,44 +33,34 @@ sint64 slayEvent(slayDisplay* Display, slayMouse* Mouse)
                     Mouse->Y = Display->Height;
                 }
             }
+        }
+    }
 
-            if (Display->Event.type == SDL_MOUSEBUTTONDOWN)
-            {
-                if (Display->Event.button.button == SDL_BUTTON_LEFT)
-                {
-                    Mouse->LMB = true;
-                }
-                if (Display->Event.button.button == SDL_BUTTON_MIDDLE)
-                {
-                    Mouse->MMB = true;
-                }
-                if (Display->Event.button.button == SDL_BUTTON_RIGHT)
-                {
-                    Mouse->RMB = true;
-                }
-            }
-            else
-            {
-                Mouse->LMB = false;
-                Mouse->MMB = false;
-                Mouse->RMB = false;
-            }
-
-            if (Display->Event.type == SDL_MOUSEWHEEL)
-            {
-                if (0 < Display->Event.wheel.y)
-                {
-                    Mouse->Wheel = 1;
-                }
-                else if (0 > Display->Event.wheel.y)
-                {
-                    Mouse->Wheel = -1;
-                }
-            }
-            else
-            {
-                Mouse->Wheel = 0;
-            }
+    if (Mouse != NULL)
+    {
+        if (SDL_GetMouseState(NULL, NULL) & 1)
+        {
+            Mouse->LMB = true;
+        }
+        else
+        {
+            Mouse->LMB = false;
+        }
+        if (SDL_GetMouseState(NULL, NULL) & 2)
+        {
+            Mouse->MMB = true;
+        }
+        else
+        {
+            Mouse->MMB = false;
+        }
+        if (SDL_GetMouseState(NULL, NULL) & 4)
+        {
+            Mouse->RMB = true;
+        }
+        else
+        {
+            Mouse->RMB = false;
         }
     }
 
