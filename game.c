@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
         updateQueue(Game);
         renderQueue(Game);
 
-        slayFPS(165, Game->DisplayPrevTick);
+        //slayFPS(165, Game->DisplayPrevTick);
     }
 
     return 0;

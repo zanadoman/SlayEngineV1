@@ -81,8 +81,8 @@ uint16 renderFPSCounter(game* Game)
     string text;
 
     text = strNew();
-    UINTtoSTR(1000 / Game->DeltaTime, text);
-    strConcat(text, 2, text->String, " FPS");
+    UINTtoSTR(Game->DeltaTime, text);
+    strConcat(text, 3, "Frametime: ", text->String, "ms");
     slayRenderText(Game->Display, Game->FontCrazyPixel, text->String, 10, -10, 0.75, 255, 255, 255, 255);
     strPurge(text);
 
