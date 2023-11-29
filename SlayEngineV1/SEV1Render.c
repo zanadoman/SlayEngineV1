@@ -66,11 +66,11 @@ uint16 slayRenderColor(slayDisplay* Display, double X, double Y, uint16 Width, u
     return 0;
 }
 
-uint16 slayRenderColorCamera(slayDisplay* Display, double X, double Y, uint16 Width, uint16 Height, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA, slayCamera* Camera)
+uint16 slayRenderColorCamera(slayDisplay* Display, double X, double Y, uint16 Width, uint16 Height, double Distance, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA, slayCamera* Camera)
 {
     SDL_Rect Object;
 
-    slayApplyCamera(&Object, Camera, X, Y, Width, Height);
+    slayApplyCamera(&Object, Camera, X, Y, Width, Height, Distance);
 
     if ((-Object.w <= Object.x && Object.x <= Display->Width) && (-Object.h <= Object.y && Object.y <= Display->Height))
     {
@@ -98,11 +98,11 @@ uint16 slayRenderTexture(slayDisplay* Display, double X, double Y, uint16 Width,
     return 0;
 }
 
-uint16 slayRenderTextureCamera(slayDisplay* Display, double X, double Y, uint16 Width, uint16 Height, SDL_Texture* Texture, slayCamera* Camera)
+uint16 slayRenderTextureCamera(slayDisplay* Display, double X, double Y, uint16 Width, uint16 Height, double Distance, SDL_Texture* Texture, slayCamera* Camera)
 {
     SDL_Rect Object;
 
-    slayApplyCamera(&Object, Camera, X, Y, Width, Height);
+    slayApplyCamera(&Object, Camera, X, Y, Width, Height, Distance);
 
     if ((-Object.w <= Object.x && Object.x <= Display->Width) && (-Object.h <= Object.y && Object.y <= Display->Height))
     {
@@ -112,7 +112,7 @@ uint16 slayRenderTextureCamera(slayDisplay* Display, double X, double Y, uint16 
     return 0;
 }
 
-uint16 slayRenderText(slayDisplay* Display, TTF_Font* Font, char* Characters, double X, double Y,double Size, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA)
+uint16 slayRenderText(slayDisplay* Display, TTF_Font* Font, char* Characters, double X, double Y, double Size, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA)
 {
     SDL_Rect Object;
     SDL_Surface* surface;
@@ -143,7 +143,7 @@ uint16 slayRenderText(slayDisplay* Display, TTF_Font* Font, char* Characters, do
     return 0;
 }
 
-uint16 slayRenderTextCamera(slayDisplay* Display, TTF_Font* Font, char* Characters, double X, double Y, double Size, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA, slayCamera* Camera)
+uint16 slayRenderTextCamera(slayDisplay* Display, TTF_Font* Font, char* Characters, double X, double Y, double Size, double Distance, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA, slayCamera* Camera)
 {
     SDL_Rect Object;
     SDL_Surface* surface;
@@ -158,7 +158,7 @@ uint16 slayRenderTextCamera(slayDisplay* Display, TTF_Font* Font, char* Characte
     surface = TTF_RenderText_Blended(Font, Characters, color);
     texture = SDL_CreateTextureFromSurface(Display->Renderer, surface);
 
-    slayApplyCamera(&Object, Camera, X, Y, surface->w * Size, surface->h * Size);
+    slayApplyCamera(&Object, Camera, X, Y, surface->w * Size, surface->h * Size, Distance);
     
     if ((-Object.w <= Object.x && Object.x <= Display->Width) && (-Object.h <= Object.y && Object.y <= Display->Height))
     {

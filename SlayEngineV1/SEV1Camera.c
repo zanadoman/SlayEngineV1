@@ -28,12 +28,12 @@ uint16 slayUpdateCamera(slayCamera* Camera)
     return 0;
 }
 
-uint16 slayApplyCamera(SDL_Rect* Object, slayCamera* Camera, double X, double Y, uint16 Width, uint16 Height)
+uint16 slayApplyCamera(SDL_Rect* Object, slayCamera* Camera, double X, double Y, uint16 Width, uint16 Height, double Distance)
 {
-    Object->x = (sint32)round((X - Camera->AbsoluteX) * Camera->Zoom);
-    Object->y = (sint32)round((Y - Camera->AbsoluteY) * Camera->Zoom);
-    Object->w = Width * Camera->Zoom;
-    Object->h = Height * Camera->Zoom;
+    Object->x = (sint32)round((X - (*Camera->OriginX + Camera->CenterX + (Camera->RelativeX / (Camera->Zoom * Distance)))) * (Camera->Zoom * Distance));
+    Object->y = (sint32)round((Y - (*Camera->OriginY + Camera->CenterY + (Camera->RelativeY / (Camera->Zoom * Distance)))) * (Camera->Zoom * Distance));
+    Object->w = Width * (Camera->Zoom * Distance);
+    Object->h = Height * (Camera->Zoom * Distance);
 
     return 0;
 }

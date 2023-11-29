@@ -14,7 +14,6 @@ int main(int argc, char *argv[])
         Game->DeltaTime = slayDeltaTime(&Game->DisplayPrevTick);
 
         updateQueue(Game);
-        slayUpdateCamera(Game->Camera);
         renderQueue(Game);
 
         slayFPS(165, Game->DisplayPrevTick);

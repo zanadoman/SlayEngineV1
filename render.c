@@ -32,9 +32,9 @@ uint16 renderBackground(game* Game)
 
 uint16 renderHint(game* Game)
 {
-    slayRenderTextCamera(Game->Display, Game->FontCrazyPixel, "Movement: Left/Right arrow", -150, 200, 0.75, 255, 255, 255, 255, Game->Camera);
-    slayRenderTextCamera(Game->Display, Game->FontCrazyPixel, "Jump: Up arrow", -150, 230, 0.75, 255, 255, 255, 255, Game->Camera);
-    slayRenderTextCamera(Game->Display, Game->FontCrazyPixel, "Shoot: LCTRL", -150, 260, 0.75, 255, 255, 255, 255, Game->Camera);
+    slayRenderTextCamera(Game->Display, Game->FontCrazyPixel, "Movement: Left/Right arrow", -150, -100, 1, 0.5, 255, 255, 255, 255, Game->Camera);
+    slayRenderTextCamera(Game->Display, Game->FontCrazyPixel, "Jump: Up arrow", -150, -70, 1, 0.5, 255, 255, 255, 255, Game->Camera);
+    slayRenderTextCamera(Game->Display, Game->FontCrazyPixel, "Shoot: LCTRL", -150, -40, 1, 0.5, 255, 255, 255, 255, Game->Camera);
 
     return 0;
 }
@@ -43,7 +43,10 @@ uint16 renderPlatform(game* Game)
 {
     for (uint64 i = 0; i < Game->Platforms->Length; i++)
     {
-        slayRenderColorCamera(Game->Display, ((platform*)Game->Platforms->Values[i])->X, ((platform*)Game->Platforms->Values[i])->Y, ((platform*)Game->Platforms->Values[i])->Width, ((platform*)Game->Platforms->Values[i])->Height, ((platform*)Game->Platforms->Values[i])->ColorR, ((platform*)Game->Platforms->Values[i])->ColorG, ((platform*)Game->Platforms->Values[i])->ColorB, 255, Game->Camera);
+        for (double j = 1; j > 0.9; j -= 0.001)
+        {
+            slayRenderColorCamera(Game->Display, ((platform*)Game->Platforms->Values[i])->X, ((platform*)Game->Platforms->Values[i])->Y, ((platform*)Game->Platforms->Values[i])->Width, ((platform*)Game->Platforms->Values[i])->Height, j, ((platform*)Game->Platforms->Values[i])->ColorR, ((platform*)Game->Platforms->Values[i])->ColorG, ((platform*)Game->Platforms->Values[i])->ColorB, 255, Game->Camera);
+        }
     }
 
     return 0;
@@ -53,7 +56,7 @@ uint16 renderProjectile(game* Game)
 {
     for (uint64 i = 0; i < Game->Projectiles->Length; i++)
     {
-        slayRenderColorCamera(Game->Display, ((projectile*)Game->Projectiles->Values[i])->X, ((projectile*)Game->Projectiles->Values[i])->Y, ((projectile*)Game->Projectiles->Values[i])->Width, ((projectile*)Game->Projectiles->Values[i])->Height, ((projectile*)Game->Projectiles->Values[i])->ColorR, ((projectile*)Game->Projectiles->Values[i])->ColorG, ((projectile*)Game->Projectiles->Values[i])->ColorB, 255, Game->Camera);
+        slayRenderColorCamera(Game->Display, ((projectile*)Game->Projectiles->Values[i])->X, ((projectile*)Game->Projectiles->Values[i])->Y, ((projectile*)Game->Projectiles->Values[i])->Width, ((projectile*)Game->Projectiles->Values[i])->Height, 1, ((projectile*)Game->Projectiles->Values[i])->ColorR, ((projectile*)Game->Projectiles->Values[i])->ColorG, ((projectile*)Game->Projectiles->Values[i])->ColorB, 255, Game->Camera);
     }
 
     return 0;
@@ -63,11 +66,11 @@ uint16 renderPlayer(game* Game)
 {
     if (Game->Player->Facing == 1)
     {
-        slayRenderTextureCamera(Game->Display, Game->Player->X, Game->Player->Y, Game->Player->Width, Game->Player->Height, Game->Player->TextureRight, Game->Camera);
+        slayRenderTextureCamera(Game->Display, Game->Player->X, Game->Player->Y, Game->Player->Width, Game->Player->Height, 1, Game->Player->TextureRight, Game->Camera);
     }
     else
     {
-        slayRenderTextureCamera(Game->Display, Game->Player->X, Game->Player->Y, Game->Player->Width, Game->Player->Height, Game->Player->TextureLeft, Game->Camera);
+        slayRenderTextureCamera(Game->Display, Game->Player->X, Game->Player->Y, Game->Player->Width, Game->Player->Height, 1, Game->Player->TextureLeft, Game->Camera);
     }
 
     return 0;
