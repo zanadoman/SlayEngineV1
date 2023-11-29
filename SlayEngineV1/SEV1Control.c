@@ -2,6 +2,36 @@
 
 sint64 slayEvent(slayDisplay* Display, slayMouse* Mouse)
 {
+    if (Mouse != NULL)
+    {
+        if (SDL_GetMouseState(NULL, NULL) & 1)
+        {
+            Mouse->LMB = true;
+        }
+        else
+        {
+            Mouse->LMB = false;
+        }
+        if (SDL_GetMouseState(NULL, NULL) & 2)
+        {
+            Mouse->MMB = true;
+        }
+        else
+        {
+            Mouse->MMB = false;
+        }
+        if (SDL_GetMouseState(NULL, NULL) & 4)
+        {
+            Mouse->RMB = true;
+        }
+        else
+        {
+            Mouse->RMB = false;
+        }
+
+        Mouse->Wheel = 0;
+    }
+
     while (SDL_PollEvent(&Display->Event))
     {
         if (Display->Event.type == SDL_QUIT)
@@ -33,34 +63,11 @@ sint64 slayEvent(slayDisplay* Display, slayMouse* Mouse)
                     Mouse->Y = Display->Height;
                 }
             }
-        }
-    }
 
-    if (Mouse != NULL)
-    {
-        if (SDL_GetMouseState(NULL, NULL) & 1)
-        {
-            Mouse->LMB = true;
-        }
-        else
-        {
-            Mouse->LMB = false;
-        }
-        if (SDL_GetMouseState(NULL, NULL) & 2)
-        {
-            Mouse->MMB = true;
-        }
-        else
-        {
-            Mouse->MMB = false;
-        }
-        if (SDL_GetMouseState(NULL, NULL) & 4)
-        {
-            Mouse->RMB = true;
-        }
-        else
-        {
-            Mouse->RMB = false;
+            if (Display->Event.type == SDL_MOUSEWHEEL)
+            {
+                Mouse->Wheel = Display->Event.wheel.y;
+            }
         }
     }
 
