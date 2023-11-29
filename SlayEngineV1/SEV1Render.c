@@ -112,6 +112,16 @@ uint16 slayRenderTextureCamera(slayDisplay* Display, double X, double Y, uint16 
     return 0;
 }
 
+uint16 slayRender3DTextureCamera(slayDisplay* Display, double X, double Y, uint16 Width, uint16 Height, double FirstLayer, double Depth, double Quality, SDL_Texture* Texture, slayCamera* Camera)
+{
+    for (double i = FirstLayer; i <= Depth; i += Quality)
+    {
+        slayRenderTextureCamera(Display, X, Y, Width, Height, i, Texture, Camera);
+    }
+
+    return 0;
+}
+
 uint16 slayRenderText(slayDisplay* Display, TTF_Font* Font, char* Characters, double X, double Y, double Size, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA)
 {
     SDL_Rect Object;

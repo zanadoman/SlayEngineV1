@@ -67,12 +67,17 @@ uint64 slayRandom(uint64 Min, uint64 Max, double Seed);
 
 SDL_Texture* slayLoadTexture(slayDisplay* Display, char* Path);
 TTF_Font* slayLoadFont(char* Path, int Size);
+
 uint16 slayRenderStart(slayDisplay* Display);
 uint16 slayRenderEnd(slayDisplay* Display);
+
 uint16 slayRenderColor(slayDisplay* Display, double X, double Y, uint16 Width, uint16 Height, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA);
 uint16 slayRenderColorCamera(slayDisplay* Display, double X, double Y, uint16 Width, uint16 Height, double Distance, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA, slayCamera* Camera);
+
 uint16 slayRenderTexture(slayDisplay* Display, double X, double Y, uint16 Width, uint16 Height, SDL_Texture* Texture);
 uint16 slayRenderTextureCamera(slayDisplay* Display, double X, double Y, uint16 Width, uint16 Height, double Distance, SDL_Texture* Texture, slayCamera* Camera);
+uint16 slayRender3DTextureCamera(slayDisplay* Display, double X, double Y, uint16 Width, uint16 Height, double FirstLayer, double Depth, double Quality, SDL_Texture* Texture, slayCamera* Camera);
+
 uint16 slayRenderText(slayDisplay* Display, TTF_Font* Font, char* Characters, double X, double Y,double Size, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA);
 uint16 slayRenderTextCamera(slayDisplay* Display, TTF_Font* Font, char* Characters, double X, double Y,double Size, double Distance, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA, slayCamera* Camera);
 
