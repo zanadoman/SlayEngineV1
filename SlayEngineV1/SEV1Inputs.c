@@ -8,31 +8,82 @@ uint8 slayKey(slayDisplay* Display, uint64 Key)
     return state[Key];
 }
 
-uint16 slayMousePosition(slayDisplay* Display, sint32* X, sint32* Y)
+//NEED TO STORE THE EVENT QUEUE
+uint16 slayMouse(slayDisplay* Display, sint32* X, sint32* Y, logic* LMB, logic* MMB, logic* RMB, sint8* Wheel)
 {
-    if (SDL_PollEvent(&Display->Event))
+    while (SDL_PollEvent(&Display->Event))
     {
         if (Display->Event.type == SDL_MOUSEMOTION)
         {
-            *X =  Display->Event.motion.x;
-            *Y =  Display->Event.motion.y;
+            if (X != NULL)
+            {
+                *X = Display->Event.motion.x;
+                if (*X < 0)
+                {
+                    *X = 0;
+                }
+                else if (Display->Width < *X)
+                {
+                    *X = Display->Width;
+                }
+            }
 
-            if (*X < 0)
+            if (Y != NULL)
             {
-                *X = 0;
+                *Y = Display->Event.motion.y;
+                if (*Y < 0)
+                {
+                    *Y = 0;
+                }
+                else if (Display->Height < *Y)
+                {
+                    *Y = Display->Height;
+                }
             }
-            else if (Display->Width < *X)
+        }
+
+        if (Display->Event.type == SDL_MOUSEBUTTONDOWN)
+        {
+            if (Display->Event.button.button == SDL_BUTTON_LEFT && LMB != NULL)
             {
-                *X = Display->Width;
+                *LMB = true;
             }
-            if (*Y < 0)
+            else if (LMB != NULL)
             {
-                *Y = 0;
+                *LMB = false;
             }
-            else if (Display->Height < *Y)
+            if (Display->Event.button.button == SDL_BUTTON_MIDDLE && MMB != NULL)
             {
-                *Y = Display->Height;
+                *MMB = true;
             }
+            else if (MMB != NULL)
+            {
+                *MMB = false;
+            }
+            if (Display->Event.button.button == SDL_BUTTON_RIGHT && RMB != NULL)
+            {
+                *RMB = true;
+            }
+            else if (RMB != NULL)
+            {
+                *RMB = false;
+            }
+        }
+
+        if (Display->Event.type == SDL_MOUSEWHEEL && Wheel != NULL)
+        {
+            if (0 < Display->Event.wheel.y)
+            {
+                *Wheel = 1;
+            }
+            else if (0 > Display->Event.wheel.y)
+            {
+                *Wheel = -1;
+            }
+        }
+        else if (Wheel != NULL)
+        {
+            *Wheel = 0;
         }
     }
 

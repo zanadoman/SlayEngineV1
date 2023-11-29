@@ -4,10 +4,9 @@ sint64 slayEvent(slayDisplay* Display)
 {
     while (SDL_PollEvent(&Display->Event) != 0)
     {
-        switch (Display->Event.type)
+        if (Display->Event.type == SDL_QUIT)
         {
-            case SDL_QUIT:
-                return 0;
+            return 0;
         }
     }
 
