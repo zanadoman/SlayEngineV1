@@ -1,11 +1,11 @@
-#include <SDL2/SDL.h> //UNIX PORT
-#include <SDL2/SDL_image.h> //UNIX PORT
-#include <SDL2/SDL_ttf.h> //UNIX PORT
-#include <SDL2/SDL_mixer.h> //UNIX PORT
-//#include "inc/SDL.h" //WINDOWS PORT
-//#include "inc/SDL_image.h" //WINDOWS PORT
-//#include "inc/SDL_ttf.h" //WINDOWS PORT
-//#include "inc/SDL_mixer.h" //WINDOWS PORT
+//#include <SDL2/SDL.h> //UNIX PORT
+//#include <SDL2/SDL_image.h> //UNIX PORT
+//#include <SDL2/SDL_ttf.h> //UNIX PORT
+//#include <SDL2/SDL_mixer.h> //UNIX PORT
+#include "inc/SDL.h" //WINDOWS PORT
+#include "inc/SDL_image.h" //WINDOWS PORT
+#include "inc/SDL_ttf.h" //WINDOWS PORT
+#include "inc/SDL_mixer.h" //WINDOWS PORT
 #include <pthread.h>
 #include "NeoTypes/NeoTypes.h"
 

@@ -1,6 +1,5 @@
 #include "game.h"
 
-uint16 updateZoomIn(Game);
 void* updatePlayerThread(void* Game);
 void* updateProjectileThread(void* Game);
 
