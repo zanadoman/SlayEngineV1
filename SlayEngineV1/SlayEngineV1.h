@@ -9,6 +9,8 @@
 #include <pthread.h>
 #include "NeoTypes/NeoTypes.h"
 
+#define slayGetTicks SDL_GetTicks
+
 #define TOP 3
 #define RIGHT 10
 #define BOTTOM 12
