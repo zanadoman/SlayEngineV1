@@ -56,12 +56,13 @@ typedef struct
 {
     sint32 X;
     sint32 Y;
+    sint32 MovementX;
+    sint32 MovementY;
     logic LMB;
     logic MMB;
     logic RMB;
     sint8 Wheel;
 } slayMouse;
-
 
 //Common_____________________________________________________________
 
@@ -108,7 +109,9 @@ uint8 slayKey(slayDisplay* Display, uint64 Key);
 
 //Mouse______________________________________________________________
 
+uint16 slayMouseMovement(slayMouse* Mouse);
 uint16 slayMouseButtons(slayMouse* Mouse);
+uint16 slayCursorVisibility(logic Visibility);
 logic slayCursorCollision(slayMouse* Mouse, slayHitbox* Hitbox);
 logic slayCursorCollisionCamera(slayMouse* Mouse, slayHitbox* Hitbox, double Distance, slayCamera* Camera);
 

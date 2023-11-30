@@ -15,6 +15,8 @@ uint16 loadGame(game* Game)
     loadFonts(Game);
     loadSounds(Game);
 
+    slayCursorVisibility(false);
+
     return 0;
 }
 

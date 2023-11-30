@@ -6,6 +6,7 @@ sint64 slayEvent(slayDisplay* Display, slayMouse* Mouse)
 
     if (Mouse != NULL)
     {
+        slayMouseMovement(Mouse);
         slayMouseButtons(Mouse);
         Mouse->Wheel = 0;
     }

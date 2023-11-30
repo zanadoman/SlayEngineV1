@@ -1,5 +1,12 @@
 #include "SlayEngineV1.h"
 
+uint16 slayMouseMovement(slayMouse* Mouse)
+{
+    SDL_GetRelativeMouseState(&Mouse->MovementX, &Mouse->MovementY);
+
+    return 0;
+}
+
 uint16 slayMouseButtons(slayMouse* Mouse)
 {
     uint32 MouseState;
@@ -30,6 +37,13 @@ uint16 slayMouseButtons(slayMouse* Mouse)
         Mouse->RMB = false;
     }
 
+    return 0;
+}
+
+uint16 slayCursorVisibility(logic Visibility)
+{
+    SDL_ShowCursor(Visibility);
+    
     return 0;
 }
 
