@@ -1,3 +1,8 @@
+/*
+Egér relatív mozgásának kezelése
+Grab és elrejtése.
+*/
+
 #include "game.h"
 
 #undef main
