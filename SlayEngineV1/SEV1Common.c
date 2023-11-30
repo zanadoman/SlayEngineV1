@@ -32,6 +32,7 @@ slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Scene
     result->MaxFPS = MaxFPS;
 
     result->Scenes = arrNew(Scenes);
+    result->CurrentScene = 0;
 
     return result;
 }

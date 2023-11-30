@@ -79,6 +79,7 @@ typedef struct
     uint64 MaxFPS;
 
     array Scenes;
+    uint64 CurrentScene;
 } slayEngine;
 
 
