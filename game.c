@@ -1,3 +1,8 @@
+/*
+Engine object bevezetése
+Demo scenekre osztása
+*/
+
 #include "game.h"
 
 #undef main
