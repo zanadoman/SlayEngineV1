@@ -69,7 +69,6 @@ typedef struct
 //Common_____________________________________________________________
 
 slayDisplay* slayNew(char* Title, int Width, int Height);
-slayMouse* slayNewMouse();
 
 //Control____________________________________________________________
 
@@ -111,6 +110,7 @@ uint8 slayKey(slayDisplay* Display, uint64 Key);
 
 //Mouse______________________________________________________________
 
+slayMouse* slayNewMouse();
 uint16 slayMouseMovement(slayMouse* Mouse);
 uint16 slayMouseButtons(slayMouse* Mouse);
 uint16 slayCursorVisibility(logic Visibility);

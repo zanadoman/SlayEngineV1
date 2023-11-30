@@ -1,5 +1,10 @@
 #include "SlayEngineV1.h"
 
+slayMouse* slayNewMouse()
+{
+    return malloc(sizeof(slayMouse));
+}
+
 uint16 slayMouseMovement(slayMouse* Mouse)
 {
     SDL_GetRelativeMouseState(&Mouse->MovementX, &Mouse->MovementY);

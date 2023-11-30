@@ -19,8 +19,3 @@ slayDisplay* slayNew(char* Title, int Width, int Height)
 
     return result;
 }
-
-slayMouse* slayNewMouse()
-{
-    return malloc(sizeof(slayMouse));
-}

@@ -5,7 +5,7 @@ uint16 renderHint(game* Game);
 uint16 renderPlatform(game* Game);
 uint16 renderProjectile(game* Game);
 uint16 renderPlayer(game* Game);
-uint16 renderFPSCounter(game* Game);
+uint16 renderFrameTime(game* Game);
 
 uint16 renderQueue(game* Game)
 {
@@ -16,7 +16,7 @@ uint16 renderQueue(game* Game)
     renderPlatform(Game);
     renderProjectile(Game);
     renderPlayer(Game);
-    renderFPSCounter(Game);
+    renderFrameTime(Game);
     
     slayRenderEnd(Game->Display);
 
@@ -73,7 +73,7 @@ uint16 renderPlayer(game* Game)
     return 0;
 }
 
-uint16 renderFPSCounter(game* Game)
+uint16 renderFrameTime(game* Game)
 {
     string text;
 
