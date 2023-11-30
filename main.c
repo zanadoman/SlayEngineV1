@@ -1,3 +1,8 @@
+/*
+Vektorok
+Forgatások
+*/
+
 #include "game.h"
 
 #undef main
