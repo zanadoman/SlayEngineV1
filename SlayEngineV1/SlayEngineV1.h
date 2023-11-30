@@ -72,6 +72,8 @@ typedef struct
     slayCamera* Camera;
     slayMouse* Mouse;
 
+    array Threads;
+
     uint64 PrevTick;
     uint64 DeltaTime;
     uint64 MaxFPS;
@@ -80,7 +82,7 @@ typedef struct
 
 //Common_____________________________________________________________
 
-slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint16 MaxFPS);
+slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Threads, uint16 MaxFPS);
 
 //Control____________________________________________________________
 

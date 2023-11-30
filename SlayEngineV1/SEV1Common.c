@@ -1,6 +1,6 @@
 #include "SlayEngineV1.h"
 
-slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint16 MaxFPS)
+slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Threads, uint16 MaxFPS)
 {
     slayEngine* result;
 
@@ -20,6 +20,12 @@ slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint16 MaxFP
     result->Camera = NULL;
 
     result->Mouse = malloc(sizeof(slayMouse));
+
+    result->Threads = arrNew(Threads);
+    for (uint64 i = 0; i < result->Threads->Length; i++)
+    {
+        result->Threads->Values[i] = malloc(sizeof(pthread_t));
+    }
 
     result->PrevTick = 0;
     result->DeltaTime = 0;

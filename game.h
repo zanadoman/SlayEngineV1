@@ -86,7 +86,6 @@ typedef struct
 {
     slayEngine* Engine;
 
-    array Threads;
     uint8 Volume;
 
     array Platforms;

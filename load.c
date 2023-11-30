@@ -22,13 +22,7 @@ uint16 loadGame(game* Game)
 
 uint16 loadRequiredElements(game* Game)
 {
-    Game->Engine = slayNewEngine("SlayEngineV1", 1920, 1080, 165);
-    
-    Game->Threads = arrNew(2);
-    for (uint64 i = 0; i < Game->Threads->Length; i++)
-    {
-        Game->Threads->Values[i] = malloc(sizeof(pthread_t));
-    }
+    Game->Engine = slayNewEngine("SlayEngineV1", 1920, 1080, 2, 165);
 
     Game->Volume = 10;
 
