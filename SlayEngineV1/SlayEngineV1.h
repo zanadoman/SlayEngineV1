@@ -77,12 +77,14 @@ typedef struct
     uint64 PrevTick;
     uint64 DeltaTime;
     uint64 MaxFPS;
+
+    array Scenes;
 } slayEngine;
 
 
 //Common_____________________________________________________________
 
-slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Threads, uint16 MaxFPS);
+slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Scenes, uint64 Threads, uint16 MaxFPS);
 
 //Control____________________________________________________________
 

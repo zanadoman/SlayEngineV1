@@ -22,7 +22,7 @@ uint16 loadGame(game* Game)
 
 uint16 loadRequiredElements(game* Game)
 {
-    Game->Engine = slayNewEngine("SlayEngineV1", 1920, 1080, 2, 165);
+    Game->Engine = slayNewEngine("SlayEngineV1", 1920, 1080, 1, 2, 165);
 
     Game->Volume = 10;
 

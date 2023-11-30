@@ -1,6 +1,6 @@
 #include "SlayEngineV1.h"
 
-slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Threads, uint16 MaxFPS)
+slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Scenes, uint64 Threads, uint16 MaxFPS)
 {
     slayEngine* result;
 
@@ -30,6 +30,8 @@ slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Threa
     result->PrevTick = 0;
     result->DeltaTime = 0;
     result->MaxFPS = MaxFPS;
+
+    result->Scenes = arrNew(Scenes);
 
     return result;
 }
