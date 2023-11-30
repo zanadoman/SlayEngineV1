@@ -18,8 +18,6 @@ int main(int argc, char *argv[])
         updateQueue(Engine);
         renderQueue(Engine);
 
-        printf("%d %d %d %d\n", Engine->Mouse->X, Engine->Mouse->Y, Engine->Mouse->MovementX, Engine->Mouse->MovementY);
-
         slayCapFPS(Engine);
     }
 
