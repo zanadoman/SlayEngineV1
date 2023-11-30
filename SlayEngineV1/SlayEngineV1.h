@@ -105,15 +105,17 @@ uint16 slayStopSound(sint16 Channel);
 //Inputs_____________________________________________________________
 
 uint8 slayKey(slayDisplay* Display, uint64 Key);
+
+//Mouse______________________________________________________________
+
 uint16 slayMouseButtons(slayMouse* Mouse);
+logic slayCursorCollision(slayMouse* Mouse, slayHitbox* Hitbox);
+logic slayCursorCollisionCamera(slayMouse* Mouse, slayHitbox* Hitbox, double Distance, slayCamera* Camera);
 
 //Hitbox_____________________________________________________________
 
 slayHitbox* slayNewHitbox(double* ObjectX, double* ObjectY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY);
 uint8 slayCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2);
-
-logic slayCursorCollision(slayMouse* Mouse, slayHitbox* Hitbox);
-logic slayCursorCollisionCamera(slayMouse* Mouse, slayHitbox* Hitbox, double Distance, slayCamera* Camera);
 
 //Camera_____________________________________________________________
 
