@@ -76,6 +76,8 @@ typedef struct
 
     array Scenes;
     uint64 CurrentScene;
+
+    void* Game;
 } slayEngine;
 
 

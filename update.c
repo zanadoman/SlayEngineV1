@@ -48,7 +48,7 @@ void* updateProjectileThread(void* Engine)
     switch (((slayEngine*)Engine)->CurrentScene)
     {
         case 0:
-            updateProjectile(((scene0*)engine->Scenes->Values[0])->Projectiles, ((scene0*)engine->Scenes->Values[0])->Player, ((scene0*)engine->Scenes->Values[0])->Platforms, ((scene0*)engine->Scenes->Values[0])->Volume, engine->DeltaTime);
+            updateProjectile(((scene0*)engine->Scenes->Values[0])->Projectiles, ((scene0*)engine->Scenes->Values[0])->Player, ((scene0*)engine->Scenes->Values[0])->Platforms, ((game*)engine->Game)->Volume, engine->DeltaTime);
             break;
     }
 

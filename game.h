@@ -84,9 +84,6 @@ typedef struct
 
 typedef struct
 {
-    TTF_Font* FontCrazyPixel;
-    uint8 Volume;
-
     array Platforms;
     SDL_Texture* TextureBackground;
     SDL_Texture* TexturePlatform;
@@ -96,8 +93,15 @@ typedef struct
     array Projectiles;
 } scene0;
 
+typedef struct
+{
+    TTF_Font* FontCrazyPixel;
+    uint8 Volume;
+} game;
+
+
 //Load queue
-uint16 loadGame(slayEngine* Engine);
+uint16 loadQueue(slayEngine* Engine);
 
 //Update queue
 uint16 updateQueue(slayEngine* Engine);

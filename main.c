@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
     slayEngine* Engine;
 
     Engine = slayNewEngine("SlayEngineV1 DEMO", 1920, 1080, 1, 2, 165);
-    loadGame(Engine);
+    loadQueue(Engine);
 
     Engine->CurrentScene = 0;
 

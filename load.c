@@ -1,12 +1,27 @@
 #include "game.h"
 
+uint16 loadGame(slayEngine* Engine);
 uint16 loadScene0(slayEngine* Engine);
 
-uint16 loadGame(slayEngine* Engine)
+uint16 loadQueue(slayEngine* Engine)
 {
+    loadGame(Engine);
     loadScene0(Engine);
 
     slayCursorVisibility(false);
+
+    return 0;
+}
+
+uint16 loadGame(slayEngine* Engine)
+{
+    game* game;
+
+    Engine->Game = malloc(sizeof(game));
+    game = Engine->Game;
+
+    game->FontCrazyPixel = slayLoadFont("assets/crazy-pixel.ttf", 48);
+    game->Volume = 10;
 
     return 0;
 }
@@ -17,9 +32,6 @@ uint16 loadScene0(slayEngine* Engine)
 
     Engine->Scenes->Values[0] = malloc(sizeof(scene0));
     scene = Engine->Scenes->Values[0];
-
-    scene->FontCrazyPixel = slayLoadFont("assets/crazy-pixel.ttf", 48);
-    scene->Volume = 10;
 
     scene->Platforms = arrNew(5);
     scene->TextureBackground = slayLoadTexture(Engine, "assets/background.jpg");

@@ -24,9 +24,9 @@ uint16 renderScene0(slayEngine* Engine, scene0* Scene)
     slayRenderTexture(Engine, 0, 0, Engine->Display->Width, Engine->Display->Height, Scene->TextureBackground);
 
     //Hint
-    slayRenderTextCamera(Engine, Scene->FontCrazyPixel, "Movement: Left/Right arrow", -150, -100, 1, 0.5, 255, 255, 255, 255);
-    slayRenderTextCamera(Engine, Scene->FontCrazyPixel, "Jump: Up arrow", -150, -70, 1, 0.5, 255, 255, 255, 255);
-    slayRenderTextCamera(Engine, Scene->FontCrazyPixel, "Shoot: LCTRL", -150, -40, 1, 0.5, 255, 255, 255, 255);
+    slayRenderTextCamera(Engine, ((game*)Engine->Game)->FontCrazyPixel, "Movement: Left/Right arrow", -150, -100, 1, 0.5, 255, 255, 255, 255);
+    slayRenderTextCamera(Engine, ((game*)Engine->Game)->FontCrazyPixel, "Jump: Up arrow", -150, -70, 1, 0.5, 255, 255, 255, 255);
+    slayRenderTextCamera(Engine, ((game*)Engine->Game)->FontCrazyPixel, "Shoot: LCTRL", -150, -40, 1, 0.5, 255, 255, 255, 255);
 
     //Platforms
     for (uint64 i = 0; i < Scene->Platforms->Length; i++)
@@ -54,6 +54,6 @@ uint16 renderScene0(slayEngine* Engine, scene0* Scene)
     string text = strNew();
     UINTtoSTR(Engine->DeltaTime, text);
     strConcat(text, 3, "Frametime: ", text->String, "ms");
-    slayRenderText(Engine, Scene->FontCrazyPixel, text->String, 10, -10, 0.75, 255, 255, 255, 255);
+    slayRenderText(Engine, ((game*)Engine->Game)->FontCrazyPixel, text->String, 10, -10, 0.75, 255, 255, 255, 255);
     strPurge(text);
 }

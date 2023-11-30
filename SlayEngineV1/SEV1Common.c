@@ -34,5 +34,7 @@ slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Scene
     result->Scenes = arrNew(Scenes);
     result->CurrentScene = 0;
 
+    result->Game = NULL;
+
     return result;
 }
