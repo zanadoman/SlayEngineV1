@@ -1,12 +1,12 @@
 #!/bin/bash
 
 TIMEFORMAT=%R
-time gcc -o ./build/bin *.c SlayEngineV1/*.c SlayEngineV1/NeoTypes/*.c -Wl,-rpath=. -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lm
+time gcc -o ./Linux/bin *.c SlayEngineV1/*.c SlayEngineV1/NeoTypes/*.c -Wl,-rpath=. -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lm
 
 if [ $? == 0 ]
 then
     echo -e "Build successful!"
-    ./build/bin
+    ./Linux/bin
 
     if [ $? == 0 ]
     then
