@@ -1,6 +1,7 @@
 /*
 Vektorok
 Forgatások
+Player lőjön a kurzor irányába kattintással
 */
 
 #include "game.h"
