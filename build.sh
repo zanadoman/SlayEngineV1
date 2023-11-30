@@ -11,7 +11,6 @@ then
     if [ $? == 0 ]
     then
         echo "Run successful!"
-        cp -r assets ./build
         exit 0
     fi
     
