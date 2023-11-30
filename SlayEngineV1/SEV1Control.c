@@ -2,9 +2,13 @@
 
 sint64 slayEvent(slayDisplay* Display, slayMouse* Mouse)
 {
+    uint32 MouseState;
+
     if (Mouse != NULL)
     {
-        if (SDL_GetMouseState(NULL, NULL) & 1)
+        MouseState = SDL_GetMouseState(NULL, NULL);
+
+        if (MouseState & 1)
         {
             Mouse->LMB = true;
         }
@@ -12,7 +16,7 @@ sint64 slayEvent(slayDisplay* Display, slayMouse* Mouse)
         {
             Mouse->LMB = false;
         }
-        if (SDL_GetMouseState(NULL, NULL) & 2)
+        if (MouseState & 2)
         {
             Mouse->MMB = true;
         }
@@ -20,7 +24,7 @@ sint64 slayEvent(slayDisplay* Display, slayMouse* Mouse)
         {
             Mouse->MMB = false;
         }
-        if (SDL_GetMouseState(NULL, NULL) & 4)
+        if (MouseState & 4)
         {
             Mouse->RMB = true;
         }
