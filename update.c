@@ -1,28 +1,43 @@
 #include "game.h"
 
-void* updatePlayerThread(void* Game);
-void* updateProjectileThread(void* Game);
+void* updatePlayerThread(void* Engine);
+void* updateProjectileThread(void* Engine);
 
-uint16 updateQueue(game* Game)
+uint16 updateQueue(slayEngine* Engine)
 {
-    //1.
-    pthread_create((pthread_t*)Game->Engine->Threads->Values[0], NULL, updatePlayerThread, (void*)Game);
-    pthread_create((pthread_t*)Game->Engine->Threads->Values[1], NULL, updateProjectileThread, (void*)Game);
-    pthread_join(*(pthread_t*)Game->Engine->Threads->Values[0], NULL);
-    pthread_join(*(pthread_t*)Game->Engine->Threads->Values[1], NULL);
-    //2.
+    switch (Engine->CurrentScene)
+    {
+        case 0:
+            pthread_create((pthread_t*)Engine->Threads->Values[0], NULL, updatePlayerThread, (void*)Engine);
+            pthread_create((pthread_t*)Engine->Threads->Values[1], NULL, updateProjectileThread, (void*)Engine);
+            pthread_join(*(pthread_t*)Engine->Threads->Values[0], NULL);
+            pthread_join(*(pthread_t*)Engine->Threads->Values[1], NULL);
+            break;
+    }
 
     return 0;
 }
 
-void* updatePlayerThread(void* Game)
+void* updatePlayerThread(void* Engine)
 {
-    updatePlayer(Game);
+    switch (((slayEngine*)Engine)->CurrentScene)
+    {
+        case 0:
+            updatePlayer(((scene0*)((slayEngine*)Engine)->Scenes->Values[0])->Player, ((scene0*)((slayEngine*)Engine)->Scenes->Values[0])->Platforms, ((slayEngine*)Engine)->DeltaTime);
+            break;
+    }
+
     pthread_exit(NULL);
 }
 
-void* updateProjectileThread(void* Game)
+void* updateProjectileThread(void* Engine)
 {
-    updateProjectile((game*)Game);
+    switch (((slayEngine*)Engine)->CurrentScene)
+    {
+        case 0:
+            updateProjectile(((scene0*)((slayEngine*)Engine)->Scenes->Values[0])->Projectiles, ((scene0*)((slayEngine*)Engine)->Scenes->Values[0])->Player, ((scene0*)((slayEngine*)Engine)->Scenes->Values[0])->Platforms, ((scene0*)((slayEngine*)Engine)->Scenes->Values[0])->Volume, ((slayEngine*)Engine)->DeltaTime);
+            break;
+    }
+
     pthread_exit(NULL);
 }

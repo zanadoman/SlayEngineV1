@@ -1,76 +1,46 @@
 #include "game.h"
 
-uint16 loadRequiredElements(game* Game);
-uint16 loadAdditionalElements(game* Game);
-uint16 loadTextures(game* Game);
-uint16 loadFonts(game* Game);
-uint16 loadSounds(game* Game);
+uint16 loadScene0(slayEngine* Engine);
 
-uint16 loadGame(game* Game)
+uint16 loadGame(slayEngine* Engine)
 {
-    loadRequiredElements(Game);
-    loadAdditionalElements(Game);
-
-    loadTextures(Game);
-    loadFonts(Game);
-    loadSounds(Game);
+    loadScene0(Engine);
 
     slayCursorVisibility(false);
 
     return 0;
 }
 
-uint16 loadRequiredElements(game* Game)
+uint16 loadScene0(slayEngine* Engine)
 {
-    Game->Engine = slayNewEngine("SlayEngineV1", 1920, 1080, 1, 2, 165);
+    scene0* scene;
 
-    Game->Volume = 10;
+    Engine->Scenes->Values[0] = malloc(sizeof(scene0));
+    scene = Engine->Scenes->Values[0];
 
-    return 0;
-}
+    scene->FontCrazyPixel = slayLoadFont("assets/crazy-pixel.ttf", 48);
+    scene->Volume = 10;
 
-uint16 loadAdditionalElements(game* Game)
-{
-    Game->Platforms = arrNew(5);
-    Game->Platforms->Values[0] = newPlatform(-200, 550, 1200, 180);
-    Game->Platforms->Values[1] = newPlatform(300, 450, 200, 30);
-    Game->Platforms->Values[2] = newPlatform(200, 350, 100, 30);
-    Game->Platforms->Values[3] = newPlatform(350, 250, 100, 30);
-    Game->Platforms->Values[4] = newPlatform(500, 150, 100, 30);
+    scene->Platforms = arrNew(5);
+    scene->TextureBackground = slayLoadTexture(Engine, "assets/background.jpg");
+    scene->TexturePlatform = slayLoadTexture(Engine, "assets/platform.png");
+    scene->Platforms->Values[0] = newPlatform(-200, 550, 1200, 180);
+    scene->Platforms->Values[1] = newPlatform(300, 450, 200, 30);
+    scene->Platforms->Values[2] = newPlatform(200, 350, 100, 30);
+    scene->Platforms->Values[3] = newPlatform(350, 250, 100, 30);
+    scene->Platforms->Values[4] = newPlatform(500, 150, 100, 30);
 
-    Game->Player = newPlayer();
-    Game->Player->X = 386;
-    Game->Player->Y = 410;
-    Game->Player->MinX = -200;
-    Game->Player->MaxX = 1000;
-    Game->Engine->Camera = slayNewCamera(&Game->Player->X, &Game->Player->Y, 14, 20, -960, -800, 1.5);
+    scene->Player = newPlayer();
+    scene->Player->TextureLeft = slayLoadTexture(Engine, "assets/player_left.png");
+    scene->Player->TextureRight = slayLoadTexture(Engine, "assets/player_right.png");
+    scene->Player->SoundFire = slayLoadSound("assets/player_fire.wav");
+    scene->Player->X = 386;
+    scene->Player->Y = 410;
+    scene->Player->MinX = -200;
+    scene->Player->MaxX = 1000;
+    Engine->Camera = slayNewCamera(&scene->Player->X, &scene->Player->Y, 14, 20, -960, -800, 1.5);
 
-    Game->Projectiles = arrNew(0);
-
-    return 0;
-}
-
-uint16 loadTextures(game* Game)
-{
-    Game->TextureBackground = slayLoadTexture(Game->Engine, "assets/background.jpg");
-    Game->TexturePlatform = slayLoadTexture(Game->Engine, "assets/platform.png");
-
-    Game->Player->TextureLeft = slayLoadTexture(Game->Engine, "assets/player_left.png");
-    Game->Player->TextureRight = slayLoadTexture(Game->Engine, "assets/player_right.png");
-
-    return 0;
-}
-
-uint16 loadFonts(game* Game)
-{
-    Game->FontCrazyPixel = slayLoadFont("assets/crazy-pixel.ttf", 48);
-
-    return 0;
-}
-
-uint16 loadSounds(game* Game)
-{
-    Game->Player->SoundFire = slayLoadSound("assets/player_fire.wav");
+    scene->Projectiles = arrNew(0);
 
     return 0;
 }

@@ -84,35 +84,34 @@ typedef struct
 
 typedef struct
 {
-    slayEngine* Engine;
-
+    TTF_Font* FontCrazyPixel;
     uint8 Volume;
 
     array Platforms;
-    player* Player;
-    array Projectiles;
-
-    TTF_Font* FontCrazyPixel;
     SDL_Texture* TextureBackground;
     SDL_Texture* TexturePlatform;
-} game;
+
+    player* Player;
+
+    array Projectiles;
+} scene0;
 
 //Load queue
-uint16 loadGame(game* Game);
+uint16 loadGame(slayEngine* Engine);
 
 //Update queue
-uint16 updateQueue(game* Game);
+uint16 updateQueue(slayEngine* Engine);
 
 //Render queue
-uint16 renderQueue(game* Game);
+uint16 renderQueue(slayEngine* Engine);
 
 //Player
 player* newPlayer();
-uint16 updatePlayer(game* Game);
+uint16 updatePlayer(player* Player, array Platforms, uint64 DeltaTime);
 
 //Level
 platform* newPlatform(double X, double Y, uint16 Width, uint16 Height);
 
 //Projectile
 projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX, uint16 Width, uint16 Height, double Speed, uint8 Facing, uint8 ColorR, uint8 ColorG, uint8 ColorB);
-uint16 updateProjectile(game* Game);
+uint16 updateProjectile(array Projectiles, player* Player, array Platforms, uint8 Volume, uint64 DeltaTime);

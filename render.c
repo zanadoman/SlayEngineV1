@@ -1,87 +1,67 @@
 #include "game.h"
 
-uint16 renderBackground(game* Game);
-uint16 renderHint(game* Game);
-uint16 renderPlatform(game* Game);
-uint16 renderProjectile(game* Game);
-uint16 renderPlayer(game* Game);
-uint16 renderFrameTime(game* Game);
+uint16 renderScene0(slayEngine* Engine, scene0* Scene);
+uint16 renderBackground(slayEngine* Engine);
+uint16 renderHint(slayEngine* Engine);
+uint16 renderPlatform(slayEngine* Engine);
+uint16 renderProjectile(slayEngine* Engine);
+uint16 renderPlayer(slayEngine* Engine);
+uint16 renderFrameTime(slayEngine* Engine);
 
-uint16 renderQueue(game* Game)
+uint16 renderQueue(slayEngine* Engine)
 {
-    slayRenderStart(Game->Engine);
+    slayRenderStart(Engine);
 
-    renderBackground(Game);
-    renderHint(Game);
-    renderPlatform(Game);
-    renderProjectile(Game);
-    renderPlayer(Game);
-    renderFrameTime(Game);
+    switch (Engine->CurrentScene)
+    {
+        case 0:
+            renderScene0(Engine, Engine->Scenes->Values[0]);
+            break;
+    }
     
-    slayRenderEnd(Game->Engine);
+    slayRenderEnd(Engine);
 
     return 0;
 }
 
-uint16 renderBackground(game* Game)
+uint16 renderScene0(slayEngine* Engine, scene0* Scene)
 {
-    slayRenderTexture(Game->Engine, 0, 0, Game->Engine->Display->Width, Game->Engine->Display->Height, Game->TextureBackground);
+    //Background
+    slayRenderTexture(Engine, 0, 0, Engine->Display->Width, Engine->Display->Height, Scene->TextureBackground);
 
-    return 0;
-}
+    //Hint
+    slayRenderTextCamera(Engine, Scene->FontCrazyPixel, "Movement: Left/Right arrow", -150, -100, 1, 0.5, 255, 255, 255, 255);
+    slayRenderTextCamera(Engine, Scene->FontCrazyPixel, "Jump: Up arrow", -150, -70, 1, 0.5, 255, 255, 255, 255);
+    slayRenderTextCamera(Engine, Scene->FontCrazyPixel, "Shoot: LCTRL", -150, -40, 1, 0.5, 255, 255, 255, 255);
 
-uint16 renderHint(game* Game)
-{
-    slayRenderTextCamera(Game->Engine, Game->FontCrazyPixel, "Movement: Left/Right arrow", -150, -100, 1, 0.5, 255, 255, 255, 255);
-    slayRenderTextCamera(Game->Engine, Game->FontCrazyPixel, "Jump: Up arrow", -150, -70, 1, 0.5, 255, 255, 255, 255);
-    slayRenderTextCamera(Game->Engine, Game->FontCrazyPixel, "Shoot: LCTRL", -150, -40, 1, 0.5, 255, 255, 255, 255);
-
-    return 0;
-}
-
-uint16 renderPlatform(game* Game)
-{
-    for (uint64 i = 0; i < Game->Platforms->Length; i++)
+    //Platforms
+    for (uint64 i = 0; i < Scene->Platforms->Length; i++)
     {
-        slayRender3DTextureCamera(Game->Engine, ((platform*)Game->Platforms->Values[i])->X, ((platform*)Game->Platforms->Values[i])->Y, ((platform*)Game->Platforms->Values[i])->Width, ((platform*)Game->Platforms->Values[i])->Height, 0.95, 0.1, 0.005, Game->TexturePlatform);
+        slayRender3DTextureCamera(Engine, ((platform*)Scene->Platforms->Values[i])->X, ((platform*)Scene->Platforms->Values[i])->Y, ((platform*)Scene->Platforms->Values[i])->Width, ((platform*)Scene->Platforms->Values[i])->Height, 0.95, 0.1, 0.005, Scene->TexturePlatform);
     }
 
-    return 0;
-}
-
-uint16 renderProjectile(game* Game)
-{
-    for (uint64 i = 0; i < Game->Projectiles->Length; i++)
+    //Projectiles
+    for (uint64 i = 0; i < Scene->Projectiles->Length; i++)
     {
-        slayRenderColorCamera(Game->Engine, ((projectile*)Game->Projectiles->Values[i])->X, ((projectile*)Game->Projectiles->Values[i])->Y, ((projectile*)Game->Projectiles->Values[i])->Width, ((projectile*)Game->Projectiles->Values[i])->Height, 1, ((projectile*)Game->Projectiles->Values[i])->ColorR, ((projectile*)Game->Projectiles->Values[i])->ColorG, ((projectile*)Game->Projectiles->Values[i])->ColorB, 255);
+        slayRenderColorCamera(Engine, ((projectile*)Scene->Projectiles->Values[i])->X, ((projectile*)Scene->Projectiles->Values[i])->Y, ((projectile*)Scene->Projectiles->Values[i])->Width, ((projectile*)Scene->Projectiles->Values[i])->Height, 1, ((projectile*)Scene->Projectiles->Values[i])->ColorR, ((projectile*)Scene->Projectiles->Values[i])->ColorG, ((projectile*)Scene->Projectiles->Values[i])->ColorB, 255);
     }
 
-    return 0;
-}
-
-uint16 renderPlayer(game* Game)
-{
-    if (Game->Player->Facing == 1)
+    //Player
+    if (Scene->Player->Facing == 1)
     {
-        slayRenderTextureCamera(Game->Engine, Game->Player->X, Game->Player->Y, Game->Player->Width, Game->Player->Height, 1, Game->Player->TextureRight);
+        slayRenderTextureCamera(Engine, Scene->Player->X, Scene->Player->Y, Scene->Player->Width, Scene->Player->Height, 1, Scene->Player->TextureRight);
     }
     else
     {
-        slayRenderTextureCamera(Game->Engine, Game->Player->X, Game->Player->Y, Game->Player->Width, Game->Player->Height, 1, Game->Player->TextureLeft);
+        slayRenderTextureCamera(Engine, Scene->Player->X, Scene->Player->Y, Scene->Player->Width, Scene->Player->Height, 1, Scene->Player->TextureLeft);
     }
 
-    return 0;
-}
-
-uint16 renderFrameTime(game* Game)
-{
+    //FrameTime
     string text;
 
     text = strNew();
-    UINTtoSTR(Game->Engine->DeltaTime, text);
+    UINTtoSTR(Engine->DeltaTime, text);
     strConcat(text, 3, "Frametime: ", text->String, "ms");
-    slayRenderText(Game->Engine, Game->FontCrazyPixel, text->String, 10, -10, 0.75, 255, 255, 255, 255);
+    slayRenderText(Engine, Scene->FontCrazyPixel, text->String, 10, -10, 0.75, 255, 255, 255, 255);
     strPurge(text);
-
-    return 0;
 }

@@ -1,6 +1,6 @@
 #include "game.h"
 
-uint16 playerProjectile(game* Game);
+uint16 playerProjectile(array Projectiles, player* Player, uint8 Volume);
 
 projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX, uint16 Width, uint16 Height, double Speed, uint8 Facing, uint8 ColorR, uint8 ColorG, uint8 ColorB)
 {
@@ -29,25 +29,25 @@ projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX
     return result;
 }
 
-uint16 updateProjectile(game* Game)
+uint16 updateProjectile(array Projectiles, player* Player, array Platforms, uint8 Volume, uint64 DeltaTime)
 {
     uint8 collision;
     uint64 j;
 
-    playerProjectile(Game);
+    playerProjectile(Projectiles, Player, Volume);
 
-    for (uint64 i = 0; i < Game->Projectiles->Length; i++)
+    for (uint64 i = 0; i < Projectiles->Length; i++)
     {
-        ((projectile*)Game->Projectiles->Values[i])->X += ((projectile*)Game->Projectiles->Values[i])->Speed * ((projectile*)Game->Projectiles->Values[i])->Facing * Game->Engine->DeltaTime;
+        ((projectile*)Projectiles->Values[i])->X += ((projectile*)Projectiles->Values[i])->Speed * ((projectile*)Projectiles->Values[i])->Facing * DeltaTime;
 
-        for (j = 0; j < Game->Platforms->Length; j++)
+        for (j = 0; j < Platforms->Length; j++)
         {
-            collision = slayCollision(((projectile*)Game->Projectiles->Values[i])->Hitbox, ((platform*)Game->Platforms->Values[j])->Hitbox);
+            collision = slayCollision(((projectile*)Projectiles->Values[i])->Hitbox, ((platform*)Platforms->Values[j])->Hitbox);
 
-            if (collision > 0 || ((projectile*)Game->Projectiles->Values[i])->X < ((projectile*)Game->Projectiles->Values[i])->MinX || ((projectile*)Game->Projectiles->Values[i])->X > ((projectile*)Game->Projectiles->Values[i])->MaxX - ((projectile*)Game->Projectiles->Values[i])->Width)
+            if (collision > 0 || ((projectile*)Projectiles->Values[i])->X < ((projectile*)Projectiles->Values[i])->MinX || ((projectile*)Projectiles->Values[i])->X > ((projectile*)Projectiles->Values[i])->MaxX - ((projectile*)Projectiles->Values[i])->Width)
             {
-                free(((projectile*)Game->Projectiles->Values[i])->Hitbox);
-                arrRemove(Game->Projectiles, i);
+                free(((projectile*)Projectiles->Values[i])->Hitbox);
+                arrRemove(Projectiles, i);
                 i--;
                 break;
             }
@@ -57,19 +57,19 @@ uint16 updateProjectile(game* Game)
     return 0;
 }
 
-uint16 playerProjectile(game* Game)
+uint16 playerProjectile(array Projectiles, player* Player, uint8 Volume)
 {
-    if (slayKey(Game->Player->KeyFire) && slayGetTicks() > Game->Player->ReloadTick + Game->Player->ReloadTime)
+    if (slayKey(Player->KeyFire) && slayGetTicks() > Player->ReloadTick + Player->ReloadTime)
     {
-        Game->Player->ReloadTick = slayGetTicks();
-        arrInsert(Game->Projectiles, Game->Projectiles->Length, newProjectile(Game->Player->X + Game->Player->ProjectileRelativeX * Game->Player->Facing, Game->Player->Y + Game->Player->ProjectileRelativeY, Game->Player->MinX, Game->Player->MaxX, Game->Player->ProjectileWidth, Game->Player->ProjectileHeight, Game->Player->ProjectileSpeed, Game->Player->Facing, Game->Player->ProjectileColorR, Game->Player->ProjectileColorG, Game->Player->ProjectileColorB));
-        if (Game->Player->Facing == 1)
+        Player->ReloadTick = slayGetTicks();
+        arrInsert(Projectiles, Projectiles->Length, newProjectile(Player->X + Player->ProjectileRelativeX * Player->Facing, Player->Y + Player->ProjectileRelativeY, Player->MinX, Player->MaxX, Player->ProjectileWidth, Player->ProjectileHeight, Player->ProjectileSpeed, Player->Facing, Player->ProjectileColorR, Player->ProjectileColorG, Player->ProjectileColorB));
+        if (Player->Facing == 1)
         {
-            slayPlaySound(Game->Player->SoundFire, 1, Game->Volume, 32, 255, 0);
+            slayPlaySound(Player->SoundFire, 1, Volume, 32, 255, 0);
         }
         else
         {
-            slayPlaySound(Game->Player->SoundFire, 1, Game->Volume, 255, 32, 0);
+            slayPlaySound(Player->SoundFire, 1, Volume, 255, 32, 0);
         }
     }
 

@@ -41,93 +41,93 @@ player* newPlayer()
     return result;
 }
 
-uint16 updatePlayer(game* Game)
+uint16 updatePlayer(player* Player, array Platforms, uint64 DeltaTime)
 {
     uint8 collision;
     logic falling;
     double zoom;
 
     //Horizontal movement
-    if (slayKey(Game->Player->KeyLeft))
+    if (slayKey(Player->KeyLeft))
     {
-        if (Game->Player->AccelerationX > -1)
+        if (Player->AccelerationX > -1)
         {
-            Game->Player->AccelerationX -= Game->Player->AccelerationRateX * Game->Engine->DeltaTime;
-            if (Game->Player->AccelerationX < -1)
+            Player->AccelerationX -= Player->AccelerationRateX * DeltaTime;
+            if (Player->AccelerationX < -1)
             {
-                Game->Player->AccelerationX = -1;
+                Player->AccelerationX = -1;
             }
         }
-        Game->Player->Facing = -1;
+        Player->Facing = -1;
     }
-    else if (slayKey(Game->Player->KeyRight))
+    else if (slayKey(Player->KeyRight))
     {
-        if (Game->Player->AccelerationX < 1)
+        if (Player->AccelerationX < 1)
         {
-            Game->Player->AccelerationX += Game->Player->AccelerationRateX * Game->Engine->DeltaTime;
-            if (Game->Player->AccelerationX > 1)
+            Player->AccelerationX += Player->AccelerationRateX * DeltaTime;
+            if (Player->AccelerationX > 1)
             {
-                Game->Player->AccelerationX = 1;
+                Player->AccelerationX = 1;
             }
         }
-        Game->Player->Facing = 1;
+        Player->Facing = 1;
     }
     else
     {
         //Deacceleration
-        if (Game->Player->AccelerationX < 0)
+        if (Player->AccelerationX < 0)
         {
-            Game->Player->AccelerationX += Game->Player->DeaccelerationRateX * Game->Engine->DeltaTime;
-            if (Game->Player->AccelerationX > 0)
+            Player->AccelerationX += Player->DeaccelerationRateX * DeltaTime;
+            if (Player->AccelerationX > 0)
             {
-                Game->Player->AccelerationX = 0;
+                Player->AccelerationX = 0;
             }
         }
-        else if (Game->Player->AccelerationX > 0)
+        else if (Player->AccelerationX > 0)
         {
-            Game->Player->AccelerationX -= Game->Player->DeaccelerationRateX * Game->Engine->DeltaTime;
-            if (Game->Player->AccelerationX < 0)
+            Player->AccelerationX -= Player->DeaccelerationRateX * DeltaTime;
+            if (Player->AccelerationX < 0)
             {
-                Game->Player->AccelerationX = 0;
+                Player->AccelerationX = 0;
             }
         }
     }
-    Game->Player->X += Game->Player->Speed * Game->Player->AccelerationX * Game->Engine->DeltaTime;
+    Player->X += Player->Speed * Player->AccelerationX * DeltaTime;
 
     //Vertical movement
-    Game->Player->Y += GRAVITY * Game->Player->AccelerationY * Game->Engine->DeltaTime;
+    Player->Y += GRAVITY * Player->AccelerationY * DeltaTime;
     falling = true;
-    for (uint64 i = 0; i < Game->Platforms->Length; i++)
+    for (uint64 i = 0; i < Platforms->Length; i++)
     {
-        collision = slayCollision(Game->Player->Hitbox, ((platform*)Game->Platforms->Values[i])->Hitbox);
+        collision = slayCollision(Player->Hitbox, ((platform*)Platforms->Values[i])->Hitbox);
 
         if (collision == BOTTOMLEFT || collision == BOTTOM || collision == BOTTOMRIGHT)
         {
             //Ground collision
-            if (Game->Player->AccelerationY >= 0)
+            if (Player->AccelerationY >= 0)
             {
-                Game->Player->Y = ((platform*)Game->Platforms->Values[i])->Y - Game->Player->Height;
-                Game->Player->AccelerationY = 0;
+                Player->Y = ((platform*)Platforms->Values[i])->Y - Player->Height;
+                Player->AccelerationY = 0;
                 falling = false;
             }
             //Side collision
             else if (collision == BOTTOMLEFT)
             {
-                Game->Player->X = ((platform*)Game->Platforms->Values[i])->X + ((platform*)Game->Platforms->Values[i])->Width;
-                Game->Player->AccelerationX = 0;
+                Player->X = ((platform*)Platforms->Values[i])->X + ((platform*)Platforms->Values[i])->Width;
+                Player->AccelerationX = 0;
             }
             else if (collision == BOTTOMRIGHT)
             {
-                Game->Player->X = ((platform*)Game->Platforms->Values[i])->X - Game->Player->Width;
-                Game->Player->AccelerationX = 0;
+                Player->X = ((platform*)Platforms->Values[i])->X - Player->Width;
+                Player->AccelerationX = 0;
             }
             
             break;
         }
         else if (collision == TOPLEFT || collision == TOP || collision == TOPRIGHT)
         {
-            Game->Player->Y = ((platform*)Game->Platforms->Values[i])->Y + ((platform*)Game->Platforms->Values[i])->Height + 1;
-            Game->Player->AccelerationY = 0;
+            Player->Y = ((platform*)Platforms->Values[i])->Y + ((platform*)Platforms->Values[i])->Height + 1;
+            Player->AccelerationY = 0;
             break;
         }
     }
@@ -135,25 +135,25 @@ uint16 updatePlayer(game* Game)
     //Falling or jumping
     if (falling)
     {
-        Game->Player->AccelerationY += Game->Player->DeaccelerationRateY * Game->Engine->DeltaTime;
-        if (Game->Player->AccelerationY > 1)
+        Player->AccelerationY += Player->DeaccelerationRateY * DeltaTime;
+        if (Player->AccelerationY > 1)
         {
-            Game->Player->AccelerationY = 1;
+            Player->AccelerationY = 1;
         }
     }
-    else if (slayKey(Game->Player->KeyJump))
+    else if (slayKey(Player->KeyJump))
     {
-        Game->Player->AccelerationY = -Game->Player->JumpHeight;
+        Player->AccelerationY = -Player->JumpHeight;
     }
 
     //Clamp player position
-    if (Game->Player->X < Game->Player->MinX)
+    if (Player->X < Player->MinX)
     {
-        Game->Player->X = Game->Player->MinX;
+        Player->X = Player->MinX;
     }
-    else if (Game->Player->X > Game->Player->MaxX - Game->Player->Width)
+    else if (Player->X > Player->MaxX - Player->Width)
     {
-        Game->Player->X = Game->Player->MaxX - Game->Player->Width;
+        Player->X = Player->MaxX - Player->Width;
     }
 
     return 0;

@@ -4,19 +4,21 @@
 
 int main(int argc, char *argv[])
 {
-    game* Game;
+    slayEngine* Engine;
 
-    Game = malloc(sizeof(game));
-    loadGame(Game);
+    Engine = slayNewEngine("SlayEngineV1 DEMO", 1920, 1080, 1, 2, 165);
+    loadGame(Engine);
 
-    while(slayEvent(Game->Engine))
+    Engine->CurrentScene = 0;
+
+    while(slayEvent(Engine))
     {
-        slayUpdateDeltaTime(Game->Engine);
+        slayUpdateDeltaTime(Engine);
 
-        updateQueue(Game);
-        renderQueue(Game);
+        updateQueue(Engine);
+        renderQueue(Engine);
 
-        slayCapFPS(Game->Engine);
+        slayCapFPS(Engine);
     }
 
     return 0;
