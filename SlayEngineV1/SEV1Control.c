@@ -1,6 +1,6 @@
 #include "SlayEngineV1.h"
 
-uint8 slayEvent(slayEngine* Engine)
+logic slayEvent(slayEngine* Engine)
 {
     slayMouseMovement(Engine);
     slayMouseButtons(Engine);
@@ -10,7 +10,7 @@ uint8 slayEvent(slayEngine* Engine)
     {
         if (Engine->Display->Event.type == SDL_QUIT)
         {
-            return 0;
+            return false;
         }
 
         if (Engine->Display->Event.type == SDL_MOUSEMOTION)
@@ -42,7 +42,7 @@ uint8 slayEvent(slayEngine* Engine)
         }
     }
 
-    return 1;
+    return true;
 }
 
 uint16 slayUpdateDeltaTime(slayEngine* Engine)

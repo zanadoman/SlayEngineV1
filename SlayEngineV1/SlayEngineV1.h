@@ -85,7 +85,7 @@ slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Scene
 
 //Control____________________________________________________________
 
-uint8 slayEvent(slayEngine* Engine);
+logic slayEvent(slayEngine* Engine);
 uint16 slayUpdateDeltaTime(slayEngine* Engine);
 uint16 slayCapFPS(slayEngine* Engine);
 uint64 slayRandom(uint64 Min, uint64 Max, double Seed);
