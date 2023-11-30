@@ -1,12 +1,6 @@
 #include "game.h"
 
 uint16 renderScene0(slayEngine* Engine, scene0* Scene);
-uint16 renderBackground(slayEngine* Engine);
-uint16 renderHint(slayEngine* Engine);
-uint16 renderPlatform(slayEngine* Engine);
-uint16 renderProjectile(slayEngine* Engine);
-uint16 renderPlayer(slayEngine* Engine);
-uint16 renderFrameTime(slayEngine* Engine);
 
 uint16 renderQueue(slayEngine* Engine)
 {
@@ -57,9 +51,7 @@ uint16 renderScene0(slayEngine* Engine, scene0* Scene)
     }
 
     //FrameTime
-    string text;
-
-    text = strNew();
+    string text = strNew();
     UINTtoSTR(Engine->DeltaTime, text);
     strConcat(text, 3, "Frametime: ", text->String, "ms");
     slayRenderText(Engine, Scene->FontCrazyPixel, text->String, 10, -10, 0.75, 255, 255, 255, 255);
