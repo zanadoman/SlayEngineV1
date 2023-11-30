@@ -48,7 +48,7 @@ uint16 updatePlayer(game* Game)
     double zoom;
 
     //Horizontal movement
-    if (slayKey(Game->Display, Game->Player->KeyLeft))
+    if (slayKey(Game->Player->KeyLeft))
     {
         if (Game->Player->AccelerationX > -1)
         {
@@ -60,7 +60,7 @@ uint16 updatePlayer(game* Game)
         }
         Game->Player->Facing = -1;
     }
-    else if (slayKey(Game->Display, Game->Player->KeyRight))
+    else if (slayKey(Game->Player->KeyRight))
     {
         if (Game->Player->AccelerationX < 1)
         {
@@ -141,7 +141,7 @@ uint16 updatePlayer(game* Game)
             Game->Player->AccelerationY = 1;
         }
     }
-    else if (slayKey(Game->Display, Game->Player->KeyJump))
+    else if (slayKey(Game->Player->KeyJump))
     {
         Game->Player->AccelerationY = -Game->Player->JumpHeight;
     }

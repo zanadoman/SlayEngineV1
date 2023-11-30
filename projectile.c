@@ -59,7 +59,7 @@ uint16 updateProjectile(game* Game)
 
 uint16 playerProjectile(game* Game)
 {
-    if (slayKey(Game->Display, Game->Player->KeyFire) && slayGetTicks() > Game->Player->ReloadTick + Game->Player->ReloadTime)
+    if (slayKey(Game->Player->KeyFire) && slayGetTicks() > Game->Player->ReloadTick + Game->Player->ReloadTime)
     {
         Game->Player->ReloadTick = slayGetTicks();
         arrInsert(Game->Projectiles, Game->Projectiles->Length, newProjectile(Game->Player->X + Game->Player->ProjectileRelativeX * Game->Player->Facing, Game->Player->Y + Game->Player->ProjectileRelativeY, Game->Player->MinX, Game->Player->MaxX, Game->Player->ProjectileWidth, Game->Player->ProjectileHeight, Game->Player->ProjectileSpeed, Game->Player->Facing, Game->Player->ProjectileColorR, Game->Player->ProjectileColorG, Game->Player->ProjectileColorB));

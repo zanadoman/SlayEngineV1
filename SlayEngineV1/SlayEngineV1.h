@@ -66,6 +66,18 @@ typedef struct
     sint8 Wheel;
 } slayMouse;
 
+typedef struct
+{
+    slayDisplay* Display;
+    slayCamera* Camera;
+    slayMouse* Mouse;
+
+    uint64 PrevTick;
+    uint64 DeltaTime;
+    uint64 MaxFPS;
+} slayEngine;
+
+
 //Common_____________________________________________________________
 
 slayDisplay* slayNew(char* Title, int Width, int Height);
@@ -106,7 +118,7 @@ uint16 slayStopSound(sint16 Channel);
 
 //Inputs_____________________________________________________________
 
-uint8 slayKey(slayDisplay* Display, uint64 Key);
+uint8 slayKey(uint64 Key);
 
 //Mouse______________________________________________________________
 
