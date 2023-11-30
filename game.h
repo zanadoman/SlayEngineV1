@@ -84,19 +84,16 @@ typedef struct
 
 typedef struct
 {
-    slayDisplay* Display;
-    slayMouse* Mouse;
+    slayEngine* Engine;
+
     array Threads;
-    uint64 DeltaTime;
-    uint64 DisplayPrevTick;
     uint8 Volume;
 
-    TTF_Font* FontCrazyPixel;
-    slayCamera* Camera;
     array Platforms;
     player* Player;
     array Projectiles;
 
+    TTF_Font* FontCrazyPixel;
     SDL_Texture* TextureBackground;
     SDL_Texture* TexturePlatform;
 } game;

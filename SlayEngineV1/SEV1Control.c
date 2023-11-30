@@ -1,77 +1,67 @@
 #include "SlayEngineV1.h"
 
-sint64 slayEvent(slayDisplay* Display, slayMouse* Mouse)
+uint8 slayEvent(slayEngine* Engine)
 {
-    uint32 MouseState;
+    slayMouseMovement(Engine);
+    slayMouseButtons(Engine);
+    Engine->Mouse->Wheel = 0;
 
-    if (Mouse != NULL)
+    while (SDL_PollEvent(&Engine->Display->Event))
     {
-        slayMouseMovement(Mouse);
-        slayMouseButtons(Mouse);
-        Mouse->Wheel = 0;
-    }
-
-    while (SDL_PollEvent(&Display->Event))
-    {
-        if (Display->Event.type == SDL_QUIT)
+        if (Engine->Display->Event.type == SDL_QUIT)
         {
             return 0;
         }
 
-        if (Mouse != NULL)
+        if (Engine->Display->Event.type == SDL_MOUSEMOTION)
         {
-            if (Display->Event.type == SDL_MOUSEMOTION)
+            Engine->Mouse->X = Engine->Display->Event.motion.x;
+            if (Engine->Mouse->X < 0)
             {
-                Mouse->X = Display->Event.motion.x;
-                if (Mouse->X < 0)
-                {
-                    Mouse->X = 0;
-                }
-                else if (Display->Width < Mouse->X)
-                {
-                    Mouse->X = Display->Width;
-                }
-
-                Mouse->Y = Display->Event.motion.y;
-                if (Mouse->Y < 0)
-                {
-                    Mouse->Y = 0;
-                }
-                else if (Display->Height < Mouse->Y)
-                {
-                    Mouse->Y = Display->Height;
-                }
+                Engine->Mouse->X = 0;
+            }
+            else if (Engine->Display->Width < Engine->Mouse->X)
+            {
+                Engine->Mouse->X = Engine->Display->Width;
             }
 
-            if (Display->Event.type == SDL_MOUSEWHEEL)
+            Engine->Mouse->Y = Engine->Display->Event.motion.y;
+            if (Engine->Mouse->Y < 0)
             {
-                Mouse->Wheel = Display->Event.wheel.y;
+                Engine->Mouse->Y = 0;
             }
+            else if (Engine->Display->Height < Engine->Mouse->Y)
+            {
+                Engine->Mouse->Y = Engine->Display->Height;
+            }
+        }
+
+        if (Engine->Display->Event.type == SDL_MOUSEWHEEL)
+        {
+            Engine->Mouse->Wheel = Engine->Display->Event.wheel.y;
         }
     }
 
     return 1;
 }
 
-uint64 slayDeltaTime(uint64* DisplayPrevTick)
+uint16 slayUpdateDeltaTime(slayEngine* Engine)
 {
-    uint64 DeltaTime;
-    
-    DeltaTime = SDL_GetTicks() - *DisplayPrevTick;
-    if (DeltaTime > 40)
+    Engine->DeltaTime = SDL_GetTicks() - Engine->PrevTick;
+    if (Engine->DeltaTime > 40)
     {
-        DeltaTime = 40;
+        Engine->DeltaTime = 40;
     }
-    *DisplayPrevTick = SDL_GetTicks();
+    Engine->PrevTick = SDL_GetTicks();
 
-    return DeltaTime;
+    return 0;
 }
 
-uint16 slayFPS(uint64 FPS, uint64 DisplayPrevTick)
+uint16 slayCapFPS(slayEngine* Engine)
 {
     sint64 delay;
 
-    delay = (sint64)round((DisplayPrevTick + 1000.0 / FPS) - SDL_GetTicks());
+    delay = (sint64)round((Engine->PrevTick + 1000.0 / Engine->MaxFPS) - SDL_GetTicks());
     if (delay > 0)
     {
         SDL_Delay(delay);

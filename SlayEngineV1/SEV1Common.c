@@ -1,21 +1,29 @@
 #include "SlayEngineV1.h"
 
-slayDisplay* slayNew(char* Title, int Width, int Height)
+slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint16 MaxFPS)
 {
-    slayDisplay* result;
+    slayEngine* result;
 
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
     TTF_Init();
     Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 4096);
 
-    result = malloc(sizeof(slayDisplay));
+    result = malloc(sizeof(slayEngine));
     
-    result->Width = Width;
-    result->Height = Height;
-    result->Window = SDL_CreateWindow(Title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, result->Width, result->Height, SDL_WINDOW_FULLSCREEN_DESKTOP | SDL_WINDOW_RESIZABLE | SDL_WINDOW_INPUT_GRABBED);
-    result->Renderer = SDL_CreateRenderer(result->Window, -1, SDL_RENDERER_ACCELERATED);
-    
-    SDL_RenderSetLogicalSize(result->Renderer, Width, Height);
+    result->Display = malloc(sizeof(slayDisplay));
+    result->Display->Width = Width;
+    result->Display->Height = Height;
+    result->Display->Window = SDL_CreateWindow(Title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, result->Display->Width, result->Display->Height, SDL_WINDOW_FULLSCREEN_DESKTOP | SDL_WINDOW_RESIZABLE | SDL_WINDOW_INPUT_GRABBED);
+    result->Display->Renderer = SDL_CreateRenderer(result->Display->Window, -1, SDL_RENDERER_ACCELERATED);  
+    SDL_RenderSetLogicalSize(result->Display->Renderer, Width, Height);
+
+    result->Camera = NULL;
+
+    result->Mouse = malloc(sizeof(slayMouse));
+
+    result->PrevTick = 0;
+    result->DeltaTime = 0;
+    result->MaxFPS = MaxFPS;
 
     return result;
 }

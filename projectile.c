@@ -38,7 +38,7 @@ uint16 updateProjectile(game* Game)
 
     for (uint64 i = 0; i < Game->Projectiles->Length; i++)
     {
-        ((projectile*)Game->Projectiles->Values[i])->X += ((projectile*)Game->Projectiles->Values[i])->Speed * ((projectile*)Game->Projectiles->Values[i])->Facing * Game->DeltaTime;
+        ((projectile*)Game->Projectiles->Values[i])->X += ((projectile*)Game->Projectiles->Values[i])->Speed * ((projectile*)Game->Projectiles->Values[i])->Facing * Game->Engine->DeltaTime;
 
         for (j = 0; j < Game->Platforms->Length; j++)
         {

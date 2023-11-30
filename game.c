@@ -1,8 +1,3 @@
-/*
-Engine object bevezetése
-Demo scenekre osztása
-*/
-
 #include "game.h"
 
 #undef main
@@ -14,14 +9,14 @@ int main(int argc, char *argv[])
     Game = malloc(sizeof(game));
     loadGame(Game);
 
-    while(slayEvent(Game->Display, Game->Mouse))
+    while(slayEvent(Game->Engine))
     {
-        Game->DeltaTime = slayDeltaTime(&Game->DisplayPrevTick);
+        slayUpdateDeltaTime(Game->Engine);
 
         updateQueue(Game);
         renderQueue(Game);
 
-        slayFPS(165, Game->DisplayPrevTick);
+        slayCapFPS(Game->Engine);
     }
 
     return 0;

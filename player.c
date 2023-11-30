@@ -52,7 +52,7 @@ uint16 updatePlayer(game* Game)
     {
         if (Game->Player->AccelerationX > -1)
         {
-            Game->Player->AccelerationX -= Game->Player->AccelerationRateX * Game->DeltaTime;
+            Game->Player->AccelerationX -= Game->Player->AccelerationRateX * Game->Engine->DeltaTime;
             if (Game->Player->AccelerationX < -1)
             {
                 Game->Player->AccelerationX = -1;
@@ -64,7 +64,7 @@ uint16 updatePlayer(game* Game)
     {
         if (Game->Player->AccelerationX < 1)
         {
-            Game->Player->AccelerationX += Game->Player->AccelerationRateX * Game->DeltaTime;
+            Game->Player->AccelerationX += Game->Player->AccelerationRateX * Game->Engine->DeltaTime;
             if (Game->Player->AccelerationX > 1)
             {
                 Game->Player->AccelerationX = 1;
@@ -77,7 +77,7 @@ uint16 updatePlayer(game* Game)
         //Deacceleration
         if (Game->Player->AccelerationX < 0)
         {
-            Game->Player->AccelerationX += Game->Player->DeaccelerationRateX * Game->DeltaTime;
+            Game->Player->AccelerationX += Game->Player->DeaccelerationRateX * Game->Engine->DeltaTime;
             if (Game->Player->AccelerationX > 0)
             {
                 Game->Player->AccelerationX = 0;
@@ -85,17 +85,17 @@ uint16 updatePlayer(game* Game)
         }
         else if (Game->Player->AccelerationX > 0)
         {
-            Game->Player->AccelerationX -= Game->Player->DeaccelerationRateX * Game->DeltaTime;
+            Game->Player->AccelerationX -= Game->Player->DeaccelerationRateX * Game->Engine->DeltaTime;
             if (Game->Player->AccelerationX < 0)
             {
                 Game->Player->AccelerationX = 0;
             }
         }
     }
-    Game->Player->X += Game->Player->Speed * Game->Player->AccelerationX * Game->DeltaTime;
+    Game->Player->X += Game->Player->Speed * Game->Player->AccelerationX * Game->Engine->DeltaTime;
 
     //Vertical movement
-    Game->Player->Y += GRAVITY * Game->Player->AccelerationY * Game->DeltaTime;
+    Game->Player->Y += GRAVITY * Game->Player->AccelerationY * Game->Engine->DeltaTime;
     falling = true;
     for (uint64 i = 0; i < Game->Platforms->Length; i++)
     {
@@ -135,7 +135,7 @@ uint16 updatePlayer(game* Game)
     //Falling or jumping
     if (falling)
     {
-        Game->Player->AccelerationY += Game->Player->DeaccelerationRateY * Game->DeltaTime;
+        Game->Player->AccelerationY += Game->Player->DeaccelerationRateY * Game->Engine->DeltaTime;
         if (Game->Player->AccelerationY > 1)
         {
             Game->Player->AccelerationY = 1;

@@ -1,45 +1,40 @@
 #include "SlayEngineV1.h"
 
-slayMouse* slayNewMouse()
+uint16 slayMouseMovement(slayEngine* Engine)
 {
-    return malloc(sizeof(slayMouse));
-}
-
-uint16 slayMouseMovement(slayMouse* Mouse)
-{
-    SDL_GetRelativeMouseState(&Mouse->MovementX, &Mouse->MovementY);
+    SDL_GetRelativeMouseState(&Engine->Mouse->MovementX, &Engine->Mouse->MovementY);
 
     return 0;
 }
 
-uint16 slayMouseButtons(slayMouse* Mouse)
+uint16 slayMouseButtons(slayEngine* Engine)
 {
     uint32 MouseState;
 
     MouseState = SDL_GetMouseState(NULL, NULL);
     if (MouseState & 1)
     {
-        Mouse->LMB = true;
+        Engine->Mouse->LMB = true;
     }
     else
     {
-        Mouse->LMB = false;
+        Engine->Mouse->LMB = false;
     }
     if (MouseState & 2)
     {
-        Mouse->MMB = true;
+        Engine->Mouse->MMB = true;
     }
     else
     {
-        Mouse->MMB = false;
+        Engine->Mouse->MMB = false;
     }
     if (MouseState & 4)
     {
-        Mouse->RMB = true;
+        Engine->Mouse->RMB = true;
     }
     else
     {
-        Mouse->RMB = false;
+        Engine->Mouse->RMB = false;
     }
 
     return 0;
@@ -52,7 +47,7 @@ uint16 slayCursorVisibility(logic Visibility)
     return 0;
 }
 
-logic slayCursorCollision(slayMouse* Mouse, slayHitbox* Hitbox)
+logic slayCursorCollision(slayEngine* Engine, slayHitbox* Hitbox)
 {
     sint32 x, y;
     uint16 width, height;
@@ -62,7 +57,7 @@ logic slayCursorCollision(slayMouse* Mouse, slayHitbox* Hitbox)
     width = (sint32)round(*Hitbox->ObjectX + Hitbox->LowerRightX) - x;
     height = (sint32)round(*Hitbox->ObjectY + Hitbox->LowerRightY) - y;
 
-    if ((x <= Mouse->X && Mouse->X <= x + width) && (y <= Mouse->Y && Mouse->Y <= y + height))
+    if ((x <= Engine->Mouse->X && Engine->Mouse->X <= x + width) && (y <= Engine->Mouse->Y && Engine->Mouse->Y <= y + height))
     {
         return true;
     }
@@ -70,7 +65,7 @@ logic slayCursorCollision(slayMouse* Mouse, slayHitbox* Hitbox)
     return false;
 }
 
-logic slayCursorCollisionCamera(slayMouse* Mouse, slayHitbox* Hitbox, double Distance, slayCamera* Camera)
+logic slayCursorCollisionCamera(slayEngine* Engine, slayHitbox* Hitbox, double Distance)
 {
     sint32 x, y;
     uint16 width, height;
@@ -80,12 +75,12 @@ logic slayCursorCollisionCamera(slayMouse* Mouse, slayHitbox* Hitbox, double Dis
     width = (sint32)round(*Hitbox->ObjectX + Hitbox->LowerRightX) - x;
     height = (sint32)round(*Hitbox->ObjectY + Hitbox->LowerRightY) - y;
 
-    x = (sint32)round((x - (*Camera->OriginX + Camera->CenterX + (Camera->RelativeX / (Camera->Zoom * Distance)))) * (Camera->Zoom * Distance));
-    y = (sint32)round((y - (*Camera->OriginY + Camera->CenterY + (Camera->RelativeY / (Camera->Zoom * Distance)))) * (Camera->Zoom * Distance));
-    width = width * (Camera->Zoom * Distance);
-    height = height * (Camera->Zoom * Distance);
+    x = (sint32)round((x - (*Engine->Camera->OriginX + Engine->Camera->CenterX + (Engine->Camera->RelativeX / (Engine->Camera->Zoom * Distance)))) * (Engine->Camera->Zoom * Distance));
+    y = (sint32)round((y - (*Engine->Camera->OriginY + Engine->Camera->CenterY + (Engine->Camera->RelativeY / (Engine->Camera->Zoom * Distance)))) * (Engine->Camera->Zoom * Distance));
+    width = width * (Engine->Camera->Zoom * Distance);
+    height = height * (Engine->Camera->Zoom * Distance);
 
-    if ((x <= Mouse->X && Mouse->X <= x + width) && (y <= Mouse->Y && Mouse->Y <= y + height))
+    if ((x <= Engine->Mouse->X && Engine->Mouse->X <= x + width) && (y <= Engine->Mouse->Y && Engine->Mouse->Y <= y + height))
     {
         return true;
     }

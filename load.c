@@ -22,10 +22,7 @@ uint16 loadGame(game* Game)
 
 uint16 loadRequiredElements(game* Game)
 {
-    Game->Display = slayNew("SlayEngineV1 Demo", 1920, 1080);
-    Game->Mouse = slayNewMouse();
-
-    Game->DisplayPrevTick = 0;
+    Game->Engine = slayNewEngine("SlayEngineV1", 1920, 1080, 165);
     
     Game->Threads = arrNew(2);
     for (uint64 i = 0; i < Game->Threads->Length; i++)
@@ -52,8 +49,7 @@ uint16 loadAdditionalElements(game* Game)
     Game->Player->Y = 410;
     Game->Player->MinX = -200;
     Game->Player->MaxX = 1000;
-
-    Game->Camera = slayNewCamera(&Game->Player->X, &Game->Player->Y, 14, 20, -960, -800, 1.5);
+    Game->Engine->Camera = slayNewCamera(&Game->Player->X, &Game->Player->Y, 14, 20, -960, -800, 1.5);
 
     Game->Projectiles = arrNew(0);
 
@@ -62,11 +58,11 @@ uint16 loadAdditionalElements(game* Game)
 
 uint16 loadTextures(game* Game)
 {
-    Game->TextureBackground = slayLoadTexture(Game->Display, "assets/background.jpg");
-    Game->TexturePlatform = slayLoadTexture(Game->Display, "assets/platform.png");
+    Game->TextureBackground = slayLoadTexture(Game->Engine, "assets/background.jpg");
+    Game->TexturePlatform = slayLoadTexture(Game->Engine, "assets/platform.png");
 
-    Game->Player->TextureLeft = slayLoadTexture(Game->Display, "assets/player_left.png");
-    Game->Player->TextureRight = slayLoadTexture(Game->Display, "assets/player_right.png");
+    Game->Player->TextureLeft = slayLoadTexture(Game->Engine, "assets/player_left.png");
+    Game->Player->TextureRight = slayLoadTexture(Game->Engine, "assets/player_right.png");
 
     return 0;
 }

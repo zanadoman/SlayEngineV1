@@ -80,34 +80,34 @@ typedef struct
 
 //Common_____________________________________________________________
 
-slayDisplay* slayNew(char* Title, int Width, int Height);
+slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint16 MaxFPS);
 
 //Control____________________________________________________________
 
-sint64 slayEvent(slayDisplay* Display, slayMouse* Mouse);
-uint64 slayDeltaTime(uint64 *DisplayPrevTick);
-uint16 slayFPS(uint64 FPS, uint64 DisplayPrevTick);
+uint8 slayEvent(slayEngine* Engine);
+uint16 slayUpdateDeltaTime(slayEngine* Engine);
+uint16 slayCapFPS(slayEngine* Engine);
 uint64 slayRandom(uint64 Min, uint64 Max, double Seed);
 
 //Render_____________________________________________________________
 
-SDL_Texture* slayLoadTexture(slayDisplay* Display, char* Path);
+SDL_Texture* slayLoadTexture(slayEngine* Engine, char* Path);
 TTF_Font* slayLoadFont(char* Path, int Size);
 
-uint16 slayRenderStart(slayDisplay* Display);
-uint16 slayRenderEnd(slayDisplay* Display);
+uint16 slayRenderStart(slayEngine* Engine);
+uint16 slayRenderEnd(slayEngine* Engine);
 
-uint16 slayRenderColor(slayDisplay* Display, double X, double Y, uint16 Width, uint16 Height, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA);
-uint16 slayRenderColorCamera(slayDisplay* Display, double X, double Y, uint16 Width, uint16 Height, double Distance, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA, slayCamera* Camera);
-uint16 slayRender3DColorCamera(slayDisplay* Display, double X, double Y, uint16 Width, uint16 Height, double FirstLayer, double Depth, double Quality, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA, slayCamera* Camera);
+uint16 slayRenderColor(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA);
+uint16 slayRenderColorCamera(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, double Distance, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA);
+uint16 slayRender3DColorCamera(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, double FirstLayer, double Depth, double Quality, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA);
 
-uint16 slayRenderTexture(slayDisplay* Display, double X, double Y, uint16 Width, uint16 Height, SDL_Texture* Texture);
-uint16 slayRenderTextureCamera(slayDisplay* Display, double X, double Y, uint16 Width, uint16 Height, double Distance, SDL_Texture* Texture, slayCamera* Camera);
-uint16 slayRender3DTextureCamera(slayDisplay* Display, double X, double Y, uint16 Width, uint16 Height, double FirstLayer, double Depth, double Quality, SDL_Texture* Texture, slayCamera* Camera);
+uint16 slayRenderTexture(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, SDL_Texture* Texture);
+uint16 slayRenderTextureCamera(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, double Distance, SDL_Texture* Texture);
+uint16 slayRender3DTextureCamera(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, double FirstLayer, double Depth, double Quality, SDL_Texture* Texture);
 
-uint16 slayRenderText(slayDisplay* Display, TTF_Font* Font, char* Characters, double X, double Y,double Size, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA);
-uint16 slayRenderTextCamera(slayDisplay* Display, TTF_Font* Font, char* Characters, double X, double Y,double Size, double Distance, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA, slayCamera* Camera);
-uint16 slayRender3DTextCamera(slayDisplay* Display, TTF_Font* Font, char* Characters, double X, double Y, double Size, double FirstLayer, double Depth, double Quality, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA, slayCamera* Camera);
+uint16 slayRenderText(slayEngine* Engine, TTF_Font* Font, char* Characters, double X, double Y, double Size, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA);
+uint16 slayRenderTextCamera(slayEngine* Engine, TTF_Font* Font, char* Characters, double X, double Y, double Size, double Distance, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA);
+uint16 slayRender3DTextCamera(slayEngine* Engine, TTF_Font* Font, char* Characters, double X, double Y, double Size, double FirstLayer, double Depth, double Quality, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA);
 
 //Audio______________________________________________________________
 
@@ -122,12 +122,11 @@ uint8 slayKey(uint64 Key);
 
 //Mouse______________________________________________________________
 
-slayMouse* slayNewMouse();
-uint16 slayMouseMovement(slayMouse* Mouse);
-uint16 slayMouseButtons(slayMouse* Mouse);
+uint16 slayMouseMovement(slayEngine* Engine);
+uint16 slayMouseButtons(slayEngine* Engine);
 uint16 slayCursorVisibility(logic Visibility);
-logic slayCursorCollision(slayMouse* Mouse, slayHitbox* Hitbox);
-logic slayCursorCollisionCamera(slayMouse* Mouse, slayHitbox* Hitbox, double Distance, slayCamera* Camera);
+logic slayCursorCollision(slayEngine* Engine, slayHitbox* Hitbox);
+logic slayCursorCollisionCamera(slayEngine* Engine, slayHitbox* Hitbox, double Distance);
 
 //Hitbox_____________________________________________________________
 
@@ -137,5 +136,4 @@ uint8 slayCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2);
 //Camera_____________________________________________________________
 
 slayCamera* slayNewCamera(double* OriginX, double* OriginY, double CenterX, double CenterY, double RelativeX, double RelativeY, double Zoom);
-uint16 slayUpdateCamera(slayCamera* Camera);
-uint16 slayApplyCamera(SDL_Rect* Object, slayCamera* Camera, double X, double Y, uint16 Width, uint16 Height, double Distance);
+uint16 slayApplyCamera(slayEngine* Engine, SDL_Rect* Object, double X, double Y, uint16 Width, uint16 Height, double Distance);
