@@ -6,33 +6,7 @@ sint64 slayEvent(slayDisplay* Display, slayMouse* Mouse)
 
     if (Mouse != NULL)
     {
-        MouseState = SDL_GetMouseState(NULL, NULL);
-
-        if (MouseState & 1)
-        {
-            Mouse->LMB = true;
-        }
-        else
-        {
-            Mouse->LMB = false;
-        }
-        if (MouseState & 2)
-        {
-            Mouse->MMB = true;
-        }
-        else
-        {
-            Mouse->MMB = false;
-        }
-        if (MouseState & 4)
-        {
-            Mouse->RMB = true;
-        }
-        else
-        {
-            Mouse->RMB = false;
-        }
-
+        slayMouseButtons(Mouse);
         Mouse->Wheel = 0;
     }
 
