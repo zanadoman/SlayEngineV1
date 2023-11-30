@@ -40,13 +40,6 @@ uint16 slayMouseButtons(slayEngine* Engine)
     return 0;
 }
 
-uint16 slayCursorVisibility(logic Visibility)
-{
-    SDL_ShowCursor(Visibility);
-    
-    return 0;
-}
-
 logic slayCursorCollision(slayEngine* Engine, slayHitbox* Hitbox)
 {
     sint32 x, y;

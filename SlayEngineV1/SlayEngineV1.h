@@ -6,6 +6,7 @@
 #include <pthread.h>
 
 #define slayGetTicks SDL_GetTicks
+#define slayMouseRelative SDL_SetRelativeMouseMode
 
 #define TOP 3
 #define RIGHT 10
@@ -127,7 +128,6 @@ uint8 slayKey(uint64 Key);
 
 uint16 slayMouseMovement(slayEngine* Engine);
 uint16 slayMouseButtons(slayEngine* Engine);
-uint16 slayCursorVisibility(logic Visibility);
 logic slayCursorCollision(slayEngine* Engine, slayHitbox* Hitbox);
 logic slayCursorCollisionCamera(slayEngine* Engine, slayHitbox* Hitbox, double Distance);
 

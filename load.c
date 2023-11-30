@@ -8,7 +8,7 @@ uint16 loadQueue(slayEngine* Engine)
     loadGame(Engine);
     loadScene0(Engine);
 
-    slayCursorVisibility(false);
+    //slayMouseRelative(true);
 
     return 0;
 }
