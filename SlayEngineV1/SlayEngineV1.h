@@ -131,6 +131,12 @@ uint16 slayMouseButtons(slayEngine* Engine);
 logic slayCursorCollision(slayEngine* Engine, slayHitbox* Hitbox);
 logic slayCursorCollisionCamera(slayEngine* Engine, slayHitbox* Hitbox, double Distance);
 
+//Vector_____________________________________________________________
+
+uint16 slayVectorLength(double X1, double Y1, double X2, double Y2, double* Length);
+uint16 slayVectorTerminal(double X1, double Y1, double* X2, double* Y2, double Length, double Angle);
+uint16 slayVectorAngle(double X1, double Y1, double X2, double Y2, double* Angle);
+
 //Hitbox_____________________________________________________________
 
 slayHitbox* slayNewHitbox(double* ObjectX, double* ObjectY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY);
