@@ -10,9 +10,9 @@
 -Hitbox/Collision detection: hitbox with hitbox, cursor with hitbox\
 -Vector calculations\
 -Loading: textures, sounds, fonts\
--Control/Event: close event, deltatime, fps capping, pseudo randoms\
+-Control/Event: close event, deltatime, fps capping, pseudo randoms
 
 # Other features
 The engine can run in windowed fullscreen and in windowed mode as well.\
 It can support any screen resolution or aspect ratio, it can adapt to it\
-while keeping the game's aspect ratio by using black bars.\
+while keeping the game's aspect ratio by using black bars.
