@@ -1,9 +1,17 @@
-#include "inc/SDL.h"
-#include "inc/SDL_image.h"
-#include "inc/SDL_ttf.h"
-#include "inc/SDL_mixer.h"
+//Linux port
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_mixer.h>
+//Windows port
+//#include "inc/SDL.h"
+//#include "inc/SDL_image.h"
+//#include "inc/SDL_ttf.h"
+//#include "inc/SDL_mixer.h"
+
 #include "NeoTypes/NeoTypes.h"
 #include <pthread.h>
+
 
 #define slayGetTicks SDL_GetTicks
 #define slayMouseRelative SDL_SetRelativeMouseMode
@@ -17,6 +25,7 @@
 #define BOTTOMLEFT 4
 #define BOTTOMRIGHT 8
 #define ALL 15
+
 
 typedef struct
 {
