@@ -1,8 +1,8 @@
 #include "game.h"
 
-uint16 playerProjectile(array Projectiles, player* Player, uint8 Volume);
+uint16 playerProjectile(slayEngine* Engine, array Projectiles, player* Player, uint8 Volume);
 
-projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX, uint16 Width, uint16 Height, double Speed, uint8 Facing, uint8 ColorR, uint8 ColorG, uint8 ColorB)
+projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX, uint16 Width, uint16 Height, double Speed, double Angle, uint8 ColorR, uint8 ColorG, uint8 ColorB)
 {
     projectile* result;
 
@@ -18,7 +18,7 @@ projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX
     result->Height = Height;
 
     result->Speed = Speed;
-    result->Facing = Facing;
+    result->Angle = Angle;
 
     result->ColorR = ColorR;
     result->ColorG = ColorG;
@@ -29,16 +29,16 @@ projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX
     return result;
 }
 
-uint16 updateProjectile(array Projectiles, player* Player, array Platforms, uint8 Volume, uint64 DeltaTime)
+uint16 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, array Platforms, uint8 Volume, uint64 DeltaTime)
 {
     uint8 collision;
     uint64 j;
 
-    playerProjectile(Projectiles, Player, Volume);
+    playerProjectile(Engine, Projectiles, Player, Volume);
 
     for (uint64 i = 0; i < Projectiles->Length; i++)
     {
-        ((projectile*)Projectiles->Values[i])->X += ((projectile*)Projectiles->Values[i])->Speed * ((projectile*)Projectiles->Values[i])->Facing * DeltaTime;
+        slayVectorTerminal(((projectile*)Projectiles->Values[i])->X, ((projectile*)Projectiles->Values[i])->Y, &((projectile*)Projectiles->Values[i])->X, &((projectile*)Projectiles->Values[i])->Y, ((projectile*)Projectiles->Values[i])->Speed * DeltaTime, ((projectile*)Projectiles->Values[i])->Angle);
 
         for (j = 0; j < Platforms->Length; j++)
         {
@@ -57,13 +57,18 @@ uint16 updateProjectile(array Projectiles, player* Player, array Platforms, uint
     return 0;
 }
 
-uint16 playerProjectile(array Projectiles, player* Player, uint8 Volume)
+uint16 playerProjectile(slayEngine* Engine, array Projectiles, player* Player, uint8 Volume)
 {
-    if (slayKey(Player->KeyFire) && slayGetTicks() > Player->ReloadTick + Player->ReloadTime)
+    SDL_Rect object;
+    double angle;
+
+    if (Engine->Mouse->LMB && slayGetTicks() > Player->ReloadTick + Player->ReloadTime)
     {
+        slayApplyCamera(Engine, &object, Player->X, Player->Y, Player->Width, Player->Height, 1);
+        slayVectorAngle(object.x, object.y, Engine->Mouse->X, Engine->Mouse->Y, &angle);
         Player->ReloadTick = slayGetTicks();
-        arrInsert(Projectiles, Projectiles->Length, newProjectile(Player->X + Player->ProjectileRelativeX * Player->Facing, Player->Y + Player->ProjectileRelativeY, Player->MinX, Player->MaxX, Player->ProjectileWidth, Player->ProjectileHeight, Player->ProjectileSpeed, Player->Facing, Player->ProjectileColorR, Player->ProjectileColorG, Player->ProjectileColorB));
-        if (Player->Facing == 1)
+        arrInsert(Projectiles, Projectiles->Length, newProjectile(Player->X + Player->ProjectileRelativeX, Player->Y + Player->ProjectileRelativeY, Player->MinX, Player->MaxX, Player->ProjectileWidth, Player->ProjectileHeight, Player->ProjectileSpeed, angle, Player->ProjectileColorR, Player->ProjectileColorG, Player->ProjectileColorB));
+        if (270 < angle || angle <= 90)
         {
             slayPlaySound(Player->SoundFire, 1, Volume, 32, 255, 0);
         }

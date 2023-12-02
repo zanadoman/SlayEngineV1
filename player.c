@@ -22,14 +22,13 @@ player* newPlayer()
     result->ReloadTime = 200;
     result->ReloadTick = 0;
 
-    result->KeyLeft = SDL_SCANCODE_LEFT;
-    result->KeyRight = SDL_SCANCODE_RIGHT;
-    result->KeyJump = SDL_SCANCODE_UP;
-    result->KeyFire = SDL_SCANCODE_LCTRL;
+    result->KeyLeft = SDL_SCANCODE_A;
+    result->KeyRight = SDL_SCANCODE_D;
+    result->KeyJump = SDL_SCANCODE_SPACE;
 
     result->Hitbox = slayNewHitbox(&result->X, &result->Y, 0, 0, result->Width, result->Height);
 
-    result->ProjectileRelativeX = 30;
+    result->ProjectileRelativeX = 9;
     result->ProjectileRelativeY = 14;
     result->ProjectileWidth = 10;
     result->ProjectileHeight = 4;

@@ -50,6 +50,8 @@ uint16 loadScene0(slayEngine* Engine)
     scene->Player->Y = 410;
     scene->Player->MinX = -200;
     scene->Player->MaxX = 1000;
+    scene->Player->MinY = -500;
+    scene->Player->MaxY = 600;
     Engine->Camera = slayNewCamera(&scene->Player->X, &scene->Player->Y, 14, 20, -960, -800, 1.5);
 
     scene->Projectiles = arrNew(0);
