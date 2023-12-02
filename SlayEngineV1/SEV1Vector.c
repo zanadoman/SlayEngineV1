@@ -7,7 +7,7 @@ uint16 slayVectorLength(double X1, double Y1, double X2, double Y2, double* Leng
     return 0;
 }
 
-uint16 slayVectorTerminal(double X1, double Y1, double* X2, double* Y2, double Length, double Angle)
+uint16 slayVectorTranslate(double X1, double Y1, double* X2, double* Y2, double Length, double Angle)
 {
     *X2 = X1 + Length * cos(Angle * PI / 180);
     *Y2 = Y1 + Length * sin(Angle * PI / 180);

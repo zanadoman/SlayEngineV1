@@ -40,7 +40,7 @@ uint16 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, a
 
     for (uint64 i = 0; i < Projectiles->Length; i++)
     {
-        slayVectorTerminal(((projectile*)Projectiles->Values[i])->X, ((projectile*)Projectiles->Values[i])->Y, &((projectile*)Projectiles->Values[i])->X, &((projectile*)Projectiles->Values[i])->Y, ((projectile*)Projectiles->Values[i])->Speed * DeltaTime, ((projectile*)Projectiles->Values[i])->Angle);
+        slayVectorTranslate(((projectile*)Projectiles->Values[i])->X, ((projectile*)Projectiles->Values[i])->Y, &((projectile*)Projectiles->Values[i])->X, &((projectile*)Projectiles->Values[i])->Y, ((projectile*)Projectiles->Values[i])->Speed * DeltaTime, ((projectile*)Projectiles->Values[i])->Angle);
 
         for (j = 0; j < Platforms->Length; j++)
         {
@@ -77,11 +77,11 @@ uint16 playerProjectile(slayEngine* Engine, array Projectiles, player* Player, u
             arrInsert(Projectiles, Projectiles->Length, newProjectile(Player->X + Player->ProjectileRelativeX, Player->Y + Player->ProjectileRelativeY, Player->MinX, Player->MaxX, Player->MinY, Player->MaxY, Player->ProjectileWidth, Player->ProjectileHeight, Player->ProjectileSpeed, angle, Player->ProjectileColorR, Player->ProjectileColorG, Player->ProjectileColorB));
             if (270 < angle || angle < 90)
             {
-                slayPlaySound(Player->SoundFire, 1, Volume, 32, 255, 0);
+                slayPlaySound(Player->SoundFire, 1, Volume, 64, 255, 0);
             }
             else
             {
-                slayPlaySound(Player->SoundFire, 1, Volume, 255, 32, 0);
+                slayPlaySound(Player->SoundFire, 1, Volume, 255, 64, 0);
             }
         }
     }
