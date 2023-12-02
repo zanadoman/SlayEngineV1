@@ -9,8 +9,8 @@ uint16 slayVectorLength(double X1, double Y1, double X2, double Y2, double* Leng
 
 uint16 slayVectorTerminal(double X1, double Y1, double* X2, double* Y2, double Length, double Angle)
 {
-    *X2 = cos(Angle * 180 / PI);
-    *Y2 = sin(Angle * 180 / PI);
+    *X2 = X1 + Length * cos(Angle * PI / 180);
+    *Y2 = Y1 + Length * sin(Angle * PI / 180);
 
     return 0;
 }
