@@ -1,5 +1,6 @@
 /*
 Textúra forgatások && áttetszőség
+Egér inputok standardizálása
 */
 
 #include "game.h"
