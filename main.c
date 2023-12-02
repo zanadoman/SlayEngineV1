@@ -1,5 +1,5 @@
 /*
-Textúra forgatások
+Textúra forgatások && áttetszőség
 */
 
 #include "game.h"
