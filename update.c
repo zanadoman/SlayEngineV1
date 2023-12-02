@@ -19,10 +19,10 @@ uint16 updateQueue(slayEngine* Engine)
 
 uint16 updateScene0(slayEngine* Engine)
 {
-    pthread_create((pthread_t*)Engine->Threads->Values[0], NULL, updatePlayerThread, (void*)Engine);
-    pthread_create((pthread_t*)Engine->Threads->Values[1], NULL, updateProjectileThread, (void*)Engine);
-    pthread_join(*(pthread_t*)Engine->Threads->Values[0], NULL);
-    pthread_join(*(pthread_t*)Engine->Threads->Values[1], NULL);
+    slayThreadStart(Engine, 0, updatePlayerThread);
+    slayThreadStart(Engine, 1, updateProjectileThread);
+    slayThreadWaitExit(Engine, 0);
+    slayThreadWaitExit(Engine, 1);
 }
 
 void* updatePlayerThread(void* Engine)
@@ -37,7 +37,7 @@ void* updatePlayerThread(void* Engine)
             break;
     }
 
-    pthread_exit(NULL);
+    slayThreadExit;
 }
 
 void* updateProjectileThread(void* Engine)
@@ -52,5 +52,5 @@ void* updateProjectileThread(void* Engine)
             break;
     }
 
-    pthread_exit(NULL);
+    slayThreadExit;
 }

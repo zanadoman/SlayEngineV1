@@ -25,6 +25,8 @@
 #define slaySound Mix_Chunk
 #define slayObject SDL_Rect
 
+#define slayThreadExit pthread_exit(NULL)
+
 #define TOP 3
 #define RIGHT 10
 #define BOTTOM 12
@@ -165,3 +167,8 @@ uint8 slayCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2);
 
 slayCamera* slayNewCamera(double* OriginX, double* OriginY, double CenterX, double CenterY, double RelativeX, double RelativeY, double Zoom);
 uint16 slayApplyCamera(slayEngine* Engine, SDL_Rect* Object, double X, double Y, uint16 Width, uint16 Height, double Distance);
+
+//Thread_____________________________________________________________
+
+uint16 slayThreadStart(slayEngine* Engine, uint64 ID, void* Function);
+uint16 slayThreadWaitExit(slayEngine* Engine, uint64 ID);

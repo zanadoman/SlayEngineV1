@@ -1,7 +1,3 @@
-/*
-Egér inputok standardizálása
-*/
-
 #include "game.h"
 
 #undef main
