@@ -1,5 +1,5 @@
 /*
-Textúra forgatások && áttetszőség
+Áttetszőség
 Egér inputok standardizálása
 */
 
