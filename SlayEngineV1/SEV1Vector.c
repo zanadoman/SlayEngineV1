@@ -12,7 +12,7 @@ uint16 slayVectorTerminal(double X1, double Y1, double* X2, double* Y2, double L
     return 0;
 }
 
-uint16 slayVectorAngle(double X1, double Y1, double X2, double Y2, double* Angle) //vissza kell tolni nullába
+uint16 slayVectorAngle(double X1, double Y1, double X2, double Y2, double* Angle)
 {
     double length;
     double angle;
