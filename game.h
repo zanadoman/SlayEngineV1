@@ -33,9 +33,9 @@ typedef struct
     uint64 KeyJump;
     uint64 KeyFire;
 
-    SDL_Texture* TextureBase;
+    slayTexture* TextureBase;
 
-    Mix_Chunk* SoundFire;
+    slaySound* SoundFire;
 
     slayHitbox* Hitbox;
 
@@ -82,8 +82,8 @@ typedef struct
 typedef struct
 {
     array Platforms;
-    SDL_Texture* TextureBackground;
-    SDL_Texture* TexturePlatform;
+    slayTexture* TextureBackground;
+    slayTexture* TexturePlatform;
 
     player* Player;
 
@@ -94,7 +94,7 @@ typedef struct
 {
     TTF_Font* FontCrazyPixel;
     uint8 Volume;
-    SDL_Texture* TextureProjectile;
+    slayTexture* TextureProjectile;
 } game;
 
 

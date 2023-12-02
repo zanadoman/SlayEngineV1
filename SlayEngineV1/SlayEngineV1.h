@@ -17,6 +17,14 @@
 #define slayGetTicks SDL_GetTicks
 #define slayMouseRelative SDL_SetRelativeMouseMode
 
+#define slayFlipNone SDL_FLIP_NONE
+#define slayFlipHorizontal SDL_FLIP_HORIZONTAL
+#define slayFlipVertical SDL_FLIP_VERTICAL
+
+#define slayTexture SDL_Texture
+#define slaySound Mix_Chunk
+#define slayObject SDL_Rect
+
 #define TOP 3
 #define RIGHT 10
 #define BOTTOM 12

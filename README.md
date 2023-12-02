@@ -4,11 +4,11 @@
 # Features
 -Keyboard input\
 -Mouse input: buttons, wheel, absolute and relative movements\
--Render: colored rectangles, textures, texts, layers, fake 3D\
+-Render: colored rectangles, textures, texts, layers, fake 3D, rotation, flipping\
 -Camera: zoom level, anchor to coordinates or ingame objects\
 -Audio: stereo, loop, timed\
 -Hitbox/Collision detection: hitbox with hitbox, cursor with hitbox\
--Vector calculations\
+-Vector calculations: length, scalar, translate, angle\
 -Loading: textures, sounds, fonts\
 -Control/Event: close event, deltatime, fps capping, pseudo randoms\
 -Scenes

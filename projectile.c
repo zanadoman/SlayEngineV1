@@ -57,7 +57,7 @@ uint16 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, a
 
 uint16 playerProjectile(slayEngine* Engine, array Projectiles, player* Player, uint8 Volume)
 {
-    SDL_Rect object;
+    slayObject object;
     double angle;
 
     if (Engine->Mouse->LMB && slayGetTicks() > Player->ReloadTick + Player->ReloadTime)
