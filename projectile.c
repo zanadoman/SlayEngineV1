@@ -2,7 +2,7 @@
 
 uint16 playerProjectile(slayEngine* Engine, array Projectiles, player* Player, uint8 Volume);
 
-projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX, uint16 Width, uint16 Height, double Speed, double Angle, uint8 ColorR, uint8 ColorG, uint8 ColorB)
+projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX, double MinY, double MaxY, uint16 Width, uint16 Height, double Speed, double Angle, uint8 ColorR, uint8 ColorG, uint8 ColorB)
 {
     projectile* result;
 
@@ -13,6 +13,8 @@ projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX
 
     result->MinX = MinX;
     result->MaxX = MaxX;
+    result->MixY = MinY;
+    result->MaxY = MaxY;
 
     result->Width = Width;
     result->Height = Height;
@@ -44,7 +46,7 @@ uint16 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, a
         {
             collision = slayCollision(((projectile*)Projectiles->Values[i])->Hitbox, ((platform*)Platforms->Values[j])->Hitbox);
 
-            if (collision > 0 || ((projectile*)Projectiles->Values[i])->X < ((projectile*)Projectiles->Values[i])->MinX || ((projectile*)Projectiles->Values[i])->X > ((projectile*)Projectiles->Values[i])->MaxX - ((projectile*)Projectiles->Values[i])->Width)
+            if (collision > 0 || (((projectile*)Projectiles->Values[i])->X < ((projectile*)Projectiles->Values[i])->MinX - ((projectile*)Projectiles->Values[i])->Width || ((projectile*)Projectiles->Values[i])->MaxX < ((projectile*)Projectiles->Values[i])->X) || (((projectile*)Projectiles->Values[i])->Y < ((projectile*)Projectiles->Values[i])->MixY - ((projectile*)Projectiles->Values[i])->Height || ((projectile*)Projectiles->Values[i])->MaxY < ((projectile*)Projectiles->Values[i])->Y))
             {
                 free(((projectile*)Projectiles->Values[i])->Hitbox);
                 arrRemove(Projectiles, i);
@@ -68,15 +70,19 @@ uint16 playerProjectile(slayEngine* Engine, array Projectiles, player* Player, u
         object.x += object.w / 2;
         object.y += object.h / 2;
         slayVectorAngle(object.x, object.y, Engine->Mouse->X, Engine->Mouse->Y, &angle);
-        Player->ReloadTick = slayGetTicks();
-        arrInsert(Projectiles, Projectiles->Length, newProjectile(Player->X + Player->ProjectileRelativeX, Player->Y + Player->ProjectileRelativeY, Player->MinX, Player->MaxX, Player->ProjectileWidth, Player->ProjectileHeight, Player->ProjectileSpeed, angle, Player->ProjectileColorR, Player->ProjectileColorG, Player->ProjectileColorB));
-        if (270 < angle || angle <= 90)
+
+        if ((Player->Facing == -1 && 90 < angle && angle < 270) || (Player->Facing == 1 && (270 < angle || angle < 90)))
         {
-            slayPlaySound(Player->SoundFire, 1, Volume, 32, 255, 0);
-        }
-        else
-        {
-            slayPlaySound(Player->SoundFire, 1, Volume, 255, 32, 0);
+            Player->ReloadTick = slayGetTicks();
+            arrInsert(Projectiles, Projectiles->Length, newProjectile(Player->X + Player->ProjectileRelativeX, Player->Y + Player->ProjectileRelativeY, Player->MinX, Player->MaxX, Player->MinY, Player->MaxY, Player->ProjectileWidth, Player->ProjectileHeight, Player->ProjectileSpeed, angle, Player->ProjectileColorR, Player->ProjectileColorG, Player->ProjectileColorB));
+            if (270 < angle || angle < 90)
+            {
+                slayPlaySound(Player->SoundFire, 1, Volume, 32, 255, 0);
+            }
+            else
+            {
+                slayPlaySound(Player->SoundFire, 1, Volume, 255, 32, 0);
+            }
         }
     }
 

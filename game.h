@@ -68,6 +68,8 @@ typedef struct
 
     double MinX;
     double MaxX;
+    double MixY;
+    double MaxY;
 
     uint16 Width;
     uint16 Height;
@@ -117,5 +119,5 @@ uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms, uint64 
 platform* newPlatform(double X, double Y, uint16 Width, uint16 Height);
 
 //Projectile
-projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX, uint16 Width, uint16 Height, double Speed, double Angle, uint8 ColorR, uint8 ColorG, uint8 ColorB);
+projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX, double MinY, double MaxY, uint16 Width, uint16 Height, double Speed, double Angle, uint8 ColorR, uint8 ColorG, uint8 ColorB);
 uint16 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, array Platforms, uint8 Volume, uint64 DeltaTime);

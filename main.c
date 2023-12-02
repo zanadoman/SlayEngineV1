@@ -1,6 +1,5 @@
 /*
 Textúra forgatások
-Player lőjön a kurzor irányába kattintással
 */
 
 #include "game.h"
