@@ -105,6 +105,7 @@ typedef struct
 //Common_____________________________________________________________
 
 slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Scenes, uint64 Threads, uint16 MaxFPS);
+uint16 slayLogo();
 
 //Control____________________________________________________________
 

@@ -1,5 +1,7 @@
 #include "SlayEngineV1.h"
 
+uint16 slayLogo(slayEngine* Engine);
+
 slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Scenes, uint64 Threads, uint16 MaxFPS)
 {
     slayEngine* result;
@@ -36,5 +38,29 @@ slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Scene
 
     result->Game = NULL;
 
+    slayLogo(result);
+
     return result;
+}
+
+uint16 slayLogo(slayEngine* Engine)
+{
+    SDL_Texture* logo;
+    SDL_Rect object;
+
+    logo = slayLoadTexture(Engine, "assets/engine/logo.jpg");
+
+    object.x = 0;
+    object.y = 0;
+    object.w = Engine->Display->Width;
+    object.h = Engine->Display->Height;
+
+    slayRenderStart(Engine);
+    SDL_RenderCopy(Engine->Display->Renderer, logo, NULL, &object);
+    slayRenderEnd(Engine);
+    SDL_DestroyTexture(logo);
+
+    SDL_Delay(2000);
+
+    return 0;
 }
