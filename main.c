@@ -17,9 +17,9 @@ int main(int argc, char *argv[])
 
     Engine->CurrentScene = 0;
 
-    double angle;
-    slayVectorAngle(12, 12, 12, 6, &angle);
-    printf("%lf\n", angle);
+    double X2, Y2;
+    slayVectorTerminal(0, 0, &X2, &Y2, 7, 45);
+    printf("X2: %lf, Y2: %lf\n", X2, Y2);
 
     while(slayEvent(Engine))
     {
