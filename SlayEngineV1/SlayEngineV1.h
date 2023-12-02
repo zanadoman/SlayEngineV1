@@ -12,6 +12,7 @@
 #include "NeoTypes/NeoTypes.h"
 #include <pthread.h>
 
+#define PI 3.141592653589793
 
 #define slayGetTicks SDL_GetTicks
 #define slayMouseRelative SDL_SetRelativeMouseMode
@@ -145,6 +146,7 @@ logic slayCursorCollisionCamera(slayEngine* Engine, slayHitbox* Hitbox, double D
 uint16 slayVectorLength(double X1, double Y1, double X2, double Y2, double* Length);
 uint16 slayVectorTerminal(double X1, double Y1, double* X2, double* Y2, double Length, double Angle);
 uint16 slayVectorAngle(double X1, double Y1, double X2, double Y2, double* Angle);
+uint16 slayVectorScalar(double X1, double Y1, double X2, double Y2, double* Scalar);
 
 //Hitbox_____________________________________________________________
 

@@ -17,6 +17,10 @@ int main(int argc, char *argv[])
 
     Engine->CurrentScene = 0;
 
+    double angle;
+    slayVectorAngle(12, 12, 12, 6, &angle);
+    printf("%lf\n", angle);
+
     while(slayEvent(Engine))
     {
         slayUpdateDeltaTime(Engine);
