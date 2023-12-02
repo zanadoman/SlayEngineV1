@@ -17,9 +17,9 @@
 #define slayGetTicks SDL_GetTicks
 #define slayMouseRelative SDL_SetRelativeMouseMode
 
-#define slayFlipNone SDL_FLIP_NONE
-#define slayFlipHorizontal SDL_FLIP_HORIZONTAL
-#define slayFlipVertical SDL_FLIP_VERTICAL
+#define slayFlipNONE SDL_FLIP_NONE
+#define slayFlipHORIZONTAL SDL_FLIP_HORIZONTAL
+#define slayFlipVERTICAL SDL_FLIP_VERTICAL
 
 #define slayTexture SDL_Texture
 #define slaySound Mix_Chunk
@@ -27,15 +27,15 @@
 
 #define slayThreadExit pthread_exit(NULL)
 
-#define TOP 3
-#define RIGHT 10
-#define BOTTOM 12
-#define LEFT 5
-#define TOPLEFT 1
-#define TOPRIGHT 2
-#define BOTTOMLEFT 4
-#define BOTTOMRIGHT 8
-#define ALL 15
+#define slayCollTOP 3
+#define slayCollRIGHT 10
+#define slayCollBOTTOM 12
+#define slayCollLEFT 5
+#define slayCollTOPLEFT 1
+#define slayCollTOPRIGHT 2
+#define slayCollBOTTOMLEFT 4
+#define slayCollBOTTOMRIGHT 8
+#define slayCollALL 15
 
 
 typedef struct
