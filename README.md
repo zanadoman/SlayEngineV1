@@ -4,7 +4,7 @@
 # Features
 -Keyboard input\
 -Mouse input: buttons, wheel, absolute and relative movements\
--Render: colored rectangles, textures, texts, layers, fake 3D, rotation, flipping\
+-Render: colored rectangles, textures, texts, layers, fake 3D, rotation, flipping, opacity\
 -Camera: zoom level, anchor to coordinates or ingame objects\
 -Audio: stereo, loop, timed\
 -Hitbox/Collision detection: hitbox with hitbox, cursor with hitbox\
