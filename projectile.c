@@ -2,7 +2,7 @@
 
 uint16 playerProjectile(slayEngine* Engine, array Projectiles, player* Player, uint8 Volume);
 
-projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX, double MinY, double MaxY, uint16 Width, uint16 Height, double Speed, double Angle, uint8 ColorR, uint8 ColorG, uint8 ColorB)
+projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX, double MinY, double MaxY, uint16 Width, uint16 Height, double Speed, double Angle)
 {
     projectile* result;
 
@@ -21,10 +21,6 @@ projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX
 
     result->Speed = Speed;
     result->Angle = Angle;
-
-    result->ColorR = ColorR;
-    result->ColorG = ColorG;
-    result->ColorB = ColorB;
 
     result->Hitbox = slayNewHitbox(&result->X, &result->Y, 0, 0, result->Width, result->Height);
 
@@ -74,7 +70,7 @@ uint16 playerProjectile(slayEngine* Engine, array Projectiles, player* Player, u
         if ((Player->Facing == -1 && 90 < angle && angle < 270) || (Player->Facing == 1 && (270 < angle || angle < 90)))
         {
             Player->ReloadTick = slayGetTicks();
-            arrInsert(Projectiles, Projectiles->Length, newProjectile(Player->X + Player->ProjectileRelativeX, Player->Y + Player->ProjectileRelativeY, Player->MinX, Player->MaxX, Player->MinY, Player->MaxY, Player->ProjectileWidth, Player->ProjectileHeight, Player->ProjectileSpeed, angle, Player->ProjectileColorR, Player->ProjectileColorG, Player->ProjectileColorB));
+            arrInsert(Projectiles, Projectiles->Length, newProjectile(Player->X + Player->ProjectileRelativeX, Player->Y + Player->ProjectileRelativeY, Player->MinX, Player->MaxX, Player->MinY, Player->MaxY, Player->ProjectileWidth, Player->ProjectileHeight, Player->ProjectileSpeed, angle));
             if (270 < angle || angle < 90)
             {
                 slayPlaySound(Player->SoundFire, 1, Volume, 64, 255, 0);
