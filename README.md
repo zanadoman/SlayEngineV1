@@ -10,7 +10,8 @@
 -Hitbox/Collision detection: hitbox with hitbox, cursor with hitbox\
 -Vector calculations\
 -Loading: textures, sounds, fonts\
--Control/Event: close event, deltatime, fps capping, pseudo randoms
+-Control/Event: close event, deltatime, fps capping, pseudo randoms\
+-Scenes
 
 # Other features
 The engine can run in windowed fullscreen and in windowed mode as well.\
