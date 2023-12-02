@@ -140,7 +140,7 @@ uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms, uint64 
             Player->AccelerationY = 1;
         }
     }
-    else if (slayKey(Player->KeyJump) || (slayCursorCollisionCamera(Engine, Player->Hitbox, 1) && Engine->Mouse->LMB))
+    else if (slayKey(Player->KeyJump))
     {
         Player->AccelerationY = -Player->JumpHeight;
     }

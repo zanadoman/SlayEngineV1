@@ -24,9 +24,9 @@ uint16 renderScene0(slayEngine* Engine, scene0* Scene)
     slayRenderTexture(Engine, 0, 0, Engine->Display->Width, Engine->Display->Height, Scene->TextureBackground);
 
     //Hint
-    slayRenderTextCamera(Engine, ((game*)Engine->Game)->FontCrazyPixel, "Movement: Left/Right arrow", -150, -100, 1, 0.5, 255, 255, 255, 255);
-    slayRenderTextCamera(Engine, ((game*)Engine->Game)->FontCrazyPixel, "Jump: Up arrow", -150, -70, 1, 0.5, 255, 255, 255, 255);
-    slayRenderTextCamera(Engine, ((game*)Engine->Game)->FontCrazyPixel, "Shoot: LCTRL", -150, -40, 1, 0.5, 255, 255, 255, 255);
+    slayRenderTextCamera(Engine, ((game*)Engine->Game)->FontCrazyPixel, "Movement: A/D", -150, -100, 1, 0.5, 255, 255, 255, 255);
+    slayRenderTextCamera(Engine, ((game*)Engine->Game)->FontCrazyPixel, "Jump: SPACE", -150, -70, 1, 0.5, 255, 255, 255, 255);
+    slayRenderTextCamera(Engine, ((game*)Engine->Game)->FontCrazyPixel, "Shoot: LMB", -150, -40, 1, 0.5, 255, 255, 255, 255);
 
     //Platforms
     for (uint64 i = 0; i < Scene->Platforms->Length; i++)

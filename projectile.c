@@ -65,6 +65,8 @@ uint16 playerProjectile(slayEngine* Engine, array Projectiles, player* Player, u
     if (Engine->Mouse->LMB && slayGetTicks() > Player->ReloadTick + Player->ReloadTime)
     {
         slayApplyCamera(Engine, &object, Player->X, Player->Y, Player->Width, Player->Height, 1);
+        object.x += object.w / 2;
+        object.y += object.h / 2;
         slayVectorAngle(object.x, object.y, Engine->Mouse->X, Engine->Mouse->Y, &angle);
         Player->ReloadTick = slayGetTicks();
         arrInsert(Projectiles, Projectiles->Length, newProjectile(Player->X + Player->ProjectileRelativeX, Player->Y + Player->ProjectileRelativeY, Player->MinX, Player->MaxX, Player->ProjectileWidth, Player->ProjectileHeight, Player->ProjectileSpeed, angle, Player->ProjectileColorR, Player->ProjectileColorG, Player->ProjectileColorB));
