@@ -111,7 +111,7 @@ uint16 renderQueue(slayEngine* Engine);
 
 //Player
 player* newPlayer();
-uint16 updatePlayer(player* Player, array Platforms, uint64 DeltaTime);
+uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms, uint64 DeltaTime);
 
 //Level
 platform* newPlatform(double X, double Y, uint16 Width, uint16 Height);

@@ -41,7 +41,7 @@ player* newPlayer()
     return result;
 }
 
-uint16 updatePlayer(player* Player, array Platforms, uint64 DeltaTime)
+uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms, uint64 DeltaTime)
 {
     uint8 collision;
     logic falling;
@@ -141,7 +141,7 @@ uint16 updatePlayer(player* Player, array Platforms, uint64 DeltaTime)
             Player->AccelerationY = 1;
         }
     }
-    else if (slayKey(Player->KeyJump))
+    else if (slayKey(Player->KeyJump) || (slayCursorCollisionCamera(Engine, Player->Hitbox, 1) && Engine->Mouse->LMB))
     {
         Player->AccelerationY = -Player->JumpHeight;
     }

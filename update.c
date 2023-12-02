@@ -33,7 +33,7 @@ void* updatePlayerThread(void* Engine)
     switch (((slayEngine*)Engine)->CurrentScene)
     {
         case 0:
-            updatePlayer(((scene0*)engine->Scenes->Values[0])->Player, ((scene0*)engine->Scenes->Values[0])->Platforms, engine->DeltaTime);
+            updatePlayer(engine, ((scene0*)engine->Scenes->Values[0])->Player, ((scene0*)engine->Scenes->Values[0])->Platforms, engine->DeltaTime);
             break;
     }
 

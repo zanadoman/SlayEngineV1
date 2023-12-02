@@ -42,15 +42,14 @@ uint16 slayMouseButtons(slayEngine* Engine)
 
 logic slayCursorCollision(slayEngine* Engine, slayHitbox* Hitbox)
 {
-    sint32 x, y;
-    uint16 width, height;
+    SDL_Rect object;
 
-    x = (sint32)round(*Hitbox->ObjectX + Hitbox->UpperLeftX);
-    y = (sint32)round(*Hitbox->ObjectY + Hitbox->UpperLeftY);
-    width = (sint32)round(*Hitbox->ObjectX + Hitbox->LowerRightX) - x;
-    height = (sint32)round(*Hitbox->ObjectY + Hitbox->LowerRightY) - y;
+    object.x = (sint32)round(*Hitbox->ObjectX + Hitbox->UpperLeftX);
+    object.y = (sint32)round(*Hitbox->ObjectY + Hitbox->UpperLeftY);
+    object.w = (sint32)round(*Hitbox->ObjectX + Hitbox->LowerRightX) - object.x;
+    object.h = (sint32)round(*Hitbox->ObjectY + Hitbox->LowerRightY) - object.y;
 
-    if ((x <= Engine->Mouse->X && Engine->Mouse->X <= x + width) && (y <= Engine->Mouse->Y && Engine->Mouse->Y <= y + height))
+    if ((object.x <= Engine->Mouse->X && Engine->Mouse->X <= object.x + object.w) && (object.y <= Engine->Mouse->Y && Engine->Mouse->Y <= object.y + object.h))
     {
         return true;
     }
@@ -60,20 +59,11 @@ logic slayCursorCollision(slayEngine* Engine, slayHitbox* Hitbox)
 
 logic slayCursorCollisionCamera(slayEngine* Engine, slayHitbox* Hitbox, double Distance)
 {
-    sint32 x, y;
-    uint16 width, height;
+    SDL_Rect object;
 
-    x = (sint32)round(*Hitbox->ObjectX + Hitbox->UpperLeftX);
-    y = (sint32)round(*Hitbox->ObjectY + Hitbox->UpperLeftY);
-    width = (sint32)round(*Hitbox->ObjectX + Hitbox->LowerRightX) - x;
-    height = (sint32)round(*Hitbox->ObjectY + Hitbox->LowerRightY) - y;
+    slayApplyCamera(Engine, &object, (sint32)round(*Hitbox->ObjectX + Hitbox->UpperLeftX), (sint32)round(*Hitbox->ObjectY + Hitbox->UpperLeftY), (sint32)round(*Hitbox->ObjectX + Hitbox->LowerRightX) - (sint32)round(*Hitbox->ObjectX + Hitbox->UpperLeftX), (sint32)round(*Hitbox->ObjectY + Hitbox->LowerRightY) - (sint32)round(*Hitbox->ObjectY + Hitbox->UpperLeftY), Distance);
 
-    x = (sint32)round((x - (*Engine->Camera->OriginX + Engine->Camera->CenterX + (Engine->Camera->RelativeX / (Engine->Camera->Zoom * Distance)))) * (Engine->Camera->Zoom * Distance));
-    y = (sint32)round((y - (*Engine->Camera->OriginY + Engine->Camera->CenterY + (Engine->Camera->RelativeY / (Engine->Camera->Zoom * Distance)))) * (Engine->Camera->Zoom * Distance));
-    width = width * (Engine->Camera->Zoom * Distance);
-    height = height * (Engine->Camera->Zoom * Distance);
-
-    if ((x <= Engine->Mouse->X && Engine->Mouse->X <= x + width) && (y <= Engine->Mouse->Y && Engine->Mouse->Y <= y + height))
+    if ((object.x <= Engine->Mouse->X && Engine->Mouse->X <= object.x + object.w) && (object.y <= Engine->Mouse->Y && Engine->Mouse->Y <= object.y + object.h))
     {
         return true;
     }
