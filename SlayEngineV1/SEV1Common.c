@@ -46,19 +46,13 @@ slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Scene
 uint16 slayLogo(slayEngine* Engine)
 {
     SDL_Texture* logo;
-    SDL_Rect object;
 
     logo = slayLoadTexture(Engine, "assets/engine/logo.jpg");
 
-    object.x = 0;
-    object.y = 0;
-    object.w = Engine->Display->Width;
-    object.h = Engine->Display->Height;
-
     slayRenderStart(Engine);
-    SDL_RenderCopy(Engine->Display->Renderer, logo, NULL, &object);
-    slayRenderEnd(Engine);
+    SDL_RenderCopy(Engine->Display->Renderer, logo, NULL, NULL);
     SDL_DestroyTexture(logo);
+    slayRenderEnd(Engine);
 
     SDL_Delay(2000);
 
