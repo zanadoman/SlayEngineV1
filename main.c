@@ -1,6 +1,5 @@
 /*
-Vektorok
-Forgatások
+Textúra forgatások
 Player lőjön a kurzor irányába kattintással
 */
 
@@ -16,10 +15,6 @@ int main(int argc, char *argv[])
     loadQueue(Engine);
 
     Engine->CurrentScene = 0;
-
-    double X2, Y2;
-    slayVectorTerminal(12, 12, &X2, &Y2, 6, 270);
-    printf("X2: %lf, Y2: %lf\n", X2, Y2);
 
     while(slayEvent(Engine))
     {
