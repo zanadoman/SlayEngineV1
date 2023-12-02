@@ -1,5 +1,4 @@
 /*
-Áttetszőség
 Egér inputok standardizálása
 */
 

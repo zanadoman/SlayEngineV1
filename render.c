@@ -21,7 +21,7 @@ uint16 renderQueue(slayEngine* Engine)
 uint16 renderScene0(slayEngine* Engine, scene0* Scene)
 {
     //Background
-    slayRenderTexture(Engine, 0, 0, Engine->Display->Width, Engine->Display->Height, 0, slayFlipNone, Scene->TextureBackground);
+    slayRenderTexture(Engine, 0, 0, Engine->Display->Width, Engine->Display->Height, 0, slayFlipNone, Scene->TextureBackground, 255);
 
     //Hint
     slayRenderTextCamera(Engine, ((game*)Engine->Game)->FontCrazyPixel, "Movement: A/D", -150, -100, 1, 0, slayFlipNone, 0.5, 255, 255, 255, 255);
@@ -31,23 +31,23 @@ uint16 renderScene0(slayEngine* Engine, scene0* Scene)
     //Platforms
     for (uint64 i = 0; i < Scene->Platforms->Length; i++)
     {
-        slayRender3DTextureCamera(Engine, ((platform*)Scene->Platforms->Values[i])->X, ((platform*)Scene->Platforms->Values[i])->Y, ((platform*)Scene->Platforms->Values[i])->Width, ((platform*)Scene->Platforms->Values[i])->Height, 0, slayFlipNone, 0.95, 0.1, 0.005, Scene->TexturePlatform);
+        slayRender3DTextureCamera(Engine, ((platform*)Scene->Platforms->Values[i])->X, ((platform*)Scene->Platforms->Values[i])->Y, ((platform*)Scene->Platforms->Values[i])->Width, ((platform*)Scene->Platforms->Values[i])->Height, 0, slayFlipNone, 0.95, 0.1, 0.005, Scene->TexturePlatform, 255);
     }
 
     //Projectiles
     for (uint64 i = 0; i < Scene->Projectiles->Length; i++)
     {
-        slayRenderTextureCamera(Engine, ((projectile*)Scene->Projectiles->Values[i])->X, ((projectile*)Scene->Projectiles->Values[i])->Y, ((projectile*)Scene->Projectiles->Values[i])->Width, ((projectile*)Scene->Projectiles->Values[i])->Height, ((projectile*)Scene->Projectiles->Values[i])->Angle, slayFlipNone, 1, ((game*)Engine->Game)->TextureProjectile);
+        slayRenderTextureCamera(Engine, ((projectile*)Scene->Projectiles->Values[i])->X, ((projectile*)Scene->Projectiles->Values[i])->Y, ((projectile*)Scene->Projectiles->Values[i])->Width, ((projectile*)Scene->Projectiles->Values[i])->Height, ((projectile*)Scene->Projectiles->Values[i])->Angle, slayFlipNone, 1, ((game*)Engine->Game)->TextureProjectile, 255);
     }
 
     //Player
     if (Scene->Player->Facing == 1)
     {
-        slayRenderTextureCamera(Engine, Scene->Player->X, Scene->Player->Y, Scene->Player->Width, Scene->Player->Height, 0, slayFlipNone, 1, Scene->Player->TextureBase);
+        slayRenderTextureCamera(Engine, Scene->Player->X, Scene->Player->Y, Scene->Player->Width, Scene->Player->Height, 0, slayFlipNone, 1, Scene->Player->TextureBase, 255);
     }
     else
     {
-        slayRenderTextureCamera(Engine, Scene->Player->X, Scene->Player->Y, Scene->Player->Width, Scene->Player->Height, 0, slayFlipHorizontal, 1, Scene->Player->TextureBase);
+        slayRenderTextureCamera(Engine, Scene->Player->X, Scene->Player->Y, Scene->Player->Width, Scene->Player->Height, 0, slayFlipHorizontal, 1, Scene->Player->TextureBase, 255);
     }
 
     //FrameTime

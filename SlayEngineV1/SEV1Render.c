@@ -91,7 +91,7 @@ uint16 slayRender3DColorCamera(slayEngine* Engine, double X, double Y, uint16 Wi
     return 0;
 }
 
-uint16 slayRenderTexture(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, double Angle, uint8 Flip, SDL_Texture* Texture)
+uint16 slayRenderTexture(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, double Angle, uint8 Flip, SDL_Texture* Texture, uint8 Alpha)
 {
     SDL_Rect Object;
 
@@ -102,13 +102,14 @@ uint16 slayRenderTexture(slayEngine* Engine, double X, double Y, uint16 Width, u
     
     if ((-Object.w <= Object.x && Object.x <= Engine->Display->Width) && (-Object.h <= Object.y && Object.y <= Engine->Display->Height))
     {
+        SDL_SetTextureAlphaMod(Texture, Alpha);
         SDL_RenderCopyEx(Engine->Display->Renderer, Texture, NULL, &Object, Angle, NULL, Flip);
     }
 
     return 0;
 }
 
-uint16 slayRenderTextureCamera(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, double Angle, uint8 Flip, double Distance, SDL_Texture* Texture)
+uint16 slayRenderTextureCamera(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, double Angle, uint8 Flip, double Distance, SDL_Texture* Texture, uint8 Alpha)
 {
     SDL_Rect Object;
 
@@ -116,17 +117,18 @@ uint16 slayRenderTextureCamera(slayEngine* Engine, double X, double Y, uint16 Wi
 
     if ((-Object.w <= Object.x && Object.x <= Engine->Display->Width) && (-Object.h <= Object.y && Object.y <= Engine->Display->Height))
     {
+        SDL_SetTextureAlphaMod(Texture, Alpha);
         SDL_RenderCopyEx(Engine->Display->Renderer, Texture, NULL, &Object, Angle, NULL, Flip);
     }
 
     return 0;
 }
 
-uint16 slayRender3DTextureCamera(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, double Angle, uint8 Flip, double FirstLayer, double Depth, double Quality, SDL_Texture* Texture)
+uint16 slayRender3DTextureCamera(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, double Angle, uint8 Flip, double FirstLayer, double Depth, double Quality, SDL_Texture* Texture, uint8 Alpha)
 {
     for (double i = FirstLayer; i <= FirstLayer + Depth; i += Quality)
     {
-        slayRenderTextureCamera(Engine, X, Y, Width, Height, Angle, Flip, i, Texture);
+        slayRenderTextureCamera(Engine, X, Y, Width, Height, Angle, Flip, i, Texture, Alpha);
     }
 
     return 0;
