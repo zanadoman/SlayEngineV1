@@ -11,7 +11,7 @@
 -Vector calculations: length, scalar, translate, angle\
 -Loading: textures, sounds, fonts\
 -Control/Event: close event, deltatime, fps capping, pseudo randoms\
--Threads: start, wait for exit, exit
+-Threads: start, wait for exit, exit\
 -Scenes
 
 # Other features
