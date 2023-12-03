@@ -99,7 +99,10 @@ typedef struct
 
 
 //Load queue
-uint16 loadQueue(slayEngine* Engine);
+uint16 loadGame(slayEngine* Engine);
+
+uint16 loadScene0(slayEngine* Engine);
+uint16 unloadScene0(slayEngine* Engine);
 
 //Save queue
 uint16 saveQueue(slayEngine* Engine);

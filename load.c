@@ -1,16 +1,5 @@
 #include "game.h"
 
-uint16 loadGame(slayEngine* Engine);
-uint16 loadScene0(slayEngine* Engine);
-
-uint16 loadQueue(slayEngine* Engine)
-{
-    loadGame(Engine);
-    loadScene0(Engine);
-
-    return 0;
-}
-
 uint16 loadGame(slayEngine* Engine)
 {
     game* game;
@@ -30,9 +19,11 @@ uint16 loadScene0(slayEngine* Engine)
     scene0* scene;
     array save;
 
+    //Scene
     Engine->Scenes->Values[0] = malloc(sizeof(scene0));
     scene = Engine->Scenes->Values[0];
 
+    //Platform
     scene->Platforms = arrNew(5);
     scene->TextureBackground = slayLoadTexture(Engine, "assets/background.jpg");
     scene->TexturePlatform = slayLoadTexture(Engine, "assets/platform.png");
@@ -42,6 +33,7 @@ uint16 loadScene0(slayEngine* Engine)
     scene->Platforms->Values[3] = newPlatform(350, 250, 100, 30);
     scene->Platforms->Values[4] = newPlatform(500, 150, 100, 30);
 
+    //Player
     scene->Player = newPlayer();
     scene->Player->TextureBase = slayLoadTexture(Engine, "assets/player_base.png");
     scene->Player->SoundFire = slayLoadSound("assets/player_fire.wav");
@@ -65,7 +57,45 @@ uint16 loadScene0(slayEngine* Engine)
     scene->Player->MaxY = 600;
     slaySetCamera(Engine, &scene->Player->X, &scene->Player->Y, 14, 20, -960, -800, 1.5);
     
+    //Projectiles
     scene->Projectiles = arrNew(0);
+
+    return 0;
+}
+
+uint16 unloadScene0(slayEngine* Engine)
+{
+    scene0* scene;
+
+    scene = Engine->Scenes->Values[0];
+
+    //Platform
+    slayUnloadTexture(scene->TextureBackground);
+    slayUnloadTexture(scene->TexturePlatform);
+    for (uint64 i = 0; i < scene->Platforms->Length; i++)
+    {
+        free(((platform*)scene->Platforms->Values[i])->Hitbox);
+    }
+    for (uint64 i = 0; i < scene->Platforms->Length; i++)
+    {
+        free(scene->Platforms->Values[i]);
+    }
+
+    //Player
+    slayUnloadTexture(scene->Player->TextureBase);
+    slayUnloadSound(scene->Player->SoundFire);
+    free(((player*)scene->Player)->Hitbox);
+    free(scene->Player);
+
+    //Projectiles
+    for (uint64 i = 0; i < scene->Projectiles->Length; i++)
+    {
+        free(((projectile*)scene->Projectiles->Values[i])->Hitbox);
+    }
+    for (uint64 i = 0; i < scene->Projectiles->Length; i++)
+    {
+        free(scene->Projectiles->Values[i]);
+    }
 
     return 0;
 }

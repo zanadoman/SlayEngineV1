@@ -100,7 +100,9 @@ uint64 slayRandom(uint64 Min, uint64 Max, double Seed);
 #define slayFlipVERTICAL SDL_FLIP_VERTICAL
 
 slayTexture* slayLoadTexture(slayEngine* Engine, char* Path);
+#define slayUnloadTexture SDL_DestroyTexture
 slayFont* slayLoadFont(char* Path, int Size);
+#define slayUnloadFont TTF_CloseFont
 
 uint16 slayRenderStart(slayEngine* Engine);
 uint16 slayRenderEnd(slayEngine* Engine);
@@ -122,6 +124,7 @@ uint16 slayRender3DTextCamera(slayEngine* Engine, slayFont* Font, char* Characte
 #define slaySound Mix_Chunk
 #define slayStopSound Mix_HaltChannel
 slaySound* slayLoadSound(char* Path);
+#define slayUnloadSound Mix_FreeChunk
 uint16 slayPlaySound(slaySound* Sound, sint16 Channel, uint8 Volume, uint8 Left, uint8 Right, sint16 Loops);
 uint16 slayPlaySoundTicks(slaySound* Sound, sint16 Channel, uint8 Volume, uint8 Left, uint8 Right, sint16 Loops, uint64 Ticks);
 
