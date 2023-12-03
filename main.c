@@ -7,7 +7,7 @@ Wiki írása
 
 #undef main
 
-int main(int argc, char *argv[])
+uint16 main(uint64 argc, char* *argv)
 {
     slayEngine* Engine;
 
