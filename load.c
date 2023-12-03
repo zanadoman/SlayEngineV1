@@ -167,6 +167,7 @@ uint16 unloadScene1(slayEngine* Engine)
     {
         free(scene->Platforms->Values[i]);
     }
+    arrPurge(scene->Platforms);
 
     //Player
     slayUnloadTexture(scene->Player->TextureBase);
@@ -183,6 +184,7 @@ uint16 unloadScene1(slayEngine* Engine)
     {
         free(scene->Projectiles->Values[i]);
     }
+    arrPurge(scene->Projectiles);
 
     free(scene);
 
