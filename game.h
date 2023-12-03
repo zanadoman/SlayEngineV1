@@ -7,6 +7,38 @@ typedef struct
     double X;
     double Y;
 
+    uint16 Width;
+    uint16 Height;
+
+    slayTexture* TextureBase;
+    slayTexture* TextureHover;
+    slayTexture* TextureCurrent;
+
+    slayHitbox* Hitbox;
+} button;
+
+typedef struct
+{
+    double X;
+    double Y;
+
+    uint16 Width;
+    uint16 Height;
+
+    uint8 ColorR;
+    uint8 ColorG;
+    uint8 ColorB;
+    uint8 ColorA;
+
+    button* ButtonResume;
+    button* ButtonQuit;
+} pause;
+
+typedef struct
+{
+    double X;
+    double Y;
+
     double MinX;
     double MaxX;
     double MinY;
@@ -81,6 +113,7 @@ typedef struct
 
 typedef struct
 {
+    pause* Pause;
     logic paused;
 
     array Platforms;
@@ -124,4 +157,5 @@ projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX
 uint16 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, array Platforms);
 
 //Pause
-uint16 updatePause(slayEngine* Engine, logic* Paused);
+pause* newPause();
+uint16 updatePause(slayEngine* Engine, pause* Pause, logic* Paused);

@@ -53,7 +53,9 @@ uint16 renderScene1(slayEngine* Engine, scene1* Scene)
     //Pause
     if (Scene->paused)
     {
-        slayRenderColor(Engine, 0, 0, Engine->Display->Width, Engine->Display->Height, 0, 0, 0, 128);
+        slayRenderColor(Engine, Scene->Pause->X, Scene->Pause->Y, Scene->Pause->Width, Scene->Pause->Height, Scene->Pause->ColorR, Scene->Pause->ColorG, Scene->Pause->ColorB, Scene->Pause->ColorA);
+        slayRenderTexture(Engine, Scene->Pause->ButtonResume->X, Scene->Pause->ButtonResume->Y, Scene->Pause->ButtonResume->Width, Scene->Pause->ButtonResume->Height, 0, slayFlipNONE, Scene->Pause->ButtonResume->TextureCurrent, 255);
+        slayRenderTexture(Engine, Scene->Pause->ButtonQuit->X, Scene->Pause->ButtonQuit->Y, Scene->Pause->ButtonQuit->Width, Scene->Pause->ButtonQuit->Height, 0, slayFlipNONE, Scene->Pause->ButtonQuit->TextureCurrent, 255);
     }
 
     //FrameTime

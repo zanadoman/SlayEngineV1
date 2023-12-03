@@ -23,6 +23,14 @@ uint16 loadScene1(slayEngine* Engine)
     Engine->Scenes->Values[1] = malloc(sizeof(scene1));
     scene = Engine->Scenes->Values[1];
 
+    //Pause
+    scene->Pause = newPause();
+    scene->Pause->ButtonResume->TextureBase = slayLoadTexture(Engine, "assets/buttons/buttonbase.png");
+    scene->Pause->ButtonResume->TextureHover = slayLoadTexture(Engine, "assets/buttons/buttonhover.png");
+    scene->Pause->ButtonResume->TextureCurrent = scene->Pause->ButtonResume->TextureBase;
+    scene->Pause->ButtonQuit->TextureBase = slayLoadTexture(Engine, "assets/buttons/buttonbase.png");
+    scene->Pause->ButtonQuit->TextureHover = slayLoadTexture(Engine, "assets/buttons/buttonhover.png");
+    scene->Pause->ButtonQuit->TextureCurrent = scene->Pause->ButtonQuit->TextureBase;
     scene->paused = false;
 
     //Platform
@@ -34,13 +42,13 @@ uint16 loadScene1(slayEngine* Engine)
     scene->Platforms->Values[2] = newPlatform(200, 350, 100, 30);
     scene->Platforms->Values[3] = newPlatform(350, 250, 100, 30);
     scene->Platforms->Values[4] = newPlatform(500, 150, 100, 30);
-
+    
     //Player
     scene->Player = newPlayer();
     scene->Player->TextureBase = slayLoadTexture(Engine, "assets/player_base.png");
     scene->Player->SoundFire = slayLoadSound("assets/player_fire.wav");
-    save = arrNew(0);
 
+    save = arrNew(0);
     if (fileRead("scene1.txt", save))
     {
         scene->Player->X = STRtoDOUBLE(((string)save->Values[0])->String, NULL);
@@ -86,7 +94,22 @@ uint16 unloadScene1(slayEngine* Engine)
     DOUBLEtoSTR(scene->Player->X, save->Values[0]);
     DOUBLEtoSTR(scene->Player->Y, save->Values[1]);
     SINTtoSTR(scene->Player->Facing, save->Values[2]);
-    fileWrite(save, "scene1.txt");
+    printf("%d\n", fileWrite(save, "scene1.txt"));
+    strPurge(save->Values[0]);
+    strPurge(save->Values[1]),
+    strPurge(save->Values[2]);
+    arrPurge(save);
+
+    //Pause
+    slayUnloadTexture(scene->Pause->ButtonResume->TextureBase);
+    slayUnloadTexture(scene->Pause->ButtonResume->TextureHover);
+    free(scene->Pause->ButtonResume->Hitbox);
+    free(scene->Pause->ButtonResume);
+    slayUnloadTexture(scene->Pause->ButtonQuit->TextureBase);
+    slayUnloadTexture(scene->Pause->ButtonQuit->TextureHover);
+    free(scene->Pause->ButtonQuit->Hitbox);
+    free(scene->Pause->ButtonQuit);
+    free(scene->Pause);
 
     //Platform
     slayUnloadTexture(scene->TextureBackground);
@@ -103,7 +126,7 @@ uint16 unloadScene1(slayEngine* Engine)
     //Player
     slayUnloadTexture(scene->Player->TextureBase);
     slayUnloadSound(scene->Player->SoundFire);
-    free(((player*)scene->Player)->Hitbox);
+    free(scene->Player->Hitbox);
     free(scene->Player);
 
     //Projectiles

@@ -20,7 +20,7 @@ uint16 updateQueue(slayEngine* Engine)
 uint16 updateScene1(slayEngine* Engine, scene1* Scene)
 {
     //1
-    updatePause(Engine, &Scene->paused);
+    updatePause(Engine, Scene->Pause, &Scene->paused);
     if (Scene->paused)
     {
         return 1;
