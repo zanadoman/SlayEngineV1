@@ -1,6 +1,6 @@
 #include "SlayEngineV1.h"
 
-Mix_Chunk* slayLoadSound(char* Path)
+slaySound* slayLoadSound(char* Path)
 {
     Mix_Chunk* result;
 
@@ -14,7 +14,7 @@ Mix_Chunk* slayLoadSound(char* Path)
     return result;
 }
 
-uint16 slayPlaySound(Mix_Chunk* Sound, sint16 Channel, uint8 Volume, uint8 Left, uint8 Right, sint16 Loops)
+uint16 slayPlaySound(slaySound* Sound, sint16 Channel, uint8 Volume, uint8 Left, uint8 Right, sint16 Loops)
 {
     Mix_VolumeChunk(Sound, Volume);
     Mix_PlayChannel(Channel, Sound, Loops);
@@ -23,7 +23,7 @@ uint16 slayPlaySound(Mix_Chunk* Sound, sint16 Channel, uint8 Volume, uint8 Left,
     return 0;
 }
 
-uint16 slayPlaySoundTicks(Mix_Chunk* Sound, sint16 Channel, uint8 Volume, uint8 Left, uint8 Right, sint16 Loops, uint64 Ticks)
+uint16 slayPlaySoundTicks(slaySound* Sound, sint16 Channel, uint8 Volume, uint8 Left, uint8 Right, sint16 Loops, uint64 Ticks)
 {
     Mix_VolumeChunk(Sound, Volume);
     Mix_SetPanning(Channel, Left, Right);

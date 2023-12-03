@@ -64,7 +64,8 @@ You need to start every render session with this function
 You need to end every render sesson by calling this function
 
 ### uint16 slayRender***()
-With these functions you can render something to the screen with absolute positions
+With these functions you can render something to the screen with absolute positions\
+For textures and texts you can set rotation and flipping (slayFlipNONE, slayFlipHORIZONTAL, slayFlipVERTICAL) you can set both vertical and horizontal flip with a | operator.
 
 ### uint16 slayRender***Camera()
 This time the rendering process will apply the perspective of the camera to the position and the size to the object to be rendered
@@ -73,3 +74,36 @@ This time the rendering process will apply the perspective of the camera to the 
 With this rendering function you can create fake 3D effect by stacking multiple layers behind each other
 
 ## Audio
+
+### Types
+
+slaySound* - for storing a sound loaded with slayLoadSound()
+
+### slaySound* slayLoadSound()
+It can load a .wav and turn it into a slaySound*
+
+### uint16 slayPlaySound()
+It can play a sound on a channel, you can set the volume for the left and right track separately and you can loop the sound if you want it
+
+### uint16 slayPlaySoundTicks()
+With this function you cap the length of the sound with ticks
+
+## Inputs
+
+### uint8 slayKey()
+You can query the state of all keyboard buttons and LMB, MMB, RMB
+
+## Mouse
+
+### sint32 slayMouseRelative()
+If you call this function with a true value then the engine will hide your cursor
+and sets the input mode to relative
+
+### logic slayCursorCollision()
+Polls the collision state of the cursor with a slayHitbox* you can use this function to create buttons
+
+### logic slayCursorCollisionCamera()
+You should use this function if you want to interact with something that lives inside the game and being rendered by the perspective of the camera
+
+## Vector
+

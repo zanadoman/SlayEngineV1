@@ -121,9 +121,9 @@ uint16 slayRender3DTextCamera(slayEngine* Engine, slayFont* Font, char* Characte
 
 #define slaySound Mix_Chunk
 #define slayStopSound Mix_HaltChannel
-Mix_Chunk* slayLoadSound(char* Path);
-uint16 slayPlaySound(Mix_Chunk* Sound, sint16 Channel, uint8 Volume, uint8 Left, uint8 Right, sint16 Loops);
-uint16 slayPlaySoundTicks(Mix_Chunk* Sound, sint16 Channel, uint8 Volume, uint8 Left, uint8 Right, sint16 Loops, uint64 Ticks);
+slaySound* slayLoadSound(char* Path);
+uint16 slayPlaySound(slaySound* Sound, sint16 Channel, uint8 Volume, uint8 Left, uint8 Right, sint16 Loops);
+uint16 slayPlaySoundTicks(slaySound* Sound, sint16 Channel, uint8 Volume, uint8 Left, uint8 Right, sint16 Loops, uint64 Ticks);
 
 //Inputs_____________________________________________________________
 
