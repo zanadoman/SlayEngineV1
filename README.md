@@ -32,7 +32,7 @@ Maximum FPS for slayCapFPS()
 
 ## Control
 
-### uint32 slayGetTicks()\
+### uint32 slayGetTicks()
 Return the number of miliseconds since the engine initialized
 
 ### logic slayEvent()
@@ -50,3 +50,33 @@ Returns a pseudo random int seeded from slayGetTicks() / your seed
 
 ## Render
 
+### Types
+slayTexture* - for stroring a texture loaded with slayLoadTexture()
+slayFont* - for storring a font loaded with slayLoadFont()
+slayObject* - an object with x, y, width, height values, you can render it
+with a color or a texture
+
+### slayTexture* slayLoadTexture()
+It can load a image file and turn it into a slayTexture*
+
+### slayFont* slayLoadFont()
+It can load a .ttf file and turn it into a slayFont*
+
+### uint16 slayRenderStart()
+You need to start every render session with this function
+
+### uint16 slayRenderEnd()
+You need to end every render sesson by calling this function
+
+### uint16 slayRender***()
+With these functions you can render something to the screen with absolute positions
+
+### uint16 slayRender***Camera()
+This time the rendering process will apply the perspective of the camera to the\
+position and the size to the object to be rendered
+
+### uint16 slayRender3D***Camera()
+With this rendering function you can create fake 3D effect by stacking multiple\
+layers behind each other
+
+## Audio

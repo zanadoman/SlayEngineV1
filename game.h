@@ -92,7 +92,7 @@ typedef struct
 
 typedef struct
 {
-    TTF_Font* FontCrazyPixel;
+    slayFont* FontCrazyPixel;
     uint8 Volume;
     slayTexture* TextureProjectile;
 } game;

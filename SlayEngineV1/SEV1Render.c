@@ -1,6 +1,6 @@
 #include "SlayEngineV1.h"
 
-SDL_Texture* slayLoadTexture(slayEngine* Engine, char* Path)
+slayTexture* slayLoadTexture(slayEngine* Engine, char* Path)
 {
     SDL_Texture* result;
 
@@ -19,7 +19,7 @@ SDL_Texture* slayLoadTexture(slayEngine* Engine, char* Path)
     return result;
 }
 
-TTF_Font* slayLoadFont(char* Path, int Size)
+slayFont* slayLoadFont(char* Path, int Size)
 {
     TTF_Font* result;
 
@@ -91,7 +91,7 @@ uint16 slayRender3DColorCamera(slayEngine* Engine, double X, double Y, uint16 Wi
     return 0;
 }
 
-uint16 slayRenderTexture(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, double Angle, uint8 Flip, SDL_Texture* Texture, uint8 Alpha)
+uint16 slayRenderTexture(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, double Angle, uint8 Flip, slayTexture* Texture, uint8 Alpha)
 {
     SDL_Rect Object;
 
@@ -109,7 +109,7 @@ uint16 slayRenderTexture(slayEngine* Engine, double X, double Y, uint16 Width, u
     return 0;
 }
 
-uint16 slayRenderTextureCamera(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, double Angle, uint8 Flip, double Distance, SDL_Texture* Texture, uint8 Alpha)
+uint16 slayRenderTextureCamera(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, double Angle, uint8 Flip, double Distance, slayTexture* Texture, uint8 Alpha)
 {
     SDL_Rect Object;
 
@@ -124,7 +124,7 @@ uint16 slayRenderTextureCamera(slayEngine* Engine, double X, double Y, uint16 Wi
     return 0;
 }
 
-uint16 slayRender3DTextureCamera(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, double Angle, uint8 Flip, double FirstLayer, double Depth, double Quality, SDL_Texture* Texture, uint8 Alpha)
+uint16 slayRender3DTextureCamera(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, double Angle, uint8 Flip, double FirstLayer, double Depth, double Quality, slayTexture* Texture, uint8 Alpha)
 {
     for (double i = FirstLayer; i <= FirstLayer + Depth; i += Quality)
     {
@@ -134,7 +134,7 @@ uint16 slayRender3DTextureCamera(slayEngine* Engine, double X, double Y, uint16 
     return 0;
 }
 
-uint16 slayRenderText(slayEngine* Engine, TTF_Font* Font, char* Characters, double X, double Y, double Size, double Angle, uint8 Flip, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA)
+uint16 slayRenderText(slayEngine* Engine, slayFont* Font, char* Characters, double X, double Y, double Size, double Angle, uint8 Flip, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA)
 {
     SDL_Rect Object;
     SDL_Surface* surface;
@@ -165,7 +165,7 @@ uint16 slayRenderText(slayEngine* Engine, TTF_Font* Font, char* Characters, doub
     return 0;
 }
 
-uint16 slayRenderTextCamera(slayEngine* Engine, TTF_Font* Font, char* Characters, double X, double Y, double Size, double Angle, uint8 Flip, double Distance, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA)
+uint16 slayRenderTextCamera(slayEngine* Engine, slayFont* Font, char* Characters, double X, double Y, double Size, double Angle, uint8 Flip, double Distance, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA)
 {
     SDL_Rect Object;
     SDL_Surface* surface;
@@ -193,7 +193,7 @@ uint16 slayRenderTextCamera(slayEngine* Engine, TTF_Font* Font, char* Characters
     return 0;
 }
 
-uint16 slayRender3DTextCamera(slayEngine* Engine, TTF_Font* Font, char* Characters, double X, double Y, double Size, double Angle, uint8 Flip, double FirstLayer, double Depth, double Quality, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA)
+uint16 slayRender3DTextCamera(slayEngine* Engine, slayFont* Font, char* Characters, double X, double Y, double Size, double Angle, uint8 Flip, double FirstLayer, double Depth, double Quality, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA)
 {
     for (double i = FirstLayer; i <= FirstLayer + Depth; i += Quality)
     {
