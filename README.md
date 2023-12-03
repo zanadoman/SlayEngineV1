@@ -20,4 +20,13 @@ The engine can run in windowed fullscreen and in windowed mode as well.\
 It can support any screen resolution or aspect ratio, it can adapt to it
 while keeping the game's aspect ratio by using black bars.
 
-### Wiki
+# Wiki
+
+###Common
+
+slayEngine* slayNewEngine()\
+Creates a new Engine instance for you.\
+Arguments:\
+Window title, Window width and height,q
+Number of scenes and number of threads will be used\
+Maximum fps for "uint16 slayCapFPS()"
