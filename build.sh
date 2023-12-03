@@ -6,7 +6,8 @@ time gcc -o ./Linux/bin *.c SlayEngineV1/*.c SlayEngineV1/NeoTypes/*.c -Wl,-rpat
 if [ $? == 0 ]
 then
     echo -e "Build successful!"
-    ./Linux/bin
+    cd Linux
+    ./bin
 
     if [ $? == 0 ]
     then
