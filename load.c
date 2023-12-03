@@ -49,7 +49,7 @@ uint16 loadScene1(slayEngine* Engine)
     scene->Player->SoundFire = slayLoadSound("assets/player_fire.wav");
 
     save = arrNew(0);
-    if (fileRead("scene1.txt", save))
+    if (fileRead("saves/scene1.txt", save))
     {
         scene->Player->X = STRtoDOUBLE(((string)save->Values[0])->String, NULL);
         scene->Player->Y = STRtoDOUBLE(((string)save->Values[1])->String, NULL);
@@ -94,7 +94,7 @@ uint16 unloadScene1(slayEngine* Engine)
     DOUBLEtoSTR(scene->Player->X, save->Values[0]);
     DOUBLEtoSTR(scene->Player->Y, save->Values[1]);
     SINTtoSTR(scene->Player->Facing, save->Values[2]);
-    printf("%d\n", fileWrite(save, "scene1.txt"));
+    printf("%d\n", fileWrite(save, "saves/scene1.txt"));
     strPurge(save->Values[0]);
     strPurge(save->Values[1]),
     strPurge(save->Values[2]);
