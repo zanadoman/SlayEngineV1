@@ -104,3 +104,8 @@ uint16 SINTtoSTR(sint64 Number, string String);
 
 double STRtoDOUBLE(char* Characters, logic* Success);
 uint16 DOUBLEtoSTR(double Number, string String);
+
+//________________NeoFile.c________________ // COMPLETED
+
+uint16 fileRead(char* FilePath, array Lines);
+uint16 fileWrite(array Lines, char* FilePath);
