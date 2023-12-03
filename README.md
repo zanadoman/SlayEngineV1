@@ -100,7 +100,7 @@ If you call this function with a true value then the engine will hide your curso
 and sets the input mode to relative
 
 ### logic slayCursorCollision()
-Polls the collision state of the cursor with a slayHitbox* you can use this function to create buttons
+Polls the collision state of the cursor with a slayHitbox*, you can use this function to create buttons
 
 ### logic slayCursorCollisionCamera()
 You should use this function if you want to interact with something that lives inside the game and being rendered by the perspective of the camera
