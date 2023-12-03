@@ -16,8 +16,7 @@
 -Scenes
 
 # Other features
-The engine can run in windowed fullscreen and in windowed mode as well.\
-It can support any screen resolution or aspect ratio, it can adapt to it
+The engine can run in windowed fullscreen and in windowed mode as well. It can support any screen resolution or aspect ratio, it can adapt to it
 while keeping the game's aspect ratio by using black bars.
 
 # Wiki
@@ -26,9 +25,7 @@ while keeping the game's aspect ratio by using black bars.
 
 ### slayEngine* slayNewEngine()\
 Creates a new engine instance for you.\
-Arguments: Window title, Window width and height,\
-Number of scenes and number of threads will be used\
-Maximum FPS for slayCapFPS()
+Arguments: Window title, Window width and height, Number of scenes and number of threads will be used Maximum FPS for slayCapFPS()
 
 ## Control
 
@@ -42,8 +39,7 @@ Handles the window closing and updates the mouse state
 Updates the delta time
 
 ### uint16 slayCapFPS(slayEngine* Engine)
-Caps FPS by the value defined at engine initialization\
-You can change it by modifying Engine.MaxFPS
+Caps FPS by the value defined at engine initialization You can change it by modifying Engine.MaxFPS
 
 ### uint64 slayRandom()
 Returns a pseudo random int seeded from slayGetTicks() / your seed
@@ -53,8 +49,7 @@ Returns a pseudo random int seeded from slayGetTicks() / your seed
 ### Types
 slayTexture* - for storing a texture loaded with slayLoadTexture()\
 slayFont* - for storing a font loaded with slayLoadFont()\
-slayObject* - an object with x, y, width, height values, you can render it\
-with a color or a texture
+slayObject* - an object with x, y, width, height values, you can render it with a color or a texture
 
 ### slayTexture* slayLoadTexture()
 It can load a image file and turn it into a slayTexture*
@@ -72,11 +67,9 @@ You need to end every render sesson by calling this function
 With these functions you can render something to the screen with absolute positions
 
 ### uint16 slayRender***Camera()
-This time the rendering process will apply the perspective of the camera to the\
-position and the size to the object to be rendered
+This time the rendering process will apply the perspective of the camera to the position and the size to the object to be rendered
 
 ### uint16 slayRender3D***Camera()
-With this rendering function you can create fake 3D effect by stacking multiple\
-layers behind each other
+With this rendering function you can create fake 3D effect by stacking multiple layers behind each other
 
 ## Audio
