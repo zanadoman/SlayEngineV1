@@ -42,8 +42,10 @@ uint16 loadScene0(slayEngine* Engine)
     {
         scene->Player->X = STRtoDOUBLE(((string)save->Values[0])->String, NULL);
         scene->Player->Y = STRtoDOUBLE(((string)save->Values[1])->String, NULL);
+        scene->Player->Facing = STRtoDOUBLE(((string)save->Values[2])->String, NULL);
         strPurge(save->Values[0]);
         strPurge(save->Values[1]);
+        strPurge(save->Values[2]);
     }
     else
     {
@@ -70,11 +72,13 @@ uint16 unloadScene0(slayEngine* Engine)
 
     scene = Engine->Scenes->Values[0];
 
-    save = arrNew(2);
+    save = arrNew(3);
     save->Values[0] = strNew();
     save->Values[1] = strNew();
+    save->Values[2] = strNew();
     DOUBLEtoSTR(scene->Player->X, save->Values[0]);
     DOUBLEtoSTR(scene->Player->Y, save->Values[1]);
+    SINTtoSTR(scene->Player->Facing, save->Values[2]);
     fileWrite(save, "scene0.txt");
 
     //Platform
