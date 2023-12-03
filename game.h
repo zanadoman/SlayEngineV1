@@ -98,14 +98,11 @@ typedef struct
 } game;
 
 
-//Load queue
+//Loading
 uint16 loadGame(slayEngine* Engine);
 
 uint16 loadScene0(slayEngine* Engine);
 uint16 unloadScene0(slayEngine* Engine);
-
-//Save queue
-uint16 saveQueue(slayEngine* Engine);
 
 //Update queue
 uint16 updateQueue(slayEngine* Engine);

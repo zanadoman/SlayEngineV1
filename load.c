@@ -38,10 +38,10 @@ uint16 loadScene0(slayEngine* Engine)
     scene->Player->TextureBase = slayLoadTexture(Engine, "assets/player_base.png");
     scene->Player->SoundFire = slayLoadSound("assets/player_fire.wav");
     save = arrNew(0);
-    if (fileRead("save.txt", save))
+    if (fileRead("scene0.txt", save))
     {
-        ((scene0*)Engine->Scenes->Values[0])->Player->X = STRtoDOUBLE(((string)save->Values[0])->String, NULL);
-        ((scene0*)Engine->Scenes->Values[0])->Player->Y = STRtoDOUBLE(((string)save->Values[1])->String, NULL);
+        scene->Player->X = STRtoDOUBLE(((string)save->Values[0])->String, NULL);
+        scene->Player->Y = STRtoDOUBLE(((string)save->Values[1])->String, NULL);
         strPurge(save->Values[0]);
         strPurge(save->Values[1]);
     }
@@ -66,8 +66,16 @@ uint16 loadScene0(slayEngine* Engine)
 uint16 unloadScene0(slayEngine* Engine)
 {
     scene0* scene;
+    array save;
 
     scene = Engine->Scenes->Values[0];
+
+    save = arrNew(2);
+    save->Values[0] = strNew();
+    save->Values[1] = strNew();
+    DOUBLEtoSTR(scene->Player->X, save->Values[0]);
+    DOUBLEtoSTR(scene->Player->Y, save->Values[1]);
+    fileWrite(save, "scene0.txt");
 
     //Platform
     slayUnloadTexture(scene->TextureBackground);

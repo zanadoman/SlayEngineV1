@@ -22,7 +22,7 @@ uint16 main(uint64 argc, char* *argv)
         slayCapFPS(Engine);
     }
 
-    saveQueue(Engine);
+    unloadScene0(Engine);
 
     return 0;
 }
