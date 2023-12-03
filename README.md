@@ -23,9 +23,9 @@ while keeping the game's aspect ratio by using black bars.
 
 ## Common
 
-### slayEngine* slayNewEngine()\
-Creates a new engine instance for you.\
-Arguments: Window title, Window width and height, Number of scenes and number of threads will be used Maximum FPS for slayCapFPS()
+### slayEngine* slayNewEngine()
+Creates a new engine instance\
+Arguments: window title, window width and height, number of scenes and number of threads will be used, maximum FPS for slayCapFPS()
 
 ## Control
 
@@ -39,7 +39,7 @@ Handles the window closing and updates the mouse state
 Updates the delta time
 
 ### uint16 slayCapFPS(slayEngine* Engine)
-Caps FPS by the value defined at engine initialization You can change it by modifying Engine.MaxFPS
+Caps FPS by the value defined at engine initialization, you can change it by modifying Engine.MaxFPS
 
 ### uint64 slayRandom()
 Returns a pseudo random int seeded from slayGetTicks() / your seed
@@ -49,10 +49,10 @@ Returns a pseudo random int seeded from slayGetTicks() / your seed
 ### Types
 slayTexture* - for storing a texture loaded with slayLoadTexture()\
 slayFont* - for storing a font loaded with slayLoadFont()\
-slayObject* - an object with x, y, width, height values, you can render it with a color or a texture
+slayObject* - an object with x, y, width and height values, you can render it with a color or a texture
 
 ### slayTexture* slayLoadTexture()
-It can load a image file and turn it into a slayTexture*
+It can load an image file and turn it into a slayTexture*
 
 ### slayFont* slayLoadFont()
 It can load a .ttf file and turn it into a slayFont*
@@ -61,11 +61,11 @@ It can load a .ttf file and turn it into a slayFont*
 You need to start every render session with this function
 
 ### uint16 slayRenderEnd()
-You need to end every render sesson by calling this function
+You need to end every render session by calling this function
 
 ### uint16 slayRender***()
 With these functions you can render something to the screen with absolute positions\
-For textures and texts you can set rotation and flipping (slayFlipNONE, slayFlipHORIZONTAL, slayFlipVERTICAL) you can set both vertical and horizontal flip with a | operator.
+For textures and texts you can set the rotation and (slayFlipNONE, slayFlipHORIZONTAL, slayFlipVERTICAL) both vertical and horizontal flipping with a | operator.
 
 ### uint16 slayRender***Camera()
 This time the rendering process will apply the perspective of the camera to the position and the size to the object to be rendered
