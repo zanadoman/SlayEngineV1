@@ -131,6 +131,7 @@ uint16 unloadScene1(slayEngine* Engine)
 
     scene = Engine->Scenes->Values[1];
 
+    //Save
     save = arrNew(3);
     save->Values[0] = strNew();
     save->Values[1] = strNew();
@@ -138,7 +139,7 @@ uint16 unloadScene1(slayEngine* Engine)
     DOUBLEtoSTR(scene->Player->X, save->Values[0]);
     DOUBLEtoSTR(scene->Player->Y, save->Values[1]);
     SINTtoSTR(scene->Player->Facing, save->Values[2]);
-    printf("%d\n", fileWrite(save, "saves/scene1.txt"));
+    fileWrite(save, "saves/scene1.txt");
     strPurge(save->Values[0]);
     strPurge(save->Values[1]),
     strPurge(save->Values[2]);
