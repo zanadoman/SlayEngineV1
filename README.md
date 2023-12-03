@@ -176,7 +176,7 @@ void* updatePlayerThread(void* Engine)
 \
 uint16 main(uint64 argc, char\* \*argv)\
 {\
-&emsp slayEngine\* Engine;\
+&emsp;slayEngine\* Engine;\
 \
     Engine = slayNewEngine("SlayEngineV1 DEMO", 1920, 1080, 1, 2, 165);\
     loadQueue(Engine);\
