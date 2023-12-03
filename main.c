@@ -10,7 +10,6 @@ uint16 main(uint64 argc, char* *argv)
     loadGame(Engine);
 
     loadScene1(Engine);
-    Engine->CurrentScene = 1;
 
     while(slayEvent(Engine))
     {

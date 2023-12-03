@@ -23,6 +23,8 @@ uint16 loadScene1(slayEngine* Engine)
     Engine->Scenes->Values[1] = malloc(sizeof(scene1));
     scene = Engine->Scenes->Values[1];
 
+    scene->paused = false;
+
     //Platform
     scene->Platforms = arrNew(5);
     scene->TextureBackground = slayLoadTexture(Engine, "assets/background.jpg");
@@ -38,6 +40,7 @@ uint16 loadScene1(slayEngine* Engine)
     scene->Player->TextureBase = slayLoadTexture(Engine, "assets/player_base.png");
     scene->Player->SoundFire = slayLoadSound("assets/player_fire.wav");
     save = arrNew(0);
+
     if (fileRead("scene1.txt", save))
     {
         scene->Player->X = STRtoDOUBLE(((string)save->Values[0])->String, NULL);
@@ -53,14 +56,18 @@ uint16 loadScene1(slayEngine* Engine)
         scene->Player->Y = 410;
     }
     arrPurge(save);
+
     scene->Player->MinX = -200;
     scene->Player->MaxX = 1000;
     scene->Player->MinY = -500;
     scene->Player->MaxY = 600;
+
     slaySetCamera(Engine, &scene->Player->X, &scene->Player->Y, 14, 20, -960, -800, 1.5);
     
     //Projectiles
     scene->Projectiles = arrNew(0);
+
+    Engine->CurrentScene = 1;
 
     return 0;
 }

@@ -18,6 +18,7 @@ slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Scene
     result->Display->Window = SDL_CreateWindow(Title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, result->Display->Width, result->Display->Height, SDL_WINDOW_FULLSCREEN_DESKTOP | SDL_WINDOW_RESIZABLE | SDL_WINDOW_INPUT_GRABBED);
     result->Display->Renderer = SDL_CreateRenderer(result->Display->Window, -1, SDL_RENDERER_ACCELERATED);  
     SDL_RenderSetLogicalSize(result->Display->Renderer, Width, Height);
+    SDL_SetRenderDrawBlendMode(result->Display->Renderer, SDL_BLENDMODE_BLEND);
 
     result->Camera = malloc(sizeof(slayCamera));
 

@@ -50,6 +50,12 @@ uint16 renderScene1(slayEngine* Engine, scene1* Scene)
         slayRenderTextureCamera(Engine, Scene->Player->X, Scene->Player->Y, Scene->Player->Width, Scene->Player->Height, 0, slayFlipHORIZONTAL, 1, Scene->Player->TextureBase, 255);
     }
 
+    //Pause
+    if (Scene->paused)
+    {
+        slayRenderColor(Engine, 0, 0, Engine->Display->Width, Engine->Display->Height, 0, 0, 0, 128);
+    }
+
     //FrameTime
     string text = strNew();
     UINTtoSTR(Engine->DeltaTime, text);

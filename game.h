@@ -81,6 +81,8 @@ typedef struct
 
 typedef struct
 {
+    logic paused;
+
     array Platforms;
     slayTexture* TextureBackground;
     slayTexture* TexturePlatform;
@@ -120,3 +122,6 @@ platform* newPlatform(double X, double Y, uint16 Width, uint16 Height);
 //Projectile
 projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX, double MinY, double MaxY, uint16 Width, uint16 Height, double Speed, double Angle);
 uint16 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, array Platforms);
+
+//Pause
+uint16 updatePause(slayEngine* Engine, logic* Paused);
