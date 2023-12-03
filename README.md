@@ -19,3 +19,5 @@
 The engine can run in windowed fullscreen and in windowed mode as well.\
 It can support any screen resolution or aspect ratio, it can adapt to it
 while keeping the game's aspect ratio by using black bars.
+
+## Wiki
