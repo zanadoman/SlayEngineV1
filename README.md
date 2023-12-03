@@ -86,7 +86,7 @@ It can load a .wav and turn it into a slaySound*
 It can play a sound on a channel, you can set the volume for the left and right track separately and you can loop the sound if you want it
 
 ### uint16 slayPlaySoundTicks()
-With this function you cap the length of the sound with ticks
+With this function you can cap the length of the sound in ticks
 
 ## Inputs
 
