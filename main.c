@@ -38,7 +38,6 @@ uint16 main(uint64 argc, char* *argv)
     save->Values[1] = strNew();
     DOUBLEtoSTR(((scene0*)Engine->Scenes->Values[0])->Player->X, save->Values[0]);
     DOUBLEtoSTR(((scene0*)Engine->Scenes->Values[0])->Player->Y, save->Values[1]);
-    printf("%s\n", ((string)save->Values[0])->String);
     fileWrite(save, "save.txt");
 
     return 0;
