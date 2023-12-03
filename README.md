@@ -8,7 +8,7 @@
 -Camera: zoom level, anchor to coordinates or ingame objects\
 -Audio: stereo, loop, timed\
 -Hitbox/Collision detection: hitbox with hitbox, cursor with hitbox\
--Vector calculations: length, scalar, translate, angle\
+-Vector calculations: length, translate, angle\
 -Loading: textures, sounds, fonts\
 -Saving: store everything you want\
 -Control/Event: close event, deltatime, fps capping, pseudo randoms\
@@ -106,4 +106,37 @@ Polls the collision state of the cursor with a slayHitbox* you can use this func
 You should use this function if you want to interact with something that lives inside the game and being rendered by the perspective of the camera
 
 ## Vector
+
+### uint16 slayVectorLength()
+This function returns the length of a vector defined by two coordinates into a double*
+
+### uint16 slayVectorTranslate()
+This function creates a vector from a initial point, length and angle then outputs the coordinates of the terminal point into two double*
+
+### uint16 slayVectorAngle()
+This function returns the angle of a vector defined by two coordinates into a double*
+
+## Hitbox
+
+### slayHitbox* slayNewHitbox()
+You can create new hitboxes with this function
+
+### uint8 slayCollision()
+This function checks the collision between two hitboxes and returns the collision value in a 8bit bitmask
+
+### Collision values
+You can get the predefinied values with: slayColl***\
+\
+The four main value from the bitmask:\
+1 - TOPLEFT - 0b....0001\
+2 - TOPRIGHT - 0b....0010\
+3 - BOTTOMLEFT - 0b....0100\
+4 - BOTTOMRIGHT - 0b....1000\
+\
+Other values:\
+3 - TOP - 0b....0011\
+12 - BOTTOM - 0b....1100\
+5 - LEFT - 0b....0101\
+10 - RIGHT - 0b....1010\
+15 - ALL - 0b....1111
 

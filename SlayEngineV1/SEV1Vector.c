@@ -34,10 +34,3 @@ uint16 slayVectorAngle(double X1, double Y1, double X2, double Y2, double* Angle
 
     return 0;
 }
-
-uint16 slayVectorScalar(double X1, double Y1, double X2, double Y2, double* Scalar)
-{
-    *Scalar = X1 * X2 + Y1 * Y2;
-
-    return 0;
-}
