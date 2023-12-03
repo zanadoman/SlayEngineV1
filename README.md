@@ -159,14 +159,6 @@ Halt your program until the thread with the given ID returns
 ### slayThreadExit;
 You should put this command at the end of each thread function
 
-### A sample for thread functions:
-void* updatePlayerThread(void* Engine)
-{
-    updatePlayer(Engine);
-
-    slayThreadExit;
-}
-
 # Samples
 
 ## main.c
@@ -184,7 +176,7 @@ uint16 main(uint64 argc, char\* \*argv)\
 &emsp;Engine->CurrentScene = 0;\
 \
 &emsp;while(slayEvent(Engine))\
-    {\
+&emsp;{\
 &emsp;&emsp;slayUpdateDeltaTime(Engine);\
 \
 &emsp;&emsp;updateQueue(Engine);\
@@ -196,4 +188,22 @@ uint16 main(uint64 argc, char\* \*argv)\
 &emsp;saveQueue(Engine);\
 \
 &emsp;return 0;\
+}
+
+### Render queue
+uint16 renderQueue(slayEngine* Engine)\
+{\
+&emsp;slayRenderStart(Engine);\
+\
+&emsp;//Render something\
+\
+&emsp;slayRenderEnd(Engine);\
+}
+
+### Thread function
+void* updatePlayerThread(void* Engine)\
+{\
+&emsp;//Update something\
+\
+&emsp;slayThreadExit;\
 }\
