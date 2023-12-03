@@ -8,8 +8,6 @@ uint16 loadQueue(slayEngine* Engine)
     loadGame(Engine);
     loadScene0(Engine);
 
-    //slayMouseRelative(true);
-
     return 0;
 }
 
