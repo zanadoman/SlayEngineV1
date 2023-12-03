@@ -1,22 +1,18 @@
 #include "SlayEngineV1.h"
 
-slayCamera* slayNewCamera(double* OriginX, double* OriginY, double CenterX, double CenterY, double RelativeX, double RelativeY, double Zoom)
+uint16 slaySetCamera(slayEngine* Engine, double* OriginX, double* OriginY, double CenterX, double CenterY, double RelativeX, double RelativeY, double Zoom)
 {
-    slayCamera* result;
+    Engine->Camera->OriginX = OriginX;
+    Engine->Camera->OriginY = OriginY;
+    Engine->Camera->CenterX = CenterX;
+    Engine->Camera->CenterY = CenterY;
+    Engine->Camera->RelativeX = RelativeX;
+    Engine->Camera->RelativeY = RelativeY;
+    Engine->Camera->AbsoluteX = *OriginX + RelativeX;
+    Engine->Camera->AbsoluteY = *OriginY + RelativeY;
+    Engine->Camera->Zoom = Zoom;
 
-    result = malloc(sizeof(slayCamera));
-
-    result->OriginX = OriginX;
-    result->OriginY = OriginY;
-    result->CenterX = CenterX;
-    result->CenterY = CenterY;
-    result->RelativeX = RelativeX;
-    result->RelativeY = RelativeY;
-    result->AbsoluteX = *OriginX + RelativeX;
-    result->AbsoluteY = *OriginY + RelativeY;
-    result->Zoom = Zoom;
-
-    return result;
+    return 0;
 }
 
 uint16 slayApplyCamera(slayEngine* Engine, SDL_Rect* Object, double X, double Y, uint16 Width, uint16 Height, double Distance)

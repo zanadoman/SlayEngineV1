@@ -1,5 +1,4 @@
 /*
-Camera törlésének megoldása, új kamera esetén
 Egérgomb input standardizálása
 Player coordinátáinak elmentése, behúzása
 Wiki írása

@@ -19,7 +19,7 @@ slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Scene
     result->Display->Renderer = SDL_CreateRenderer(result->Display->Window, -1, SDL_RENDERER_ACCELERATED);  
     SDL_RenderSetLogicalSize(result->Display->Renderer, Width, Height);
 
-    result->Camera = NULL;
+    result->Camera = malloc(sizeof(slayCamera));
 
     result->Mouse = malloc(sizeof(slayMouse));
 
