@@ -10,7 +10,7 @@
 -Hitbox/Collision detection: hitbox with hitbox, cursor with hitbox\
 -Vector calculations: length, scalar, translate, angle\
 -Loading: textures, sounds, fonts\
--Saving: store everything in you want\
+-Saving: store everything you want\
 -Control/Event: close event, deltatime, fps capping, pseudo randoms\
 -Threads: start, wait for exit, exit\
 -Scenes
