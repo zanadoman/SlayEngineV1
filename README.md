@@ -22,11 +22,31 @@ while keeping the game's aspect ratio by using black bars.
 
 # Wiki
 
-### Common
+## Common
 
-slayEngine* slayNewEngine()\
-Creates a new Engine instance for you.\
-Arguments:\
-Window title, Window width and height,q
+### slayEngine* slayNewEngine()\
+Creates a new engine instance for you.\
+Arguments: Window title, Window width and height,\
 Number of scenes and number of threads will be used\
-Maximum fps for "uint16 slayCapFPS()"
+Maximum FPS for slayCapFPS()
+
+### Control
+
+### uint32 slayGetTicks()\
+Return the number of miliseconds since the engine initialized
+
+### logic slayEvent()
+Handles the window closing and updates the mouse state
+
+### uint16 slayUpdateDeltaTime(slayEngine* Engine)
+Updates the delta time
+
+### uint16 slayCapFPS(slayEngine* Engine)
+Caps FPS by the value defined at engine initialization\
+You can change it by modifying Engine.MaxFPS
+
+### uint64 slayRandom()
+Returns a pseudo random int seeded from slayGetTicks() / your seed
+
+## Render
+
