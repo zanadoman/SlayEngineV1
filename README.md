@@ -30,7 +30,7 @@ Arguments: Window title, Window width and height,\
 Number of scenes and number of threads will be used\
 Maximum FPS for slayCapFPS()
 
-### Control
+## Control
 
 ### uint32 slayGetTicks()\
 Return the number of miliseconds since the engine initialized
