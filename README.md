@@ -178,22 +178,22 @@ uint16 main(uint64 argc, char\* \*argv)\
 {\
 &emsp;slayEngine\* Engine;\
 \
-    Engine = slayNewEngine("SlayEngineV1 DEMO", 1920, 1080, 1, 2, 165);\
-    loadQueue(Engine);\
+&emsp;Engine = slayNewEngine("SlayEngineV1 DEMO", 1920, 1080, 1, 2, 165);\
+&emsp;loadQueue(Engine);\
 \
-    Engine->CurrentScene = 0;\
+&emsp;Engine->CurrentScene = 0;\
 \
-    while(slayEvent(Engine))\
+&emsp;while(slayEvent(Engine))\
     {\
-        slayUpdateDeltaTime(Engine);\
+&emsp;&emsp;slayUpdateDeltaTime(Engine);\
 \
-        updateQueue(Engine);\
-        renderQueue(Engine);\
+&emsp;&emsp;updateQueue(Engine);\
+&emsp;&emsp;renderQueue(Engine);\
 \
-        slayCapFPS(Engine);\
-    }\
+&emsp;&emsp;slayCapFPS(Engine);\
+&emsp;}\
 \
-    saveQueue(Engine);\
+&emsp;saveQueue(Engine);\
 \
-    return 0;\
+&emsp;return 0;\
 }\
