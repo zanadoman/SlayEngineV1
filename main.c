@@ -2,7 +2,6 @@
 Egérgomb input standardizálása
 Player coordinátáinak elmentése, behúzása
 Wiki írása
-Basic networking
 */
 
 #include "game.h"
