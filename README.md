@@ -68,7 +68,7 @@ With these functions you can render something to the screen with absolute positi
 For textures and texts you can set the rotation and (slayFlipNONE, slayFlipHORIZONTAL, slayFlipVERTICAL) both vertical and horizontal flipping with a | operator.
 
 ### uint16 slayRender***Camera()
-This time the rendering process will apply the perspective of the camera to the position and the size to the object to be rendered
+This time the rendering process will apply the perspective of the camera to the position and the size of the object to be rendered
 
 ### uint16 slayRender3D***Camera()
 With this rendering function you can create fake 3D effect by stacking multiple layers behind each other
