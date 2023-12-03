@@ -51,9 +51,9 @@ Returns a pseudo random int seeded from slayGetTicks() / your seed
 ## Render
 
 ### Types
-slayTexture* - for stroring a texture loaded with slayLoadTexture()
-slayFont* - for storring a font loaded with slayLoadFont()
-slayObject* - an object with x, y, width, height values, you can render it
+slayTexture* - for storing a texture loaded with slayLoadTexture()\
+slayFont* - for storing a font loaded with slayLoadFont()\
+slayObject* - an object with x, y, width, height values, you can render it\
 with a color or a texture
 
 ### slayTexture* slayLoadTexture()
