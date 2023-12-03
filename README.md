@@ -54,8 +54,14 @@ slayObject* - an object with x, y, width and height values, you can render it wi
 ### slayTexture* slayLoadTexture()
 It can load an image file and turn it into a slayTexture*
 
+### void slayUnloadTexture()
+For unloading a texture
+
 ### slayFont* slayLoadFont()
 It can load a .ttf file and turn it into a slayFont*
+
+### void slayUnloadFont()
+For unloading a font
 
 ### uint16 slayRenderStart()
 You need to start every render session with this function
@@ -76,11 +82,13 @@ With this rendering function you can create fake 3D effect by stacking multiple 
 ## Audio
 
 ### Types
-
 slaySound* - for storing a sound loaded with slayLoadSound()
 
 ### slaySound* slayLoadSound()
 It can load a .wav and turn it into a slaySound*
+
+### void slayUnloadSound()
+For unloading a sound
 
 ### uint16 slayPlaySound()
 It can play a sound on a channel, you can set the volume for the left and right track separately and you can loop the sound if you want it
