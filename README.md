@@ -140,3 +140,60 @@ Other values:\
 10 - RIGHT - 0b....1010\
 15 - ALL - 0b....1111
 
+## Camera
+
+### uint16 slaySetCamera()
+You can change the properties of the camera with this function, you attach it to an ingame object or a fixed coordinate, you can also set zoom level
+
+### uint16 slayApplyCamera()
+This function can apply the perspective of the camera to a slayObject*
+
+## Thread
+
+### uint16 slayThreadStart()
+You can start any function in a new thread with the engine as argument
+
+### uint16 slayThreadWaitExit()
+Halt your program until the thread with the given ID returns
+
+### slayThreadExit;
+You should put this command at the end of each thread function
+
+### A sample for thread functions:
+void* updatePlayerThread(void* Engine)
+{
+    updatePlayer(Engine);
+
+    slayThreadExit;
+}
+
+# Samples
+
+## main.c
+#include "game.h"\
+\
+#undef main\
+\
+uint16 main(uint64 argc, char* *argv)\
+{\
+    slayEngine* Engine;\
+\
+    Engine = slayNewEngine("SlayEngineV1 DEMO", 1920, 1080, 1, 2, 165);\
+    loadQueue(Engine);\
+\
+    Engine->CurrentScene = 0;\
+\
+    while(slayEvent(Engine))\
+    {\
+        slayUpdateDeltaTime(Engine);\
+\
+        updateQueue(Engine);\
+        renderQueue(Engine);\
+\
+        slayCapFPS(Engine);\
+    }\
+\
+    saveQueue(Engine);\
+\
+    return 0;\
+}\
