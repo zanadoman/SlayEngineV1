@@ -60,6 +60,12 @@ uint16 updatePause(slayEngine* Engine, pause* Pause, logic* Paused)
         if (slayCursorCollision(Engine, Pause->ButtonQuit->Hitbox))
         {
             Pause->ButtonQuit->TextureCurrent = Pause->ButtonQuit->TextureHover;
+
+            if (slayKey(Engine, SDL_SCANCODE_LMB))
+            {
+                unloadScene1(Engine);
+                loadScene0(Engine);
+            }
         }
         else
         {

@@ -1,5 +1,6 @@
 #include "game.h"
 
+uint16 updateScene0(slayEngine* Engine, scene0* Scene);
 uint16 updateScene1(slayEngine* Engine, scene1* Scene);
 
 void* updatePlayerThread(void* Engine);
@@ -9,10 +10,20 @@ uint16 updateQueue(slayEngine* Engine)
 {
     switch (Engine->CurrentScene)
     {
+        case 0:
+            updateScene0(Engine, Engine->Scenes->Values[0]);
+            break;
         case 1:
             updateScene1(Engine, Engine->Scenes->Values[1]);
             break;
     }
+
+    return 0;
+}
+
+uint16 updateScene0(slayEngine* Engine, scene0* Scene)
+{
+    updateMenu(Engine, Scene);
 
     return 0;
 }

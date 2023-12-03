@@ -113,6 +113,15 @@ typedef struct
 
 typedef struct
 {
+    uint8 ColorR;
+    uint8 ColorG;
+    uint8 ColorB;
+
+    button* ButtonScene1;    
+} scene0;
+
+typedef struct
+{
     pause* Pause;
     logic paused;
 
@@ -133,8 +142,14 @@ typedef struct
 } game;
 
 
+//Menu
+uint16 updateMenu(slayEngine* Engine, scene0* Scene);
+
 //Loading
 uint16 loadGame(slayEngine* Engine);
+
+uint16 loadScene0(slayEngine* Engine);
+uint16 unloadScene0(slayEngine* Engine);
 
 uint16 loadScene1(slayEngine* Engine);
 uint16 unloadScene1(slayEngine* Engine);

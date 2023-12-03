@@ -14,6 +14,50 @@ uint16 loadGame(slayEngine* Engine)
     return 0;
 }
 
+uint16 loadScene0(slayEngine* Engine)
+{
+    scene0* scene;
+
+    //Scene
+    Engine->Scenes->Values[0] = malloc(sizeof(scene0));
+    scene = Engine->Scenes->Values[0];
+
+    //Color
+    scene->ColorR = 0;
+    scene->ColorG = 0;
+    scene->ColorB = 0;
+
+    //Button
+    scene->ButtonScene1 = malloc(sizeof(button));
+    scene->ButtonScene1->TextureBase = slayLoadTexture(Engine, "assets/buttons/buttonbase.png");
+    scene->ButtonScene1->TextureHover = slayLoadTexture(Engine, "assets/buttons/buttonhover.png");
+    scene->ButtonScene1->TextureCurrent = scene->ButtonScene1->TextureBase;
+    scene->ButtonScene1->X = 810;
+    scene->ButtonScene1->Y = 330;
+    scene->ButtonScene1->Width = 300;
+    scene->ButtonScene1->Height = 100;
+    scene->ButtonScene1->Hitbox = slayNewHitbox(&scene->ButtonScene1->X, &scene->ButtonScene1->Y, 0, 0, 300, 100);
+
+    Engine->CurrentScene = 0;
+
+    return 0;
+}
+
+uint16 unloadScene0(slayEngine* Engine)
+{
+    scene0* scene;
+
+    scene = Engine->Scenes->Values[0];
+
+    slayUnloadTexture(scene->ButtonScene1->TextureBase);
+    slayUnloadTexture(scene->ButtonScene1->TextureHover);
+    free(scene->ButtonScene1->Hitbox);
+    free(scene->ButtonScene1);
+    free(scene);
+
+    return 0;
+}
+
 uint16 loadScene1(slayEngine* Engine)
 {
     scene1* scene;
@@ -49,7 +93,7 @@ uint16 loadScene1(slayEngine* Engine)
     scene->Player->SoundFire = slayLoadSound("assets/player_fire.wav");
 
     save = arrNew(0);
-    if (fileRead("saves/scene1.txt", save))
+    if (fileRead("saves/scene1.txt", save) && save->Length == 3)
     {
         scene->Player->X = STRtoDOUBLE(((string)save->Values[0])->String, NULL);
         scene->Player->Y = STRtoDOUBLE(((string)save->Values[1])->String, NULL);
@@ -138,6 +182,8 @@ uint16 unloadScene1(slayEngine* Engine)
     {
         free(scene->Projectiles->Values[i]);
     }
+
+    free(scene);
 
     return 0;
 }
