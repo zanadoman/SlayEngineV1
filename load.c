@@ -28,6 +28,7 @@ uint16 loadGame(slayEngine* Engine)
 uint16 loadScene0(slayEngine* Engine)
 {
     scene0* scene;
+    array save;
 
     Engine->Scenes->Values[0] = malloc(sizeof(scene0));
     scene = Engine->Scenes->Values[0];
@@ -44,8 +45,20 @@ uint16 loadScene0(slayEngine* Engine)
     scene->Player = newPlayer();
     scene->Player->TextureBase = slayLoadTexture(Engine, "assets/player_base.png");
     scene->Player->SoundFire = slayLoadSound("assets/player_fire.wav");
-    scene->Player->X = 386;
-    scene->Player->Y = 410;
+    save = arrNew(0);
+    if (fileRead("save.txt", save))
+    {
+        ((scene0*)Engine->Scenes->Values[0])->Player->X = STRtoDOUBLE(((string)save->Values[0])->String, NULL);
+        ((scene0*)Engine->Scenes->Values[0])->Player->Y = STRtoDOUBLE(((string)save->Values[1])->String, NULL);
+        strPurge(save->Values[0]);
+        strPurge(save->Values[1]);
+    }
+    else
+    {
+        scene->Player->X = 386;
+        scene->Player->Y = 410;
+    }
+    arrPurge(save);
     scene->Player->MinX = -200;
     scene->Player->MaxX = 1000;
     scene->Player->MinY = -500;

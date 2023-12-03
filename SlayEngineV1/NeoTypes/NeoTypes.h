@@ -107,5 +107,5 @@ uint16 DOUBLEtoSTR(double Number, string String);
 
 //________________NeoFile.c________________ // COMPLETED
 
-uint16 fileRead(char* FilePath, array Lines);
-uint16 fileWrite(array Lines, char* FilePath);
+logic fileRead(char* FilePath, array Lines);
+logic fileWrite(array Lines, char* FilePath);

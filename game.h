@@ -101,6 +101,9 @@ typedef struct
 //Load queue
 uint16 loadQueue(slayEngine* Engine);
 
+//Save queue
+uint16 saveQueue(slayEngine* Engine);
+
 //Update queue
 uint16 updateQueue(slayEngine* Engine);
 
