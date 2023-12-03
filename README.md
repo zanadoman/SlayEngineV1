@@ -154,7 +154,7 @@ This function can apply the perspective of the camera to a slayObject*
 You can start any function in a new thread with the engine as argument
 
 ### uint16 slayThreadWaitExit()
-Halt your program until the thread with the given ID returns
+Pauses your program until the thread with the given ID returns
 
 ### slayThreadExit;
 You should put this command at the end of each thread function
