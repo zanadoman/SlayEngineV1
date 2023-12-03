@@ -1,6 +1,6 @@
 #include "game.h"
 
-uint16 renderScene0(slayEngine* Engine, scene0* Scene);
+uint16 renderScene1(slayEngine* Engine, scene1* Scene);
 
 uint16 renderQueue(slayEngine* Engine)
 {
@@ -8,8 +8,8 @@ uint16 renderQueue(slayEngine* Engine)
 
     switch (Engine->CurrentScene)
     {
-        case 0:
-            renderScene0(Engine, Engine->Scenes->Values[0]);
+        case 1:
+            renderScene1(Engine, Engine->Scenes->Values[1]);
             break;
     }
     
@@ -18,7 +18,7 @@ uint16 renderQueue(slayEngine* Engine)
     return 0;
 }
 
-uint16 renderScene0(slayEngine* Engine, scene0* Scene)
+uint16 renderScene1(slayEngine* Engine, scene1* Scene)
 {
     //Background
     slayRenderTexture(Engine, 0, 0, Engine->Display->Width, Engine->Display->Height, 0, slayFlipNONE, Scene->TextureBackground, 255);

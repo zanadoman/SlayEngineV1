@@ -88,7 +88,7 @@ typedef struct
     player* Player;
 
     array Projectiles;
-} scene0;
+} scene1;
 
 typedef struct
 {
@@ -101,8 +101,8 @@ typedef struct
 //Loading
 uint16 loadGame(slayEngine* Engine);
 
-uint16 loadScene0(slayEngine* Engine);
-uint16 unloadScene0(slayEngine* Engine);
+uint16 loadScene1(slayEngine* Engine);
+uint16 unloadScene1(slayEngine* Engine);
 
 //Update queue
 uint16 updateQueue(slayEngine* Engine);

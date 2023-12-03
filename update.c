@@ -1,6 +1,6 @@
 #include "game.h"
 
-uint16 updateScene0(slayEngine* Engine);
+uint16 updateScene1(slayEngine* Engine);
 
 void* updatePlayerThread(void* Engine);
 void* updateProjectileThread(void* Engine);
@@ -9,15 +9,15 @@ uint16 updateQueue(slayEngine* Engine)
 {
     switch (Engine->CurrentScene)
     {
-        case 0:
-            updateScene0(Engine);
+        case 1:
+            updateScene1(Engine);
             break;
     }
 
     return 0;
 }
 
-uint16 updateScene0(slayEngine* Engine)
+uint16 updateScene1(slayEngine* Engine)
 {
     slayThreadStart(Engine, 0, updatePlayerThread);
     slayThreadStart(Engine, 1, updateProjectileThread);
@@ -32,8 +32,8 @@ void* updatePlayerThread(void* Engine)
     engine = Engine;
     switch (((slayEngine*)Engine)->CurrentScene)
     {
-        case 0:
-            updatePlayer(engine, ((scene0*)engine->Scenes->Values[0])->Player, ((scene0*)engine->Scenes->Values[0])->Platforms);
+        case 1:
+            updatePlayer(engine, ((scene1*)engine->Scenes->Values[1])->Player, ((scene1*)engine->Scenes->Values[1])->Platforms);
             break;
     }
 
@@ -47,8 +47,8 @@ void* updateProjectileThread(void* Engine)
     engine = Engine;
     switch (((slayEngine*)Engine)->CurrentScene)
     {
-        case 0:
-            updateProjectile(engine, ((scene0*)engine->Scenes->Values[0])->Projectiles, ((scene0*)engine->Scenes->Values[0])->Player, ((scene0*)engine->Scenes->Values[0])->Platforms);
+        case 1:
+            updateProjectile(engine, ((scene1*)engine->Scenes->Values[1])->Projectiles, ((scene1*)engine->Scenes->Values[1])->Player, ((scene1*)engine->Scenes->Values[1])->Platforms);
             break;
     }
 

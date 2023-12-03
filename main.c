@@ -6,11 +6,11 @@ uint16 main(uint64 argc, char* *argv)
 {
     slayEngine* Engine;
 
-    Engine = slayNewEngine("SlayEngineV1 DEMO", 1920, 1080, 1, 2, 165);
+    Engine = slayNewEngine("SlayEngineV1 DEMO", 1920, 1080, 2, 2, 165);
     loadGame(Engine);
 
-    loadScene0(Engine);
-    Engine->CurrentScene = 0;
+    loadScene1(Engine);
+    Engine->CurrentScene = 1;
 
     while(slayEvent(Engine))
     {
@@ -22,7 +22,7 @@ uint16 main(uint64 argc, char* *argv)
         slayCapFPS(Engine);
     }
 
-    unloadScene0(Engine);
+    unloadScene1(Engine);
 
     return 0;
 }
