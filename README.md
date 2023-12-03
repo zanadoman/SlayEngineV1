@@ -22,7 +22,7 @@ while keeping the game's aspect ratio by using black bars.
 
 # Wiki
 
-###Common
+### Common
 
 slayEngine* slayNewEngine()\
 Creates a new Engine instance for you.\
