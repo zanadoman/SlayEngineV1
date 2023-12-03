@@ -28,11 +28,6 @@ uint16 slayPlaySoundTicks(Mix_Chunk* Sound, sint16 Channel, uint8 Volume, uint8 
     Mix_VolumeChunk(Sound, Volume);
     Mix_SetPanning(Channel, Left, Right);
     Mix_PlayChannelTimed(Channel, Sound, Loops, Ticks);
-}
-
-uint16 slayStopSound(sint16 Channel)
-{
-    Mix_HaltChannel(Channel);
 
     return 0;
 }

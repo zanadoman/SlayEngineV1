@@ -12,32 +12,6 @@
 #include "NeoTypes/NeoTypes.h"
 #include <pthread.h>
 
-#define PI 3.141592653589793
-
-#define slayGetTicks SDL_GetTicks
-#define slayMouseRelative SDL_SetRelativeMouseMode
-
-#define slayFlipNONE SDL_FLIP_NONE
-#define slayFlipHORIZONTAL SDL_FLIP_HORIZONTAL
-#define slayFlipVERTICAL SDL_FLIP_VERTICAL
-
-#define slayTexture SDL_Texture
-#define slaySound Mix_Chunk
-#define slayObject SDL_Rect
-
-#define slayThreadExit pthread_exit(NULL)
-
-#define slayCollTOP 3
-#define slayCollRIGHT 10
-#define slayCollBOTTOM 12
-#define slayCollLEFT 5
-#define slayCollTOPLEFT 1
-#define slayCollTOPRIGHT 2
-#define slayCollBOTTOMLEFT 4
-#define slayCollBOTTOMRIGHT 8
-#define slayCollALL 15
-
-
 typedef struct
 {
     uint16 Width;
@@ -109,12 +83,20 @@ uint16 slayLogo();
 
 //Control____________________________________________________________
 
+#define slayGetTicks SDL_GetTicks
 logic slayEvent(slayEngine* Engine);
 uint16 slayUpdateDeltaTime(slayEngine* Engine);
 uint16 slayCapFPS(slayEngine* Engine);
 uint64 slayRandom(uint64 Min, uint64 Max, double Seed);
 
 //Render_____________________________________________________________
+
+#define slayTexture SDL_Texture
+#define slayObject SDL_Rect
+
+#define slayFlipNONE SDL_FLIP_NONE
+#define slayFlipHORIZONTAL SDL_FLIP_HORIZONTAL
+#define slayFlipVERTICAL SDL_FLIP_VERTICAL
 
 SDL_Texture* slayLoadTexture(slayEngine* Engine, char* Path);
 TTF_Font* slayLoadFont(char* Path, int Size);
@@ -136,10 +118,11 @@ uint16 slayRender3DTextCamera(slayEngine* Engine, TTF_Font* Font, char* Characte
 
 //Audio______________________________________________________________
 
+#define slaySound Mix_Chunk
+#define slayStopSound Mix_HaltChannel
 Mix_Chunk* slayLoadSound(char* Path);
 uint16 slayPlaySound(Mix_Chunk* Sound, sint16 Channel, uint8 Volume, uint8 Left, uint8 Right, sint16 Loops);
 uint16 slayPlaySoundTicks(Mix_Chunk* Sound, sint16 Channel, uint8 Volume, uint8 Left, uint8 Right, sint16 Loops, uint64 Ticks);
-uint16 slayStopSound(sint16 Channel);
 
 //Inputs_____________________________________________________________
 
@@ -147,6 +130,7 @@ uint8 slayKey(uint64 Key);
 
 //Mouse______________________________________________________________
 
+#define slayMouseRelative SDL_SetRelativeMouseMode
 uint16 slayMouseMovement(slayEngine* Engine);
 uint16 slayMouseButtons(slayEngine* Engine);
 logic slayCursorCollision(slayEngine* Engine, slayHitbox* Hitbox);
@@ -154,12 +138,23 @@ logic slayCursorCollisionCamera(slayEngine* Engine, slayHitbox* Hitbox, double D
 
 //Vector_____________________________________________________________
 
+#define PI 3.141592653589793
 uint16 slayVectorLength(double X1, double Y1, double X2, double Y2, double* Length);
 uint16 slayVectorTranslate(double X1, double Y1, double* X2, double* Y2, double Length, double Angle);
 uint16 slayVectorAngle(double X1, double Y1, double X2, double Y2, double* Angle);
 uint16 slayVectorScalar(double X1, double Y1, double X2, double Y2, double* Scalar);
 
 //Hitbox_____________________________________________________________
+
+#define slayCollTOP 3
+#define slayCollRIGHT 10
+#define slayCollBOTTOM 12
+#define slayCollLEFT 5
+#define slayCollTOPLEFT 1
+#define slayCollTOPRIGHT 2
+#define slayCollBOTTOMLEFT 4
+#define slayCollBOTTOMRIGHT 8
+#define slayCollALL 15
 
 slayHitbox* slayNewHitbox(double* ObjectX, double* ObjectY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY);
 uint8 slayCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2);
@@ -171,5 +166,6 @@ uint16 slayApplyCamera(slayEngine* Engine, SDL_Rect* Object, double X, double Y,
 
 //Thread_____________________________________________________________
 
+#define slayThreadExit pthread_exit(NULL)
 uint16 slayThreadStart(slayEngine* Engine, uint64 ID, void* Function);
 uint16 slayThreadWaitExit(slayEngine* Engine, uint64 ID);
