@@ -111,7 +111,7 @@ You should use this function if you want to interact with something that lives i
 This function returns the length of a vector defined by two coordinates into a double*
 
 ### uint16 slayVectorTranslate()
-This function creates a vector from a initial point, length and angle then outputs the coordinates of the terminal point into two double*
+This function creates a vector from an initial point, length and angle then outputs the coordinates of the terminal point into two double*
 
 ### uint16 slayVectorAngle()
 This function returns the angle of a vector defined by two coordinates into a double*
@@ -143,7 +143,7 @@ Other values:\
 ## Camera
 
 ### uint16 slaySetCamera()
-You can change the properties of the camera with this function, you attach it to an ingame object or a fixed coordinate, you can also set zoom level
+You can change the properties of the camera with this function, you can attach it to an ingame object or a fixed coordinate, you can also set zoom level
 
 ### uint16 slayApplyCamera()
 This function can apply the perspective of the camera to a slayObject*
