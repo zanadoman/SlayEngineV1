@@ -126,7 +126,10 @@ uint16 slayPlaySoundTicks(Mix_Chunk* Sound, sint16 Channel, uint8 Volume, uint8 
 
 //Inputs_____________________________________________________________
 
-uint8 slayKey(uint64 Key);
+#define SDL_SCANCODE_LMB 513
+#define SDL_SCANCODE_MMB 514
+#define SDL_SCANCODE_RMB 515
+uint8 slayKey(slayEngine* Engine, uint64 Key);
 
 //Mouse______________________________________________________________
 

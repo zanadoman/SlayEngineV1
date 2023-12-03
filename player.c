@@ -25,6 +25,7 @@ player* newPlayer()
     result->KeyLeft = SDL_SCANCODE_A;
     result->KeyRight = SDL_SCANCODE_D;
     result->KeyJump = SDL_SCANCODE_SPACE;
+    result->KeyFire = SDL_SCANCODE_LMB;
 
     result->Hitbox = slayNewHitbox(&result->X, &result->Y, 0, 0, result->Width, result->Height);
 
@@ -40,18 +41,18 @@ player* newPlayer()
     return result;
 }
 
-uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms, uint64 DeltaTime)
+uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms)
 {
     uint8 collision;
     logic falling;
     double zoom;
 
     //Horizontal movement
-    if (slayKey(Player->KeyLeft))
+    if (slayKey(Engine, Player->KeyLeft))
     {
         if (Player->AccelerationX > -1)
         {
-            Player->AccelerationX -= Player->AccelerationRateX * DeltaTime;
+            Player->AccelerationX -= Player->AccelerationRateX * Engine->DeltaTime;
             if (Player->AccelerationX < -1)
             {
                 Player->AccelerationX = -1;
@@ -59,11 +60,11 @@ uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms, uint64 
         }
         Player->Facing = -1;
     }
-    else if (slayKey(Player->KeyRight))
+    else if (slayKey(Engine, Player->KeyRight))
     {
         if (Player->AccelerationX < 1)
         {
-            Player->AccelerationX += Player->AccelerationRateX * DeltaTime;
+            Player->AccelerationX += Player->AccelerationRateX * Engine->DeltaTime;
             if (Player->AccelerationX > 1)
             {
                 Player->AccelerationX = 1;
@@ -76,7 +77,7 @@ uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms, uint64 
         //Deacceleration
         if (Player->AccelerationX < 0)
         {
-            Player->AccelerationX += Player->DeaccelerationRateX * DeltaTime;
+            Player->AccelerationX += Player->DeaccelerationRateX * Engine->DeltaTime;
             if (Player->AccelerationX > 0)
             {
                 Player->AccelerationX = 0;
@@ -84,17 +85,17 @@ uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms, uint64 
         }
         else if (Player->AccelerationX > 0)
         {
-            Player->AccelerationX -= Player->DeaccelerationRateX * DeltaTime;
+            Player->AccelerationX -= Player->DeaccelerationRateX * Engine->DeltaTime;
             if (Player->AccelerationX < 0)
             {
                 Player->AccelerationX = 0;
             }
         }
     }
-    Player->X += Player->Speed * Player->AccelerationX * DeltaTime;
+    Player->X += Player->Speed * Player->AccelerationX * Engine->DeltaTime;
 
     //Vertical movement
-    Player->Y += GRAVITY * Player->AccelerationY * DeltaTime;
+    Player->Y += GRAVITY * Player->AccelerationY * Engine->DeltaTime;
     falling = true;
     for (uint64 i = 0; i < Platforms->Length; i++)
     {
@@ -134,13 +135,13 @@ uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms, uint64 
     //Falling or jumping
     if (falling)
     {
-        Player->AccelerationY += Player->DeaccelerationRateY * DeltaTime;
+        Player->AccelerationY += Player->DeaccelerationRateY * Engine->DeltaTime;
         if (Player->AccelerationY > 1)
         {
             Player->AccelerationY = 1;
         }
     }
-    else if (slayKey(Player->KeyJump))
+    else if (slayKey(Engine, Player->KeyJump))
     {
         Player->AccelerationY = -Player->JumpHeight;
     }

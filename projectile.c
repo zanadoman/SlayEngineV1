@@ -27,16 +27,16 @@ projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX
     return result;
 }
 
-uint16 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, array Platforms, uint8 Volume, uint64 DeltaTime)
+uint16 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, array Platforms)
 {
     uint8 collision;
     uint64 j;
 
-    playerProjectile(Engine, Projectiles, Player, Volume);
+    playerProjectile(Engine, Projectiles, Player, ((game*)Engine->Game)->Volume);
 
     for (uint64 i = 0; i < Projectiles->Length; i++)
     {
-        slayVectorTranslate(((projectile*)Projectiles->Values[i])->X, ((projectile*)Projectiles->Values[i])->Y, &((projectile*)Projectiles->Values[i])->X, &((projectile*)Projectiles->Values[i])->Y, ((projectile*)Projectiles->Values[i])->Speed * DeltaTime, ((projectile*)Projectiles->Values[i])->Angle);
+        slayVectorTranslate(((projectile*)Projectiles->Values[i])->X, ((projectile*)Projectiles->Values[i])->Y, &((projectile*)Projectiles->Values[i])->X, &((projectile*)Projectiles->Values[i])->Y, ((projectile*)Projectiles->Values[i])->Speed * Engine->DeltaTime, ((projectile*)Projectiles->Values[i])->Angle);
 
         for (j = 0; j < Platforms->Length; j++)
         {
@@ -60,7 +60,7 @@ uint16 playerProjectile(slayEngine* Engine, array Projectiles, player* Player, u
     slayObject object;
     double angle;
 
-    if (Engine->Mouse->LMB && slayGetTicks() > Player->ReloadTick + Player->ReloadTime)
+    if (slayKey(Engine, Player->KeyFire) && slayGetTicks() > Player->ReloadTick + Player->ReloadTime)
     {
         slayApplyCamera(Engine, &object, Player->X, Player->Y, Player->Width, Player->Height, 1);
         object.x += object.w / 2;

@@ -109,11 +109,11 @@ uint16 renderQueue(slayEngine* Engine);
 
 //Player
 player* newPlayer();
-uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms, uint64 DeltaTime);
+uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms);
 
 //Level
 platform* newPlatform(double X, double Y, uint16 Width, uint16 Height);
 
 //Projectile
 projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX, double MinY, double MaxY, uint16 Width, uint16 Height, double Speed, double Angle);
-uint16 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, array Platforms, uint8 Volume, uint64 DeltaTime);
+uint16 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, array Platforms);

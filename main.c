@@ -1,5 +1,4 @@
 /*
-Egérgomb input standardizálása
 Player coordinátáinak elmentése, behúzása
 Wiki írása
 */
