@@ -28,7 +28,10 @@ uint16 renderScene0(slayEngine* Engine, scene0* Scene)
     slayRenderColor(Engine, 0, 0, Engine->Display->Width, Engine->Display->Height, Scene->ColorR, Scene->ColorG, Scene->ColorB, 255);
 
     //Button
-    slayRenderTexture(Engine, Scene->ButtonScene1->X, Scene->ButtonScene1->Y, Scene->ButtonScene1->Width, Scene->ButtonScene1->Height, 0, slayFlipNONE, Scene->ButtonScene1->TextureCurrent, 255);
+    for (uint64 i = 0; i < Scene->Buttons->Length; i++)
+    {
+        slayRenderTexture(Engine, ((button*)Scene->Buttons->Values[i])->X, ((button*)Scene->Buttons->Values[i])->Y, ((button*)Scene->Buttons->Values[i])->Width, ((button*)Scene->Buttons->Values[i])->Height, 0, slayFlipNONE, ((button*)Scene->Buttons->Values[i])->TextureCurrent, 255);
+    }
 
     return 0;
 }

@@ -28,15 +28,17 @@ uint16 loadScene0(slayEngine* Engine)
     scene->ColorB = 0;
 
     //Button
-    scene->ButtonScene1 = malloc(sizeof(button));
-    scene->ButtonScene1->TextureBase = slayLoadTexture(Engine, "assets/buttons/buttonbase.png");
-    scene->ButtonScene1->TextureHover = slayLoadTexture(Engine, "assets/buttons/buttonhover.png");
-    scene->ButtonScene1->TextureCurrent = scene->ButtonScene1->TextureBase;
-    scene->ButtonScene1->X = 810;
-    scene->ButtonScene1->Y = 330;
-    scene->ButtonScene1->Width = 300;
-    scene->ButtonScene1->Height = 100;
-    scene->ButtonScene1->Hitbox = slayNewHitbox(&scene->ButtonScene1->X, &scene->ButtonScene1->Y, 0, 0, 300, 100);
+    scene->Buttons = arrNew(1);
+    
+    scene->Buttons->Values[0] = malloc(sizeof(button));
+    ((button*)scene->Buttons->Values[0])->TextureBase = slayLoadTexture(Engine, "assets/buttons/buttonbase.png");
+    ((button*)scene->Buttons->Values[0])->TextureHover = slayLoadTexture(Engine, "assets/buttons/buttonhover.png");
+    ((button*)scene->Buttons->Values[0])->TextureCurrent = ((button*)scene->Buttons->Values[0])->TextureBase;
+    ((button*)scene->Buttons->Values[0])->X = 810;
+    ((button*)scene->Buttons->Values[0])->Y = 330;
+    ((button*)scene->Buttons->Values[0])->Width = 300;
+    ((button*)scene->Buttons->Values[0])->Height = 100;
+    ((button*)scene->Buttons->Values[0])->Hitbox = slayNewHitbox(&((button*)scene->Buttons->Values[0])->X, &((button*)scene->Buttons->Values[0])->Y, 0, 0, 300, 100);
 
     //Scene
     Engine->CurrentScene = 0;
@@ -51,10 +53,14 @@ uint16 unloadScene0(slayEngine* Engine)
     scene = Engine->Scenes->Values[0];
 
     //Buttons
-    slayUnloadTexture(scene->ButtonScene1->TextureBase);
-    slayUnloadTexture(scene->ButtonScene1->TextureHover);
-    free(scene->ButtonScene1->Hitbox);
-    free(scene->ButtonScene1);
+    for (uint64 i = 0; i < scene->Buttons->Length; i++)
+    {
+        slayUnloadTexture(((button*)scene->Buttons->Values[i])->TextureBase);
+        slayUnloadTexture(((button*)scene->Buttons->Values[i])->TextureHover);
+        free(((button*)scene->Buttons->Values[i])->Hitbox);
+        free(scene->Buttons->Values[i]);
+    }
+    arrPurge(scene->Buttons);
 
     //Scene
     free(scene);

@@ -2,9 +2,9 @@
 
 uint16 updateMenu(slayEngine* Engine, scene0* Scene)
 {
-    if (slayCursorCollision(Engine, Scene->ButtonScene1->Hitbox))
+    if (slayCursorCollision(Engine, ((button*)Scene->Buttons->Values[0])->Hitbox))
     {
-        Scene->ButtonScene1->TextureCurrent = Scene->ButtonScene1->TextureHover;
+        ((button*)Scene->Buttons->Values[0])->TextureCurrent = ((button*)Scene->Buttons->Values[0])->TextureHover;
 
         if (slayKey(Engine, SDL_SCANCODE_LMB))
         {
@@ -14,7 +14,7 @@ uint16 updateMenu(slayEngine* Engine, scene0* Scene)
     }
     else
     {
-        Scene->ButtonScene1->TextureCurrent = Scene->ButtonScene1->TextureBase;
+        ((button*)Scene->Buttons->Values[0])->TextureCurrent = ((button*)Scene->Buttons->Values[0])->TextureBase;
     }
 
     return 0;

@@ -116,7 +116,7 @@ typedef struct
     uint8 ColorG;
     uint8 ColorB;
 
-    button* ButtonScene1;    
+    array Buttons;   
 } scene0;
 
 typedef struct
