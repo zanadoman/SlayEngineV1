@@ -17,25 +17,27 @@ pause* newPause(slayEngine* Engine)
     result->ColorB = 0;
     result->ColorA = 192;
 
-    result->ButtonResume = malloc(sizeof(button));
-    result->ButtonResume->X = 810;
-    result->ButtonResume->Y = 330;
-    result->ButtonResume->Width = 300;
-    result->ButtonResume->Height = 100;
-    result->ButtonResume->TextureBase = slayLoadTexture(Engine, "assets/buttons/buttonbase.png");
-    result->ButtonResume->TextureHover = slayLoadTexture(Engine, "assets/buttons/buttonhover.png");
-    result->ButtonResume->TextureCurrent = result->ButtonResume->TextureBase;
-    result->ButtonResume->Hitbox = slayNewHitbox(&result->ButtonResume->X, &result->ButtonResume->Y, 0, 0, 300, 100);
+    result->Buttons = arrNew(2);
 
-    result->ButtonQuit = malloc(sizeof(button));
-    result->ButtonQuit->X = 810;
-    result->ButtonQuit->Y = 630;
-    result->ButtonQuit->Width = 300;
-    result->ButtonQuit->Height = 100;
-    result->ButtonQuit->TextureBase = slayLoadTexture(Engine, "assets/buttons/buttonbase.png");
-    result->ButtonQuit->TextureHover = slayLoadTexture(Engine, "assets/buttons/buttonhover.png");
-    result->ButtonQuit->TextureCurrent = result->ButtonQuit->TextureBase;
-    result->ButtonQuit->Hitbox = slayNewHitbox(&result->ButtonQuit->X, &result->ButtonQuit->Y, 0, 0, 300, 100);
+    result->Buttons->Values[0] = malloc(sizeof(button));
+    ((button*)result->Buttons->Values[0])->X = 810;
+    ((button*)result->Buttons->Values[0])->Y = 330;
+    ((button*)result->Buttons->Values[0])->Width = 300;
+    ((button*)result->Buttons->Values[0])->Height = 100;
+    ((button*)result->Buttons->Values[0])->TextureBase = slayLoadTexture(Engine, "assets/buttons/buttonbase.png");
+    ((button*)result->Buttons->Values[0])->TextureHover = slayLoadTexture(Engine, "assets/buttons/buttonhover.png");
+    ((button*)result->Buttons->Values[0])->TextureCurrent = ((button*)result->Buttons->Values[0])->TextureBase;
+    ((button*)result->Buttons->Values[0])->Hitbox = slayNewHitbox(&((button*)result->Buttons->Values[0])->X, &((button*)result->Buttons->Values[0])->Y, 0, 0, 300, 100);
+
+    result->Buttons->Values[1] = malloc(sizeof(button));
+    ((button*)result->Buttons->Values[1])->X = 810;
+    ((button*)result->Buttons->Values[1])->Y = 630;
+    ((button*)result->Buttons->Values[1])->Width = 300;
+    ((button*)result->Buttons->Values[1])->Height = 100;
+    ((button*)result->Buttons->Values[1])->TextureBase = slayLoadTexture(Engine, "assets/buttons/buttonbase.png");
+    ((button*)result->Buttons->Values[1])->TextureHover = slayLoadTexture(Engine, "assets/buttons/buttonhover.png");
+    ((button*)result->Buttons->Values[1])->TextureCurrent = ((button*)result->Buttons->Values[1])->TextureBase;
+    ((button*)result->Buttons->Values[1])->Hitbox = slayNewHitbox(&((button*)result->Buttons->Values[1])->X, &((button*)result->Buttons->Values[1])->Y, 0, 0, 300, 100);
 
     return result;
 }
@@ -49,9 +51,9 @@ uint16 updatePause(slayEngine* Engine, pause* Pause, logic* Paused)
 
     if (*Paused)
     {
-        if (slayCursorCollision(Engine, Pause->ButtonResume->Hitbox))
+        if (slayCursorCollision(Engine, ((button*)Pause->Buttons->Values[0])->Hitbox))
         {
-            Pause->ButtonResume->TextureCurrent = Pause->ButtonResume->TextureHover;
+            ((button*)Pause->Buttons->Values[0])->TextureCurrent = ((button*)Pause->Buttons->Values[0])->TextureHover;
 
             if (slayKey(Engine, SDL_SCANCODE_LMB))
             {
@@ -60,12 +62,12 @@ uint16 updatePause(slayEngine* Engine, pause* Pause, logic* Paused)
         }
         else
         {
-            Pause->ButtonResume->TextureCurrent = Pause->ButtonResume->TextureBase;
+            ((button*)Pause->Buttons->Values[0])->TextureCurrent = ((button*)Pause->Buttons->Values[0])->TextureBase;
         }
 
-        if (slayCursorCollision(Engine, Pause->ButtonQuit->Hitbox))
+        if (slayCursorCollision(Engine, ((button*)Pause->Buttons->Values[1])->Hitbox))
         {
-            Pause->ButtonQuit->TextureCurrent = Pause->ButtonQuit->TextureHover;
+            ((button*)Pause->Buttons->Values[1])->TextureCurrent = ((button*)Pause->Buttons->Values[1])->TextureHover;
 
             if (slayKey(Engine, SDL_SCANCODE_LMB))
             {
@@ -75,7 +77,7 @@ uint16 updatePause(slayEngine* Engine, pause* Pause, logic* Paused)
         }
         else
         {
-            Pause->ButtonQuit->TextureCurrent = Pause->ButtonQuit->TextureBase;
+            ((button*)Pause->Buttons->Values[1])->TextureCurrent = ((button*)Pause->Buttons->Values[1])->TextureBase;
         }
     }
 

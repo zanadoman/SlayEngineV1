@@ -144,14 +144,14 @@ uint16 unloadScene1(slayEngine* Engine)
     arrPurge(save);
 
     //Pause
-    slayUnloadTexture(scene->Pause->ButtonResume->TextureBase);
-    slayUnloadTexture(scene->Pause->ButtonResume->TextureHover);
-    free(scene->Pause->ButtonResume->Hitbox);
-    free(scene->Pause->ButtonResume);
-    slayUnloadTexture(scene->Pause->ButtonQuit->TextureBase);
-    slayUnloadTexture(scene->Pause->ButtonQuit->TextureHover);
-    free(scene->Pause->ButtonQuit->Hitbox);
-    free(scene->Pause->ButtonQuit);
+    for (uint64 i = 0; i < scene->Pause->Buttons->Length; i++)
+    {
+        slayUnloadTexture(((button*)scene->Pause->Buttons->Values[i])->TextureBase);
+        slayUnloadTexture(((button*)scene->Pause->Buttons->Values[i])->TextureHover);
+        free(((button*)scene->Pause->Buttons->Values[i])->Hitbox);
+        free(scene->Pause->Buttons->Values[i]);
+    }
+    arrPurge(scene->Pause->Buttons);
     free(scene->Pause);
 
     //Level

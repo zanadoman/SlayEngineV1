@@ -30,8 +30,7 @@ typedef struct
     uint8 ColorB;
     uint8 ColorA;
 
-    button* ButtonResume;
-    button* ButtonQuit;
+    array Buttons;
 } pause;
 
 typedef struct
