@@ -23,7 +23,9 @@ uint16 updateQueue(slayEngine* Engine)
 
 uint16 updateScene0(slayEngine* Engine, scene0* Scene)
 {
+    //1
     updateMenu(Engine, Scene);
+    //2
 
     return 0;
 }
