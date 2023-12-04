@@ -113,6 +113,7 @@ uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms)
                 Player->AccelerationY = 0;
                 falling = false;
 
+                //Sceen 2 platform generation
                 if (Engine->CurrentScene == 2 && Platforms->Length / 2 < i)
                 {
                     arrInsert(Platforms, Platforms->Length, newPlatform(((platform*)Platforms->Values[Platforms->Length - 1])->X + 200, ((platform*)Platforms->Values[Platforms->Length - 1])->Y + slayRandom(-100, 100, i), 100, 30));
@@ -169,6 +170,8 @@ uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms)
     {
         Player->X = Player->MaxX - Player->Width;
     }
+
+    //Sceen 2 falling
     if (Engine->CurrentScene == 2 && ((platform*)Platforms->Values[4])->Y + 500 < Player->Y)
     {
         Player->X = ((platform*)Platforms->Values[4])->X + 36;
