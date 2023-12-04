@@ -114,15 +114,21 @@ uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms)
                 falling = false;
 
                 //Sceen 2 platform generation
-                if (Engine->CurrentScene == 2 && Platforms->Length / 2 < i)
+                if (Engine->CurrentScene == 2 && 4 < i)
                 {
-                    arrInsert(Platforms, Platforms->Length, newPlatform(((platform*)Platforms->Values[Platforms->Length - 1])->X + 200, ((platform*)Platforms->Values[Platforms->Length - 1])->Y + slayRandom(-100, 100, i), 100, 30));
-                    arrRemove(Platforms, 0);
+                    for (uint64 j = 0; j < i - 4; j++)
+                    {
+                        arrInsert(Platforms, Platforms->Length, newPlatform(((platform*)Platforms->Values[Platforms->Length - 1])->X + 200, ((platform*)Platforms->Values[Platforms->Length - 1])->Y + slayRandom(-100, 100, i), 100, 30));
+                        arrRemove(Platforms, 0);
+                    }
                 }
-                else if (Engine->CurrentScene == 2 && i < Platforms->Length / 2)
+                else if (Engine->CurrentScene == 2 && i < 4)
                 {
-                    arrInsert(Platforms, 0, newPlatform(((platform*)Platforms->Values[0])->X - 200, ((platform*)Platforms->Values[0])->Y + slayRandom(-100, 100, i), 100, 30));
-                    arrRemove(Platforms, Platforms->Length - 1);
+                    for (uint64 j = 0; j < 4 - i; j++)
+                    {
+                        arrInsert(Platforms, 0, newPlatform(((platform*)Platforms->Values[0])->X - 200, ((platform*)Platforms->Values[0])->Y + slayRandom(-100, 100, i), 100, 30));
+                        arrRemove(Platforms, Platforms->Length - 1);
+                    }
                 }
             }
             //Side collision
