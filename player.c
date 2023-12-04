@@ -121,7 +121,7 @@ uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms)
                 }
                 else if (Engine->CurrentScene == 2 && i < Platforms->Length / 2)
                 {
-                    arrInsert(Platforms, 0, newPlatform(((platform*)Platforms->Values[0])->X - 200, ((platform*)Platforms->Values[Platforms->Length - 1])->Y + slayRandom(-100, 100, i), 100, 30));
+                    arrInsert(Platforms, 0, newPlatform(((platform*)Platforms->Values[0])->X - 200, ((platform*)Platforms->Values[0])->Y + slayRandom(-100, 100, i), 100, 30));
                     arrRemove(Platforms, Platforms->Length - 1);
                 }
             }
