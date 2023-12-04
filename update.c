@@ -61,8 +61,7 @@ uint16 updateScene2(slayEngine* Engine, scene2* Scene)
         return 1;
     }
     //2
-    slayThreadStart(Engine, 0, updatePlayerThread);
-    slayThreadWaitExit(Engine, 0);
+    updatePlayer(Engine, Scene->Player, Scene->Platforms);
     //3
 
     return 0;
@@ -77,9 +76,6 @@ void* updatePlayerThread(void* Engine)
     {
         case 1:
             updatePlayer(engine, ((scene1*)engine->Scenes->Values[1])->Player, ((scene1*)engine->Scenes->Values[1])->Platforms);
-            break;
-        case 2:
-            updatePlayer(engine, ((scene2*)engine->Scenes->Values[2])->Player, ((scene2*)engine->Scenes->Values[2])->Platforms);
             break;
     }
 
