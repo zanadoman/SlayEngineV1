@@ -1,6 +1,6 @@
 #include "game.h"
 
-player* newPlayer(slayEngine* Engine)
+player* newPlayer(slayEngine* Engine, uint64 KeyLeft, uint64 KeyRight, uint64 KeyJump, uint64 KeyFire)
 {
     player* result;
 
@@ -22,10 +22,10 @@ player* newPlayer(slayEngine* Engine)
     result->ReloadTime = 200;
     result->ReloadTick = 0;
 
-    result->KeyLeft = SDL_SCANCODE_A;
-    result->KeyRight = SDL_SCANCODE_D;
-    result->KeyJump = SDL_SCANCODE_SPACE;
-    result->KeyFire = SDL_SCANCODE_LMB;
+    result->KeyLeft = KeyLeft;
+    result->KeyRight = KeyRight;
+    result->KeyJump = KeyJump;
+    result->KeyFire = KeyFire;
 
     result->TextureBase = slayLoadTexture(Engine, "assets/player_base.png");
     result->SoundFire = slayLoadSound("assets/player_fire.wav");
@@ -168,6 +168,11 @@ uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms)
     else if (Player->X > Player->MaxX - Player->Width)
     {
         Player->X = Player->MaxX - Player->Width;
+    }
+    if (Engine->CurrentScene == 2 && ((platform*)Platforms->Values[4])->Y + 500 < Player->Y)
+    {
+        Player->X = ((platform*)Platforms->Values[4])->X + 36;
+        Player->Y = ((platform*)Platforms->Values[4])->Y - 40;
     }
 
     return 0;

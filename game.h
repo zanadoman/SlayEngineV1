@@ -179,7 +179,7 @@ uint16 updateQueue(slayEngine* Engine);
 uint16 renderQueue(slayEngine* Engine);
 
 //Player
-player* newPlayer(slayEngine* Engine);
+player* newPlayer(slayEngine* Engine, uint64 KeyLeft, uint64 KeyRight, uint64 KeyJump, uint64 KeyFire);
 uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms);
 
 //Level

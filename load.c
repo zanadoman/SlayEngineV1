@@ -105,7 +105,7 @@ uint16 loadScene1(slayEngine* Engine)
     scene->Platforms->Values[4] = newPlatform(500, 150, 100, 30);
     
     //Player
-    scene->Player = newPlayer(Engine);
+    scene->Player = newPlayer(Engine, SDL_SCANCODE_A, SDL_SCANCODE_D, SDL_SCANCODE_SPACE, SDL_SCANCODE_LMB);
 
     save = arrNew(0);
     if (fileRead("saves/scene1.txt", save) && save->Length == 3)
@@ -237,15 +237,15 @@ uint16 loadScene2(slayEngine* Engine)
     scene->Platforms->Values[8] = newPlatform(1150, 250 + slayRandom(-100, 100, 1), 100, 30);
     
     //Player
-    scene->Player = newPlayer(Engine);
+    scene->Player = newPlayer(Engine, SDL_SCANCODE_LEFT, SDL_SCANCODE_RIGHT, SDL_SCANCODE_UP, 0);
 
     scene->Player->X = 386;
     scene->Player->Y = 210;
 
-    scene->Player->MinX = -100000;
-    scene->Player->MaxX = 100000;
-    scene->Player->MinY = -100000;
-    scene->Player->MaxY = 100000;
+    scene->Player->MinX = -1000000;
+    scene->Player->MaxX = 1000000;
+    scene->Player->MinY = -1000000;
+    scene->Player->MaxY = 1000000;
 
     slaySetCamera(Engine, &scene->Player->X, &scene->Player->Y, 14, 20, -960, -520, 1.5);
 
