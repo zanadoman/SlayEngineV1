@@ -258,9 +258,6 @@ uint16 loadScene2(slayEngine* Engine)
     scene->Player->MaxY = 600;
 
     slaySetCamera(Engine, &scene->Player->X, &scene->Player->Y, 14, 20, -960, -800, 1.5);
-    
-    //Projectiles
-    scene->Projectiles = arrNew(0);
 
     //Scene
     Engine->CurrentScene = 2;
@@ -318,17 +315,6 @@ uint16 unloadScene2(slayEngine* Engine)
     slayUnloadSound(scene->Player->SoundFire);
     free(scene->Player->Hitbox);
     free(scene->Player);
-
-    //Projectiles
-    for (uint64 i = 0; i < scene->Projectiles->Length; i++)
-    {
-        free(((projectile*)scene->Projectiles->Values[i])->Hitbox);
-    }
-    for (uint64 i = 0; i < scene->Projectiles->Length; i++)
-    {
-        free(scene->Projectiles->Values[i]);
-    }
-    arrPurge(scene->Projectiles);
 
     //Scene
     free(scene);

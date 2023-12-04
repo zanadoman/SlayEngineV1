@@ -145,8 +145,6 @@ typedef struct
     slayTexture* TexturePlatform;
 
     player* Player;
-
-    array Projectiles;
 } scene2;
 
 typedef struct
