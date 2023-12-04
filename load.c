@@ -190,3 +190,18 @@ uint16 unloadScene1(slayEngine* Engine)
 
     return 0;
 }
+
+uint16 unloadSceneCurrent(slayEngine* Engine)
+{
+    switch (Engine->CurrentScene)
+    {
+        case 0:
+            unloadScene0(Engine);
+            break;
+        case 1:
+            unloadScene1(Engine);
+            break;
+    }
+
+    return 0;
+}

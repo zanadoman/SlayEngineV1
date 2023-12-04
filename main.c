@@ -21,12 +21,7 @@ uint16 main(uint64 argc, char* *argv)
         slayCapFPS(Engine);
     }
 
-    switch (Engine->CurrentScene)
-    {
-        case 1:
-            unloadScene1(Engine);
-            break;
-    }
+    unloadSceneCurrent(Engine);
 
     return 0;
 }

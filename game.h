@@ -154,6 +154,8 @@ uint16 unloadScene0(slayEngine* Engine);
 uint16 loadScene1(slayEngine* Engine);
 uint16 unloadScene1(slayEngine* Engine);
 
+uint16 unloadSceneCurrent(slayEngine* Engine);
+
 //Update queue
 uint16 updateQueue(slayEngine* Engine);
 
