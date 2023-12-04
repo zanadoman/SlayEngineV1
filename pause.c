@@ -71,7 +71,7 @@ uint16 updatePause(slayEngine* Engine, pause* Pause, logic* Paused)
 
             if (slayKey(Engine, SDL_SCANCODE_LMB))
             {
-                unloadScene1(Engine);
+                unloadSceneCurrent(Engine);
                 loadScene0(Engine);
             }
         }
