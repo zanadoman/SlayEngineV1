@@ -21,7 +21,6 @@ slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Scene
     SDL_SetRenderDrawBlendMode(result->Display->Renderer, SDL_BLENDMODE_BLEND);
 
     result->Camera = malloc(sizeof(slayCamera));
-
     result->Mouse = malloc(sizeof(slayMouse));
 
     result->Threads = arrNew(Threads);
@@ -59,7 +58,7 @@ uint16 slayLogo(slayEngine* Engine)
     SDL_DestroyTexture(logo);
     slayRenderEnd(Engine);
 
-    SDL_Delay(2000);
+    SDL_Delay(1500);
 
     return 0;
 }
