@@ -38,6 +38,7 @@ uint16 loadScene0(slayEngine* Engine)
     scene->ButtonScene1->Height = 100;
     scene->ButtonScene1->Hitbox = slayNewHitbox(&scene->ButtonScene1->X, &scene->ButtonScene1->Y, 0, 0, 300, 100);
 
+    //Scene
     Engine->CurrentScene = 0;
 
     return 0;
