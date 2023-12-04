@@ -89,6 +89,8 @@ uint16 renderScene1(slayEngine* Engine, scene1* Scene)
     strConcat(text, 3, "Frametime: ", text->String, "ms");
     slayRenderText(Engine, ((game*)Engine->Game)->FontCrazyPixel, text->String, 10, -10, 0.75, 0, slayFlipNONE, 255, 255, 255, 255);
     strPurge(text);
+
+    return 0;
 }
 
 uint16 renderScene2(slayEngine* Engine, scene2* Scene)
@@ -134,4 +136,6 @@ uint16 renderScene2(slayEngine* Engine, scene2* Scene)
     strConcat(text, 3, "Frametime: ", text->String, "ms");
     slayRenderText(Engine, ((game*)Engine->Game)->FontCrazyPixel, text->String, 10, -10, 0.75, 0, slayFlipNONE, 255, 255, 255, 255);
     strPurge(text);
+
+    return 0;
 }

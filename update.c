@@ -28,7 +28,10 @@ uint16 updateQueue(slayEngine* Engine)
 uint16 updateScene0(slayEngine* Engine, scene0* Scene)
 {
     //1
-    updateMenu(Engine, Scene);
+    if (updateMenu(Engine, Scene))
+    {
+        return 2;
+    }
     //2
 
     return 0;
@@ -37,7 +40,10 @@ uint16 updateScene0(slayEngine* Engine, scene0* Scene)
 uint16 updateScene1(slayEngine* Engine, scene1* Scene)
 {
     //1
-    updatePause(Engine, Scene->Pause, &Scene->paused);
+    if (updatePause(Engine, Scene->Pause, &Scene->paused))
+    {
+        return 2;
+    }
     if (Scene->paused)
     {
         return 1;
@@ -55,7 +61,10 @@ uint16 updateScene1(slayEngine* Engine, scene1* Scene)
 uint16 updateScene2(slayEngine* Engine, scene2* Scene)
 {
     //1
-    updatePause(Engine, Scene->Pause, &Scene->paused);
+    if (updatePause(Engine, Scene->Pause, &Scene->paused))
+    {
+        return 2;
+    }
     if (Scene->paused)
     {
         return 1;
