@@ -49,11 +49,15 @@ uint16 unloadScene0(slayEngine* Engine)
 
     scene = Engine->Scenes->Values[0];
 
+    //Buttons
     slayUnloadTexture(scene->ButtonScene1->TextureBase);
     slayUnloadTexture(scene->ButtonScene1->TextureHover);
     free(scene->ButtonScene1->Hitbox);
     free(scene->ButtonScene1);
+
+    //Scene
     free(scene);
+    Engine->Scenes->Values[0] = NULL;
 
     return 0;
 }
@@ -186,7 +190,9 @@ uint16 unloadScene1(slayEngine* Engine)
     }
     arrPurge(scene->Projectiles);
 
+    //Scene
     free(scene);
+    Engine->Scenes->Values[1] = NULL;
 
     return 0;
 }
