@@ -38,6 +38,7 @@ uint16 loadScene0(slayEngine* Engine)
     ((button*)scene->Buttons->Values[0])->Y = 330;
     ((button*)scene->Buttons->Values[0])->Width = 300;
     ((button*)scene->Buttons->Values[0])->Height = 100;
+    ((button*)scene->Buttons->Values[0])->Pressed = false;
     ((button*)scene->Buttons->Values[0])->Hitbox = slayNewHitbox(&((button*)scene->Buttons->Values[0])->X, &((button*)scene->Buttons->Values[0])->Y, 0, 0, 300, 100);
 
     scene->Buttons->Values[1] = malloc(sizeof(button));
@@ -48,6 +49,7 @@ uint16 loadScene0(slayEngine* Engine)
     ((button*)scene->Buttons->Values[1])->Y = 630;
     ((button*)scene->Buttons->Values[1])->Width = 300;
     ((button*)scene->Buttons->Values[1])->Height = 100;
+    ((button*)scene->Buttons->Values[1])->Pressed = false;
     ((button*)scene->Buttons->Values[1])->Hitbox = slayNewHitbox(&((button*)scene->Buttons->Values[1])->X, &((button*)scene->Buttons->Values[1])->Y, 0, 0, 300, 100);
 
     //Scene
@@ -207,6 +209,134 @@ uint16 unloadScene1(slayEngine* Engine)
     return 0;
 }
 
+uint16 loadScene2(slayEngine* Engine)
+{
+    scene2* scene;
+    array save;
+
+    //Scene
+    Engine->Scenes->Values[2] = malloc(sizeof(scene2));
+    scene = Engine->Scenes->Values[2];
+
+    //Pause
+    scene->Pause = newPause(Engine);
+    scene->paused = false;
+
+    //Level
+    scene->TextureBackground = slayLoadTexture(Engine, "assets/background.jpg");
+    scene->TexturePlatform = slayLoadTexture(Engine, "assets/platform.png");
+    scene->Platforms = arrNew(5);
+    scene->Platforms->Values[0] = newPlatform(-200, 550, 1200, 180);
+    scene->Platforms->Values[1] = newPlatform(300, 450, 200, 30);
+    scene->Platforms->Values[2] = newPlatform(200, 350, 100, 30);
+    scene->Platforms->Values[3] = newPlatform(350, 250, 100, 30);
+    scene->Platforms->Values[4] = newPlatform(500, 150, 100, 30);
+    
+    //Player
+    scene->Player = newPlayer(Engine);
+
+    save = arrNew(0);
+    if (fileRead("saves/scene2.txt", save) && save->Length == 3)
+    {
+        scene->Player->X = STRtoDOUBLE(((string)save->Values[0])->String, NULL);
+        scene->Player->Y = STRtoDOUBLE(((string)save->Values[1])->String, NULL);
+        scene->Player->Facing = STRtoDOUBLE(((string)save->Values[2])->String, NULL);
+        strPurge(save->Values[0]);
+        strPurge(save->Values[1]);
+        strPurge(save->Values[2]);
+    }
+    else
+    {
+        scene->Player->X = 386;
+        scene->Player->Y = 410;
+    }
+    arrPurge(save);
+
+    scene->Player->MinX = -200;
+    scene->Player->MaxX = 1000;
+    scene->Player->MinY = -500;
+    scene->Player->MaxY = 600;
+
+    slaySetCamera(Engine, &scene->Player->X, &scene->Player->Y, 14, 20, -960, -800, 1.5);
+    
+    //Projectiles
+    scene->Projectiles = arrNew(0);
+
+    //Scene
+    Engine->CurrentScene = 2;
+
+    return 0;
+}
+
+uint16 unloadScene2(slayEngine* Engine)
+{
+    scene2* scene;
+    array save;
+
+    scene = Engine->Scenes->Values[2];
+
+    //Save
+    save = arrNew(3);
+    save->Values[0] = strNew();
+    save->Values[1] = strNew();
+    save->Values[2] = strNew();
+    DOUBLEtoSTR(scene->Player->X, save->Values[0]);
+    DOUBLEtoSTR(scene->Player->Y, save->Values[1]);
+    SINTtoSTR(scene->Player->Facing, save->Values[2]);
+    fileWrite(save, "saves/scene2.txt");
+    strPurge(save->Values[0]);
+    strPurge(save->Values[1]),
+    strPurge(save->Values[2]);
+    arrPurge(save);
+
+    //Pause
+    for (uint64 i = 0; i < scene->Pause->Buttons->Length; i++)
+    {
+        slayUnloadTexture(((button*)scene->Pause->Buttons->Values[i])->TextureBase);
+        slayUnloadTexture(((button*)scene->Pause->Buttons->Values[i])->TextureHover);
+        free(((button*)scene->Pause->Buttons->Values[i])->Hitbox);
+        free(scene->Pause->Buttons->Values[i]);
+    }
+    arrPurge(scene->Pause->Buttons);
+    free(scene->Pause);
+
+    //Level
+    slayUnloadTexture(scene->TextureBackground);
+    slayUnloadTexture(scene->TexturePlatform);
+    for (uint64 i = 0; i < scene->Platforms->Length; i++)
+    {
+        free(((platform*)scene->Platforms->Values[i])->Hitbox);
+    }
+    for (uint64 i = 0; i < scene->Platforms->Length; i++)
+    {
+        free(scene->Platforms->Values[i]);
+    }
+    arrPurge(scene->Platforms);
+
+    //Player
+    slayUnloadTexture(scene->Player->TextureBase);
+    slayUnloadSound(scene->Player->SoundFire);
+    free(scene->Player->Hitbox);
+    free(scene->Player);
+
+    //Projectiles
+    for (uint64 i = 0; i < scene->Projectiles->Length; i++)
+    {
+        free(((projectile*)scene->Projectiles->Values[i])->Hitbox);
+    }
+    for (uint64 i = 0; i < scene->Projectiles->Length; i++)
+    {
+        free(scene->Projectiles->Values[i]);
+    }
+    arrPurge(scene->Projectiles);
+
+    //Scene
+    free(scene);
+    Engine->Scenes->Values[2] = NULL;
+
+    return 0;
+}
+
 uint16 unloadSceneCurrent(slayEngine* Engine)
 {
     switch (Engine->CurrentScene)
@@ -216,6 +346,9 @@ uint16 unloadSceneCurrent(slayEngine* Engine)
             break;
         case 1:
             unloadScene1(Engine);
+            break;
+        case 2:
+            unloadScene2(Engine);
             break;
     }
 

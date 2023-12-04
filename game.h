@@ -10,6 +10,8 @@ typedef struct
     uint16 Width;
     uint16 Height;
 
+    logic Pressed;
+
     slayTexture* TextureBase;
     slayTexture* TextureHover;
     slayTexture* TextureCurrent;
@@ -135,6 +137,20 @@ typedef struct
 
 typedef struct
 {
+    pause* Pause;
+    logic paused;
+
+    array Platforms;
+    slayTexture* TextureBackground;
+    slayTexture* TexturePlatform;
+
+    player* Player;
+
+    array Projectiles;
+} scene2;
+
+typedef struct
+{
     slayFont* FontCrazyPixel;
     uint8 Volume;
     slayTexture* TextureProjectile;
@@ -152,6 +168,9 @@ uint16 unloadScene0(slayEngine* Engine);
 
 uint16 loadScene1(slayEngine* Engine);
 uint16 unloadScene1(slayEngine* Engine);
+
+uint16 loadScene2(slayEngine* Engine);
+uint16 unloadScene2(slayEngine* Engine);
 
 uint16 unloadSceneCurrent(slayEngine* Engine);
 

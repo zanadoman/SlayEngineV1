@@ -27,6 +27,7 @@ pause* newPause(slayEngine* Engine)
     ((button*)result->Buttons->Values[0])->TextureBase = slayLoadTexture(Engine, "assets/buttons/buttonbase.png");
     ((button*)result->Buttons->Values[0])->TextureHover = slayLoadTexture(Engine, "assets/buttons/buttonhover.png");
     ((button*)result->Buttons->Values[0])->TextureCurrent = ((button*)result->Buttons->Values[0])->TextureBase;
+    ((button*)result->Buttons->Values[0])->Pressed = false;
     ((button*)result->Buttons->Values[0])->Hitbox = slayNewHitbox(&((button*)result->Buttons->Values[0])->X, &((button*)result->Buttons->Values[0])->Y, 0, 0, 300, 100);
 
     result->Buttons->Values[1] = malloc(sizeof(button));
@@ -37,6 +38,7 @@ pause* newPause(slayEngine* Engine)
     ((button*)result->Buttons->Values[1])->TextureBase = slayLoadTexture(Engine, "assets/buttons/buttonbase.png");
     ((button*)result->Buttons->Values[1])->TextureHover = slayLoadTexture(Engine, "assets/buttons/buttonhover.png");
     ((button*)result->Buttons->Values[1])->TextureCurrent = ((button*)result->Buttons->Values[1])->TextureBase;
+    ((button*)result->Buttons->Values[1])->Pressed = false;
     ((button*)result->Buttons->Values[1])->Hitbox = slayNewHitbox(&((button*)result->Buttons->Values[1])->X, &((button*)result->Buttons->Values[1])->Y, 0, 0, 300, 100);
 
     return result;
@@ -57,11 +59,18 @@ uint16 updatePause(slayEngine* Engine, pause* Pause, logic* Paused)
 
             if (slayKey(Engine, SDL_SCANCODE_LMB))
             {
+                ((button*)Pause->Buttons->Values[0])->Pressed = true;
+            }
+            else if (((button*)Pause->Buttons->Values[0])->Pressed)
+            {
                 *Paused = false;
+
+                ((button*)Pause->Buttons->Values[0])->Pressed = false;
             }
         }
         else
         {
+            ((button*)Pause->Buttons->Values[0])->Pressed = false;
             ((button*)Pause->Buttons->Values[0])->TextureCurrent = ((button*)Pause->Buttons->Values[0])->TextureBase;
         }
 
@@ -71,6 +80,10 @@ uint16 updatePause(slayEngine* Engine, pause* Pause, logic* Paused)
 
             if (slayKey(Engine, SDL_SCANCODE_LMB))
             {
+                ((button*)Pause->Buttons->Values[1])->Pressed = true;
+            }
+            else if (((button*)Pause->Buttons->Values[1])->Pressed)
+            {
                 unloadSceneCurrent(Engine);
                 loadScene0(Engine);
 
@@ -79,6 +92,7 @@ uint16 updatePause(slayEngine* Engine, pause* Pause, logic* Paused)
         }
         else
         {
+            ((button*)Pause->Buttons->Values[1])->Pressed = false;
             ((button*)Pause->Buttons->Values[1])->TextureCurrent = ((button*)Pause->Buttons->Values[1])->TextureBase;
         }
     }
