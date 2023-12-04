@@ -13,17 +13,6 @@ uint16 main(uint64 argc, char* *argv)
 
     while(slayEvent(Engine))
     {
-        if (Engine->CurrentScene)
-        {
-            unloadScene1(Engine);
-            loadScene0(Engine);
-        }
-        else
-        {
-            unloadScene0(Engine);
-            loadScene1(Engine);
-        }
-
         slayUpdateDeltaTime(Engine);
 
         updateQueue(Engine);
