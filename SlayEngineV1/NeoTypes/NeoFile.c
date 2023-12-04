@@ -47,6 +47,7 @@ logic fileWrite(array Lines, char* FilePath)
     {
         fprintf(file, "%s\n", ((string)Lines->Values[i])->String);
     }
+    fclose(file);
 
     return true;
 }
