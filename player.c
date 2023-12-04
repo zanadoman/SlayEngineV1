@@ -172,10 +172,10 @@ uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms)
     }
 
     //Sceen 2 falling
-    if (Engine->CurrentScene == 2 && ((platform*)Platforms->Values[4])->Y + 500 < Player->Y)
+    if (Engine->CurrentScene == 2 && ((platform*)Platforms->Values[4])->Y + 1000 < Player->Y)
     {
         Player->X = ((platform*)Platforms->Values[4])->X + 36;
-        Player->Y = ((platform*)Platforms->Values[4])->Y - 40;
+        Player->Y = ((platform*)Platforms->Values[4])->Y - 1040;
     }
 
     return 0;
