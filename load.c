@@ -72,19 +72,13 @@ uint16 loadScene1(slayEngine* Engine)
     scene = Engine->Scenes->Values[1];
 
     //Pause
-    scene->Pause = newPause();
-    scene->Pause->ButtonResume->TextureBase = slayLoadTexture(Engine, "assets/buttons/buttonbase.png");
-    scene->Pause->ButtonResume->TextureHover = slayLoadTexture(Engine, "assets/buttons/buttonhover.png");
-    scene->Pause->ButtonResume->TextureCurrent = scene->Pause->ButtonResume->TextureBase;
-    scene->Pause->ButtonQuit->TextureBase = slayLoadTexture(Engine, "assets/buttons/buttonbase.png");
-    scene->Pause->ButtonQuit->TextureHover = slayLoadTexture(Engine, "assets/buttons/buttonhover.png");
-    scene->Pause->ButtonQuit->TextureCurrent = scene->Pause->ButtonQuit->TextureBase;
+    scene->Pause = newPause(Engine);
     scene->paused = false;
 
-    //Platform
-    scene->Platforms = arrNew(5);
+    //Level
     scene->TextureBackground = slayLoadTexture(Engine, "assets/background.jpg");
     scene->TexturePlatform = slayLoadTexture(Engine, "assets/platform.png");
+    scene->Platforms = arrNew(5);
     scene->Platforms->Values[0] = newPlatform(-200, 550, 1200, 180);
     scene->Platforms->Values[1] = newPlatform(300, 450, 200, 30);
     scene->Platforms->Values[2] = newPlatform(200, 350, 100, 30);
@@ -92,9 +86,7 @@ uint16 loadScene1(slayEngine* Engine)
     scene->Platforms->Values[4] = newPlatform(500, 150, 100, 30);
     
     //Player
-    scene->Player = newPlayer();
-    scene->Player->TextureBase = slayLoadTexture(Engine, "assets/player_base.png");
-    scene->Player->SoundFire = slayLoadSound("assets/player_fire.wav");
+    scene->Player = newPlayer(Engine);
 
     save = arrNew(0);
     if (fileRead("saves/scene1.txt", save) && save->Length == 3)
@@ -123,6 +115,7 @@ uint16 loadScene1(slayEngine* Engine)
     //Projectiles
     scene->Projectiles = arrNew(0);
 
+    //Scene
     Engine->CurrentScene = 1;
 
     return 0;
@@ -160,7 +153,7 @@ uint16 unloadScene1(slayEngine* Engine)
     free(scene->Pause->ButtonQuit);
     free(scene->Pause);
 
-    //Platform
+    //Level
     slayUnloadTexture(scene->TextureBackground);
     slayUnloadTexture(scene->TexturePlatform);
     for (uint64 i = 0; i < scene->Platforms->Length; i++)

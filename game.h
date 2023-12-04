@@ -163,7 +163,7 @@ uint16 updateQueue(slayEngine* Engine);
 uint16 renderQueue(slayEngine* Engine);
 
 //Player
-player* newPlayer();
+player* newPlayer(slayEngine* Engine);
 uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms);
 
 //Level
@@ -174,5 +174,5 @@ projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX
 uint16 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, array Platforms);
 
 //Pause
-pause* newPause();
+pause* newPause(slayEngine* Engine);
 uint16 updatePause(slayEngine* Engine, pause* Pause, logic* Paused);

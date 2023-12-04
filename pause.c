@@ -1,6 +1,6 @@
 #include "game.h"
 
-pause* newPause()
+pause* newPause(slayEngine* Engine)
 {
     pause* result;
 
@@ -22,6 +22,9 @@ pause* newPause()
     result->ButtonResume->Y = 330;
     result->ButtonResume->Width = 300;
     result->ButtonResume->Height = 100;
+    result->ButtonResume->TextureBase = slayLoadTexture(Engine, "assets/buttons/buttonbase.png");
+    result->ButtonResume->TextureHover = slayLoadTexture(Engine, "assets/buttons/buttonhover.png");
+    result->ButtonResume->TextureCurrent = result->ButtonResume->TextureBase;
     result->ButtonResume->Hitbox = slayNewHitbox(&result->ButtonResume->X, &result->ButtonResume->Y, 0, 0, 300, 100);
 
     result->ButtonQuit = malloc(sizeof(button));
@@ -29,6 +32,9 @@ pause* newPause()
     result->ButtonQuit->Y = 630;
     result->ButtonQuit->Width = 300;
     result->ButtonQuit->Height = 100;
+    result->ButtonQuit->TextureBase = slayLoadTexture(Engine, "assets/buttons/buttonbase.png");
+    result->ButtonQuit->TextureHover = slayLoadTexture(Engine, "assets/buttons/buttonhover.png");
+    result->ButtonQuit->TextureCurrent = result->ButtonQuit->TextureBase;
     result->ButtonQuit->Hitbox = slayNewHitbox(&result->ButtonQuit->X, &result->ButtonQuit->Y, 0, 0, 300, 100);
 
     return result;

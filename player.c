@@ -1,6 +1,6 @@
 #include "game.h"
 
-player* newPlayer()
+player* newPlayer(slayEngine* Engine)
 {
     player* result;
 
@@ -26,6 +26,9 @@ player* newPlayer()
     result->KeyRight = SDL_SCANCODE_D;
     result->KeyJump = SDL_SCANCODE_SPACE;
     result->KeyFire = SDL_SCANCODE_LMB;
+
+    result->TextureBase = slayLoadTexture(Engine, "assets/player_base.png");
+    result->SoundFire = slayLoadSound("assets/player_fire.wav");
 
     result->Hitbox = slayNewHitbox(&result->X, &result->Y, 0, 0, result->Width, result->Height);
 
