@@ -41,7 +41,7 @@ Updates the delta time
 ### uint16 slayCapFPS(slayEngine* Engine)
 Caps FPS by the value defined at engine initialization, you can change it by modifying Engine.MaxFPS
 
-### uint64 slayRandom()
+### sint64 slayRandom()
 Returns a pseudo random int seeded from slayGetTicks() / your seed
 
 ## Render

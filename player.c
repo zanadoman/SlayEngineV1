@@ -112,6 +112,17 @@ uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms)
                 Player->Y = ((platform*)Platforms->Values[i])->Y - Player->Height;
                 Player->AccelerationY = 0;
                 falling = false;
+
+                if (Engine->CurrentScene == 2 && Platforms->Length / 2 < i)
+                {
+                    arrInsert(Platforms, Platforms->Length, newPlatform(((platform*)Platforms->Values[Platforms->Length - 1])->X + 200, ((platform*)Platforms->Values[Platforms->Length - 1])->Y + slayRandom(-100, 100, i), 100, 30));
+                    arrRemove(Platforms, 0);
+                }
+                else if (Engine->CurrentScene == 2 && i < Platforms->Length / 2)
+                {
+                    arrInsert(Platforms, 0, newPlatform(((platform*)Platforms->Values[0])->X - 200, ((platform*)Platforms->Values[Platforms->Length - 1])->Y + slayRandom(-100, 100, i), 100, 30));
+                    arrRemove(Platforms, Platforms->Length - 1);
+                }
             }
             //Side collision
             else if (collision == slayCollBOTTOMLEFT)

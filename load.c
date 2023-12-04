@@ -225,39 +225,29 @@ uint16 loadScene2(slayEngine* Engine)
     //Level
     scene->TextureBackground = slayLoadTexture(Engine, "assets/background.jpg");
     scene->TexturePlatform = slayLoadTexture(Engine, "assets/platform.png");
-    scene->Platforms = arrNew(5);
-    scene->Platforms->Values[0] = newPlatform(-200, 550, 1200, 180);
-    scene->Platforms->Values[1] = newPlatform(300, 450, 200, 30);
-    scene->Platforms->Values[2] = newPlatform(200, 350, 100, 30);
-    scene->Platforms->Values[3] = newPlatform(350, 250, 100, 30);
-    scene->Platforms->Values[4] = newPlatform(500, 150, 100, 30);
+    scene->Platforms = arrNew(9);
+    scene->Platforms->Values[0] = newPlatform(-450, 250 + slayRandom(-100, 100, 1), 100, 30);
+    scene->Platforms->Values[1] = newPlatform(-250, 250 + slayRandom(-100, 100, 1), 100, 30);
+    scene->Platforms->Values[2] = newPlatform(-50, 250 + slayRandom(-100, 100, 1), 100, 30);
+    scene->Platforms->Values[3] = newPlatform(150, 250 + slayRandom(-100, 100, 2), 100, 30);
+    scene->Platforms->Values[4] = newPlatform(350, 250, 100, 30);
+    scene->Platforms->Values[5] = newPlatform(550, 250 + slayRandom(-100, 100, 3), 100, 30);
+    scene->Platforms->Values[6] = newPlatform(750, 250 + slayRandom(-100, 100, 4), 100, 30);
+    scene->Platforms->Values[7] = newPlatform(950, 250 + slayRandom(-100, 100, 1), 100, 30);
+    scene->Platforms->Values[8] = newPlatform(1150, 250 + slayRandom(-100, 100, 1), 100, 30);
     
     //Player
     scene->Player = newPlayer(Engine);
 
-    save = arrNew(0);
-    if (fileRead("saves/scene2.txt", save) && save->Length == 3)
-    {
-        scene->Player->X = STRtoDOUBLE(((string)save->Values[0])->String, NULL);
-        scene->Player->Y = STRtoDOUBLE(((string)save->Values[1])->String, NULL);
-        scene->Player->Facing = STRtoDOUBLE(((string)save->Values[2])->String, NULL);
-        strPurge(save->Values[0]);
-        strPurge(save->Values[1]);
-        strPurge(save->Values[2]);
-    }
-    else
-    {
-        scene->Player->X = 386;
-        scene->Player->Y = 410;
-    }
-    arrPurge(save);
+    scene->Player->X = 386;
+    scene->Player->Y = 210;
 
-    scene->Player->MinX = -200;
-    scene->Player->MaxX = 1000;
-    scene->Player->MinY = -500;
-    scene->Player->MaxY = 600;
+    scene->Player->MinX = -100000;
+    scene->Player->MaxX = 100000;
+    scene->Player->MinY = -100000;
+    scene->Player->MaxY = 100000;
 
-    slaySetCamera(Engine, &scene->Player->X, &scene->Player->Y, 14, 20, -960, -800, 1.5);
+    slaySetCamera(Engine, &scene->Player->X, &scene->Player->Y, 14, 20, -960, -520, 1.5);
 
     //Scene
     Engine->CurrentScene = 2;
@@ -271,20 +261,6 @@ uint16 unloadScene2(slayEngine* Engine)
     array save;
 
     scene = Engine->Scenes->Values[2];
-
-    //Save
-    save = arrNew(3);
-    save->Values[0] = strNew();
-    save->Values[1] = strNew();
-    save->Values[2] = strNew();
-    DOUBLEtoSTR(scene->Player->X, save->Values[0]);
-    DOUBLEtoSTR(scene->Player->Y, save->Values[1]);
-    SINTtoSTR(scene->Player->Facing, save->Values[2]);
-    fileWrite(save, "saves/scene2.txt");
-    strPurge(save->Values[0]);
-    strPurge(save->Values[1]),
-    strPurge(save->Values[2]);
-    arrPurge(save);
 
     //Pause
     for (uint64 i = 0; i < scene->Pause->Buttons->Length; i++)

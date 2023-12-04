@@ -87,7 +87,7 @@ uint16 slayLogo();
 logic slayEvent(slayEngine* Engine);
 uint16 slayUpdateDeltaTime(slayEngine* Engine);
 uint16 slayCapFPS(slayEngine* Engine);
-uint64 slayRandom(uint64 Min, uint64 Max, double Seed);
+sint64 slayRandom(uint64 Min, uint64 Max, double Seed);
 
 //Render_____________________________________________________________
 
