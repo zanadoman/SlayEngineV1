@@ -28,7 +28,7 @@ uint16 loadScene0(slayEngine* Engine)
     scene->ColorB = 0;
 
     //Button
-    scene->Buttons = arrNew(1);
+    scene->Buttons = arrNew(2);
     
     scene->Buttons->Values[0] = malloc(sizeof(button));
     ((button*)scene->Buttons->Values[0])->TextureBase = slayLoadTexture(Engine, "assets/buttons/buttonbase.png");
@@ -39,6 +39,16 @@ uint16 loadScene0(slayEngine* Engine)
     ((button*)scene->Buttons->Values[0])->Width = 300;
     ((button*)scene->Buttons->Values[0])->Height = 100;
     ((button*)scene->Buttons->Values[0])->Hitbox = slayNewHitbox(&((button*)scene->Buttons->Values[0])->X, &((button*)scene->Buttons->Values[0])->Y, 0, 0, 300, 100);
+
+    scene->Buttons->Values[1] = malloc(sizeof(button));
+    ((button*)scene->Buttons->Values[1])->TextureBase = slayLoadTexture(Engine, "assets/buttons/buttonbase.png");
+    ((button*)scene->Buttons->Values[1])->TextureHover = slayLoadTexture(Engine, "assets/buttons/buttonhover.png");
+    ((button*)scene->Buttons->Values[1])->TextureCurrent = ((button*)scene->Buttons->Values[1])->TextureBase;
+    ((button*)scene->Buttons->Values[1])->X = 810;
+    ((button*)scene->Buttons->Values[1])->Y = 630;
+    ((button*)scene->Buttons->Values[1])->Width = 300;
+    ((button*)scene->Buttons->Values[1])->Height = 100;
+    ((button*)scene->Buttons->Values[1])->Hitbox = slayNewHitbox(&((button*)scene->Buttons->Values[1])->X, &((button*)scene->Buttons->Values[1])->Y, 0, 0, 300, 100);
 
     //Scene
     Engine->CurrentScene = 0;

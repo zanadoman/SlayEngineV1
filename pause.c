@@ -73,6 +73,8 @@ uint16 updatePause(slayEngine* Engine, pause* Pause, logic* Paused)
             {
                 unloadSceneCurrent(Engine);
                 loadScene0(Engine);
+
+                return 1;
             }
         }
         else
