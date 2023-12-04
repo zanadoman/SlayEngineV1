@@ -67,7 +67,12 @@ uint16 updateScene2(slayEngine* Engine, scene2* Scene)
     }
     if (Scene->paused)
     {
+        slayMouseRelative(false);
         return 1;
+    }
+    else
+    {
+        slayMouseRelative(true);
     }
     //2
     updatePlayer(Engine, Scene->Player, Scene->Platforms);
