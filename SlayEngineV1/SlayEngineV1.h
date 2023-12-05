@@ -18,6 +18,7 @@ typedef struct slayDisplayStruct slayDisplay;
 typedef struct slayMouseStruct slayMouse;
 typedef struct slayHitboxStruct slayHitbox;
 typedef struct slayCameraStruct slayCamera;
+typedef struct flipbookStruct slayFlipbook;
 
 //Common_____________________________________________________________
 
@@ -181,3 +182,20 @@ uint16 slayApplyCamera(slayEngine* Engine, slayObject* Object, double X, double 
 #define slayThreadExit pthread_exit(NULL)
 uint16 slayThreadStart(slayEngine* Engine, uint64 ID, void* Function);
 uint16 slayThreadWaitExit(slayEngine* Engine, uint64 ID);
+
+//Flipbook___________________________________________________________
+
+struct flipbookStruct
+{
+    SDL_Texture* *Textures;
+
+    uint64 Current;
+    uint64 PrevTick;
+
+    uint64 Delay;
+    uint64 Count;
+};
+
+slayFlipbook* slayNewFlipbook(slayEngine* Engine, uint64 Delay, uint64 Count, char* Paths, ...);
+uint16 slayApplyFlipbook(slayEngine* Engine, slayFlipbook* Flipbook, slayTexture** Target);
+uint16 slayPurgeFlipbook(slayFlipbook* Flipbook);

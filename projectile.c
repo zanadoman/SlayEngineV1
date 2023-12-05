@@ -82,3 +82,18 @@ uint16 playerProjectile(slayEngine* Engine, array Projectiles, player* Player, u
 
     return 0;
 }
+
+uint16 destroyProjectiles(array Projectiles)
+{
+    for (uint64 i = 0; i < Projectiles->Length; i++)
+    {
+        free(((projectile*)Projectiles->Values[i])->Hitbox);
+    }
+    for (uint64 i = 0; i < Projectiles->Length; i++)
+    {
+        free(Projectiles->Values[i]);
+    }
+    arrPurge(Projectiles);
+
+    return 0;
+}

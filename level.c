@@ -16,3 +16,18 @@ platform* newPlatform(double X, double Y, uint16 Width, uint16 Height)
 
     return result;
 }
+
+uint16 destroyPlatforms(array Platforms)
+{
+    for (uint64 i = 0; i < Platforms->Length; i++)
+    {
+        free(((platform*)Platforms->Values[i])->Hitbox);
+    }
+    for (uint64 i = 0; i < Platforms->Length; i++)
+    {
+        free(Platforms->Values[i]);
+    }
+    arrPurge(Platforms);
+
+    return 0;
+}

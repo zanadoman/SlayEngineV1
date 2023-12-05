@@ -36,28 +36,16 @@ uint16 renderScene2(slayEngine* Engine, scene2* Scene)
     //Platforms
     for (uint64 i = 0; i < Scene->Platforms->Length; i++)
     {
-        slayRender3DTextureCamera(Engine, ((platform*)Scene->Platforms->Values[i])->X, ((platform*)Scene->Platforms->Values[i])->Y, ((platform*)Scene->Platforms->Values[i])->Width, ((platform*)Scene->Platforms->Values[i])->Height, 0, slayFlipNONE, 0.95, 0.1, 0.005, Scene->TexturePlatform, 255);
+        slayRender3DTextureCamera(Engine, ((platform*)Scene->Platforms->Values[i])->X, ((platform*)Scene->Platforms->Values[i])->Y, ((platform*)Scene->Platforms->Values[i])->Width, ((platform*)Scene->Platforms->Values[i])->Height, 0, slayFlipNONE, 0.98, 0.04, 0.005, Scene->TexturePlatform, 255);
     }
 
     //Player
-    if (Scene->Player->Facing == 1)
-    {
-        slayRenderTextureCamera(Engine, Scene->Player->X, Scene->Player->Y, Scene->Player->Width, Scene->Player->Height, 0, slayFlipNONE, 1, Scene->Player->TextureBase, 255);
-    }
-    else
-    {
-        slayRenderTextureCamera(Engine, Scene->Player->X, Scene->Player->Y, Scene->Player->Width, Scene->Player->Height, 0, slayFlipHORIZONTAL, 1, Scene->Player->TextureBase, 255);
-    }
+    renderPlayer(Engine, Scene->Player);
 
     //Pause
     if (Scene->paused)
     {
-        slayRenderColor(Engine, Scene->Pause->X, Scene->Pause->Y, Scene->Pause->Width, Scene->Pause->Height, Scene->Pause->ColorR, Scene->Pause->ColorG, Scene->Pause->ColorB, Scene->Pause->ColorA);
-
-        for (uint64 i = 0; i < Scene->Pause->Buttons->Length; i++)
-        {
-            slayRenderTexture(Engine, ((button*)Scene->Pause->Buttons->Values[i])->X, ((button*)Scene->Pause->Buttons->Values[i])->Y, ((button*)Scene->Pause->Buttons->Values[i])->Width, ((button*)Scene->Pause->Buttons->Values[i])->Height, 0, slayFlipNONE, ((button*)Scene->Pause->Buttons->Values[i])->TextureCurrent, 255);
-        }
+        renderPause(Engine, Scene->Pause);
     }
 
     //FrameTime
@@ -84,7 +72,7 @@ uint16 loadScene2(slayEngine* Engine)
     scene->paused = false;
 
     //Level
-    scene->TextureBackground = slayLoadTexture(Engine, "assets/background.jpg");
+    scene->TextureBackground = slayLoadTexture(Engine, "assets/background.png");
     scene->TexturePlatform = slayLoadTexture(Engine, "assets/platform.png");
     scene->Platforms = arrNew(9);
     scene->Platforms->Values[0] = newPlatform(-450, 250 + slayRandom(-100, 100, 1), 100, 30);
@@ -124,34 +112,15 @@ uint16 unloadScene2(slayEngine* Engine)
     scene = Engine->Scenes->Values[2];
 
     //Pause
-    for (uint64 i = 0; i < scene->Pause->Buttons->Length; i++)
-    {
-        slayUnloadTexture(((button*)scene->Pause->Buttons->Values[i])->TextureBase);
-        slayUnloadTexture(((button*)scene->Pause->Buttons->Values[i])->TextureHover);
-        free(((button*)scene->Pause->Buttons->Values[i])->Hitbox);
-        free(scene->Pause->Buttons->Values[i]);
-    }
-    arrPurge(scene->Pause->Buttons);
-    free(scene->Pause);
+    uint16 destroyPause(pause* Pause);
 
     //Level
     slayUnloadTexture(scene->TextureBackground);
     slayUnloadTexture(scene->TexturePlatform);
-    for (uint64 i = 0; i < scene->Platforms->Length; i++)
-    {
-        free(((platform*)scene->Platforms->Values[i])->Hitbox);
-    }
-    for (uint64 i = 0; i < scene->Platforms->Length; i++)
-    {
-        free(scene->Platforms->Values[i]);
-    }
-    arrPurge(scene->Platforms);
+    uint16 destroyPlatforms(array Platforms);
 
     //Player
-    slayUnloadTexture(scene->Player->TextureBase);
-    slayUnloadSound(scene->Player->SoundFire);
-    free(scene->Player->Hitbox);
-    free(scene->Player);
+    destroyPlayer(scene->Player);
 
     //Scene
     free(scene);

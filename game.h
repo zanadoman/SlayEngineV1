@@ -125,6 +125,7 @@ struct platformStruct
 };
 
 platform* newPlatform(double X, double Y, uint16 Width, uint16 Height);
+uint16 destroyPlatforms(array Platforms);
 
 //Player_____________________________________________________________
 
@@ -159,8 +160,11 @@ struct playerStruct
     uint64 KeyJump;
     uint64 KeyFire;
 
-    slayTexture* TextureBase;
-
+    slayFlipbook* FlipbookIdle;
+    slayFlipbook* FlipbookRun;
+    slayTexture* TextureJump;
+    slayTexture* TextureFall;
+    slayTexture* TextureCurrent;
     slaySound* SoundFire;
 
     slayHitbox* Hitbox;
@@ -177,6 +181,8 @@ struct playerStruct
 
 player* newPlayer(slayEngine* Engine, uint64 KeyLeft, uint64 KeyRight, uint64 KeyJump, uint64 KeyFire);
 uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms);
+uint16 renderPlayer(slayEngine* Engine, player* Player);
+uint16 destroyPlayer(player* Player);
 
 //Projectile_________________________________________________________
 
@@ -201,6 +207,7 @@ struct projectileStruct
 
 projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX, double MinY, double MaxY, uint16 Width, uint16 Height, double Speed, double Angle);
 uint16 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, array Platforms);
+uint16 destroyProjectiles(array Projectiles);
 
 //Menu_______________________________________________________________
 
@@ -226,3 +233,5 @@ struct pauseStruct
 
 pause* newPause(slayEngine* Engine);
 uint16 updatePause(slayEngine* Engine, pause* Pause, logic* Paused);
+uint16 renderPause(slayEngine* Engine, pause* Pause);
+uint16 destroyPause(pause* Pause);

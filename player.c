@@ -27,7 +27,12 @@ player* newPlayer(slayEngine* Engine, uint64 KeyLeft, uint64 KeyRight, uint64 Ke
     result->KeyJump = KeyJump;
     result->KeyFire = KeyFire;
 
-    result->TextureBase = slayLoadTexture(Engine, "assets/player_base.png");
+    result->FlipbookIdle = slayNewFlipbook(Engine, 150, 4, "assets/player/idle/idle1.png", "assets/player/idle/idle2.png", "assets/player/idle/idle3.png", "assets/player/idle/idle4.png");
+    result->FlipbookRun = slayNewFlipbook(Engine, 150, 6, "assets/player/run/run1.png", "assets/player/run/run2.png", "assets/player/run/run3.png", "assets/player/run/run4.png", "assets/player/run/run5.png", "assets/player/run/run6.png");
+    result->TextureJump = slayLoadTexture(Engine, "assets/player/jump.png");
+    result->TextureFall = slayLoadTexture(Engine, "assets/player/fall.png");
+    
+    result->TextureCurrent = result->FlipbookIdle->Textures[0];
     result->SoundFire = slayLoadSound("assets/player_fire.wav");
 
     result->Hitbox = slayNewHitbox(&result->X, &result->Y, 18, 22, 48, 64);
@@ -183,6 +188,51 @@ uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms)
         Player->X = ((platform*)Platforms->Values[4])->X + 36;
         Player->Y = ((platform*)Platforms->Values[4])->Y - 1040;
     }
+
+    //Flipbooks
+    if (Player->AccelerationX == 0 && Player->AccelerationY == 0)
+    {
+        slayApplyFlipbook(Engine, Player->FlipbookIdle, &Player->TextureCurrent);
+    }
+    else if (Player->AccelerationX != 0 && Player->AccelerationY == 0)
+    {
+        slayApplyFlipbook(Engine, Player->FlipbookRun, &Player->TextureCurrent);
+    }
+    else if (Player->AccelerationY < 0)
+    {
+        Player->TextureCurrent = Player->TextureJump;
+    }
+    else
+    {
+        Player->TextureCurrent = Player->TextureFall;
+    }
+
+    return 0;
+}
+
+uint16 renderPlayer(slayEngine* Engine, player* Player)
+{
+    if (Player->Facing == 1)
+    {
+        slayRenderTextureCamera(Engine, Player->X, Player->Y, Player->Width, Player->Height, 0, slayFlipNONE, 1, Player->TextureCurrent, 255);
+    }
+    else
+    {
+        slayRenderTextureCamera(Engine, Player->X, Player->Y, Player->Width, Player->Height, 0, slayFlipHORIZONTAL, 1, Player->TextureCurrent, 255);
+    }
+
+    return 0;
+}
+
+uint16 destroyPlayer(player* Player)
+{
+    slayPurgeFlipbook(Player->FlipbookIdle);
+    slayPurgeFlipbook(Player->FlipbookRun);
+    slayUnloadTexture(Player->TextureJump);
+    slayUnloadTexture(Player->TextureFall);
+    slayUnloadSound(Player->SoundFire);
+    free(Player->Hitbox);
+    free(Player);
 
     return 0;
 }
