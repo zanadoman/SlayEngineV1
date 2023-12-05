@@ -3,6 +3,7 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_mixer.h>
+
 //Windows port
 //#include "inc/SDL.h"
 //#include "inc/SDL_image.h"
@@ -12,52 +13,15 @@
 #include "NeoTypes/NeoTypes.h"
 #include <pthread.h>
 
-typedef struct
-{
-    uint16 Width;
-    uint16 Height;
-    SDL_Window *Window;
-    SDL_Renderer *Renderer;
-    SDL_Event Event;
-} slayDisplay;
+typedef struct slayEngineStruct slayEngine;
+typedef struct slayDisplayStruct slayDisplay;
+typedef struct slayMouseStruct slayMouse;
+typedef struct slayHitboxStruct slayHitbox;
+typedef struct slayCameraStruct slayCamera;
 
-typedef struct
-{
-    double* OriginX;
-    double* OriginY;
-    double CenterX;
-    double CenterY;
-    double RelativeX;
-    double RelativeY;
-    double AbsoluteX;
-    double AbsoluteY;
+//Common_____________________________________________________________
 
-    double Zoom;
-} slayCamera;
-
-typedef struct
-{
-    double* ObjectX;
-    double* ObjectY;
-    sint32 UpperLeftX;
-    sint32 UpperLeftY;
-    sint32 LowerRightX;
-    sint32 LowerRightY;
-} slayHitbox;
-
-typedef struct
-{
-    sint32 X;
-    sint32 Y;
-    sint32 MovementX;
-    sint32 MovementY;
-    logic LMB;
-    logic MMB;
-    logic RMB;
-    sint8 Wheel;
-} slayMouse;
-
-typedef struct
+struct slayEngineStruct
 {
     slayDisplay* Display;
     slayCamera* Camera;
@@ -73,10 +37,16 @@ typedef struct
     uint64 CurrentScene;
 
     void* Game;
-} slayEngine;
+};
 
-
-//Common_____________________________________________________________
+struct slayDisplayStruct
+{
+    uint16 Width;
+    uint16 Height;
+    SDL_Window *Window;
+    SDL_Renderer *Renderer;
+    SDL_Event Event;
+};
 
 slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Scenes, uint64 Threads, uint16 MaxFPS);
 uint16 slayLogo();
@@ -137,6 +107,18 @@ uint8 slayKey(slayEngine* Engine, uint64 Key);
 
 //Mouse______________________________________________________________
 
+struct slayMouseStruct
+{
+    sint32 X;
+    sint32 Y;
+    sint32 MovementX;
+    sint32 MovementY;
+    logic LMB;
+    logic MMB;
+    logic RMB;
+    sint8 Wheel;
+};
+
 #define slayMouseRelative SDL_SetRelativeMouseMode
 uint16 slayMouseMovement(slayEngine* Engine);
 uint16 slayMouseButtons(slayEngine* Engine);
@@ -152,6 +134,16 @@ uint16 slayVectorAngle(double X1, double Y1, double X2, double Y2, double* Angle
 
 //Hitbox_____________________________________________________________
 
+struct slayHitboxStruct
+{
+    double* ObjectX;
+    double* ObjectY;
+    sint32 UpperLeftX;
+    sint32 UpperLeftY;
+    sint32 LowerRightX;
+    sint32 LowerRightY;
+};
+
 #define slayCollTOP 3
 #define slayCollRIGHT 10
 #define slayCollBOTTOM 12
@@ -166,6 +158,20 @@ slayHitbox* slayNewHitbox(double* ObjectX, double* ObjectY, sint32 UpperLeftX, s
 uint8 slayCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2);
 
 //Camera_____________________________________________________________
+
+struct slayCameraStruct
+{
+    double* OriginX;
+    double* OriginY;
+    double CenterX;
+    double CenterY;
+    double RelativeX;
+    double RelativeY;
+    double AbsoluteX;
+    double AbsoluteY;
+
+    double Zoom;
+};
 
 uint16 slaySetCamera(slayEngine* Engine, double* OriginX, double* OriginY, double CenterX, double CenterY, double RelativeX, double RelativeY, double Zoom);
 uint16 slayApplyCamera(slayEngine* Engine, slayObject* Object, double X, double Y, uint16 Width, uint16 Height, double Distance);
