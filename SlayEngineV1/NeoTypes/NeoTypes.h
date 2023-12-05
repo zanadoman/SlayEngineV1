@@ -3,6 +3,12 @@
 #include <stdarg.h>
 #include <math.h>
 
+typedef struct arrayStruct* array;
+typedef struct stringStruct* string;
+typedef struct listStruct* list;
+typedef struct listCacheStruct* listCache_t;
+typedef struct listNodeStruct* listNode;
+
 //________________NeoTypes.h_______________//
 
 #define true 1
@@ -24,12 +30,11 @@ double asDouble(uint64 Value);
 
 //________________NeoArray.c_______________// COMPLETED
 
-typedef struct
+struct arrayStruct
 {
     void* *Values;
     uint64 Length;
-}* array;
-
+};
 
 array arrNew(uint64 Length);
 uint16 arrInit(array Array, uint64 Length, void* Values, ...);
@@ -41,12 +46,11 @@ uint16 arrPurge(array Array);
 
 //_______________NeoString.c_______________ // COMPLETED
 
-typedef struct
+struct stringStruct
 {
     char* String;
     uint64 Lenght;
-}* string;
-
+};
 
 uint64 strLength(char* Characters);
 
@@ -64,13 +68,11 @@ uint16 strPurge(string String);
 
 //________________NeoList.c________________ // COMPLETED
 
-typedef struct listCacheStruct* listCache_t;
-typedef struct listNodeStruct* listNode;
-typedef struct
+struct listStruct
 {
     listCache_t Cache;
     uint64 Length;
-}* list;
+};
 struct listCacheStruct
 {
     listNode* Nodes;
@@ -82,7 +84,6 @@ struct listNodeStruct
     listNode Next;
     void* Value;
 };
-
 
 list listNew();
 
