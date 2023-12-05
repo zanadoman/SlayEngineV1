@@ -62,10 +62,8 @@ uint16 playerProjectile(slayEngine* Engine, array Projectiles, player* Player, u
 
     if (slayKey(Engine, Player->KeyFire) && slayGetTicks() > Player->ReloadTick + Player->ReloadTime)
     {
-        slayApplyCamera(Engine, &object, Player->X, Player->Y, Player->Width, Player->Height, 1);
-        object.x += object.w / 2;
-        object.y += object.h / 2;
-        slayVectorAngle(object.x, object.y, Engine->Mouse->X, Engine->Mouse->Y, &angle);
+        slayApplyCamera(Engine, &object, *Player->Hitbox->ObjectX + Player->Hitbox->UpperLeftX, *Player->Hitbox->ObjectY + Player->Hitbox->UpperLeftY, Player->Hitbox->LowerRightX - Player->Hitbox->UpperLeftX, Player->Hitbox->LowerRightY - Player->Hitbox->UpperLeftY, 1);
+        slayVectorAngle(object.x + object.w / 2, object.y + object.h / 2, Engine->Mouse->X, Engine->Mouse->Y, &angle);
 
         if ((Player->Facing == -1 && 90 < angle && angle < 270) || (Player->Facing == 1 && (270 < angle || angle < 90)))
         {

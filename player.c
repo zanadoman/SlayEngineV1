@@ -6,8 +6,8 @@ player* newPlayer(slayEngine* Engine, uint64 KeyLeft, uint64 KeyRight, uint64 Ke
 
     result = malloc(sizeof(player));
 
-    result->Width = 28;
-    result->Height = 40;
+    result->Width = 66;
+    result->Height = 64;
 
     result->AccelerationX = 0;
     result->AccelerationRateX = 0.003;
@@ -30,10 +30,10 @@ player* newPlayer(slayEngine* Engine, uint64 KeyLeft, uint64 KeyRight, uint64 Ke
     result->TextureBase = slayLoadTexture(Engine, "assets/player_base.png");
     result->SoundFire = slayLoadSound("assets/player_fire.wav");
 
-    result->Hitbox = slayNewHitbox(&result->X, &result->Y, 0, 0, result->Width, result->Height);
+    result->Hitbox = slayNewHitbox(&result->X, &result->Y, 18, 22, 48, 64);
 
-    result->ProjectileRelativeX = 9;
-    result->ProjectileRelativeY = 14;
+    result->ProjectileRelativeX = 33;
+    result->ProjectileRelativeY = 43;
     result->ProjectileWidth = 10;
     result->ProjectileHeight = 4;
     result->ProjectileSpeed = 0.75;
@@ -109,7 +109,7 @@ uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms)
             //Ground collision
             if (Player->AccelerationY >= 0)
             {
-                Player->Y = ((platform*)Platforms->Values[i])->Y - Player->Height;
+                Player->Y = ((platform*)Platforms->Values[i])->Y - Player->Hitbox->LowerRightY;
                 Player->AccelerationY = 0;
                 falling = false;
 
@@ -134,12 +134,12 @@ uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms)
             //Side collision
             else if (collision == slayCollBOTTOMLEFT)
             {
-                Player->X = ((platform*)Platforms->Values[i])->X + ((platform*)Platforms->Values[i])->Width;
+                Player->X = ((platform*)Platforms->Values[i])->X + ((platform*)Platforms->Values[i])->Width - Player->Hitbox->UpperLeftX;
                 Player->AccelerationX = 0;
             }
             else if (collision == slayCollBOTTOMRIGHT)
             {
-                Player->X = ((platform*)Platforms->Values[i])->X - Player->Width;
+                Player->X = ((platform*)Platforms->Values[i])->X - Player->Width + Player->Hitbox->UpperLeftX;
                 Player->AccelerationX = 0;
             }
             
@@ -147,7 +147,7 @@ uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms)
         }
         else if (collision == slayCollTOPLEFT || collision == slayCollTOP || collision == slayCollTOPRIGHT)
         {
-            Player->Y = ((platform*)Platforms->Values[i])->Y + ((platform*)Platforms->Values[i])->Height + 1;
+            Player->Y = ((platform*)Platforms->Values[i])->Y + ((platform*)Platforms->Values[i])->Height - Player->Hitbox->UpperLeftY;
             Player->AccelerationY = 0;
             break;
         }
@@ -168,17 +168,17 @@ uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms)
     }
 
     //Clamp player position
-    if (Player->X < Player->MinX)
+    if (Player->X < Player->MinX - Player->Hitbox->UpperLeftX)
     {
-        Player->X = Player->MinX;
+        Player->X = Player->MinX - Player->Hitbox->UpperLeftX;
     }
-    else if (Player->X > Player->MaxX - Player->Width)
+    else if (Player->X > Player->MaxX - Player->Width + Player->Hitbox->UpperLeftX)
     {
-        Player->X = Player->MaxX - Player->Width;
+        Player->X = Player->MaxX - Player->Width + Player->Hitbox->UpperLeftX;
     }
 
     //Sceen 2 falling
-    if (Engine->CurrentScene == 2 && ((platform*)Platforms->Values[4])->Y + 1000 < Player->Y)
+    if (Engine->CurrentScene == 2 && ((platform*)Platforms->Values[4])->Y + 1000 < Player->Y + Player->Hitbox->UpperLeftY)
     {
         Player->X = ((platform*)Platforms->Values[4])->X + 36;
         Player->Y = ((platform*)Platforms->Values[4])->Y - 1040;

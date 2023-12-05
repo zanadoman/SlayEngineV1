@@ -122,7 +122,7 @@ uint16 loadScene1(slayEngine* Engine)
     scene->Player->MinY = -500;
     scene->Player->MaxY = 600;
 
-    slaySetCamera(Engine, &scene->Player->X, &scene->Player->Y, 14, 20, -960, -800, 1.5);
+    slaySetCamera(Engine, &scene->Player->X, &scene->Player->Y, 33, 32, -960, -800, 1.5);
     
     //Projectiles
     scene->Projectiles = arrNew(0);
