@@ -226,8 +226,8 @@ uint16 renderPlayer(slayEngine* Engine, player* Player)
 
 uint16 destroyPlayer(player* Player)
 {
-    slayPurgeFlipbook(Player->FlipbookIdle);
-    slayPurgeFlipbook(Player->FlipbookRun);
+    slayDestroyFlipbook(Player->FlipbookIdle);
+    slayDestroyFlipbook(Player->FlipbookRun);
     slayUnloadTexture(Player->TextureJump);
     slayUnloadTexture(Player->TextureFall);
     slayUnloadSound(Player->SoundFire);
