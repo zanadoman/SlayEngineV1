@@ -185,8 +185,8 @@ uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms)
     //Sceen 2 falling
     if (Engine->CurrentScene == 2 && ((platform*)Platforms->Values[4])->Y + 1000 < Player->Y + Player->Hitbox->UpperLeftY)
     {
-        Player->X = ((platform*)Platforms->Values[4])->X + 36;
-        Player->Y = ((platform*)Platforms->Values[4])->Y - 1040;
+        Player->X = ((platform*)Platforms->Values[4])->X + 17;
+        Player->Y = ((platform*)Platforms->Values[4])->Y - 1064;
     }
 
     //Flipbooks

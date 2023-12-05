@@ -52,7 +52,7 @@ uint16 renderScene2(slayEngine* Engine, scene2* Scene)
     string text = strNew();
     UINTtoSTR(Engine->DeltaTime, text);
     strConcat(text, 3, "Frametime: ", text->String, "ms");
-    slayRenderText(Engine, ((game*)Engine->Game)->FontCrazyPixel, text->String, 10, -10, 0.75, 0, slayFlipNONE, 255, 255, 255, 255);
+    slayRenderText(Engine, ((game*)Engine->Game)->FontCrazyPixel, text->String, 10, -10, 0.75, 0, slayFlipNONE, 0, 0, 0, 255);
     strPurge(text);
 
     return 0;
