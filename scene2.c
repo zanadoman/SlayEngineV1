@@ -29,9 +29,9 @@ uint16 renderScene2(slayEngine* Engine, scene2* Scene)
     slayRenderTexture(Engine, 0, 0, Engine->Display->Width, Engine->Display->Height, 0, slayFlipNONE, Scene->TextureBackground, 255);
 
     //Hint
-    slayRenderTextCamera(Engine, ((game*)Engine->Game)->FontCrazyPixel, "Movement: A/D", -150, -100, 1, 0, slayFlipNONE, 0.5, 255, 255, 255, 255);
-    slayRenderTextCamera(Engine, ((game*)Engine->Game)->FontCrazyPixel, "Jump: SPACE", -150, -70, 1, 0, slayFlipNONE, 0.5, 255, 255, 255, 255);
-    slayRenderTextCamera(Engine, ((game*)Engine->Game)->FontCrazyPixel, "Shoot: LMB", -150, -40, 1, 0, slayFlipNONE, 0.5, 255, 255, 255, 255);
+    slayRenderTextCamera(Engine, ((game*)Engine->Game)->FontCrazyPixel, "Movement: A/D", -150, -100, 1, 0, slayFlipNONE, 0.5, 0, 0, 0, 255);
+    slayRenderTextCamera(Engine, ((game*)Engine->Game)->FontCrazyPixel, "Jump: SPACE", -150, -70, 1, 0, slayFlipNONE, 0.5, 0, 0, 0, 255);
+    slayRenderTextCamera(Engine, ((game*)Engine->Game)->FontCrazyPixel, "Shoot: LMB", -150, -40, 1, 0, slayFlipNONE, 0.5, 0, 0, 0, 255);
 
     //Platforms
     for (uint64 i = 0; i < Scene->Platforms->Length; i++)
@@ -88,8 +88,8 @@ uint16 loadScene2(slayEngine* Engine)
     //Player
     scene->Player = newPlayer(Engine, SDL_SCANCODE_LEFT, SDL_SCANCODE_RIGHT, SDL_SCANCODE_UP, 0);
 
-    scene->Player->X = 386;
-    scene->Player->Y = 210;
+    scene->Player->X = 367;
+    scene->Player->Y = 186;
 
     scene->Player->MinX = -1000000;
     scene->Player->MaxX = 1000000;
