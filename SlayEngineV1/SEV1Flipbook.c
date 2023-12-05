@@ -17,7 +17,7 @@ slayFlipbook* slayNewFlipbook(slayEngine* Engine, uint64 Delay, uint64 Count, ch
     }
     va_end(PathsArgs);
 
-    result->Current = 0;
+    result->Current = -1;
     result->PrevTick = 0;
 
     result->Delay = Delay;
@@ -26,12 +26,10 @@ slayFlipbook* slayNewFlipbook(slayEngine* Engine, uint64 Delay, uint64 Count, ch
     return result;
 }
 
-uint16 slayApplyFlipbook(slayEngine* Engine, slayFlipbook* Flipbook, slayTexture** Target)
+slayTexture* slayTurnFlipbook(slayEngine* Engine, slayFlipbook* Flipbook)
 {
     if (Flipbook->Delay <= SDL_GetTicks() - Flipbook->PrevTick)
     {
-        *Target = Flipbook->Textures[Flipbook->Current];
-
         Flipbook->Current++;
         if (Flipbook->Current == Flipbook->Count)
         {
@@ -39,6 +37,8 @@ uint16 slayApplyFlipbook(slayEngine* Engine, slayFlipbook* Flipbook, slayTexture
         }
         Flipbook->PrevTick = SDL_GetTicks();
     }
+
+    return Flipbook->Textures[Flipbook->Current];
 }
 
 uint16 slayPurgeFlipbook(slayFlipbook* Flipbook)

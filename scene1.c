@@ -26,10 +26,20 @@ uint16 renderScene1(slayEngine* Engine, scene1* Scene)
     //Background
     slayRenderTexture(Engine, 0, 0, Engine->Display->Width, Engine->Display->Height, 0, slayFlipNONE, Scene->TextureBackground, 255);
 
+    //Mountains
+    for (double i = 0; i < 5; i++)
+    {
+        slayRenderTextureCamera(Engine, -3560 + 1583 * i, -1000, 1584, 3312, 0, slayFlipNONE, 0.2, Scene->TextureMountain, 255);
+    }
+
     //Hint
-    slayRenderTextCamera(Engine, ((game*)Engine->Game)->FontCrazyPixel, "Movement: A/D", -150, -100, 1, 0, slayFlipNONE, 0.5, 255, 255, 255, 255);
-    slayRenderTextCamera(Engine, ((game*)Engine->Game)->FontCrazyPixel, "Jump: SPACE", -150, -70, 1, 0, slayFlipNONE, 0.5, 255, 255, 255, 255);
-    slayRenderTextCamera(Engine, ((game*)Engine->Game)->FontCrazyPixel, "Shoot: LMB", -150, -40, 1, 0, slayFlipNONE, 0.5, 255, 255, 255, 255);
+    slayRenderTextCamera(Engine, ((game*)Engine->Game)->FontCrazyPixel, "Movement: A/D", -150, 300, 1, 0, slayFlipNONE, 0.5, 255, 255, 255, 255);
+    slayRenderTextCamera(Engine, ((game*)Engine->Game)->FontCrazyPixel, "Jump: SPACE", -150, 330, 1, 0, slayFlipNONE, 0.5, 255, 255, 255, 255);
+    slayRenderTextCamera(Engine, ((game*)Engine->Game)->FontCrazyPixel, "Shoot: LMB", -150, 360, 1, 0, slayFlipNONE, 0.5, 255, 255, 255, 255);
+
+    //Shrooms
+    slayRenderTextureCamera(Engine, 210, 320, 32, 30, 0, slayFlipNONE, 0.98, Scene->TextureShroom, 255);
+    slayRenderTextureCamera(Engine, 550, 120, 32, 30, 0, slayFlipNONE, 0.98, Scene->TextureShroom, 255);
 
     //Platforms
     for (uint64 i = 0; i < Scene->Platforms->Length; i++)
@@ -45,6 +55,9 @@ uint16 renderScene1(slayEngine* Engine, scene1* Scene)
 
     //Player
     renderPlayer(Engine, Scene->Player);
+
+    //Bush
+    slayRenderTextureCamera(Engine, 700, 508, 69, 42, 0, slayFlipNONE, 1.02, Scene->TextureBush, 255);
 
     //Pause
     if (Scene->paused)
@@ -76,10 +89,13 @@ uint16 loadScene1(slayEngine* Engine)
     scene->paused = false;
 
     //Level
-    scene->TextureBackground = slayLoadTexture(Engine, "assets/background.png");
-    scene->TexturePlatform = slayLoadTexture(Engine, "assets/platform.png");
+    scene->TextureBackground = slayLoadTexture(Engine, "assets/level/background.png");
+    scene->TextureMountain = slayLoadTexture(Engine, "assets/level/mountain.png");
+    scene->TextureShroom = slayLoadTexture(Engine, "assets/level/shroom.png");
+    scene->TextureBush = slayLoadTexture(Engine, "assets/level/bush.png");
+    scene->TexturePlatform = slayLoadTexture(Engine, "assets/level/platform.png");
     scene->Platforms = arrNew(5);
-    scene->Platforms->Values[0] = newPlatform(-200, 550, 1200, 180);
+    scene->Platforms->Values[0] = newPlatform(-200, 550, 1200, 360);
     scene->Platforms->Values[1] = newPlatform(300, 450, 200, 30);
     scene->Platforms->Values[2] = newPlatform(200, 350, 100, 30);
     scene->Platforms->Values[3] = newPlatform(350, 250, 100, 30);
@@ -100,8 +116,8 @@ uint16 loadScene1(slayEngine* Engine)
     }
     else
     {
-        scene->Player->X = 386;
-        scene->Player->Y = 410;
+        scene->Player->X = 367;
+        scene->Player->Y = 386;
     }
     arrPurge(save);
 
@@ -147,6 +163,9 @@ uint16 unloadScene1(slayEngine* Engine)
 
     //Level
     slayUnloadTexture(scene->TextureBackground);
+    slayUnloadTexture(scene->TextureMountain);
+    slayUnloadTexture(scene->TextureShroom);
+    slayUnloadTexture(scene->TextureBush);
     slayUnloadTexture(scene->TexturePlatform);
     uint16 destroyPlatforms(array Platforms);
 

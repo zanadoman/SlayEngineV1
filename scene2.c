@@ -72,8 +72,8 @@ uint16 loadScene2(slayEngine* Engine)
     scene->paused = false;
 
     //Level
-    scene->TextureBackground = slayLoadTexture(Engine, "assets/background.png");
-    scene->TexturePlatform = slayLoadTexture(Engine, "assets/platform.png");
+    scene->TextureBackground = slayLoadTexture(Engine, "assets/level/background.png");
+    scene->TexturePlatform = slayLoadTexture(Engine, "assets/level/platform.png");
     scene->Platforms = arrNew(9);
     scene->Platforms->Values[0] = newPlatform(-450, 250 + slayRandom(-100, 100, 1), 100, 30);
     scene->Platforms->Values[1] = newPlatform(-250, 250 + slayRandom(-100, 100, 1), 100, 30);
@@ -96,7 +96,7 @@ uint16 loadScene2(slayEngine* Engine)
     scene->Player->MinY = -1000000;
     scene->Player->MaxY = 1000000;
 
-    slaySetCamera(Engine, &scene->Player->X, &scene->Player->Y, 14, 20, -960, -520, 1.5);
+    slaySetCamera(Engine, &scene->Player->X, &scene->Player->Y, 33, 32, -960, -520, 1.5);
 
     //Scene
     Engine->CurrentScene = 2;

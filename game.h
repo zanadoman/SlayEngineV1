@@ -78,6 +78,9 @@ struct scene1Struct
 
     array Platforms;
     slayTexture* TextureBackground;
+    slayTexture* TextureMountain;
+    slayTexture* TextureShroom;
+    slayTexture* TextureBush;
     slayTexture* TexturePlatform;
 
     player* Player;
