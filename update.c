@@ -1,12 +1,5 @@
 #include "game.h"
 
-uint16 updateScene0(slayEngine* Engine, scene0* Scene);
-uint16 updateScene1(slayEngine* Engine, scene1* Scene);
-uint16 updateScene2(slayEngine* Engine, scene2* Scene);
-
-void* updatePlayerThread(void* Engine);
-void* updateProjectileThread(void* Engine);
-
 uint16 updateQueue(slayEngine* Engine)
 {
     switch (Engine->CurrentScene)
@@ -21,62 +14,6 @@ uint16 updateQueue(slayEngine* Engine)
             updateScene2(Engine, Engine->Scenes->Values[2]);
             break;
     }
-
-    return 0;
-}
-
-uint16 updateScene0(slayEngine* Engine, scene0* Scene)
-{
-    //1
-    if (updateMenu(Engine, Scene))
-    {
-        return 2;
-    }
-    //2
-
-    return 0;
-}
-
-uint16 updateScene1(slayEngine* Engine, scene1* Scene)
-{
-    //1
-    if (updatePause(Engine, Scene->Pause, &Scene->paused))
-    {
-        return 2;
-    }
-    if (Scene->paused)
-    {
-        return 1;
-    }
-    //2
-    slayThreadStart(Engine, 0, updatePlayerThread);
-    slayThreadStart(Engine, 1, updateProjectileThread);
-    slayThreadWaitExit(Engine, 0);
-    slayThreadWaitExit(Engine, 1);
-    //3
-
-    return 0;
-}
-
-uint16 updateScene2(slayEngine* Engine, scene2* Scene)
-{
-    //1
-    if (updatePause(Engine, Scene->Pause, &Scene->paused))
-    {
-        return 2;
-    }
-    if (Scene->paused)
-    {
-        slayMouseRelative(false);
-        return 1;
-    }
-    else
-    {
-        slayMouseRelative(true);
-    }
-    //2
-    updatePlayer(Engine, Scene->Player, Scene->Platforms);
-    //3
 
     return 0;
 }
