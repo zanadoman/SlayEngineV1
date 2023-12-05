@@ -29,7 +29,8 @@ struct buttonStruct
     slayHitbox* Hitbox;
 };
 
-//Loading
+//Loading____________________________________________________________
+
 struct gameStruct
 {
     slayFont* FontCrazyPixel;
@@ -40,16 +41,19 @@ struct gameStruct
 uint16 loadGame(slayEngine* Engine);
 uint16 unloadSceneCurrent(slayEngine* Engine);
 
-//Update queue
+//Update queue_______________________________________________________
+
 uint16 updateQueue(slayEngine* Engine);
 
 void* updatePlayerThread(void* Engine);
 void* updateProjectileThread(void* Engine);
 
-//Render queue
+//Render queue_______________________________________________________
+
 uint16 renderQueue(slayEngine* Engine);
 
-//Scene0
+//Scene0_____________________________________________________________
+
 struct scene0Struct
 {
     uint8 ColorR;
@@ -65,7 +69,8 @@ uint16 renderScene0(slayEngine* Engine, scene0* Scene);
 uint16 loadScene0(slayEngine* Engine);
 uint16 unloadScene0(slayEngine* Engine);
 
-//Scene1
+//Scene1_____________________________________________________________
+
 struct scene1Struct
 {
     pause* Pause;
@@ -86,7 +91,8 @@ uint16 renderScene1(slayEngine* Engine, scene1* Scene);
 uint16 loadScene1(slayEngine* Engine);
 uint16 unloadScene1(slayEngine* Engine);
 
-//Scene2
+//Scene2_____________________________________________________________
+
 struct scene2Struct
 {
     pause* Pause;
@@ -105,7 +111,8 @@ uint16 renderScene2(slayEngine* Engine, scene2* Scene);
 uint16 loadScene2(slayEngine* Engine);
 uint16 unloadScene2(slayEngine* Engine);
 
-//Level
+//Level______________________________________________________________
+
 struct platformStruct
 {
     double X;
@@ -119,7 +126,8 @@ struct platformStruct
 
 platform* newPlatform(double X, double Y, uint16 Width, uint16 Height);
 
-//Player
+//Player_____________________________________________________________
+
 struct playerStruct
 {
     double X;
@@ -170,7 +178,8 @@ struct playerStruct
 player* newPlayer(slayEngine* Engine, uint64 KeyLeft, uint64 KeyRight, uint64 KeyJump, uint64 KeyFire);
 uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms);
 
-//Projectile
+//Projectile_________________________________________________________
+
 struct projectileStruct
 {
     double X;
@@ -193,10 +202,12 @@ struct projectileStruct
 projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX, double MinY, double MaxY, uint16 Width, uint16 Height, double Speed, double Angle);
 uint16 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, array Platforms);
 
-//Menu
+//Menu_______________________________________________________________
+
 uint16 updateMenu(slayEngine* Engine, scene0* Scene);
 
-//Pause
+//Pause______________________________________________________________
+
 struct pauseStruct
 {
     double X;
