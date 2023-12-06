@@ -34,47 +34,17 @@ uint16 updatePause(slayEngine* Engine, pause* Pause, logic* Paused)
 
     if (*Paused)
     {
-        if (slayCursorCollision(Engine, ((button*)Pause->Buttons->Values[0])->Hitbox))
+        if (updateButton(Engine, Pause->Buttons->Values[0]))
         {
-            ((button*)Pause->Buttons->Values[0])->TextureCurrent = ((button*)Pause->Buttons->Values[0])->TextureHover;
-
-            if (slayKey(Engine, SDL_SCANCODE_LMB))
-            {
-                ((button*)Pause->Buttons->Values[0])->Pressed = true;
-            }
-            else if (((button*)Pause->Buttons->Values[0])->Pressed)
-            {
-                *Paused = false;
-
-                ((button*)Pause->Buttons->Values[0])->Pressed = false;
-            }
-        }
-        else
-        {
-            ((button*)Pause->Buttons->Values[0])->Pressed = false;
-            ((button*)Pause->Buttons->Values[0])->TextureCurrent = ((button*)Pause->Buttons->Values[0])->TextureBase;
+            *Paused = false;
         }
 
-        if (slayCursorCollision(Engine, ((button*)Pause->Buttons->Values[1])->Hitbox))
+        if (updateButton(Engine, Pause->Buttons->Values[1]))
         {
-            ((button*)Pause->Buttons->Values[1])->TextureCurrent = ((button*)Pause->Buttons->Values[1])->TextureHover;
+            unloadSceneCurrent(Engine);
+            loadScene0(Engine);
 
-            if (slayKey(Engine, SDL_SCANCODE_LMB))
-            {
-                ((button*)Pause->Buttons->Values[1])->Pressed = true;
-            }
-            else if (((button*)Pause->Buttons->Values[1])->Pressed)
-            {
-                unloadSceneCurrent(Engine);
-                loadScene0(Engine);
-
-                return 1;
-            }
-        }
-        else
-        {
-            ((button*)Pause->Buttons->Values[1])->Pressed = false;
-            ((button*)Pause->Buttons->Values[1])->TextureCurrent = ((button*)Pause->Buttons->Values[1])->TextureBase;
+            return 1;
         }
     }
 

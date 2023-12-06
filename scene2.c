@@ -3,13 +3,10 @@
 uint16 updateScene2(slayEngine* Engine, scene2* Scene)
 {
     //1
-    if (updatePause(Engine, Scene->Pause, &Scene->paused))
-    {
-        return 2;
-    }
-    if (Scene->paused)
+    if (updatePause(Engine, Scene->Pause, &Scene->paused) || Scene->paused)
     {
         slayMouseRelative(false);
+
         return 1;
     }
     else

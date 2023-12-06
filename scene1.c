@@ -3,11 +3,7 @@
 uint16 updateScene1(slayEngine* Engine, scene1* Scene)
 {
     //1
-    if (updatePause(Engine, Scene->Pause, &Scene->paused))
-    {
-        return 2;
-    }
-    if (Scene->paused)
+    if (updatePause(Engine, Scene->Pause, &Scene->paused) || Scene->paused)
     {
         return 1;
     }

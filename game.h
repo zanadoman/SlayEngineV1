@@ -132,8 +132,12 @@ uint16 destroyPlatforms(array Platforms);
 
 //Common_____________________________________________________________
 
-button* newButton(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, char* TextureBase, char* TextureHover);
 uint16 renderFrameTime(slayEngine* Engine);
+
+//Button_____________________________________________________________
+
+button* newButton(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, char* TextureBase, char* TextureHover);
+logic updateButton(slayEngine* Engine, button* Button);
 uint16 destroyButton(button* Button);
 
 //Player_____________________________________________________________
