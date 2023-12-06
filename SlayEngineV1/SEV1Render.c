@@ -83,7 +83,7 @@ uint16 slayRenderColorCamera(slayEngine* Engine, double X, double Y, uint16 Widt
 
 uint16 slayRender3DColorCamera(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, double FirstLayer, double Depth, double Quality, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA)
 {
-    for (double i = FirstLayer; i <= FirstLayer + Depth; i += Quality)
+    for (double i = FirstLayer - Depth; i <= FirstLayer; i += Quality)
     {
         slayRenderColorCamera(Engine, X, Y, Width, Height, i, ColorR, ColorG, ColorB, ColorA);
     }
@@ -126,7 +126,7 @@ uint16 slayRenderTextureCamera(slayEngine* Engine, double X, double Y, uint16 Wi
 
 uint16 slayRender3DTextureCamera(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, double Angle, uint8 Flip, double FirstLayer, double Depth, double Quality, slayTexture* Texture, uint8 Alpha)
 {
-    for (double i = FirstLayer; i <= FirstLayer + Depth; i += Quality)
+    for (double i = FirstLayer - Depth; i <= FirstLayer; i += Quality)
     {
         slayRenderTextureCamera(Engine, X, Y, Width, Height, Angle, Flip, i, Texture, Alpha);
     }
@@ -195,7 +195,7 @@ uint16 slayRenderTextCamera(slayEngine* Engine, slayFont* Font, char* Characters
 
 uint16 slayRender3DTextCamera(slayEngine* Engine, slayFont* Font, char* Characters, double X, double Y, double Size, double Angle, uint8 Flip, double FirstLayer, double Depth, double Quality, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA)
 {
-    for (double i = FirstLayer; i <= FirstLayer + Depth; i += Quality)
+    for (double i = FirstLayer - Depth; i <= FirstLayer; i += Quality)
     {
         slayRenderTextCamera(Engine, Font, Characters, X, Y, Size, Angle, Flip, i, ColorR, ColorG, ColorB, ColorA);
     }
