@@ -28,7 +28,6 @@ uint16 renderScene2(slayEngine* Engine, scene2* Scene)
     //Hint
     slayRenderTextCamera(Engine, ((game*)Engine->Game)->FontCrazyPixel, "Movement: A/D", -150, -100, 1, 0, slayFlipNONE, 0.5, 0, 0, 0, 255);
     slayRenderTextCamera(Engine, ((game*)Engine->Game)->FontCrazyPixel, "Jump: SPACE", -150, -70, 1, 0, slayFlipNONE, 0.5, 0, 0, 0, 255);
-    slayRenderTextCamera(Engine, ((game*)Engine->Game)->FontCrazyPixel, "Shoot: LMB", -150, -40, 1, 0, slayFlipNONE, 0.5, 0, 0, 0, 255);
 
     //Platforms
     for (uint64 i = 0; i < Scene->Platforms->Length; i++)
