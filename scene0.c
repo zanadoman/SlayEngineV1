@@ -5,7 +5,7 @@ uint16 updateScene0(slayEngine* Engine, scene0* Scene)
     //1
     if (updateMenu(Engine, Scene))
     {
-        return 2;
+        return 1;
     }
     //2
 
