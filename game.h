@@ -130,6 +130,10 @@ struct platformStruct
 platform* newPlatform(double X, double Y, uint16 Width, uint16 Height);
 uint16 destroyPlatforms(array Platforms);
 
+//Common_____________________________________________________________
+
+uint16 renderFrameTime(slayEngine* Engine);
+
 //Player_____________________________________________________________
 
 struct playerStruct
