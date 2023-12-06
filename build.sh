@@ -1,7 +1,14 @@
 #!/bin/bash
 
+function compile()
+{
+    gcc -c 
+
+    echo "Hello World!"
+}
+
 TIMEFORMAT=%R
-time gcc -o Linux/bin Compiled/Demo/*.o Compiled/SlayEngineV1/*.o SlayEngineV1/NeoTypes/*.o -Wl,-rpath=. -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lm
+time gcc -o Linux/bin Compiled/*.o SlayEngineV1/NeoTypes/*.o -Wl,-rpath=. -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lm
 
 if [ $? == 0 ]
 then
