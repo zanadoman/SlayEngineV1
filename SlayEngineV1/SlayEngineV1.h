@@ -20,7 +20,7 @@ typedef struct slayHitboxStruct slayHitbox;
 typedef struct slayCameraStruct slayCamera;
 typedef struct flipbookStruct slayFlipbook;
 
-//Common_____________________________________________________________
+//Engine_____________________________________________________________
 
 struct slayEngineStruct
 {
