@@ -1,0 +1,9 @@
+{
+    "tasks": [
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "./build.sh"
+        }
+    ]
+}
