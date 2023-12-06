@@ -11,6 +11,8 @@ uint16 main(uint64 argc, char* *argv)
 
     loadScene0(Engine);
 
+    printf("Ki van a faszom!\n");
+
     while (slayEvent(Engine))
     {
         slayUpdateDeltaTime(Engine);
