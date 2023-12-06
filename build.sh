@@ -18,7 +18,7 @@ function compile()
         return 0;
     fi
 
-    gcc -o Linux/bin Compiled/*.o SlayEngineV1/NeoTypes/*.o -Wl,-rpath=. -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lm
+    gcc -o Linux/bin Compiled/*.o -Wl,-rpath=. -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lm
     if [ $? != 0 ]
     then
         echo "Compilation failed!"
