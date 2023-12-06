@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ ! -z $1 ] && [ $1 == "-a" ] || [ ! -z $1 ] && [ $1 == "--all" ]
+if [ ! -z $1 ] && [ $1 == "--all" ]
 then
     cd Compiled
     rm *.o
