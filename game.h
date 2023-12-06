@@ -52,6 +52,10 @@ void* updateProjectileThread(void* Engine);
 
 uint16 renderQueue(slayEngine* Engine);
 
+uint16 renderPlayer(slayEngine* Engine, player* Player);
+uint16 renderPause(slayEngine* Engine, pause* Pause);
+uint16 renderFrameTime(slayEngine* Engine);
+
 //Scene0_____________________________________________________________
 
 struct scene0Struct
@@ -130,10 +134,6 @@ struct platformStruct
 platform* newPlatform(double X, double Y, uint16 Width, uint16 Height);
 uint16 destroyPlatforms(array Platforms);
 
-//Common_____________________________________________________________
-
-uint16 renderFrameTime(slayEngine* Engine);
-
 //Button_____________________________________________________________
 
 button* newButton(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, char* TextureBase, char* TextureHover);
@@ -194,7 +194,6 @@ struct playerStruct
 
 player* newPlayer(slayEngine* Engine, uint64 KeyLeft, uint64 KeyRight, uint64 KeyJump, uint64 KeyFire);
 uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms);
-uint16 renderPlayer(slayEngine* Engine, player* Player);
 uint16 destroyPlayer(player* Player);
 
 //Projectile_________________________________________________________
@@ -246,5 +245,4 @@ struct pauseStruct
 
 pause* newPause(slayEngine* Engine);
 uint16 updatePause(slayEngine* Engine, pause* Pause, logic* Paused);
-uint16 renderPause(slayEngine* Engine, pause* Pause);
 uint16 destroyPause(pause* Pause);

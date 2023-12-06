@@ -210,20 +210,6 @@ uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms)
     return 0;
 }
 
-uint16 renderPlayer(slayEngine* Engine, player* Player)
-{
-    if (Player->Facing == 1)
-    {
-        slayRenderTextureCamera(Engine, Player->X, Player->Y, Player->Width, Player->Height, 0, slayFlipNONE, 1, Player->TextureCurrent, 255);
-    }
-    else
-    {
-        slayRenderTextureCamera(Engine, Player->X, Player->Y, Player->Width, Player->Height, 0, slayFlipHORIZONTAL, 1, Player->TextureCurrent, 255);
-    }
-
-    return 0;
-}
-
 uint16 destroyPlayer(player* Player)
 {
     slayDestroyFlipbook(Player->FlipbookIdle);
