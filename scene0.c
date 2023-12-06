@@ -42,27 +42,8 @@ uint16 loadScene0(slayEngine* Engine)
     //Button
     scene->Buttons = arrNew(2);
     
-    scene->Buttons->Values[0] = malloc(sizeof(button));
-    ((button*)scene->Buttons->Values[0])->TextureBase = slayLoadTexture(Engine, "assets/buttons/buttonbase.png");
-    ((button*)scene->Buttons->Values[0])->TextureHover = slayLoadTexture(Engine, "assets/buttons/buttonhover.png");
-    ((button*)scene->Buttons->Values[0])->TextureCurrent = ((button*)scene->Buttons->Values[0])->TextureBase;
-    ((button*)scene->Buttons->Values[0])->X = 810;
-    ((button*)scene->Buttons->Values[0])->Y = 330;
-    ((button*)scene->Buttons->Values[0])->Width = 300;
-    ((button*)scene->Buttons->Values[0])->Height = 100;
-    ((button*)scene->Buttons->Values[0])->Pressed = false;
-    ((button*)scene->Buttons->Values[0])->Hitbox = slayNewHitbox(&((button*)scene->Buttons->Values[0])->X, &((button*)scene->Buttons->Values[0])->Y, 0, 0, 300, 100);
-
-    scene->Buttons->Values[1] = malloc(sizeof(button));
-    ((button*)scene->Buttons->Values[1])->TextureBase = slayLoadTexture(Engine, "assets/buttons/buttonbase.png");
-    ((button*)scene->Buttons->Values[1])->TextureHover = slayLoadTexture(Engine, "assets/buttons/buttonhover.png");
-    ((button*)scene->Buttons->Values[1])->TextureCurrent = ((button*)scene->Buttons->Values[1])->TextureBase;
-    ((button*)scene->Buttons->Values[1])->X = 810;
-    ((button*)scene->Buttons->Values[1])->Y = 630;
-    ((button*)scene->Buttons->Values[1])->Width = 300;
-    ((button*)scene->Buttons->Values[1])->Height = 100;
-    ((button*)scene->Buttons->Values[1])->Pressed = false;
-    ((button*)scene->Buttons->Values[1])->Hitbox = slayNewHitbox(&((button*)scene->Buttons->Values[1])->X, &((button*)scene->Buttons->Values[1])->Y, 0, 0, 300, 100);
+    scene->Buttons->Values[0] = newButton(Engine, 810, 330, 300, 100, "assets/buttons/buttonbase.png", "assets/buttons/buttonhover.png");
+    scene->Buttons->Values[1] = newButton(Engine, 810, 630, 300, 100, "assets/buttons/buttonbase.png", "assets/buttons/buttonhover.png");
 
     //Scene
     Engine->CurrentScene = 0;
@@ -79,12 +60,8 @@ uint16 unloadScene0(slayEngine* Engine)
     //Buttons
     for (uint64 i = 0; i < scene->Buttons->Length; i++)
     {
-        slayUnloadTexture(((button*)scene->Buttons->Values[i])->TextureBase);
-        slayUnloadTexture(((button*)scene->Buttons->Values[i])->TextureHover);
-        free(((button*)scene->Buttons->Values[i])->Hitbox);
-        free(scene->Buttons->Values[i]);
+        destroyButton(scene->Buttons->Values[i]);
     }
-    arrPurge(scene->Buttons);
 
     //Scene
     free(scene);
