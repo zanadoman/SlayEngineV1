@@ -1,4 +1,4 @@
-#include "game.h"
+#include "../game.h"
 
 uint16 playerProjectile(slayEngine* Engine, array Projectiles, player* Player, uint8 Volume);
 

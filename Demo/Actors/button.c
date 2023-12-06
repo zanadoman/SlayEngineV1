@@ -1,4 +1,4 @@
-#include "game.h"
+#include "../game.h"
 
 button* newButton(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, char* TextureBase, char* TextureHover)
 {

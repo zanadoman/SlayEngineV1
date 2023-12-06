@@ -1,4 +1,4 @@
-#include "game.h"
+#include "../game.h"
 
 platform* newPlatform(double X, double Y, uint16 Width, uint16 Height)
 {

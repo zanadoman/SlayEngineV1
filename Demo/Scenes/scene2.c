@@ -1,4 +1,4 @@
-#include "game.h"
+#include "../game.h"
 
 uint16 updateScene2(slayEngine* Engine, scene2* Scene)
 {

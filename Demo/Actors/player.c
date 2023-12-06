@@ -1,4 +1,4 @@
-#include "game.h"
+#include "../game.h"
 
 player* newPlayer(slayEngine* Engine, uint64 KeyLeft, uint64 KeyRight, uint64 KeyJump, uint64 KeyFire)
 {
