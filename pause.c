@@ -12,6 +12,8 @@ pause* newPause(slayEngine* Engine)
     result->Width = 500;
     result->Height = 800;
 
+    result->Pressed = false;
+
     result->ColorR = 0;
     result->ColorG = 0;
     result->ColorB = 0;
@@ -29,7 +31,12 @@ uint16 updatePause(slayEngine* Engine, pause* Pause, logic* Paused)
 {
     if (slayKey(Engine, SDL_SCANCODE_ESCAPE))
     {
-        *Paused = true;
+        Pause->Pressed = true;
+    }
+    else if (Pause->Pressed)
+    {
+        *Paused = !*Paused;
+        Pause->Pressed = false;
     }
 
     if (*Paused)

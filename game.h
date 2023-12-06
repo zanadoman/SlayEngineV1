@@ -12,23 +12,6 @@ typedef struct playerStruct player;
 typedef struct projectileStruct projectile;
 typedef struct pauseStruct pause;
 
-struct buttonStruct
-{
-    double X;
-    double Y;
-
-    uint16 Width;
-    uint16 Height;
-
-    logic Pressed;
-
-    slayTexture* TextureBase;
-    slayTexture* TextureHover;
-    slayTexture* TextureCurrent;
-
-    slayHitbox* Hitbox;
-};
-
 //Loading____________________________________________________________
 
 struct gameStruct
@@ -136,6 +119,23 @@ uint16 destroyPlatforms(array Platforms);
 
 //Button_____________________________________________________________
 
+struct buttonStruct
+{
+    double X;
+    double Y;
+
+    uint16 Width;
+    uint16 Height;
+
+    logic Pressed;
+
+    slayTexture* TextureBase;
+    slayTexture* TextureHover;
+    slayTexture* TextureCurrent;
+
+    slayHitbox* Hitbox;
+};
+
 button* newButton(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, char* TextureBase, char* TextureHover);
 logic updateButton(slayEngine* Engine, button* Button);
 uint16 destroyButton(button* Button);
@@ -234,6 +234,8 @@ struct pauseStruct
 
     uint16 Width;
     uint16 Height;
+
+    logic Pressed;
 
     uint8 ColorR;
     uint8 ColorG;
