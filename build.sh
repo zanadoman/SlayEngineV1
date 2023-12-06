@@ -2,14 +2,21 @@
 
 function compile()
 {
-    cd Compiled
-    gcc -c ../$(git diff --name-only | grep .c)
-    if [ $? != 0 ]
+    git diff --name-only | grep .c 1> /dev/null
+    if [ $? == 0 ]
     then
-        echo "Pre-compilation failed!"
-        exit 1
+        cd Compiled
+        gcc -c ../$(git diff --name-only | grep .c)
+        if [ $? != 0 ]
+        then
+            echo "Pre-compilation failed!"
+            exit 1
+        fi
+        cd ..
+    else
+        echo "Compilation skipped!"
+        return 0;
     fi
-    cd ..
 
     gcc -o Linux/bin Compiled/*.o SlayEngineV1/NeoTypes/*.o -Wl,-rpath=. -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lm
     if [ $? != 0 ]
