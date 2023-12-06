@@ -2,13 +2,25 @@
 
 function compile()
 {
-    gcc -c 
+    cd Compiled
+    gcc -c ../$(git diff --name-only)
+    if [ $? != 0 ]
+    then
+        return 1
+    fi
+    cd ..
 
-    echo "Hello World!"
+    gcc -o Linux/bin Compiled/*.o SlayEngineV1/NeoTypes/*.o -Wl,-rpath=. -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lm
+    if [ $? != 0 ]
+    then
+        return 1
+    fi
+
+    return 0
 }
 
 TIMEFORMAT=%R
-time gcc -o Linux/bin Compiled/*.o SlayEngineV1/NeoTypes/*.o -Wl,-rpath=. -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lm
+time compile
 
 if [ $? == 0 ]
 then
