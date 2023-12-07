@@ -20,7 +20,7 @@ array arrNew(uint64 Length)
     return Array;
 }
 
-uint16 arrInit(array Array, uint64 Length, void* Values, ...)
+uint8 arrInit(array Array, uint64 Length, void* Values, ...)
 {
     va_list ValuesArgs;
 
@@ -44,7 +44,7 @@ uint16 arrInit(array Array, uint64 Length, void* Values, ...)
     return 0;
 }
 
-uint16 arrInsert(array Array, uint64 Index, void* Value)
+uint8 arrInsert(array Array, uint64 Index, void* Value)
 {
     Array->Values = realloc(Array->Values, sizeof(void*) * (Array->Length + 1));
     if (Array->Values == NULL)
@@ -63,7 +63,7 @@ uint16 arrInsert(array Array, uint64 Index, void* Value)
     return 0;
 }
 
-uint16 arrRemove(array Array, uint64 Index)
+uint8 arrRemove(array Array, uint64 Index)
 {
     for (uint64 i = Index; i < Array->Length - 1; i++)
     {
@@ -81,7 +81,7 @@ uint16 arrRemove(array Array, uint64 Index)
     return 0;
 }
 
-uint16 arrPurge(array Array)
+uint8 arrPurge(array Array)
 {
     free(Array->Values);
     free(Array);

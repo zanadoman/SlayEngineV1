@@ -25,7 +25,8 @@ uint64 STRtoUINT(char* Characters, logic* Success)
 
     return result;
 }
-uint16 UINTtoSTR(uint64 Number, string String)
+
+uint8 UINTtoSTR(uint64 Number, string String)
 {
     uint64 i;
 
@@ -93,7 +94,8 @@ sint64 STRtoSINT(char* Characters, logic* Success)
 
     return result;
 }
-uint16 SINTtoSTR(sint64 Number, string String)
+
+uint8 SINTtoSTR(sint64 Number, string String)
 {
     uint64 i;
 
@@ -191,7 +193,8 @@ double STRtoDOUBLE(char* Characters, logic* Success)
 
     return result;
 }
-uint16 DOUBLEtoSTR(double Number, string String)
+
+uint8 DOUBLEtoSTR(double Number, string String)
 {
     uint64 i, whole;
     double fraction;

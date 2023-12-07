@@ -34,7 +34,7 @@ string strNew()
     return String;
 }
 
-uint16 strInit(string String, char* Characters)
+uint8 strInit(string String, char* Characters)
 {   
     String->Lenght = strLength(Characters);
     free(String->String);
@@ -54,7 +54,7 @@ uint16 strInit(string String, char* Characters)
     return 0;
 }
 
-uint16 strAppend(string String, char Character)
+uint8 strAppend(string String, char Character)
 {
     String->String = realloc(String->String, String->Lenght + 1);
     if (String->String == NULL)
@@ -69,7 +69,7 @@ uint16 strAppend(string String, char Character)
     return 0;
 }
 
-uint16 strConcat(string String, uint64 Count, char* Characters, ...)
+uint8 strConcat(string String, uint64 Count, char* Characters, ...)
 {
     char* StringTMP;
     uint64 StringLengthTMP;
@@ -117,7 +117,7 @@ uint16 strConcat(string String, uint64 Count, char* Characters, ...)
     return 0;
 }
 
-uint16 strRead(string String)
+uint8 strRead(string String)
 {
     char Character;
 
@@ -132,7 +132,7 @@ uint16 strRead(string String)
     return 0;
 }
 
-uint16 strSplit(array Array, char* Characters, char Character)
+uint8 strSplit(array Array, char* Characters, char Character)
 {
     array result;
     
@@ -201,7 +201,7 @@ logic strCompare(char* Characters1, char* Characters2)
     return false;
 }
 
-uint16 strPurge(string String)
+uint8 strPurge(string String)
 {
     free(String->String);
     free(String);

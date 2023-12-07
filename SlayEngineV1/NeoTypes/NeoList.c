@@ -23,7 +23,7 @@ list listNew()
     return result;
 }
 
-uint16 listInsert(list List, uint64 Index, void* Value)
+uint8 listInsert(list List, uint64 Index, void* Value)
 {
     listNode first;
     listNode last;
@@ -106,7 +106,7 @@ uint16 listInsert(list List, uint64 Index, void* Value)
     return 0;
 }
 
-uint16 listRemove(list List, uint64 Index)
+uint8 listRemove(list List, uint64 Index)
 {
     listNode first;
     listNode last;
@@ -188,7 +188,7 @@ listNode listGet(list List, uint64 Index)
     return result;
 }
 
-uint16 listCache(list List, uint64 CacheCoverage)
+uint8 listCache(list List, uint64 CacheCoverage)
 {
     listNode first;
     listNode last;
@@ -242,7 +242,7 @@ uint16 listCache(list List, uint64 CacheCoverage)
     return 0;
 }
 
-uint16 listPurge(list List)
+uint8 listPurge(list List)
 {
     listNode tmp;
 

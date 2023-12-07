@@ -37,12 +37,12 @@ struct arrayStruct
 };
 
 array arrNew(uint64 Length);
-uint16 arrInit(array Array, uint64 Length, void* Values, ...);
+uint8 arrInit(array Array, uint64 Length, void* Values, ...);
 
-uint16 arrInsert(array Array, uint64 Index, void* Value);
-uint16 arrRemove(array Array, uint64 Index);
+uint8 arrInsert(array Array, uint64 Index, void* Value);
+uint8 arrRemove(array Array, uint64 Index);
 
-uint16 arrPurge(array Array);
+uint8 arrPurge(array Array);
 
 //_______________NeoString.c_______________ // COMPLETED
 
@@ -55,16 +55,16 @@ struct stringStruct
 uint64 strLength(char* Characters);
 
 string strNew();
-uint16 strInit(string String, char* Characters);
+uint8 strInit(string String, char* Characters);
 
-uint16 strAppend(string String, char Character);
-uint16 strConcat(string String, uint64 Count, char* Characters, ...);
+uint8 strAppend(string String, char Character);
+uint8 strConcat(string String, uint64 Count, char* Characters, ...);
 
-uint16 strRead(string String);
-uint16 strSplit(array Array, char* Characters, char Character);
+uint8 strRead(string String);
+uint8 strSplit(array Array, char* Characters, char Character);
 logic strCompare(char* Characters1, char* Characters2);
 
-uint16 strPurge(string String);
+uint8 strPurge(string String);
 
 //________________NeoList.c________________ // COMPLETED
 
@@ -87,24 +87,24 @@ struct listNodeStruct
 
 list listNew();
 
-uint16 listInsert(list List, uint64 Index, void* Value);
-uint16 listRemove(list List, uint64 Index);
+uint8 listInsert(list List, uint64 Index, void* Value);
+uint8 listRemove(list List, uint64 Index);
 
 listNode listGet(list List, uint64 Index);
-uint16 listCache(list List, uint64 CacheCoverage);
+uint8 listCache(list List, uint64 CacheCoverage);
 
-uint16 listPurge(list List);
+uint8 listPurge(list List);
 
 //_______________NeoConvert.c______________ // COMPLETED
 
 uint64 STRtoUINT(char* Characters, logic* Success);
-uint16 UINTtoSTR(uint64 Number, string String);
+uint8 UINTtoSTR(uint64 Number, string String);
 
 sint64 STRtoSINT(char* Characters, logic* Success);
-uint16 SINTtoSTR(sint64 Number, string String);
+uint8 SINTtoSTR(sint64 Number, string String);
 
 double STRtoDOUBLE(char* Characters, logic* Success);
-uint16 DOUBLEtoSTR(double Number, string String);
+uint8 DOUBLEtoSTR(double Number, string String);
 
 //________________NeoFile.c________________ // COMPLETED
 
