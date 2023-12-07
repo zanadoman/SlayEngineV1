@@ -4,7 +4,6 @@ projectdir="$(pwd)"
 
 if [[ ! -z $1 && $1 == "-a" ]] || [[ ! -z $1 && $1 == "--all" ]]
 then
-    rm Compiled/*.o
     gcc -c Demo/*.c Demo/Actors/*.c Demo/Scenes/*.c SlayEngineV1/*.c SlayEngineV1/NeoTypes/*.c
     if [ $? != 0 ]
     then
@@ -12,6 +11,7 @@ then
         rm *.o
         exit 1
     fi
+    rm Compiled/*.o
     mv *.o Compiled
     echo "Re-compilation successful!"
 else
