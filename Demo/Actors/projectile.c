@@ -68,37 +68,37 @@ uint16 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, e
         switch (((projectile*)Projectiles->Values[i])->Parent)
         {
             case PLAYER:
-                collision = slayCollision(((projectile*)Projectiles->Values[i])->Hitbox, Eagle->Hitbox);
-                if (0 < collision)
+                if (Eagle->Alive)
                 {
-                    free(((projectile*)Projectiles->Values[i])->Hitbox);
-                    arrRemove(Projectiles, i);
-                    i--;
-
-                    if (Eagle->Alive)
+                    collision = slayCollision(((projectile*)Projectiles->Values[i])->Hitbox, Eagle->Hitbox);
+                    if (0 < collision)
                     {
+                        free(((projectile*)Projectiles->Values[i])->Hitbox);
+                        arrRemove(Projectiles, i);
+                        i--;
+
                         Eagle->Alive = false;
                         Eagle->DeathTick = slayGetTicks();
-                    }
 
-                    continue;
+                        continue;
+                    }
                 }
                 break;
             case EAGLE:
-                collision = slayCollision(((projectile*)Projectiles->Values[i])->Hitbox, Player->Hitbox);
-                if (0 < collision)
+                if (Player->Alive)
                 {
-                    free(((projectile*)Projectiles->Values[i])->Hitbox);
-                    arrRemove(Projectiles, i);
-                    i--;
-
-                    if (Eagle->Alive)
+                    collision = slayCollision(((projectile*)Projectiles->Values[i])->Hitbox, Player->Hitbox);
+                    if (0 < collision)
                     {
+                        free(((projectile*)Projectiles->Values[i])->Hitbox);
+                        arrRemove(Projectiles, i);
+                        i--;
+
                         Player->Alive = false;
                         Player->DeathTick = slayGetTicks();
-                    }
 
-                    continue;
+                        continue;
+                    }
                 }
                 break;
         }
