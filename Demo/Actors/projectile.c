@@ -43,8 +43,10 @@ uint16 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, e
     {
         destroyed = false;
 
+        //Movement
         slayVectorTranslate(((projectile*)Projectiles->Values[i])->X, ((projectile*)Projectiles->Values[i])->Y, &((projectile*)Projectiles->Values[i])->X, &((projectile*)Projectiles->Values[i])->Y, ((projectile*)Projectiles->Values[i])->Speed * Engine->DeltaTime, ((projectile*)Projectiles->Values[i])->Angle);
 
+        //Platform collision
         for (j = 0; j < Platforms->Length; j++)
         {
             collision = slayCollision(((projectile*)Projectiles->Values[i])->Hitbox, ((platform*)Platforms->Values[j])->Hitbox);
@@ -63,6 +65,7 @@ uint16 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, e
             continue;
         }
 
+        //Actor collision
         switch (((projectile*)Projectiles->Values[i])->Parent)
         {
             case PLAYER:
@@ -73,8 +76,11 @@ uint16 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, e
                     arrRemove(Projectiles, i);
                     i--;
 
-                    Eagle->Alive = false;
-                    Eagle->DeathTick = slayGetTicks();
+                    if (Eagle->Alive)
+                    {
+                        Eagle->Alive = false;
+                        Eagle->DeathTick = slayGetTicks();
+                    }
 
                     continue;
                 }
@@ -87,8 +93,11 @@ uint16 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, e
                     arrRemove(Projectiles, i);
                     i--;
 
-                    Player->Alive = false;
-                    Player->DeathTick = slayGetTicks();
+                    if (Eagle->Alive)
+                    {
+                        Player->Alive = false;
+                        Player->DeathTick = slayGetTicks();
+                    }
 
                     continue;
                 }

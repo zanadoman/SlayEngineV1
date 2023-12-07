@@ -16,7 +16,7 @@ eagle* newEagle(slayEngine* Engine)
     result->ReloadTick = 0;
 
     result->Alive = true;
-    result->RespawnTime = 10000;
+    result->RespawnTime = 2000;
     result->DeathTick = 0;
 
     result->FlipbookFlying = slayNewFlipbook(Engine, 150, 6, "assets/eagle/flying/flying1.png", "assets/eagle/flying/flying2.png", "assets/eagle/flying/flying3.png", "assets/eagle/flying/flying4.png", "assets/eagle/flying/flying3.png", "assets/eagle/flying/flying2.png");
@@ -32,10 +32,10 @@ uint16 updateEagle(slayEngine* Engine, eagle* Eagle)
 {
     if (Eagle->Alive)
     {
-        //Flipbook
-        Eagle->TextureCurrent = slayTurnFlipbook(Eagle->FlipbookFlying);
-
         //Horizontal movement
+        Eagle->X += Eagle->Speed * Eagle->Facing * Engine->DeltaTime;
+
+        //Clamp position
         if (Eagle->X < Eagle->MinX)
         {
             Eagle->Facing = 1;
@@ -44,13 +44,17 @@ uint16 updateEagle(slayEngine* Engine, eagle* Eagle)
         {
             Eagle->Facing = -1;
         }
-        Eagle->X += Eagle->Speed * Eagle->Facing * Engine->DeltaTime;
+
+        //Flipbooks
+        Eagle->TextureCurrent = slayTurnFlipbook(Eagle->FlipbookFlying);
     }
     else if (Eagle->FlipbookDying->Current != Eagle->FlipbookDying->Count - 1)
     {
+        //Flipbooks (Dying)
         Eagle->TextureCurrent = slayTurnFlipbook(Eagle->FlipbookDying);
     }
 
+    //Respawning
     if (!Eagle->Alive && slayGetTicks() - Eagle->DeathTick > Eagle->RespawnTime)
     {
         Eagle->Alive = true;

@@ -30,7 +30,7 @@ player* newPlayer(slayEngine* Engine, uint64 KeyLeft, uint64 KeyRight, uint64 Ke
     result->KeyFire = KeyFire;
 
     result->Alive = true;
-    result->RespawnTime = 2000;
+    result->RespawnTime = 500;
     result->DeathTick = 0;
 
     result->FlipbookIdle = slayNewFlipbook(Engine, 150, 4, "assets/player/idle/idle1.png", "assets/player/idle/idle2.png", "assets/player/idle/idle3.png", "assets/player/idle/idle4.png");
@@ -207,6 +207,7 @@ uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms)
         Player->TextureCurrent = Player->TextureFall;
     }
 
+    //Respawning
     if (!Player->Alive && slayGetTicks() > Player->DeathTick + Player->RespawnTime)
     {
         Player->Alive = true;
