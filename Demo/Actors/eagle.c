@@ -46,7 +46,7 @@ uint16 updateEagle(slayEngine* Engine, eagle* Eagle)
         }
         Eagle->X += Eagle->Speed * Eagle->Facing * Engine->DeltaTime;
     }
-    else if (Eagle->FlipbookDying->Current != 6)
+    else if (Eagle->FlipbookDying->Current != Eagle->FlipbookDying->Count - 1)
     {
         Eagle->TextureCurrent = slayTurnFlipbook(Eagle->FlipbookDying);
     }
