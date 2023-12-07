@@ -34,3 +34,10 @@ uint16 slayVectorAngle(double X1, double Y1, double X2, double Y2, double* Angle
 
     return 0;
 }
+
+uint16 slayVectorRayCast(double SourceX, double SourceY, double TargetX, double TargetY, double Angle, slayHitbox Obstacle)
+{
+
+
+    return 0;
+}
