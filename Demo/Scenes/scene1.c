@@ -1,6 +1,6 @@
 #include "../game.h"
 
-uint16 updateScene1(slayEngine* Engine, scene1* Scene)
+uint8 updateScene1(slayEngine* Engine, scene1* Scene)
 {
     //1
     if (updatePause(Engine, Scene->Pause, &Scene->paused) || Scene->paused)
@@ -19,7 +19,7 @@ uint16 updateScene1(slayEngine* Engine, scene1* Scene)
     return 0;
 }
 
-uint16 renderScene1(slayEngine* Engine, scene1* Scene)
+uint8 renderScene1(slayEngine* Engine, scene1* Scene)
 {
     //Background
     slayRenderTexture(Engine, 0, 0, Engine->Display->Width, Engine->Display->Height, 0, slayFlipNONE, Scene->TextureBackground, 255);
@@ -72,7 +72,7 @@ uint16 renderScene1(slayEngine* Engine, scene1* Scene)
     return 0;
 }
 
-uint16 loadScene1(slayEngine* Engine)
+uint8 loadScene1(slayEngine* Engine)
 {
     scene1* scene;
     array save;
@@ -146,7 +146,7 @@ uint16 loadScene1(slayEngine* Engine)
     return 0;
 }
 
-uint16 unloadScene1(slayEngine* Engine)
+uint8 unloadScene1(slayEngine* Engine)
 {
     scene1* scene;
     array save;

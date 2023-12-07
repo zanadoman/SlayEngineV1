@@ -27,7 +27,7 @@ pause* newPause(slayEngine* Engine)
     return result;
 }
 
-uint16 updatePause(slayEngine* Engine, pause* Pause, logic* Paused)
+uint8 updatePause(slayEngine* Engine, pause* Pause, logic* Paused)
 {
     if (slayKey(Engine, SDL_SCANCODE_ESCAPE))
     {
@@ -58,7 +58,7 @@ uint16 updatePause(slayEngine* Engine, pause* Pause, logic* Paused)
     return 0;
 }
 
-uint16 destroyPause(pause* Pause)
+uint8 destroyPause(pause* Pause)
 {
     for (uint8 i = 0; i < Pause->Buttons->Length; i++)
     {

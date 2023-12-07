@@ -1,6 +1,6 @@
 #include "game.h"
 
-uint16 updateQueue(slayEngine* Engine)
+uint8 updateQueue(slayEngine* Engine)
 {
     switch (Engine->CurrentScene)
     {

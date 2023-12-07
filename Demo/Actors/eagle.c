@@ -28,7 +28,7 @@ eagle* newEagle(slayEngine* Engine)
     return result;
 }
 
-uint16 updateEagle(slayEngine* Engine, eagle* Eagle)
+uint8 updateEagle(slayEngine* Engine, eagle* Eagle)
 {
     if (Eagle->Alive)
     {
@@ -64,7 +64,7 @@ uint16 updateEagle(slayEngine* Engine, eagle* Eagle)
     return 0;
 }
 
-uint16 destroyEagle(eagle* Eagle)
+uint8 destroyEagle(eagle* Eagle)
 {
     slayDestroyFlipbook(Eagle->FlipbookFlying);
     slayDestroyFlipbook(Eagle->FlipbookDying);

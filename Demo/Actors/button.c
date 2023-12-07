@@ -47,7 +47,7 @@ logic updateButton(slayEngine* Engine, button* Button)
     return false;
 }
 
-uint16 destroyButton(button* Button)
+uint8 destroyButton(button* Button)
 {
     slayUnloadTexture(Button->TextureBase);
     slayUnloadTexture(Button->TextureHover);

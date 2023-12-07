@@ -1,7 +1,7 @@
 #include "../game.h"
 
-uint16 playerProjectile(slayEngine* Engine, array Projectiles, player* Player, slaySound* SoundFire, uint8 Volume);
-uint16 eagleProjectile(slayEngine* Engine, array Projectiles, eagle* Eagle, player* Player, array Platforms, slaySound* SoundFire, uint8 Volume);
+uint8 playerProjectile(slayEngine* Engine, array Projectiles, player* Player, slaySound* SoundFire, uint8 Volume);
+uint8 eagleProjectile(slayEngine* Engine, array Projectiles, eagle* Eagle, player* Player, array Platforms, slaySound* SoundFire, uint8 Volume);
 
 projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX, double MinY, double MaxY, double Angle, actors Parent)
 {
@@ -30,7 +30,7 @@ projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX
     return result;
 }
 
-uint16 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, eagle* Eagle, array Platforms, slaySound* SoundFire)
+uint8 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, eagle* Eagle, array Platforms, slaySound* SoundFire)
 {
     uint8 collision;
     logic destroyed;
@@ -114,7 +114,7 @@ uint16 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, e
     return 0;
 }
 
-uint16 playerProjectile(slayEngine* Engine, array Projectiles, player* Player, slaySound* SoundFire, uint8 Volume)
+uint8 playerProjectile(slayEngine* Engine, array Projectiles, player* Player, slaySound* SoundFire, uint8 Volume)
 {
     slayObject object;
     double angle;
@@ -135,7 +135,7 @@ uint16 playerProjectile(slayEngine* Engine, array Projectiles, player* Player, s
     return 0;
 }
 
-uint16 eagleProjectile(slayEngine* Engine, array Projectiles, eagle* Eagle, player* Player, array Platforms, slaySound* SoundFire, uint8 Volume)
+uint8 eagleProjectile(slayEngine* Engine, array Projectiles, eagle* Eagle, player* Player, array Platforms, slaySound* SoundFire, uint8 Volume)
 {
     double length, angle;
 
@@ -166,7 +166,7 @@ uint16 eagleProjectile(slayEngine* Engine, array Projectiles, eagle* Eagle, play
     }
 }
 
-uint16 destroyProjectiles(array Projectiles)
+uint8 destroyProjectiles(array Projectiles)
 {
     for (uint16 i = 0; i < Projectiles->Length; i++)
     {

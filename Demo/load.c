@@ -1,6 +1,6 @@
 #include "game.h"
 
-uint16 loadGame(slayEngine* Engine)
+uint8 loadGame(slayEngine* Engine)
 {
     game* game;
 
@@ -14,7 +14,7 @@ uint16 loadGame(slayEngine* Engine)
     return 0;
 }
 
-uint16 unloadSceneCurrent(slayEngine* Engine)
+uint8 unloadSceneCurrent(slayEngine* Engine)
 {
     switch (Engine->CurrentScene)
     {

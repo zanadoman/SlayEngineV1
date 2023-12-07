@@ -45,7 +45,7 @@ player* newPlayer(slayEngine* Engine, uint16 KeyLeft, uint16 KeyRight, uint16 Ke
     return result;
 }
 
-uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms)
+uint8 updatePlayer(slayEngine* Engine, player* Player, array Platforms)
 {
     uint8 collision;
     logic falling;
@@ -216,7 +216,7 @@ uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms)
     return 0;
 }
 
-uint16 destroyPlayer(player* Player)
+uint8 destroyPlayer(player* Player)
 {
     slayDestroyFlipbook(Player->FlipbookIdle);
     slayDestroyFlipbook(Player->FlipbookRun);

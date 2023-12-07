@@ -1,6 +1,6 @@
 #include "game.h"
 
-uint16 renderQueue(slayEngine* Engine)
+uint8 renderQueue(slayEngine* Engine)
 {
     slayRenderStart(Engine);
 
@@ -22,7 +22,7 @@ uint16 renderQueue(slayEngine* Engine)
     return 0;
 }
 
-uint16 renderPlayer(slayEngine* Engine, player* Player)
+uint8 renderPlayer(slayEngine* Engine, player* Player)
 {
     if (Player->Facing == 1)
     {
@@ -36,7 +36,7 @@ uint16 renderPlayer(slayEngine* Engine, player* Player)
     return 0;
 }
 
-uint16 renderEagle(slayEngine* Engine, eagle* Eagle)
+uint8 renderEagle(slayEngine* Engine, eagle* Eagle)
 {
     if (Eagle->Facing == 1)
     {
@@ -50,7 +50,7 @@ uint16 renderEagle(slayEngine* Engine, eagle* Eagle)
     return 0;
 }
 
-uint16 renderPause(slayEngine* Engine, pause* Pause)
+uint8 renderPause(slayEngine* Engine, pause* Pause)
 {
     slayRenderColor(Engine, Pause->X, Pause->Y, Pause->Width, Pause->Height, Pause->ColorR, Pause->ColorG, Pause->ColorB, Pause->ColorA);
 
@@ -62,7 +62,7 @@ uint16 renderPause(slayEngine* Engine, pause* Pause)
     return 0;
 }
 
-uint16 renderFrameTime(slayEngine* Engine)
+uint8 renderFrameTime(slayEngine* Engine)
 {
     string text;
 

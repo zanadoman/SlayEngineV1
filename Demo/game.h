@@ -29,12 +29,12 @@ struct gameStruct
     slayTexture* TextureProjectile;
 };
 
-uint16 loadGame(slayEngine* Engine);
-uint16 unloadSceneCurrent(slayEngine* Engine);
+uint8 loadGame(slayEngine* Engine);
+uint8 unloadSceneCurrent(slayEngine* Engine);
 
 //Update queue_______________________________________________________
 
-uint16 updateQueue(slayEngine* Engine);
+uint8 updateQueue(slayEngine* Engine);
 
 void* updatePlayerThread(void* Engine);
 void* updateEagleThread(void* Engine);
@@ -42,12 +42,12 @@ void* updateProjectileThread(void* Engine);
 
 //Render queue_______________________________________________________
 
-uint16 renderQueue(slayEngine* Engine);
+uint8 renderQueue(slayEngine* Engine);
 
-uint16 renderPlayer(slayEngine* Engine, player* Player);
-uint16 renderEagle(slayEngine* Engine, eagle* Eagle);
-uint16 renderPause(slayEngine* Engine, pause* Pause);
-uint16 renderFrameTime(slayEngine* Engine);
+uint8 renderPlayer(slayEngine* Engine, player* Player);
+uint8 renderEagle(slayEngine* Engine, eagle* Eagle);
+uint8 renderPause(slayEngine* Engine, pause* Pause);
+uint8 renderFrameTime(slayEngine* Engine);
 
 //Scene0_____________________________________________________________
 
@@ -60,11 +60,11 @@ struct scene0Struct
     array Buttons;   
 };
 
-uint16 updateScene0(slayEngine* Engine, scene0* Scene);
-uint16 renderScene0(slayEngine* Engine, scene0* Scene);
+uint8 updateScene0(slayEngine* Engine, scene0* Scene);
+uint8 renderScene0(slayEngine* Engine, scene0* Scene);
 
-uint16 loadScene0(slayEngine* Engine);
-uint16 unloadScene0(slayEngine* Engine);
+uint8 loadScene0(slayEngine* Engine);
+uint8 unloadScene0(slayEngine* Engine);
 
 //Scene1_____________________________________________________________
 
@@ -88,11 +88,11 @@ struct scene1Struct
     array Projectiles;
 };
 
-uint16 updateScene1(slayEngine* Engine, scene1* Scene);
-uint16 renderScene1(slayEngine* Engine, scene1* Scene);
+uint8 updateScene1(slayEngine* Engine, scene1* Scene);
+uint8 renderScene1(slayEngine* Engine, scene1* Scene);
 
-uint16 loadScene1(slayEngine* Engine);
-uint16 unloadScene1(slayEngine* Engine);
+uint8 loadScene1(slayEngine* Engine);
+uint8 unloadScene1(slayEngine* Engine);
 
 //Scene2_____________________________________________________________
 
@@ -108,11 +108,11 @@ struct scene2Struct
     player* Player;
 };
 
-uint16 updateScene2(slayEngine* Engine, scene2* Scene);
-uint16 renderScene2(slayEngine* Engine, scene2* Scene);
+uint8 updateScene2(slayEngine* Engine, scene2* Scene);
+uint8 renderScene2(slayEngine* Engine, scene2* Scene);
 
-uint16 loadScene2(slayEngine* Engine);
-uint16 unloadScene2(slayEngine* Engine);
+uint8 loadScene2(slayEngine* Engine);
+uint8 unloadScene2(slayEngine* Engine);
 
 //Level______________________________________________________________
 
@@ -151,7 +151,7 @@ struct buttonStruct
 
 button* newButton(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, char* TextureBase, char* TextureHover);
 logic updateButton(slayEngine* Engine, button* Button);
-uint16 destroyButton(button* Button);
+uint8 destroyButton(button* Button);
 
 //Player_____________________________________________________________
 
@@ -203,8 +203,8 @@ struct playerStruct
 };
 
 player* newPlayer(slayEngine* Engine, uint16 KeyLeft, uint16 KeyRight, uint16 KeyJump, uint16 KeyFire);
-uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms);
-uint16 destroyPlayer(player* Player);
+uint8 updatePlayer(slayEngine* Engine, player* Player, array Platforms);
+uint8 destroyPlayer(player* Player);
 
 //Eagle______________________________________________________________
 
@@ -239,8 +239,8 @@ struct eagleStruct
 };
 
 eagle* newEagle(slayEngine* Engine);
-uint16 updateEagle(slayEngine* Engine, eagle* Eagle);
-uint16 destroyEagle(eagle* Eagle);
+uint8 updateEagle(slayEngine* Engine, eagle* Eagle);
+uint8 destroyEagle(eagle* Eagle);
 
 //Projectile_________________________________________________________
 
@@ -266,12 +266,12 @@ struct projectileStruct
 };
 
 projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX, double MinY, double MaxY, double Angle, actors Parent);
-uint16 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, eagle* Eagle, array Platforms, slaySound* SoundFire);
-uint16 destroyProjectiles(array Projectiles);
+uint8 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, eagle* Eagle, array Platforms, slaySound* SoundFire);
+uint8 destroyProjectiles(array Projectiles);
 
 //Menu_______________________________________________________________
 
-uint16 updateMenu(slayEngine* Engine, scene0* Scene);
+uint8 updateMenu(slayEngine* Engine, scene0* Scene);
 
 //Pause______________________________________________________________
 
@@ -294,5 +294,5 @@ struct pauseStruct
 };
 
 pause* newPause(slayEngine* Engine);
-uint16 updatePause(slayEngine* Engine, pause* Pause, logic* Paused);
-uint16 destroyPause(pause* Pause);
+uint8 updatePause(slayEngine* Engine, pause* Pause, logic* Paused);
+uint8 destroyPause(pause* Pause);
