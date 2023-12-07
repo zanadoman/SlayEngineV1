@@ -1,9 +1,9 @@
 #include "../game.h"
 
-uint16 playerProjectile(slayEngine* Engine, array Projectiles, player* Player, uint8 Volume);
-uint16 eagleProjectile(slayEngine* Engine, array Projectiles, eagle* Eagle, player* Player, array Platforms, uint8 Volume);
+uint16 playerProjectile(slayEngine* Engine, array Projectiles, player* Player, slaySound* SoundFire, uint8 Volume);
+uint16 eagleProjectile(slayEngine* Engine, array Projectiles, eagle* Eagle, player* Player, array Platforms, slaySound* SoundFire, uint8 Volume);
 
-projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX, double MinY, double MaxY, uint16 Width, uint16 Height, double Speed, double Angle, actors Parent)
+projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX, double MinY, double MaxY, double Angle, actors Parent)
 {
     projectile* result;
 
@@ -17,27 +17,27 @@ projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX
     result->MixY = MinY;
     result->MaxY = MaxY;
 
-    result->Width = Width;
-    result->Height = Height;
+    result->Width = 10;
+    result->Height = 4;
 
-    result->Speed = Speed;
+    result->Speed = 0.75;
     result->Angle = Angle;
 
     result->Parent = Parent;
 
-    result->Hitbox = slayNewHitbox(&result->X, &result->Y, 0, 0, result->Width, result->Height);
+    result->Hitbox = slayNewHitbox(&result->X, &result->Y, 3, 0, 4, 4);
 
     return result;
 }
 
-uint16 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, eagle* Eagle, array Platforms)
+uint16 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, eagle* Eagle, array Platforms, slaySound* SoundFire)
 {
     uint8 collision;
     logic destroyed;
     uint64 j;
 
-    playerProjectile(Engine, Projectiles, Player, ((game*)Engine->Game)->Volume);
-    eagleProjectile(Engine, Projectiles, Eagle, Player, Platforms, ((game*)Engine->Game)->Volume);
+    playerProjectile(Engine, Projectiles, Player, SoundFire, ((game*)Engine->Game)->Volume);
+    eagleProjectile(Engine, Projectiles, Eagle, Player, Platforms, SoundFire, ((game*)Engine->Game)->Volume);
 
     for (uint64 i = 0; i < Projectiles->Length; i++)
     {
@@ -91,52 +91,52 @@ uint16 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, e
     return 0;
 }
 
-uint16 playerProjectile(slayEngine* Engine, array Projectiles, player* Player, uint8 Volume)
+uint16 playerProjectile(slayEngine* Engine, array Projectiles, player* Player, slaySound* SoundFire, uint8 Volume)
 {
     slayObject object;
     double angle;
 
     if (slayKey(Engine, Player->KeyFire) && slayGetTicks() > Player->ReloadTick + Player->ReloadTime)
     {
-        slayApplyCamera(Engine, &object, Player->X + Player->ProjectileRelativeX, Player->Y + Player->ProjectileRelativeY, 0, 0, 1);
+        slayApplyCamera(Engine, &object, Player->X + Player->CenterX, Player->Y + Player->CenterY, 0, 0, 1);
         slayVectorAngle(object.x, object.y, Engine->Mouse->X, Engine->Mouse->Y, &angle);
 
         if ((Player->Facing == -1 && 90 < angle && angle < 270) || (Player->Facing == 1 && (270 < angle || angle < 90)))
         {
             Player->ReloadTick = slayGetTicks();
-            arrInsert(Projectiles, Projectiles->Length, newProjectile(Player->X + Player->ProjectileRelativeX, Player->Y + Player->ProjectileRelativeY, Player->MinX, Player->MaxX, Player->MinY, Player->MaxY, Player->ProjectileWidth, Player->ProjectileHeight, Player->ProjectileSpeed, angle, PLAYER));
-            slayPlaySound(Player->SoundFire, 1, Volume, 255, 255, 0);
+            arrInsert(Projectiles, Projectiles->Length, newProjectile(Player->X + Player->CenterX, Player->Y + Player->CenterY, Player->MinX, Player->MaxX, Player->MinY, Player->MaxY, angle, PLAYER));
+            slayPlaySound(SoundFire, 1, Volume, 255, 255, 0);
         }
     }
 
     return 0;
 }
 
-uint16 eagleProjectile(slayEngine* Engine, array Projectiles, eagle* Eagle, player* Player, array Platforms, uint8 Volume)
+uint16 eagleProjectile(slayEngine* Engine, array Projectiles, eagle* Eagle, player* Player, array Platforms, slaySound* SoundFire, uint8 Volume)
 {
     double length, angle;
 
-    slayVectorLength(Eagle->X + Eagle->Width / 2, Eagle->Y + Eagle->Height / 2, Player->X + Player->ProjectileRelativeX, Player->Y + Player->ProjectileRelativeY, &length);
-    slayVectorAngle(Eagle->X + Eagle->Width / 2, Eagle->Y + Eagle->Height / 2, Player->X + Player->ProjectileRelativeX, Player->Y + Player->ProjectileRelativeY, &angle);
+    slayVectorLength(Eagle->X + Eagle->Width / 2, Eagle->Y + Eagle->Height / 2, Player->X + Player->CenterX, Player->Y + Player->CenterY, &length);
+    slayVectorAngle(Eagle->X + Eagle->Width / 2, Eagle->Y + Eagle->Height / 2, Player->X + Player->CenterX, Player->Y + Player->CenterY, &angle);
     if (slayGetTicks() - Eagle->ReloadTick >= Eagle->ReloadTime && length <= Eagle->AttackRange && ((Eagle->Facing == -1 && 90 < angle && angle < 270) || (Eagle->Facing == 1 && (270 < angle || angle < 90))))
     {
         for (uint64 i = 0; i <  Platforms->Length; i++)
         {
-            if (!slayVectorRayCast(Eagle->X + Eagle->Width / 2, Eagle->Y + Eagle->Height / 2, Player->X + Player->ProjectileRelativeX, Player->Y + Player->ProjectileRelativeY, ((platform*)Platforms->Values[i])->Hitbox))
+            if (!slayVectorRayCast(Eagle->X + Eagle->Width / 2, Eagle->Y + Eagle->Height / 2, Player->X + Player->CenterX, Player->Y + Player->CenterY, ((platform*)Platforms->Values[i])->Hitbox))
             {
                 break;
             }
             else if (i == Platforms->Length - 1)
             {
                 Eagle->ReloadTick = slayGetTicks();
-                arrInsert(Projectiles, Projectiles->Length, newProjectile(Eagle->X + Eagle->Width / 2, Eagle->Y + Eagle->Height / 2, Player->MinX, Player->MaxX, Player->MinY, Player->MaxY, Player->ProjectileWidth, Player->ProjectileHeight, Player->ProjectileSpeed, angle, EAGLE));
+                arrInsert(Projectiles, Projectiles->Length, newProjectile(Eagle->X + Eagle->Width / 2, Eagle->Y + Eagle->Height / 2, Eagle->MinX, Eagle->MaxX, Eagle->MinY, Eagle->MaxY, angle, EAGLE));
                 if (Player->X < Eagle->X)
                 {
-                    slayPlaySound(Player->SoundFire, 1, Volume, 64, 255, 0);
+                    slayPlaySound(SoundFire, 1, Volume, 64, 255, 0);
                 }
                 else 
                 {
-                    slayPlaySound(Player->SoundFire, 1, Volume, 255, 64, 0);
+                    slayPlaySound(SoundFire, 1, Volume, 255, 64, 0);
                 }
             }
         }

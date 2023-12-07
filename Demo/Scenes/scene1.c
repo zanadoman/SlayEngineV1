@@ -97,6 +97,9 @@ uint16 loadScene1(slayEngine* Engine)
     scene->Platforms->Values[2] = newPlatform(200, 350, 100, 30);
     scene->Platforms->Values[3] = newPlatform(350, 250, 100, 30);
     scene->Platforms->Values[4] = newPlatform(500, 150, 100, 30);
+
+    //Sounds
+    scene->SoundFire = slayLoadSound("assets/player_fire.wav");
     
     //Player
     scene->Player = newPlayer(Engine, SDL_SCANCODE_A, SDL_SCANCODE_D, SDL_SCANCODE_SPACE, SDL_SCANCODE_LMB);
@@ -131,6 +134,8 @@ uint16 loadScene1(slayEngine* Engine)
     scene->Eagle->Y = 50;
     scene->Eagle->MinX = -200;
     scene->Eagle->MaxX = 1000;
+    scene->Eagle->MinY = -500;
+    scene->Eagle->MaxY = 600;
     
     //Projectiles
     scene->Projectiles = arrNew(0);
@@ -172,6 +177,9 @@ uint16 unloadScene1(slayEngine* Engine)
     slayUnloadTexture(scene->TextureBush);
     slayUnloadTexture(scene->TexturePlatform);
     uint16 destroyPlatforms(array Platforms);
+
+    //Sounds
+    slayUnloadSound(scene->SoundFire);
 
     //Player
     destroyPlayer(scene->Player);

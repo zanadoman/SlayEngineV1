@@ -31,20 +31,12 @@ player* newPlayer(slayEngine* Engine, uint64 KeyLeft, uint64 KeyRight, uint64 Ke
     result->FlipbookRun = slayNewFlipbook(Engine, 150, 6, "assets/player/run/run1.png", "assets/player/run/run2.png", "assets/player/run/run3.png", "assets/player/run/run4.png", "assets/player/run/run5.png", "assets/player/run/run6.png");
     result->TextureJump = slayLoadTexture(Engine, "assets/player/jump.png");
     result->TextureFall = slayLoadTexture(Engine, "assets/player/fall.png");
+    result->CenterX = 33;
+    result->CenterY = 43;
     
     result->TextureCurrent = result->FlipbookIdle->Textures[0];
-    result->SoundFire = slayLoadSound("assets/player_fire.wav");
 
     result->Hitbox = slayNewHitbox(&result->X, &result->Y, 18, 22, 48, 64);
-
-    result->ProjectileRelativeX = 33;
-    result->ProjectileRelativeY = 43;
-    result->ProjectileWidth = 10;
-    result->ProjectileHeight = 4;
-    result->ProjectileSpeed = 0.75;
-    result->ProjectileColorR = 192;
-    result->ProjectileColorG = 192;
-    result->ProjectileColorB = 192;
 
     return result;
 }
@@ -216,7 +208,6 @@ uint16 destroyPlayer(player* Player)
     slayDestroyFlipbook(Player->FlipbookRun);
     slayUnloadTexture(Player->TextureJump);
     slayUnloadTexture(Player->TextureFall);
-    slayUnloadSound(Player->SoundFire);
     free(Player->Hitbox);
     free(Player);
 

@@ -56,7 +56,7 @@ void* updateProjectileThread(void* Engine)
     switch (((slayEngine*)Engine)->CurrentScene)
     {
         case 1:
-            updateProjectile(engine, ((scene1*)engine->Scenes->Values[1])->Projectiles, ((scene1*)engine->Scenes->Values[1])->Player, ((scene1*)engine->Scenes->Values[1])->Eagle, ((scene1*)engine->Scenes->Values[1])->Platforms);
+            updateProjectile(engine, ((scene1*)engine->Scenes->Values[1])->Projectiles, ((scene1*)engine->Scenes->Values[1])->Player, ((scene1*)engine->Scenes->Values[1])->Eagle, ((scene1*)engine->Scenes->Values[1])->Platforms, ((scene1*)engine->Scenes->Values[1])->SoundFire);
             break;
     }
 

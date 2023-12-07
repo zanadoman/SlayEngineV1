@@ -80,6 +80,8 @@ struct scene1Struct
     slayTexture* TextureBush;
     slayTexture* TexturePlatform;
 
+    slaySound* SoundFire;
+
     player* Player;
     eagle* Eagle;
 
@@ -178,6 +180,8 @@ struct playerStruct
     sint8 Facing;
     uint64 ReloadTime;
     uint64 ReloadTick;
+    double CenterX;
+    double CenterY;
 
     uint64 KeyLeft;
     uint64 KeyRight;
@@ -189,18 +193,8 @@ struct playerStruct
     slayTexture* TextureJump;
     slayTexture* TextureFall;
     slayTexture* TextureCurrent;
-    slaySound* SoundFire;
 
     slayHitbox* Hitbox;
-
-    double ProjectileRelativeX;
-    double ProjectileRelativeY;
-    uint16 ProjectileWidth;
-    uint16 ProjectileHeight;
-    double ProjectileSpeed;
-    uint8 ProjectileColorR;
-    uint8 ProjectileColorG;
-    uint8 ProjectileColorB;
 };
 
 player* newPlayer(slayEngine* Engine, uint64 KeyLeft, uint64 KeyRight, uint64 KeyJump, uint64 KeyFire);
@@ -216,6 +210,8 @@ struct eagleStruct
 
     double MinX;
     double MaxX;
+    double MinY;
+    double MaxY;
 
     uint16 Width;
     uint16 Height;
@@ -259,8 +255,8 @@ struct projectileStruct
     slayHitbox* Hitbox;
 };
 
-projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX, double MinY, double MaxY, uint16 Width, uint16 Height, double Speed, double Angle, actors Parent);
-uint16 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, eagle* Eagle, array Platforms);
+projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX, double MinY, double MaxY, double Angle, actors Parent);
+uint16 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, eagle* Eagle, array Platforms, slaySound* SoundFire);
 uint16 destroyProjectiles(array Projectiles);
 
 //Menu_______________________________________________________________

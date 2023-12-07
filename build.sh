@@ -9,6 +9,7 @@ then
     if [ $? != 0 ]
     then
         echo "Re-compilation failed!"
+        rm *.o
         exit 1
     fi
     mv *.o Compiled
