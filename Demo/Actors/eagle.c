@@ -54,7 +54,6 @@ uint16 updateEagle(slayEngine* Engine, eagle* Eagle, player* Player, array Platf
         {
             if (!slayVectorRayCast(Eagle->X + Eagle->Widht / 2, Eagle->Y + Eagle->Height / 2, Player->X + Player->ProjectileRelativeX, Player->Y + Player->ProjectileRelativeY, ((platform*)Platforms->Values[i])->Hitbox))
             {
-                printf("%d\n", i);
                 break;
             }
             else if (i == Platforms->Length - 1)
