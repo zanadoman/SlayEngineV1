@@ -33,6 +33,21 @@ void* updatePlayerThread(void* Engine)
     slayThreadExit;
 }
 
+void* updateEagleThread(void* Engine)
+{
+    slayEngine* engine;
+
+    engine = Engine;
+    switch (((slayEngine*)Engine)->CurrentScene)
+    {
+        case 1:
+            updateEagle(engine, ((scene1*)engine->Scenes->Values[1])->Eagle);
+            break;
+    }
+
+    slayThreadExit;
+}
+
 void* updateProjectileThread(void* Engine)
 {
     slayEngine* engine;
@@ -41,7 +56,7 @@ void* updateProjectileThread(void* Engine)
     switch (((slayEngine*)Engine)->CurrentScene)
     {
         case 1:
-            updateProjectile(engine, ((scene1*)engine->Scenes->Values[1])->Projectiles, ((scene1*)engine->Scenes->Values[1])->Player, ((scene1*)engine->Scenes->Values[1])->Platforms);
+            updateProjectile(engine, ((scene1*)engine->Scenes->Values[1])->Projectiles, ((scene1*)engine->Scenes->Values[1])->Player, ((scene1*)engine->Scenes->Values[1])->Eagle, ((scene1*)engine->Scenes->Values[1])->Platforms);
             break;
     }
 

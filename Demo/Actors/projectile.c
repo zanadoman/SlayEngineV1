@@ -1,8 +1,9 @@
 #include "../game.h"
 
 uint16 playerProjectile(slayEngine* Engine, array Projectiles, player* Player, uint8 Volume);
+uint16 eagleProjectile(slayEngine* Engine, array Projectiles, eagle* Eagle, player* Player, array Platforms, uint8 Volume);
 
-projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX, double MinY, double MaxY, uint16 Width, uint16 Height, double Speed, double Angle)
+projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX, double MinY, double MaxY, uint16 Width, uint16 Height, double Speed, double Angle, actors Parent)
 {
     projectile* result;
 
@@ -22,20 +23,26 @@ projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX
     result->Speed = Speed;
     result->Angle = Angle;
 
+    result->Parent = Parent;
+
     result->Hitbox = slayNewHitbox(&result->X, &result->Y, 0, 0, result->Width, result->Height);
 
     return result;
 }
 
-uint16 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, array Platforms)
+uint16 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, eagle* Eagle, array Platforms)
 {
     uint8 collision;
+    logic destroyed;
     uint64 j;
 
     playerProjectile(Engine, Projectiles, Player, ((game*)Engine->Game)->Volume);
+    eagleProjectile(Engine, Projectiles, Eagle, Player, Platforms, ((game*)Engine->Game)->Volume);
 
     for (uint64 i = 0; i < Projectiles->Length; i++)
     {
+        destroyed = false;
+
         slayVectorTranslate(((projectile*)Projectiles->Values[i])->X, ((projectile*)Projectiles->Values[i])->Y, &((projectile*)Projectiles->Values[i])->X, &((projectile*)Projectiles->Values[i])->Y, ((projectile*)Projectiles->Values[i])->Speed * Engine->DeltaTime, ((projectile*)Projectiles->Values[i])->Angle);
 
         for (j = 0; j < Platforms->Length; j++)
@@ -46,9 +53,38 @@ uint16 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, a
             {
                 free(((projectile*)Projectiles->Values[i])->Hitbox);
                 arrRemove(Projectiles, i);
+                destroyed = true;
                 i--;
                 break;
             }
+        }
+        if (destroyed)
+        {
+            continue;
+        }
+
+        switch (((projectile*)Projectiles->Values[i])->Parent)
+        {
+            case PLAYER:
+                collision = slayCollision(((projectile*)Projectiles->Values[i])->Hitbox, Eagle->Hitbox);
+                if (0 < collision)
+                {
+                    free(((projectile*)Projectiles->Values[i])->Hitbox);
+                    arrRemove(Projectiles, i);
+                    i--;
+                    continue;
+                }
+                break;
+            case EAGLE:
+                collision = slayCollision(((projectile*)Projectiles->Values[i])->Hitbox, Player->Hitbox);
+                if (0 < collision)
+                {
+                    free(((projectile*)Projectiles->Values[i])->Hitbox);
+                    arrRemove(Projectiles, i);
+                    i--;
+                    continue;
+                }
+                break;
         }
     }
 
@@ -68,19 +104,42 @@ uint16 playerProjectile(slayEngine* Engine, array Projectiles, player* Player, u
         if ((Player->Facing == -1 && 90 < angle && angle < 270) || (Player->Facing == 1 && (270 < angle || angle < 90)))
         {
             Player->ReloadTick = slayGetTicks();
-            arrInsert(Projectiles, Projectiles->Length, newProjectile(Player->X + Player->ProjectileRelativeX, Player->Y + Player->ProjectileRelativeY, Player->MinX, Player->MaxX, Player->MinY, Player->MaxY, Player->ProjectileWidth, Player->ProjectileHeight, Player->ProjectileSpeed, angle));
-            if (270 < angle || angle < 90)
-            {
-                slayPlaySound(Player->SoundFire, 1, Volume, 64, 255, 0);
-            }
-            else
-            {
-                slayPlaySound(Player->SoundFire, 1, Volume, 255, 64, 0);
-            }
+            arrInsert(Projectiles, Projectiles->Length, newProjectile(Player->X + Player->ProjectileRelativeX, Player->Y + Player->ProjectileRelativeY, Player->MinX, Player->MaxX, Player->MinY, Player->MaxY, Player->ProjectileWidth, Player->ProjectileHeight, Player->ProjectileSpeed, angle, PLAYER));
+            slayPlaySound(Player->SoundFire, 1, Volume, 255, 255, 0);
         }
     }
 
     return 0;
+}
+
+uint16 eagleProjectile(slayEngine* Engine, array Projectiles, eagle* Eagle, player* Player, array Platforms, uint8 Volume)
+{
+    double angle;
+
+    slayVectorAngle(Eagle->X + Eagle->Width / 2, Eagle->Y + Eagle->Height / 2, Player->X + Player->ProjectileRelativeX, Player->Y + Player->ProjectileRelativeY, &angle);
+    if (slayGetTicks() - Eagle->ReloadTick >= Eagle->ReloadTime && ((Eagle->Facing == -1 && 90 < angle && angle < 270) || (Eagle->Facing == 1 && (270 < angle || angle < 90))))
+    {
+        for (uint64 i = 0; i <  Platforms->Length; i++)
+        {
+            if (!slayVectorRayCast(Eagle->X + Eagle->Width / 2, Eagle->Y + Eagle->Height / 2, Player->X + Player->ProjectileRelativeX, Player->Y + Player->ProjectileRelativeY, ((platform*)Platforms->Values[i])->Hitbox))
+            {
+                break;
+            }
+            else if (i == Platforms->Length - 1)
+            {
+                Eagle->ReloadTick = slayGetTicks();
+                arrInsert(Projectiles, Projectiles->Length, newProjectile(Eagle->X + Eagle->Width / 2, Eagle->Y + Eagle->Height / 2, Player->MinX, Player->MaxX, Player->MinY, Player->MaxY, Player->ProjectileWidth, Player->ProjectileHeight, Player->ProjectileSpeed, angle, EAGLE));
+                if (Player->X < Eagle->X)
+                {
+                    slayPlaySound(Player->SoundFire, 1, Volume, 64, 255, 0);
+                }
+                else 
+                {
+                    slayPlaySound(Player->SoundFire, 1, Volume, 255, 64, 0);
+                }
+            }
+        }
+    }
 }
 
 uint16 destroyProjectiles(array Projectiles)

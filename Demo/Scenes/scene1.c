@@ -9,12 +9,12 @@ uint16 updateScene1(slayEngine* Engine, scene1* Scene)
     }
     //2
     slayThreadStart(Engine, 0, updatePlayerThread);
-    slayThreadStart(Engine, 1, updateProjectileThread);
+    slayThreadStart(Engine, 1, updateEagleThread);
+    slayThreadStart(Engine, 2, updateProjectileThread);
     slayThreadWaitExit(Engine, 0);
     slayThreadWaitExit(Engine, 1);
+    slayThreadWaitExit(Engine, 2);
     //3
-    updateEagle(Engine, Scene->Eagle, Scene->Player, Scene->Platforms, Scene->Projectiles);
-    //4
 
     return 0;
 }

@@ -13,6 +13,13 @@ typedef struct eagleStruct eagle;
 typedef struct projectileStruct projectile;
 typedef struct pauseStruct pause;
 
+typedef enum
+{
+    PLAYER,
+    EAGLE,
+    PROJECTILE,
+} actors;
+
 //Loading____________________________________________________________
 
 struct gameStruct
@@ -30,6 +37,7 @@ uint16 unloadSceneCurrent(slayEngine* Engine);
 uint16 updateQueue(slayEngine* Engine);
 
 void* updatePlayerThread(void* Engine);
+void* updateEagleThread(void* Engine);
 void* updateProjectileThread(void* Engine);
 
 //Render queue_______________________________________________________
@@ -224,7 +232,7 @@ struct eagleStruct
 };
 
 eagle* newEagle(slayEngine* Engine);
-uint16 updateEagle(slayEngine* Engine, eagle* Eagle, player* Player, array Platforms, array Projectiles);
+uint16 updateEagle(slayEngine* Engine, eagle* Eagle);
 uint16 destroyEagle(eagle* Eagle);
 
 //Projectile_________________________________________________________
@@ -245,11 +253,13 @@ struct projectileStruct
     double Speed;
     double Angle;
 
+    actors Parent;
+
     slayHitbox* Hitbox;
 };
 
-projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX, double MinY, double MaxY, uint16 Width, uint16 Height, double Speed, double Angle);
-uint16 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, array Platforms);
+projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX, double MinY, double MaxY, uint16 Width, uint16 Height, double Speed, double Angle, actors Parent);
+uint16 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, eagle* Eagle, array Platforms);
 uint16 destroyProjectiles(array Projectiles);
 
 //Menu_______________________________________________________________
