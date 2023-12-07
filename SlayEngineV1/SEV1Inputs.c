@@ -16,11 +16,25 @@ logic slayKey(slayEngine* Engine, uint16 Key)
     }
     else if (Key == SDL_SCANCODE_WHEELUP)
     {
-        return abs(Engine->Mouse->Wheel);
+        if (Engine->Mouse->Wheel == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
     else if (Key == SDL_SCANCODE_WHEELDOWN)
     {
-        return abs(Engine->Mouse->Wheel);
+        if (Engine->Mouse->Wheel == -1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
     else
     {
