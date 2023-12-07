@@ -44,8 +44,8 @@ uint16 updateEagle(slayEngine* Engine, eagle* Eagle)
 
 uint16 destroyEagle(eagle* Eagle)
 {
-    free(Eagle->Hitbox);
     slayDestroyFlipbook(Eagle->Flipbook);
+    free(Eagle->Hitbox);
     free(Eagle);
 
     return 0;
