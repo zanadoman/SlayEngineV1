@@ -36,6 +36,20 @@ uint16 renderPlayer(slayEngine* Engine, player* Player)
     return 0;
 }
 
+uint16 renderEagle(slayEngine* Engine, eagle* Eagle)
+{
+    if (Eagle->Facing == 1)
+    {
+        slayRenderTextureCamera(Engine, Eagle->X, Eagle->Y, Eagle->Widht, Eagle->Height, 0, slayFlipHORIZONTAL, 1, Eagle->TextureCurrent, 255);
+    }
+    else
+    {
+        slayRenderTextureCamera(Engine, Eagle->X, Eagle->Y, Eagle->Widht, Eagle->Height, 0, slayFlipNONE, 1, Eagle->TextureCurrent, 255);
+    }
+
+    return 0;
+}
+
 uint16 renderPause(slayEngine* Engine, pause* Pause)
 {
     slayRenderColor(Engine, Pause->X, Pause->Y, Pause->Width, Pause->Height, Pause->ColorR, Pause->ColorG, Pause->ColorB, Pause->ColorA);

@@ -37,6 +37,7 @@ void* updateProjectileThread(void* Engine);
 uint16 renderQueue(slayEngine* Engine);
 
 uint16 renderPlayer(slayEngine* Engine, player* Player);
+uint16 renderEagle(slayEngine* Engine, eagle* Eagle);
 uint16 renderPause(slayEngine* Engine, pause* Pause);
 uint16 renderFrameTime(slayEngine* Engine);
 
@@ -205,8 +206,16 @@ struct eagleStruct
     double X;
     double Y;
 
+    double MinX;
+    double MaxX;
+
     uint16 Widht;
     uint16 Height;
+
+    double Speed;
+    double Facing;
+    uint64 ReloadTime;
+    uint64 ReloadTick;
 
     slayFlipbook* Flipbook;
     slayTexture* TextureCurrent;
@@ -215,8 +224,7 @@ struct eagleStruct
 };
 
 eagle* newEagle(slayEngine* Engine);
-uint16 updateEagle(slayEngine* Engine, eagle* Eagle);
-uint16 renderEagle(slayEngine* Engine, eagle* Eagle);
+uint16 updateEagle(slayEngine* Engine, eagle* Eagle, player* Player, array Platforms, array Projectiles);
 uint16 destroyEagle(eagle* Eagle);
 
 //Projectile_________________________________________________________
