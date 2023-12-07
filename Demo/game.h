@@ -188,8 +188,13 @@ struct playerStruct
     uint64 KeyJump;
     uint64 KeyFire;
 
+    logic Alive;
+    uint64 RespawnTime;
+    uint64 DeathTick;
+
     slayFlipbook* FlipbookIdle;
     slayFlipbook* FlipbookRun;
+    slayFlipbook* FlipbookStunned;
     slayTexture* TextureJump;
     slayTexture* TextureFall;
     slayTexture* TextureCurrent;
@@ -222,7 +227,12 @@ struct eagleStruct
     uint64 ReloadTime;
     uint64 ReloadTick;
 
-    slayFlipbook* Flipbook;
+    logic Alive;
+    uint64 RespawnTime;
+    uint64 DeathTick;
+
+    slayFlipbook* FlipbookFlying;
+    slayFlipbook* FlipbookDying;
     slayTexture* TextureCurrent;
     
     slayHitbox* Hitbox;

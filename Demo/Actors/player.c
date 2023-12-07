@@ -21,19 +21,23 @@ player* newPlayer(slayEngine* Engine, uint64 KeyLeft, uint64 KeyRight, uint64 Ke
     result->Facing = 1;
     result->ReloadTime = 200;
     result->ReloadTick = 0;
+    result->CenterX = 33;
+    result->CenterY = 43;
 
     result->KeyLeft = KeyLeft;
     result->KeyRight = KeyRight;
     result->KeyJump = KeyJump;
     result->KeyFire = KeyFire;
 
+    result->Alive = true;
+    result->RespawnTime = 2000;
+    result->DeathTick = 0;
+
     result->FlipbookIdle = slayNewFlipbook(Engine, 150, 4, "assets/player/idle/idle1.png", "assets/player/idle/idle2.png", "assets/player/idle/idle3.png", "assets/player/idle/idle4.png");
     result->FlipbookRun = slayNewFlipbook(Engine, 150, 6, "assets/player/run/run1.png", "assets/player/run/run2.png", "assets/player/run/run3.png", "assets/player/run/run4.png", "assets/player/run/run5.png", "assets/player/run/run6.png");
+    result->FlipbookStunned = slayNewFlipbook(Engine, 150, 2, "assets/player/stunned/stunned1.png", "assets/player/stunned/stunned2.png");
     result->TextureJump = slayLoadTexture(Engine, "assets/player/jump.png");
     result->TextureFall = slayLoadTexture(Engine, "assets/player/fall.png");
-    result->CenterX = 33;
-    result->CenterY = 43;
-    
     result->TextureCurrent = result->FlipbookIdle->Textures[0];
 
     result->Hitbox = slayNewHitbox(&result->X, &result->Y, 18, 22, 48, 64);
@@ -48,7 +52,7 @@ uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms)
     double zoom;
 
     //Horizontal movement
-    if (slayKey(Engine, Player->KeyLeft))
+    if (Player->Alive && slayKey(Engine, Player->KeyLeft))
     {
         if (Player->AccelerationX > -1)
         {
@@ -60,7 +64,7 @@ uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms)
         }
         Player->Facing = -1;
     }
-    else if (slayKey(Engine, Player->KeyRight))
+    else if (Player->Alive && slayKey(Engine, Player->KeyRight))
     {
         if (Player->AccelerationX < 1)
         {
@@ -159,7 +163,7 @@ uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms)
             Player->AccelerationY = 1;
         }
     }
-    else if (slayKey(Engine, Player->KeyJump))
+    else if (Player->Alive && slayKey(Engine, Player->KeyJump))
     {
         Player->AccelerationY = -Player->JumpHeight;
     }
@@ -182,7 +186,11 @@ uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms)
     }
 
     //Flipbooks
-    if (Player->AccelerationX == 0 && Player->AccelerationY == 0)
+    if (!Player->Alive)
+    {
+        Player->TextureCurrent = slayTurnFlipbook(Player->FlipbookStunned);
+    }
+    else if (Player->AccelerationX == 0 && Player->AccelerationY == 0)
     {
         Player->TextureCurrent = slayTurnFlipbook(Player->FlipbookIdle);
     }
@@ -199,6 +207,11 @@ uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms)
         Player->TextureCurrent = Player->TextureFall;
     }
 
+    if (!Player->Alive && slayGetTicks() > Player->DeathTick + Player->RespawnTime)
+    {
+        Player->Alive = true;
+    }
+
     return 0;
 }
 
@@ -206,6 +219,7 @@ uint16 destroyPlayer(player* Player)
 {
     slayDestroyFlipbook(Player->FlipbookIdle);
     slayDestroyFlipbook(Player->FlipbookRun);
+    slayDestroyFlipbook(Player->FlipbookStunned);
     slayUnloadTexture(Player->TextureJump);
     slayUnloadTexture(Player->TextureFall);
     free(Player->Hitbox);

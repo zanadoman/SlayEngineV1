@@ -72,6 +72,10 @@ uint16 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, e
                     free(((projectile*)Projectiles->Values[i])->Hitbox);
                     arrRemove(Projectiles, i);
                     i--;
+
+                    Eagle->Alive = false;
+                    Eagle->DeathTick = slayGetTicks();
+
                     continue;
                 }
                 break;
@@ -82,6 +86,10 @@ uint16 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, e
                     free(((projectile*)Projectiles->Values[i])->Hitbox);
                     arrRemove(Projectiles, i);
                     i--;
+
+                    Player->Alive = false;
+                    Player->DeathTick = slayGetTicks();
+
                     continue;
                 }
                 break;
@@ -96,7 +104,7 @@ uint16 playerProjectile(slayEngine* Engine, array Projectiles, player* Player, s
     slayObject object;
     double angle;
 
-    if (slayKey(Engine, Player->KeyFire) && slayGetTicks() > Player->ReloadTick + Player->ReloadTime)
+    if (Player->Alive && slayKey(Engine, Player->KeyFire) && slayGetTicks() > Player->ReloadTick + Player->ReloadTime)
     {
         slayApplyCamera(Engine, &object, Player->X + Player->CenterX, Player->Y + Player->CenterY, 0, 0, 1);
         slayVectorAngle(object.x, object.y, Engine->Mouse->X, Engine->Mouse->Y, &angle);
@@ -118,7 +126,7 @@ uint16 eagleProjectile(slayEngine* Engine, array Projectiles, eagle* Eagle, play
 
     slayVectorLength(Eagle->X + Eagle->Width / 2, Eagle->Y + Eagle->Height / 2, Player->X + Player->CenterX, Player->Y + Player->CenterY, &length);
     slayVectorAngle(Eagle->X + Eagle->Width / 2, Eagle->Y + Eagle->Height / 2, Player->X + Player->CenterX, Player->Y + Player->CenterY, &angle);
-    if (slayGetTicks() - Eagle->ReloadTick >= Eagle->ReloadTime && length <= Eagle->AttackRange && ((Eagle->Facing == -1 && 90 < angle && angle < 270) || (Eagle->Facing == 1 && (270 < angle || angle < 90))))
+    if (Eagle->Alive && slayGetTicks() - Eagle->ReloadTick >= Eagle->ReloadTime && length <= Eagle->AttackRange && ((Eagle->Facing == -1 && 90 < angle && angle < 270) || (Eagle->Facing == 1 && (270 < angle || angle < 90))))
     {
         for (uint64 i = 0; i <  Platforms->Length; i++)
         {
