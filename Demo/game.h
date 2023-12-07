@@ -178,19 +178,19 @@ struct playerStruct
     double Speed;
     double JumpHeight;
     sint8 Facing;
-    uint64 ReloadTime;
-    uint64 ReloadTick;
+    uint16 ReloadTime;
+    uint32 ReloadTick;
     double CenterX;
     double CenterY;
 
-    uint64 KeyLeft;
-    uint64 KeyRight;
-    uint64 KeyJump;
-    uint64 KeyFire;
+    uint16 KeyLeft;
+    uint16 KeyRight;
+    uint16 KeyJump;
+    uint16 KeyFire;
 
     logic Alive;
-    uint64 RespawnTime;
-    uint64 DeathTick;
+    uint16 RespawnTime;
+    uint32 DeathTick;
 
     slayFlipbook* FlipbookIdle;
     slayFlipbook* FlipbookRun;
@@ -202,7 +202,7 @@ struct playerStruct
     slayHitbox* Hitbox;
 };
 
-player* newPlayer(slayEngine* Engine, uint64 KeyLeft, uint64 KeyRight, uint64 KeyJump, uint64 KeyFire);
+player* newPlayer(slayEngine* Engine, uint16 KeyLeft, uint16 KeyRight, uint16 KeyJump, uint16 KeyFire);
 uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms);
 uint16 destroyPlayer(player* Player);
 
@@ -224,12 +224,12 @@ struct eagleStruct
     double Speed;
     double Facing;
     double AttackRange;
-    uint64 ReloadTime;
-    uint64 ReloadTick;
+    uint16 ReloadTime;
+    uint32 ReloadTick;
 
     logic Alive;
-    uint64 RespawnTime;
-    uint64 DeathTick;
+    uint16 RespawnTime;
+    uint32 DeathTick;
 
     slayFlipbook* FlipbookFlying;
     slayFlipbook* FlipbookDying;

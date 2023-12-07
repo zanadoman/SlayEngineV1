@@ -5,6 +5,7 @@ slayFlipbook* slayNewFlipbook(slayEngine* Engine, uint64 Delay, uint64 Count, ch
     slayFlipbook* result;
     
     va_list PathsArgs;
+    char* PathsTemp;
 
     result = malloc(sizeof(slayFlipbook));
 
@@ -13,7 +14,15 @@ slayFlipbook* slayNewFlipbook(slayEngine* Engine, uint64 Delay, uint64 Count, ch
     result->Textures[0] = slayLoadTexture(Engine, Paths);
     for (uint64 i = 1; i < Count; i++)
     {
-        result->Textures[i] = slayLoadTexture(Engine, va_arg(PathsArgs, char*));
+        PathsTemp = va_arg(PathsArgs, char*);
+        if (PathsTemp == NULL)
+        {
+            result->Textures[i] = NULL;
+        }
+        else
+        {
+            result->Textures[i] = slayLoadTexture(Engine, PathsTemp);
+        }
     }
     va_end(PathsArgs);
 

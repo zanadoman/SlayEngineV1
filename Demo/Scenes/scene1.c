@@ -40,13 +40,13 @@ uint16 renderScene1(slayEngine* Engine, scene1* Scene)
     slayRenderTextureCamera(Engine, 550, 120, 32, 30, 0, slayFlipNONE, 0.98, Scene->TextureShroom, 255);
 
     //Platforms
-    for (uint64 i = 0; i < Scene->Platforms->Length; i++)
+    for (uint8 i = 0; i < Scene->Platforms->Length; i++)
     {
         slayRender3DTextureCamera(Engine, ((platform*)Scene->Platforms->Values[i])->X, ((platform*)Scene->Platforms->Values[i])->Y, ((platform*)Scene->Platforms->Values[i])->Width, ((platform*)Scene->Platforms->Values[i])->Height, 0, slayFlipNONE, 1.02, 0.04, 0.005, Scene->TexturePlatform, 255);
     }
 
     //Projectiles
-    for (uint64 i = 0; i < Scene->Projectiles->Length; i++)
+    for (uint16 i = 0; i < Scene->Projectiles->Length; i++)
     {
         slayRenderTextureCamera(Engine, ((projectile*)Scene->Projectiles->Values[i])->X, ((projectile*)Scene->Projectiles->Values[i])->Y, ((projectile*)Scene->Projectiles->Values[i])->Width, ((projectile*)Scene->Projectiles->Values[i])->Height, ((projectile*)Scene->Projectiles->Values[i])->Angle, slayFlipNONE, 1, ((game*)Engine->Game)->TextureProjectile, 255);
     }
@@ -168,7 +168,7 @@ uint16 unloadScene1(slayEngine* Engine)
     arrPurge(save);
 
     //Pause
-    uint16 destroyPause(pause* Pause);
+    destroyPause(scene->Pause);
 
     //Level
     slayUnloadTexture(scene->TextureBackground);
@@ -176,7 +176,7 @@ uint16 unloadScene1(slayEngine* Engine)
     slayUnloadTexture(scene->TextureShroom);
     slayUnloadTexture(scene->TextureBush);
     slayUnloadTexture(scene->TexturePlatform);
-    uint16 destroyPlatforms(array Platforms);
+    destroyPlatforms(scene->Platforms);
 
     //Sounds
     slayUnloadSound(scene->SoundFire);

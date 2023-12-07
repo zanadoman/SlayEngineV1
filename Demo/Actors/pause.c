@@ -60,7 +60,7 @@ uint16 updatePause(slayEngine* Engine, pause* Pause, logic* Paused)
 
 uint16 destroyPause(pause* Pause)
 {
-    for (uint64 i = 0; i < Pause->Buttons->Length; i++)
+    for (uint8 i = 0; i < Pause->Buttons->Length; i++)
     {
         destroyButton(Pause->Buttons->Values[i]);
     }

@@ -34,12 +34,11 @@ uint16 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, e
 {
     uint8 collision;
     logic destroyed;
-    uint64 j;
 
     playerProjectile(Engine, Projectiles, Player, SoundFire, ((game*)Engine->Game)->Volume);
     eagleProjectile(Engine, Projectiles, Eagle, Player, Platforms, SoundFire, ((game*)Engine->Game)->Volume);
 
-    for (uint64 i = 0; i < Projectiles->Length; i++)
+    for (uint16 i = 0; i < Projectiles->Length; i++)
     {
         destroyed = false;
 
@@ -47,7 +46,7 @@ uint16 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, e
         slayVectorTranslate(((projectile*)Projectiles->Values[i])->X, ((projectile*)Projectiles->Values[i])->Y, &((projectile*)Projectiles->Values[i])->X, &((projectile*)Projectiles->Values[i])->Y, ((projectile*)Projectiles->Values[i])->Speed * Engine->DeltaTime, ((projectile*)Projectiles->Values[i])->Angle);
 
         //Platform collision
-        for (j = 0; j < Platforms->Length; j++)
+        for (uint16 j = 0; j < Platforms->Length; j++)
         {
             collision = slayCollision(((projectile*)Projectiles->Values[i])->Hitbox, ((platform*)Platforms->Values[j])->Hitbox);
 
@@ -137,7 +136,7 @@ uint16 eagleProjectile(slayEngine* Engine, array Projectiles, eagle* Eagle, play
     slayVectorAngle(Eagle->X + Eagle->Width / 2, Eagle->Y + Eagle->Height / 2, Player->X + Player->CenterX, Player->Y + Player->CenterY, &angle);
     if (Eagle->Alive && slayGetTicks() - Eagle->ReloadTick >= Eagle->ReloadTime && length <= Eagle->AttackRange && ((Eagle->Facing == -1 && 90 < angle && angle < 270) || (Eagle->Facing == 1 && (270 < angle || angle < 90))))
     {
-        for (uint64 i = 0; i <  Platforms->Length; i++)
+        for (uint16 i = 0; i <  Platforms->Length; i++)
         {
             if (!slayVectorRayCast(Eagle->X + Eagle->Width / 2, Eagle->Y + Eagle->Height / 2, Player->X + Player->CenterX, Player->Y + Player->CenterY, ((platform*)Platforms->Values[i])->Hitbox))
             {
@@ -162,11 +161,11 @@ uint16 eagleProjectile(slayEngine* Engine, array Projectiles, eagle* Eagle, play
 
 uint16 destroyProjectiles(array Projectiles)
 {
-    for (uint64 i = 0; i < Projectiles->Length; i++)
+    for (uint16 i = 0; i < Projectiles->Length; i++)
     {
         free(((projectile*)Projectiles->Values[i])->Hitbox);
     }
-    for (uint64 i = 0; i < Projectiles->Length; i++)
+    for (uint16 i = 0; i < Projectiles->Length; i++)
     {
         free(Projectiles->Values[i]);
     }

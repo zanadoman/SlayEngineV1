@@ -1,6 +1,6 @@
 #include "../game.h"
 
-player* newPlayer(slayEngine* Engine, uint64 KeyLeft, uint64 KeyRight, uint64 KeyJump, uint64 KeyFire)
+player* newPlayer(slayEngine* Engine, uint16 KeyLeft, uint16 KeyRight, uint16 KeyJump, uint16 KeyFire)
 {
     player* result;
 
@@ -101,7 +101,7 @@ uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms)
     //Vertical movement
     Player->Y += GRAVITY * Player->AccelerationY * Engine->DeltaTime;
     falling = true;
-    for (uint64 i = 0; i < Platforms->Length; i++)
+    for (uint16 i = 0; i < Platforms->Length; i++)
     {
         collision = slayCollision(Player->Hitbox, ((platform*)Platforms->Values[i])->Hitbox);
 
@@ -117,7 +117,7 @@ uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms)
                 //Sceen 2 platform generation
                 if (Engine->CurrentScene == 2 && 4 < i)
                 {
-                    for (uint64 j = 0; j < i - 4; j++)
+                    for (uint8 j = 0; j < i - 4; j++)
                     {
                         arrInsert(Platforms, Platforms->Length, newPlatform(((platform*)Platforms->Values[Platforms->Length - 1])->X + 200, ((platform*)Platforms->Values[Platforms->Length - 1])->Y + slayRandom(-100, 100, i), 100, 30));
                         arrRemove(Platforms, 0);
@@ -125,7 +125,7 @@ uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms)
                 }
                 else if (Engine->CurrentScene == 2 && i < 4)
                 {
-                    for (uint64 j = 0; j < 4 - i; j++)
+                    for (uint8 j = 0; j < 4 - i; j++)
                     {
                         arrInsert(Platforms, 0, newPlatform(((platform*)Platforms->Values[0])->X - 200, ((platform*)Platforms->Values[0])->Y + slayRandom(-100, 100, i), 100, 30));
                         arrRemove(Platforms, Platforms->Length - 1);

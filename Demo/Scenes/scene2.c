@@ -30,7 +30,7 @@ uint16 renderScene2(slayEngine* Engine, scene2* Scene)
     slayRenderTextCamera(Engine, ((game*)Engine->Game)->FontCrazyPixel, "Jump: SPACE", -150, -70, 1, 0, slayFlipNONE, 0.5, 0, 0, 0, 255);
 
     //Platforms
-    for (uint64 i = 0; i < Scene->Platforms->Length; i++)
+    for (uint8 i = 0; i < Scene->Platforms->Length; i++)
     {
         slayRender3DTextureCamera(Engine, ((platform*)Scene->Platforms->Values[i])->X, ((platform*)Scene->Platforms->Values[i])->Y, ((platform*)Scene->Platforms->Values[i])->Width, ((platform*)Scene->Platforms->Values[i])->Height, 0, slayFlipNONE, 1.02, 0.04, 0.005, Scene->TexturePlatform, 255);
     }
@@ -104,12 +104,12 @@ uint16 unloadScene2(slayEngine* Engine)
     scene = Engine->Scenes->Values[2];
 
     //Pause
-    uint16 destroyPause(pause* Pause);
+    destroyPause(scene->Pause);
 
     //Level
     slayUnloadTexture(scene->TextureBackground);
     slayUnloadTexture(scene->TexturePlatform);
-    uint16 destroyPlatforms(array Platforms);
+    destroyPlatforms(scene->Platforms);
 
     //Player
     destroyPlayer(scene->Player);

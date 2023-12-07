@@ -2,7 +2,7 @@
 
 #undef main
 
-uint16 main(uint64 argc, char* *argv)
+uint16 main(uint8 argc, char* *argv)
 {
     slayEngine* Engine;
 

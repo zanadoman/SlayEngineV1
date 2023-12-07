@@ -54,7 +54,7 @@ uint16 renderPause(slayEngine* Engine, pause* Pause)
 {
     slayRenderColor(Engine, Pause->X, Pause->Y, Pause->Width, Pause->Height, Pause->ColorR, Pause->ColorG, Pause->ColorB, Pause->ColorA);
 
-    for (uint64 i = 0; i < Pause->Buttons->Length; i++)
+    for (uint8 i = 0; i < Pause->Buttons->Length; i++)
     {
         slayRenderTexture(Engine, ((button*)Pause->Buttons->Values[i])->X, ((button*)Pause->Buttons->Values[i])->Y, ((button*)Pause->Buttons->Values[i])->Width, ((button*)Pause->Buttons->Values[i])->Height, 0, slayFlipNONE, ((button*)Pause->Buttons->Values[i])->TextureCurrent, 255);
     }

@@ -18,7 +18,7 @@ uint16 renderScene0(slayEngine* Engine, scene0* Scene)
     slayRenderColor(Engine, 0, 0, Engine->Display->Width, Engine->Display->Height, Scene->ColorR, Scene->ColorG, Scene->ColorB, 255);
 
     //Button
-    for (uint64 i = 0; i < Scene->Buttons->Length; i++)
+    for (uint8 i = 0; i < Scene->Buttons->Length; i++)
     {
         slayRenderTexture(Engine, ((button*)Scene->Buttons->Values[i])->X, ((button*)Scene->Buttons->Values[i])->Y, ((button*)Scene->Buttons->Values[i])->Width, ((button*)Scene->Buttons->Values[i])->Height, 0, slayFlipNONE, ((button*)Scene->Buttons->Values[i])->TextureCurrent, 255);
     }
@@ -58,7 +58,7 @@ uint16 unloadScene0(slayEngine* Engine)
     scene = Engine->Scenes->Values[0];
 
     //Buttons
-    for (uint64 i = 0; i < scene->Buttons->Length; i++)
+    for (uint8 i = 0; i < scene->Buttons->Length; i++)
     {
         destroyButton(scene->Buttons->Values[i]);
     }
