@@ -14,6 +14,14 @@ logic slayKey(slayEngine* Engine, uint16 Key)
     {
         return Engine->Mouse->LMB;
     }
+    else if (Key == SDL_SCANCODE_WHEELUP)
+    {
+        return abs(Engine->Mouse->Wheel);
+    }
+    else if (Key == SDL_SCANCODE_WHEELDOWN)
+    {
+        return abs(Engine->Mouse->Wheel);
+    }
     else
     {
         return SDL_GetKeyboardState(NULL)[Key];

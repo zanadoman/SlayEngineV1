@@ -96,6 +96,9 @@ uint8 slayPlaySoundTicks(slaySound* Sound, sint16 Channel, uint8 Volume, uint8 L
 #define SDL_SCANCODE_LMB 513
 #define SDL_SCANCODE_MMB 514
 #define SDL_SCANCODE_RMB 515
+#define SDL_SCANCODE_WHEELUP 516
+#define SDL_SCANCODE_WHEELDOWN 517
+
 logic slayKey(slayEngine* Engine, uint16 Key);
 
 //Mouse______________________________________________________________
