@@ -1,5 +1,7 @@
 #!/bin/bash
 
+projectdir="$(pwd)"
+
 if [[ ! -z $1 && $1 == "-a" ]] || [[ ! -z $1 && $1 == "--all" ]]
 then
     cd Compiled
