@@ -26,7 +26,7 @@ slayFlipbook* slayNewFlipbook(slayEngine* Engine, uint64 Delay, uint64 Count, ch
     return result;
 }
 
-slayTexture* slayTurnFlipbook(slayEngine* Engine, slayFlipbook* Flipbook)
+slayTexture* slayTurnFlipbook(slayFlipbook* Flipbook)
 {
     if (Flipbook->Delay <= SDL_GetTicks() - Flipbook->PrevTick)
     {

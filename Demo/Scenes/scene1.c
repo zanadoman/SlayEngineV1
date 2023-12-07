@@ -13,6 +13,7 @@ uint16 updateScene1(slayEngine* Engine, scene1* Scene)
     slayThreadWaitExit(Engine, 0);
     slayThreadWaitExit(Engine, 1);
     //3
+    updateEagle(Engine, Scene->Eagle);
 
     return 0;
 }
@@ -48,6 +49,9 @@ uint16 renderScene1(slayEngine* Engine, scene1* Scene)
     {
         slayRenderTextureCamera(Engine, ((projectile*)Scene->Projectiles->Values[i])->X, ((projectile*)Scene->Projectiles->Values[i])->Y, ((projectile*)Scene->Projectiles->Values[i])->Width, ((projectile*)Scene->Projectiles->Values[i])->Height, ((projectile*)Scene->Projectiles->Values[i])->Angle, slayFlipNONE, 1, ((game*)Engine->Game)->TextureProjectile, 255);
     }
+
+    //Eagle
+    renderEagle(Engine, Scene->Eagle);
 
     //Player
     renderPlayer(Engine, Scene->Player);
@@ -119,6 +123,9 @@ uint16 loadScene1(slayEngine* Engine)
     scene->Player->MaxY = 600;
 
     slaySetCamera(Engine, &scene->Player->X, &scene->Player->Y, 33, 32, -960, -800, 1.5);
+
+    //Eagle
+    scene->Eagle = newEagle(Engine);
     
     //Projectiles
     scene->Projectiles = arrNew(0);
@@ -163,6 +170,9 @@ uint16 unloadScene1(slayEngine* Engine)
 
     //Player
     destroyPlayer(scene->Player);
+
+    //Eagle
+    destroyEagle(scene->Eagle);
 
     //Projectiles
     destroyProjectiles(scene->Projectiles);

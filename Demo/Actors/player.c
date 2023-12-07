@@ -192,11 +192,11 @@ uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms)
     //Flipbooks
     if (Player->AccelerationX == 0 && Player->AccelerationY == 0)
     {
-        Player->TextureCurrent = slayTurnFlipbook(Engine, Player->FlipbookIdle);
+        Player->TextureCurrent = slayTurnFlipbook(Player->FlipbookIdle);
     }
     else if (Player->AccelerationX != 0 && Player->AccelerationY == 0)
     {
-        Player->TextureCurrent = slayTurnFlipbook(Engine, Player->FlipbookRun);
+        Player->TextureCurrent = slayTurnFlipbook(Player->FlipbookRun);
     }
     else if (Player->AccelerationY < 0)
     {

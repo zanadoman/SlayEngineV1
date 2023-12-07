@@ -9,6 +9,7 @@ typedef struct scene1Struct scene1;
 typedef struct scene2Struct scene2;
 typedef struct platformStruct platform;
 typedef struct playerStruct player;
+typedef struct eagleStruct eagle;
 typedef struct projectileStruct projectile;
 typedef struct pauseStruct pause;
 
@@ -71,6 +72,7 @@ struct scene1Struct
     slayTexture* TexturePlatform;
 
     player* Player;
+    eagle* Eagle;
 
     array Projectiles;
 };
@@ -195,6 +197,27 @@ struct playerStruct
 player* newPlayer(slayEngine* Engine, uint64 KeyLeft, uint64 KeyRight, uint64 KeyJump, uint64 KeyFire);
 uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms);
 uint16 destroyPlayer(player* Player);
+
+//Eagle______________________________________________________________
+
+struct eagleStruct
+{
+    double X;
+    double Y;
+
+    uint16 Widht;
+    uint16 Height;
+
+    slayFlipbook* Flipbook;
+    slayTexture* TextureCurrent;
+    
+    slayHitbox* Hitbox;
+};
+
+eagle* newEagle(slayEngine* Engine);
+uint16 updateEagle(slayEngine* Engine, eagle* Eagle);
+uint16 renderEagle(slayEngine* Engine, eagle* Eagle);
+uint16 destroyEagle(eagle* Eagle);
 
 //Projectile_________________________________________________________
 
