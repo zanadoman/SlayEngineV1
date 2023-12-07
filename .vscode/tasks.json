@@ -5,17 +5,17 @@
             "type": "shell",
             "command": "./build.sh",
             "problemMatcher": [],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
+            "group": "build"
         },
         {
             "label": "build-all",
             "type": "shell",
             "command": "./build.sh --all",
             "problemMatcher": [],
-            "group": "build"
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
         }
     ]
 }

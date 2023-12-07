@@ -55,6 +55,21 @@ uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms)
     logic falling;
     double zoom;
 
+    /*double angle;
+    slayVectorAngle(Player->X + Player->ProjectileRelativeX, Player->Y + Player->ProjectileRelativeY, Engine->Mouse->X, Engine->Mouse->Y, &angle);
+    for (uint64 i = 0; i < Platforms->Length; i++)
+    {
+        if (slayVectorRayCast(Player->X + Player->ProjectileRelativeX, Player->Y + Player->ProjectileRelativeY, Engine->Mouse->X, Engine->Mouse->Y, angle, ((platform*)Platforms->Values[i])->Hitbox) != -1)
+        {
+            printf("False\n");
+            break;
+        }
+        if (i == Platforms->Length - 1)
+        {
+            printf("True\n");
+        }
+    }*/
+
     //Horizontal movement
     if (slayKey(Engine, Player->KeyLeft))
     {

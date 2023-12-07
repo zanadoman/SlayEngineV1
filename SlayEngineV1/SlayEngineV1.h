@@ -125,6 +125,7 @@ logic slayCursorCollisionCamera(slayEngine* Engine, slayHitbox* Hitbox, double D
 uint16 slayVectorLength(double X1, double Y1, double X2, double Y2, double* Length);
 uint16 slayVectorTranslate(double X1, double Y1, double* X2, double* Y2, double Length, double Angle);
 uint16 slayVectorAngle(double X1, double Y1, double X2, double Y2, double* Angle);
+double slayVectorRayCast(double SourceX, double SourceY, double TargetX, double TargetY, double Angle, slayHitbox* Obstacle);
 
 //Hitbox_____________________________________________________________
 
