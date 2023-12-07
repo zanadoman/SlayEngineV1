@@ -49,8 +49,8 @@ logic slayVectorRayCast(double SourceX, double SourceY, double TargetX, double T
 
     while (slayCollision(RayHitbox, Obstacle) == 0)
     {
-        slayVectorTranslate(SourceX, SourceY, &SourceX, &SourceY, 1, RayAngle);
-        RayLength--;
+        slayVectorTranslate(SourceX, SourceY, &SourceX, &SourceY, 3, RayAngle);
+        RayLength -= 3;
 
         if (RayLength <= 0)
         {

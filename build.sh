@@ -4,28 +4,26 @@ projectdir="$(pwd)"
 
 if [[ ! -z $1 && $1 == "-a" ]] || [[ ! -z $1 && $1 == "--all" ]]
 then
-    cd Compiled
-    rm *.o
-    gcc -c ../Demo/*.c ../Demo/Actors/*.c ../Demo/Scenes/*.c ../SlayEngineV1/*.c ../SlayEngineV1/NeoTypes/*.c
+    rm Compiled/*.o
+    gcc -c Demo/*.c Demo/Actors/*.c Demo/Scenes/*.c SlayEngineV1/*.c SlayEngineV1/NeoTypes/*.c
     if [ $? != 0 ]
     then
         echo "Re-compilation failed!"
         exit 1
     fi
-    cd ..
+    mv *.o Compiled
     echo "Re-compilation successful!"
 else
-    git diff --name-only | grep .c 1> /dev/null
+    git diff --name-only | grep "\.c" 1> /dev/null
     if [ $? == 0 ]
     then
-        cd Compiled
-        gcc -c ../$(git diff --name-only | grep .c)
+        gcc -c $(git diff --name-only | grep "\.c")
         if [ $? != 0 ]
         then
             echo "Pre-compilation failed!"
             exit 1
         fi
-        cd ..
+        mv *.o Compiled
         echo "Pre-compilation successful!"
     else
         echo "Pre-compilation skipped!"

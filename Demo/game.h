@@ -209,7 +209,7 @@ struct eagleStruct
     double MinX;
     double MaxX;
 
-    uint16 Widht;
+    uint16 Width;
     uint16 Height;
 
     double Speed;

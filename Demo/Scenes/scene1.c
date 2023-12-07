@@ -127,6 +127,10 @@ uint16 loadScene1(slayEngine* Engine)
 
     //Eagle
     scene->Eagle = newEagle(Engine);
+    scene->Eagle->X = 370;
+    scene->Eagle->Y = 50;
+    scene->Eagle->MinX = -200;
+    scene->Eagle->MaxX = 1000;
     
     //Projectiles
     scene->Projectiles = arrNew(0);
