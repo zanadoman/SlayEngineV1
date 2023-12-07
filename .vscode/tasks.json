@@ -3,7 +3,19 @@
         {
             "label": "build",
             "type": "shell",
-            "command": "./build.sh"
+            "command": "./build.sh",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "build-all",
+            "type": "shell",
+            "command": "./build.sh --all",
+            "problemMatcher": [],
+            "group": "build"
         }
     ]
 }

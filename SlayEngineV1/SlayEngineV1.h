@@ -42,7 +42,7 @@ struct slayDisplayStruct
     SDL_Event Event;
 };
 
-slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Scenes, uint64 Threads, uint16 MaxFPS);
+slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Scenes, uint64 Threads, uint16 MaxFPS, char* IconPath);
 uint16 slayLogo();
 
 //Control____________________________________________________________

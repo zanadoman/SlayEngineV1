@@ -2,9 +2,11 @@
 
 uint16 slayLogo(slayEngine* Engine);
 
-slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Scenes, uint64 Threads, uint16 MaxFPS)
+slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Scenes, uint64 Threads, uint16 MaxFPS, char* IconPath)
 {
     slayEngine* result;
+
+    SDL_Surface* icon;
 
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
     TTF_Init();
@@ -19,6 +21,20 @@ slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Scene
     result->Display->Renderer = SDL_CreateRenderer(result->Display->Window, -1, SDL_RENDERER_ACCELERATED);  
     SDL_RenderSetLogicalSize(result->Display->Renderer, Width, Height);
     SDL_SetRenderDrawBlendMode(result->Display->Renderer, SDL_BLENDMODE_BLEND);
+
+    if (IconPath != NULL)
+    {
+        icon = IMG_Load(IconPath);
+        if (icon != NULL)
+        {
+            SDL_SetWindowIcon(result->Display->Window, icon);
+            SDL_FreeSurface(icon);
+        }
+        else
+        {
+            printf("ERROR Unable to load icon: %s\n", IconPath);
+        }
+    }
 
     result->Camera = malloc(sizeof(slayCamera));
     result->Mouse = malloc(sizeof(slayMouse));

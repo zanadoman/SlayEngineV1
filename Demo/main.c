@@ -6,7 +6,7 @@ uint16 main(uint64 argc, char* *argv)
 {
     slayEngine* Engine;
 
-    Engine = slayNewEngine("SlayEngineV1 DEMO", 1920, 1080, 2, 2, 165);
+    Engine = slayNewEngine("SlayEngineV1 DEMO", 1920, 1080, 2, 2, 165, "assets/icon.png");
     loadGame(Engine);
 
     loadScene0(Engine);
