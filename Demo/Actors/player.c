@@ -208,7 +208,7 @@ uint16 updatePlayer(slayEngine* Engine, player* Player, array Platforms)
     }
 
     //Respawning
-    if (!Player->Alive && slayGetTicks() > Player->DeathTick + Player->RespawnTime)
+    if (!Player->Alive && Player->RespawnTime <= slayGetTicks() - Player->DeathTick)
     {
         Player->Alive = true;
     }

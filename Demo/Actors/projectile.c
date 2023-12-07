@@ -35,8 +35,15 @@ uint16 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, e
     uint8 collision;
     logic destroyed;
 
-    playerProjectile(Engine, Projectiles, Player, SoundFire, ((game*)Engine->Game)->Volume);
-    eagleProjectile(Engine, Projectiles, Eagle, Player, Platforms, SoundFire, ((game*)Engine->Game)->Volume);
+    //Actor shooting
+    if (Player->Alive)
+    {
+        playerProjectile(Engine, Projectiles, Player, SoundFire, ((game*)Engine->Game)->Volume);
+    }
+    if (Eagle->Alive)
+    {
+        eagleProjectile(Engine, Projectiles, Eagle, Player, Platforms, SoundFire, ((game*)Engine->Game)->Volume);
+    }
 
     for (uint16 i = 0; i < Projectiles->Length; i++)
     {
@@ -112,7 +119,7 @@ uint16 playerProjectile(slayEngine* Engine, array Projectiles, player* Player, s
     slayObject object;
     double angle;
 
-    if (Player->Alive && slayKey(Engine, Player->KeyFire) && slayGetTicks() > Player->ReloadTick + Player->ReloadTime)
+    if (slayKey(Engine, Player->KeyFire) && Player->ReloadTime < slayGetTicks() - Player->ReloadTick)
     {
         slayApplyCamera(Engine, &object, Player->X + Player->CenterX, Player->Y + Player->CenterY, 0, 0, 1);
         slayVectorAngle(object.x, object.y, Engine->Mouse->X, Engine->Mouse->Y, &angle);
@@ -134,7 +141,7 @@ uint16 eagleProjectile(slayEngine* Engine, array Projectiles, eagle* Eagle, play
 
     slayVectorLength(Eagle->X + Eagle->Width / 2, Eagle->Y + Eagle->Height / 2, Player->X + Player->CenterX, Player->Y + Player->CenterY, &length);
     slayVectorAngle(Eagle->X + Eagle->Width / 2, Eagle->Y + Eagle->Height / 2, Player->X + Player->CenterX, Player->Y + Player->CenterY, &angle);
-    if (Eagle->Alive && slayGetTicks() - Eagle->ReloadTick >= Eagle->ReloadTime && length <= Eagle->AttackRange && ((Eagle->Facing == -1 && 90 < angle && angle < 270) || (Eagle->Facing == 1 && (270 < angle || angle < 90))))
+    if (length <= Eagle->AttackRange && Eagle->ReloadTime < slayGetTicks() - Eagle->ReloadTick && ((Eagle->Facing == -1 && 90 < angle && angle < 270) || (Eagle->Facing == 1 && (270 < angle || angle < 90))))
     {
         for (uint16 i = 0; i <  Platforms->Length; i++)
         {

@@ -55,7 +55,7 @@ uint16 updateEagle(slayEngine* Engine, eagle* Eagle)
     }
 
     //Respawning
-    if (!Eagle->Alive && slayGetTicks() - Eagle->DeathTick > Eagle->RespawnTime)
+    if (!Eagle->Alive && Eagle->RespawnTime <= slayGetTicks() - Eagle->DeathTick)
     {
         Eagle->Alive = true;
         Eagle->FlipbookDying->Current = 0;
