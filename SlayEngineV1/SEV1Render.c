@@ -19,7 +19,7 @@ slayTexture* slayLoadTexture(slayEngine* Engine, char* Path)
     return result;
 }
 
-slayFont* slayLoadFont(char* Path, int Size)
+slayFont* slayLoadFont(char* Path, uint8 Size)
 {
     TTF_Font* result;
 

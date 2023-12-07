@@ -70,7 +70,7 @@ uint16 slayCapFPS(slayEngine* Engine)
     return 0;
 }
 
-sint64 slayRandom(uint64 Min, uint64 Max, double Seed)
+sint64 slayRandom(sint64 Min, sint64 Max, double Seed)
 {
     return (sint64)round(SDL_GetTicks() / Seed) % (Max - Min) + Min;
 }

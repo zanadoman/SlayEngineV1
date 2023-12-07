@@ -51,7 +51,7 @@ uint16 slayLogo();
 logic slayEvent(slayEngine* Engine);
 uint16 slayUpdateDeltaTime(slayEngine* Engine);
 uint16 slayCapFPS(slayEngine* Engine);
-sint64 slayRandom(uint64 Min, uint64 Max, double Seed);
+sint64 slayRandom(sint64 Min, sint64 Max, double Seed);
 
 //Render_____________________________________________________________
 
@@ -65,7 +65,7 @@ sint64 slayRandom(uint64 Min, uint64 Max, double Seed);
 
 slayTexture* slayLoadTexture(slayEngine* Engine, char* Path);
 #define slayUnloadTexture SDL_DestroyTexture
-slayFont* slayLoadFont(char* Path, int Size);
+slayFont* slayLoadFont(char* Path, uint8 Size);
 #define slayUnloadFont TTF_CloseFont
 
 uint16 slayRenderStart(slayEngine* Engine);
@@ -90,14 +90,14 @@ uint16 slayRender3DTextCamera(slayEngine* Engine, slayFont* Font, char* Characte
 slaySound* slayLoadSound(char* Path);
 #define slayUnloadSound Mix_FreeChunk
 uint16 slayPlaySound(slaySound* Sound, sint16 Channel, uint8 Volume, uint8 Left, uint8 Right, sint16 Loops);
-uint16 slayPlaySoundTicks(slaySound* Sound, sint16 Channel, uint8 Volume, uint8 Left, uint8 Right, sint16 Loops, uint64 Ticks);
+uint16 slayPlaySoundTicks(slaySound* Sound, sint16 Channel, uint8 Volume, uint8 Left, uint8 Right, sint16 Loops, uint32 Ticks);
 
 //Inputs_____________________________________________________________
 
 #define SDL_SCANCODE_LMB 513
 #define SDL_SCANCODE_MMB 514
 #define SDL_SCANCODE_RMB 515
-uint8 slayKey(slayEngine* Engine, uint64 Key);
+uint8 slayKey(slayEngine* Engine, uint16 Key);
 
 //Mouse______________________________________________________________
 
@@ -190,6 +190,6 @@ struct flipbookStruct
     uint64 Count;
 };
 
-slayFlipbook* slayNewFlipbook(slayEngine* Engine, uint64 Delay, uint64 Count, char* Paths, ...);
+slayFlipbook* slayNewFlipbook(slayEngine* Engine, uint32 Delay, uint64 Count, char* Paths, ...);
 slayTexture* slayTurnFlipbook(slayFlipbook* Flipbook);
 uint16 slayDestroyFlipbook(slayFlipbook* Flipbook);

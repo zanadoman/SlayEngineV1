@@ -1,6 +1,6 @@
 #include "SlayEngineV1.h"
 
-slayFlipbook* slayNewFlipbook(slayEngine* Engine, uint64 Delay, uint64 Count, char* Paths, ...)
+slayFlipbook* slayNewFlipbook(slayEngine* Engine, uint32 Delay, uint64 Count, char* Paths, ...)
 {
     slayFlipbook* result;
     

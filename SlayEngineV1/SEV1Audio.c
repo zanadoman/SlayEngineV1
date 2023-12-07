@@ -23,7 +23,7 @@ uint16 slayPlaySound(slaySound* Sound, sint16 Channel, uint8 Volume, uint8 Left,
     return 0;
 }
 
-uint16 slayPlaySoundTicks(slaySound* Sound, sint16 Channel, uint8 Volume, uint8 Left, uint8 Right, sint16 Loops, uint64 Ticks)
+uint16 slayPlaySoundTicks(slaySound* Sound, sint16 Channel, uint8 Volume, uint8 Left, uint8 Right, sint16 Loops, uint32 Ticks)
 {
     Mix_VolumeChunk(Sound, Volume);
     Mix_SetPanning(Channel, Left, Right);
