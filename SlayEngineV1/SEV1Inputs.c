@@ -1,6 +1,6 @@
 #include "SlayEngineV1.h"
 
-uint8 slayKey(slayEngine* Engine, uint16 Key)
+logic slayKey(slayEngine* Engine, uint16 Key)
 {
     if (Key == SDL_SCANCODE_RMB)
     {

@@ -14,7 +14,7 @@ slaySound* slayLoadSound(char* Path)
     return result;
 }
 
-uint16 slayPlaySound(slaySound* Sound, sint16 Channel, uint8 Volume, uint8 Left, uint8 Right, sint16 Loops)
+uint8 slayPlaySound(slaySound* Sound, sint16 Channel, uint8 Volume, uint8 Left, uint8 Right, sint16 Loops)
 {
     Mix_VolumeChunk(Sound, Volume);
     Mix_PlayChannel(Channel, Sound, Loops);
@@ -23,7 +23,7 @@ uint16 slayPlaySound(slaySound* Sound, sint16 Channel, uint8 Volume, uint8 Left,
     return 0;
 }
 
-uint16 slayPlaySoundTicks(slaySound* Sound, sint16 Channel, uint8 Volume, uint8 Left, uint8 Right, sint16 Loops, uint32 Ticks)
+uint8 slayPlaySoundTicks(slaySound* Sound, sint16 Channel, uint8 Volume, uint8 Left, uint8 Right, sint16 Loops, uint32 Ticks)
 {
     Mix_VolumeChunk(Sound, Volume);
     Mix_SetPanning(Channel, Left, Right);

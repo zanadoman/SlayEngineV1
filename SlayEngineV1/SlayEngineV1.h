@@ -43,14 +43,13 @@ struct slayDisplayStruct
 };
 
 slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Scenes, uint64 Threads, uint16 MaxFPS, char* IconPath);
-uint16 slayLogo();
 
 //Control____________________________________________________________
 
 #define slayGetTicks SDL_GetTicks
 logic slayEvent(slayEngine* Engine);
-uint16 slayUpdateDeltaTime(slayEngine* Engine);
-uint16 slayCapFPS(slayEngine* Engine);
+uint8 slayUpdateDeltaTime(slayEngine* Engine);
+uint8 slayCapFPS(slayEngine* Engine);
 sint64 slayRandom(sint64 Min, sint64 Max, double Seed);
 
 //Render_____________________________________________________________
@@ -68,20 +67,20 @@ slayTexture* slayLoadTexture(slayEngine* Engine, char* Path);
 slayFont* slayLoadFont(char* Path, uint8 Size);
 #define slayUnloadFont TTF_CloseFont
 
-uint16 slayRenderStart(slayEngine* Engine);
-uint16 slayRenderEnd(slayEngine* Engine);
+uint8 slayRenderStart(slayEngine* Engine);
+uint8 slayRenderEnd(slayEngine* Engine);
 
-uint16 slayRenderColor(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA);
-uint16 slayRenderColorCamera(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, double Distance, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA);
-uint16 slayRender3DColorCamera(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, double FirstLayer, double Depth, double Quality, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA);
+uint8 slayRenderColor(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA);
+uint8 slayRenderColorCamera(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, double Distance, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA);
+uint8 slayRender3DColorCamera(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, double FirstLayer, double Depth, double Quality, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA);
 
-uint16 slayRenderTexture(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, double Angle, uint8 Flip, slayTexture* Texture, uint8 Alpha);
-uint16 slayRenderTextureCamera(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, double Angle, uint8 Flip, double Distance, slayTexture* Texture, uint8 Alpha);
-uint16 slayRender3DTextureCamera(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, double Angle, uint8 Flip, double FirstLayer, double Depth, double Quality, slayTexture* Texture, uint8 Alpha);
+uint8 slayRenderTexture(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, double Angle, uint8 Flip, slayTexture* Texture, uint8 Alpha);
+uint8 slayRenderTextureCamera(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, double Angle, uint8 Flip, double Distance, slayTexture* Texture, uint8 Alpha);
+uint8 slayRender3DTextureCamera(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, double Angle, uint8 Flip, double FirstLayer, double Depth, double Quality, slayTexture* Texture, uint8 Alpha);
 
-uint16 slayRenderText(slayEngine* Engine, slayFont* Font, char* Characters, double X, double Y, double Size, double Angle, uint8 Flip, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA);
-uint16 slayRenderTextCamera(slayEngine* Engine, slayFont* Font, char* Characters, double X, double Y, double Size, double Angle, uint8 Flip, double Distance, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA);
-uint16 slayRender3DTextCamera(slayEngine* Engine, slayFont* Font, char* Characters, double X, double Y, double Size, double Angle, uint8 Flip, double FirstLayer, double Depth, double Quality, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA);
+uint8 slayRenderText(slayEngine* Engine, slayFont* Font, char* Characters, double X, double Y, double Size, double Angle, uint8 Flip, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA);
+uint8 slayRenderTextCamera(slayEngine* Engine, slayFont* Font, char* Characters, double X, double Y, double Size, double Angle, uint8 Flip, double Distance, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA);
+uint8 slayRender3DTextCamera(slayEngine* Engine, slayFont* Font, char* Characters, double X, double Y, double Size, double Angle, uint8 Flip, double FirstLayer, double Depth, double Quality, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA);
 
 //Audio______________________________________________________________
 
@@ -89,15 +88,15 @@ uint16 slayRender3DTextCamera(slayEngine* Engine, slayFont* Font, char* Characte
 #define slayStopSound Mix_HaltChannel
 slaySound* slayLoadSound(char* Path);
 #define slayUnloadSound Mix_FreeChunk
-uint16 slayPlaySound(slaySound* Sound, sint16 Channel, uint8 Volume, uint8 Left, uint8 Right, sint16 Loops);
-uint16 slayPlaySoundTicks(slaySound* Sound, sint16 Channel, uint8 Volume, uint8 Left, uint8 Right, sint16 Loops, uint32 Ticks);
+uint8 slayPlaySound(slaySound* Sound, sint16 Channel, uint8 Volume, uint8 Left, uint8 Right, sint16 Loops);
+uint8 slayPlaySoundTicks(slaySound* Sound, sint16 Channel, uint8 Volume, uint8 Left, uint8 Right, sint16 Loops, uint32 Ticks);
 
 //Inputs_____________________________________________________________
 
 #define SDL_SCANCODE_LMB 513
 #define SDL_SCANCODE_MMB 514
 #define SDL_SCANCODE_RMB 515
-uint8 slayKey(slayEngine* Engine, uint16 Key);
+logic slayKey(slayEngine* Engine, uint16 Key);
 
 //Mouse______________________________________________________________
 
@@ -114,17 +113,17 @@ struct slayMouseStruct
 };
 
 #define slayMouseRelative SDL_SetRelativeMouseMode
-uint16 slayMouseMovement(slayEngine* Engine);
-uint16 slayMouseButtons(slayEngine* Engine);
+uint8 slayMouseMovement(slayEngine* Engine);
+uint8 slayMouseButtons(slayEngine* Engine);
 logic slayCursorCollision(slayEngine* Engine, slayHitbox* Hitbox);
 logic slayCursorCollisionCamera(slayEngine* Engine, slayHitbox* Hitbox, double Distance);
 
 //Vector_____________________________________________________________
 
 #define PI 3.141592653589793
-uint16 slayVectorLength(double X1, double Y1, double X2, double Y2, double* Length);
-uint16 slayVectorTranslate(double X1, double Y1, double* X2, double* Y2, double Length, double Angle);
-uint16 slayVectorAngle(double X1, double Y1, double X2, double Y2, double* Angle);
+uint8 slayVectorLength(double X1, double Y1, double X2, double Y2, double* Length);
+uint8 slayVectorTranslate(double X1, double Y1, double* X2, double* Y2, double Length, double Angle);
+uint8 slayVectorAngle(double X1, double Y1, double X2, double Y2, double* Angle);
 logic slayVectorRayCast(double SourceX, double SourceY, double TargetX, double TargetY, slayHitbox* Obstacle);
 
 //Hitbox_____________________________________________________________
@@ -168,14 +167,14 @@ struct slayCameraStruct
     double Zoom;
 };
 
-uint16 slaySetCamera(slayEngine* Engine, double* OriginX, double* OriginY, double CenterX, double CenterY, double RelativeX, double RelativeY, double Zoom);
-uint16 slayApplyCamera(slayEngine* Engine, slayObject* Object, double X, double Y, uint16 Width, uint16 Height, double Distance);
+uint8 slaySetCamera(slayEngine* Engine, double* OriginX, double* OriginY, double CenterX, double CenterY, double RelativeX, double RelativeY, double Zoom);
+uint8 slayApplyCamera(slayEngine* Engine, slayObject* Object, double X, double Y, uint16 Width, uint16 Height, double Distance);
 
 //Thread_____________________________________________________________
 
 #define slayThreadExit pthread_exit(NULL)
-uint16 slayThreadStart(slayEngine* Engine, uint64 ID, void* Function);
-uint16 slayThreadWaitExit(slayEngine* Engine, uint64 ID);
+uint8 slayThreadStart(slayEngine* Engine, uint64 ID, void* Function);
+uint8 slayThreadWaitExit(slayEngine* Engine, uint64 ID);
 
 //Flipbook___________________________________________________________
 
@@ -192,4 +191,4 @@ struct flipbookStruct
 
 slayFlipbook* slayNewFlipbook(slayEngine* Engine, uint32 Delay, uint64 Count, char* Paths, ...);
 slayTexture* slayTurnFlipbook(slayFlipbook* Flipbook);
-uint16 slayDestroyFlipbook(slayFlipbook* Flipbook);
+uint8 slayDestroyFlipbook(slayFlipbook* Flipbook);

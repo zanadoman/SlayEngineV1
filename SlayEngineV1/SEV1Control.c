@@ -45,7 +45,7 @@ logic slayEvent(slayEngine* Engine)
     return true;
 }
 
-uint16 slayUpdateDeltaTime(slayEngine* Engine)
+uint8 slayUpdateDeltaTime(slayEngine* Engine)
 {
     Engine->DeltaTime = SDL_GetTicks() - Engine->PrevTick;
     if (Engine->DeltaTime > 40)
@@ -57,7 +57,7 @@ uint16 slayUpdateDeltaTime(slayEngine* Engine)
     return 0;
 }
 
-uint16 slayCapFPS(slayEngine* Engine)
+uint8 slayCapFPS(slayEngine* Engine)
 {
     sint64 delay;
 

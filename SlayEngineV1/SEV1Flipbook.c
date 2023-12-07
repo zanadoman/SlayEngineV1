@@ -50,7 +50,7 @@ slayTexture* slayTurnFlipbook(slayFlipbook* Flipbook)
     return Flipbook->Textures[Flipbook->Current];
 }
 
-uint16 slayDestroyFlipbook(slayFlipbook* Flipbook)
+uint8 slayDestroyFlipbook(slayFlipbook* Flipbook)
 {
     for (uint64 i = 0; i < Flipbook->Count; i++)
     {

@@ -1,6 +1,6 @@
 #include "SlayEngineV1.h"
 
-uint16 slayLogo(slayEngine* Engine);
+uint8 slayLogo(slayEngine* Engine);
 
 slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Scenes, uint64 Threads, uint16 MaxFPS, char* IconPath)
 {
@@ -63,7 +63,7 @@ slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Scene
     return result;
 }
 
-uint16 slayLogo(slayEngine* Engine)
+uint8 slayLogo(slayEngine* Engine)
 {
     SDL_Texture* logo;
 

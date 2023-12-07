@@ -1,13 +1,13 @@
 #include "SlayEngineV1.h"
 
-uint16 slayMouseMovement(slayEngine* Engine)
+uint8 slayMouseMovement(slayEngine* Engine)
 {
     SDL_GetRelativeMouseState(&Engine->Mouse->MovementX, &Engine->Mouse->MovementY);
 
     return 0;
 }
 
-uint16 slayMouseButtons(slayEngine* Engine)
+uint8 slayMouseButtons(slayEngine* Engine)
 {
     uint32 MouseState;
 
