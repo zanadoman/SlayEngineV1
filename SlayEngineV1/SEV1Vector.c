@@ -39,24 +39,22 @@ double slayVectorRayCast(double SourceX, double SourceY, double TargetX, double 
 {
     double result;
 
-    double RayX, RayY;
     double RayLength;
     slayHitbox* RayHitbox;
 
-    RayX = SourceX;
-    RayY = SourceY;
     slayVectorLength(SourceX, SourceY, TargetX, TargetY, &RayLength);
-    RayHitbox = slayNewHitbox(&RayX, &RayY, 0, 0, 0, 0);
+    RayHitbox = slayNewHitbox(&SourceX, &SourceY, 0, 0, 0, 0);
     while (slayCollision(RayHitbox, Obstacle) == 0)
     {
-        slayVectorTranslate(RayX, RayY, &RayX, &RayY, 3, Angle);
+        slayVectorTranslate(SourceX, SourceY, &SourceX, &SourceY, 3, Angle);
 
-        slayVectorLength(RayX, RayY, TargetX, TargetY, &result);
+        slayVectorLength(SourceX, SourceY, TargetX, TargetY, &result);
         if (RayLength <= result)
         {
             return -1;
         }
     }
+    free(RayHitbox);
 
     return result;
 }
