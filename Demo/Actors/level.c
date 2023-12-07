@@ -17,7 +17,7 @@ platform* newPlatform(double X, double Y, uint16 Width, uint16 Height)
     return result;
 }
 
-uint16 destroyPlatforms(array Platforms)
+uint8 destroyPlatforms(array Platforms)
 {
     for (uint16 i = 0; i < Platforms->Length; i++)
     {

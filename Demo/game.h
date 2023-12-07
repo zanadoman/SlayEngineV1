@@ -128,7 +128,7 @@ struct platformStruct
 };
 
 platform* newPlatform(double X, double Y, uint16 Width, uint16 Height);
-uint16 destroyPlatforms(array Platforms);
+uint8 destroyPlatforms(array Platforms);
 
 //Button_____________________________________________________________
 
