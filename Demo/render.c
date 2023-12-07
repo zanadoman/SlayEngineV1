@@ -40,11 +40,11 @@ uint16 renderEagle(slayEngine* Engine, eagle* Eagle)
 {
     if (Eagle->Facing == 1)
     {
-        slayRenderTextureCamera(Engine, Eagle->X, Eagle->Y, Eagle->Widht, Eagle->Height, 0, slayFlipHORIZONTAL, 1, Eagle->TextureCurrent, 255);
+        slayRenderTextureCamera(Engine, Eagle->X, Eagle->Y, Eagle->Width, Eagle->Height, 0, slayFlipHORIZONTAL, 1, Eagle->TextureCurrent, 255);
     }
     else
     {
-        slayRenderTextureCamera(Engine, Eagle->X, Eagle->Y, Eagle->Widht, Eagle->Height, 0, slayFlipNONE, 1, Eagle->TextureCurrent, 255);
+        slayRenderTextureCamera(Engine, Eagle->X, Eagle->Y, Eagle->Width, Eagle->Height, 0, slayFlipNONE, 1, Eagle->TextureCurrent, 255);
     }
 
     return 0;

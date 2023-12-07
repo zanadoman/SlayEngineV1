@@ -11,6 +11,7 @@ eagle* newEagle(slayEngine* Engine)
 
     result->Speed = 0.2;
     result->Facing = 1;
+    result->AttackRange = 400;
     result->ReloadTime = 200;
     result->ReloadTick = 0;
 

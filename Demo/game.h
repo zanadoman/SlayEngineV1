@@ -222,6 +222,7 @@ struct eagleStruct
 
     double Speed;
     double Facing;
+    double AttackRange;
     uint64 ReloadTime;
     uint64 ReloadTick;
 
