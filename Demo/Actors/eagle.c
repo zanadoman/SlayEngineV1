@@ -7,7 +7,7 @@ eagle* newEagle(slayEngine* Engine)
     result = malloc(sizeof(eagle));
 
     result->X = 200;
-    result->Y = 200;
+    result->Y = 50;
 
     result->MinX = 0;
     result->MaxX = 800;
