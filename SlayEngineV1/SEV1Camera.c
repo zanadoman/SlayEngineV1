@@ -17,10 +17,13 @@ uint8 slaySetCamera(slayEngine* Engine, double* OriginX, double* OriginY, double
 
 uint8 slayApplyCamera(slayEngine* Engine, slayObject* Object, double X, double Y, uint16 Width, uint16 Height, double Distance)
 {
-    Object->x = (sint32)round((X - (*Engine->Camera->OriginX + Engine->Camera->CenterX + (Engine->Camera->RelativeX / (Engine->Camera->Zoom * Distance)))) * (Engine->Camera->Zoom * Distance));
-    Object->y = (sint32)round((Y - (*Engine->Camera->OriginY + Engine->Camera->CenterY + (Engine->Camera->RelativeY / (Engine->Camera->Zoom * Distance)))) * (Engine->Camera->Zoom * Distance));
-    Object->w = Width * (Engine->Camera->Zoom * Distance);
-    Object->h = Height * (Engine->Camera->Zoom * Distance);
+    double cache;
+
+    cache = Engine->Camera->Zoom * Distance;
+    Object->x = (sint32)round((X - (*Engine->Camera->OriginX + Engine->Camera->CenterX + (Engine->Camera->RelativeX / cache))) * cache);
+    Object->y = (sint32)round((Y - (*Engine->Camera->OriginY + Engine->Camera->CenterY + (Engine->Camera->RelativeY / cache))) * cache);
+    Object->w = Width * cache;
+    Object->h = Height * cache;
 
     return 0;
 }
