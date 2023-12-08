@@ -131,6 +131,20 @@ logic slayVectorRayCast(double SourceX, double SourceY, double TargetX, double T
 
 //Hitbox_____________________________________________________________
 
+typedef enum
+{
+    slayCollNONE = 0,
+    slayCollTOP = 3,
+    slayCollRIGHT = 10,
+    slayCollBOTTOM = 12,
+    slayCollLEFT = 5,
+    slayCollTOPLEFT = 1,
+    slayCollTOPRIGHT = 2,
+    slayCollBOTTOMLEFT = 4,
+    slayCollBOTTOMRIGHT = 8,
+    slayCollALL = 15
+} slayColls;
+
 struct slayHitboxStruct
 {
     double* ObjectX;
@@ -141,18 +155,8 @@ struct slayHitboxStruct
     sint32 LowerRightY;
 };
 
-#define slayCollTOP 3
-#define slayCollRIGHT 10
-#define slayCollBOTTOM 12
-#define slayCollLEFT 5
-#define slayCollTOPLEFT 1
-#define slayCollTOPRIGHT 2
-#define slayCollBOTTOMLEFT 4
-#define slayCollBOTTOMRIGHT 8
-#define slayCollALL 15
-
 slayHitbox* slayNewHitbox(double* ObjectX, double* ObjectY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY);
-uint8 slayCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2);
+slayColls slayCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2);
 
 //Camera_____________________________________________________________
 

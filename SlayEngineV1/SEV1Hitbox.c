@@ -16,9 +16,9 @@ slayHitbox* slayNewHitbox(double* ObjectX, double* ObjectY, sint32 UpperLeftX, s
     return result;
 }
 
-uint8 slayCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2)
+slayColls slayCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2)
 {
-    uint8 result;
+    slayColls result;
 
     double Hitbox1UpperLeftX;
     double Hitbox1UpperLeftY;
@@ -43,19 +43,19 @@ uint8 slayCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2)
     result = 0;
     if (((Hitbox1UpperLeftX <= Hitbox2LowerRightX && Hitbox2LowerRightX <= Hitbox1LowerRightX) && (Hitbox1UpperLeftY <= Hitbox2LowerRightY && Hitbox2LowerRightY <= Hitbox1LowerRightY)) || ((Hitbox2UpperLeftX <= Hitbox1UpperLeftX && Hitbox1UpperLeftX <= Hitbox2LowerRightX) && (Hitbox2UpperLeftY <= Hitbox1UpperLeftY && Hitbox1UpperLeftY <= Hitbox2LowerRightY)))
     {
-        result = result | 1;
+        result = result | slayCollTOPLEFT;
     }
     if (((Hitbox1UpperLeftX <= Hitbox2UpperLeftX && Hitbox2UpperLeftX <= Hitbox1LowerRightX) && (Hitbox1UpperLeftY <= Hitbox2LowerRightY && Hitbox2LowerRightY <= Hitbox1LowerRightY)) || ((Hitbox2UpperLeftX <= Hitbox1LowerRightX && Hitbox1LowerRightX <= Hitbox2LowerRightX) && (Hitbox2UpperLeftY <= Hitbox1UpperLeftY && Hitbox1UpperLeftY <= Hitbox2LowerRightY)))
     {
-        result = result | 2;
+        result = result | slayCollTOPRIGHT;
     }
     if (((Hitbox1UpperLeftX <= Hitbox2LowerRightX && Hitbox2LowerRightX <= Hitbox1LowerRightX) && (Hitbox1UpperLeftY <= Hitbox2UpperLeftY && Hitbox2UpperLeftY <= Hitbox1LowerRightY)) || ((Hitbox2UpperLeftX <= Hitbox1UpperLeftX && Hitbox1UpperLeftX <= Hitbox2LowerRightX) && (Hitbox2UpperLeftY <= Hitbox1LowerRightY && Hitbox1LowerRightY <= Hitbox2LowerRightY)))
     {
-        result = result | 4;
+        result = result | slayCollBOTTOMLEFT;
     }
     if (((Hitbox1UpperLeftX <= Hitbox2UpperLeftX && Hitbox2UpperLeftX <= Hitbox1LowerRightX) && (Hitbox1UpperLeftY <= Hitbox2UpperLeftY && Hitbox2UpperLeftY <= Hitbox1LowerRightY)) || ((Hitbox2UpperLeftX <= Hitbox1LowerRightX && Hitbox1LowerRightX <= Hitbox2LowerRightX) && (Hitbox2UpperLeftY <= Hitbox1LowerRightY && Hitbox1LowerRightY <= Hitbox2LowerRightY)))
     {
-        result = result | 8;
+        result = result | slayCollBOTTOMRIGHT;
     }
 
     return result;
