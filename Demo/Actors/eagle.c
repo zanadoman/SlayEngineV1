@@ -46,19 +46,19 @@ uint8 updateEagle(slayEngine* Engine, eagle* Eagle)
         }
 
         //Flipbooks
-        Eagle->TextureCurrent = slayTurnFlipbook(Eagle->FlipbookFlying);
+        Eagle->TextureCurrent = slayLoopFlipbook(Eagle->FlipbookFlying);
     }
-    else if (Eagle->FlipbookDying->Current != Eagle->FlipbookDying->Count - 1)
+    else
     {
         //Flipbooks (Dying)
-        Eagle->TextureCurrent = slayTurnFlipbook(Eagle->FlipbookDying);
+        Eagle->TextureCurrent = slayPlayFlipbook(Eagle->FlipbookDying);
     }
 
     //Respawning
     if (!Eagle->Alive && Eagle->RespawnTime <= slayGetTicks() - Eagle->DeathTick)
     {
         Eagle->Alive = true;
-        Eagle->FlipbookDying->Current = 0;
+        slayResetFlipbook(Eagle->FlipbookDying);
     }
 
     return 0;

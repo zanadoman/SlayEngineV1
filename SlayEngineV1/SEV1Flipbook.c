@@ -35,7 +35,29 @@ slayFlipbook* slayNewFlipbook(slayEngine* Engine, uint32 Delay, uint64 Count, ch
     return result;
 }
 
-slayTexture* slayTurnFlipbook(slayFlipbook* Flipbook)
+uint8 slayResetFlipbook(slayFlipbook* Flipbook)
+{
+    Flipbook->Current = -1;
+
+    return 0;
+}
+
+slayTexture* slayPlayFlipbook(slayFlipbook* Flipbook)
+{
+    if (Flipbook->Current != Flipbook->Count - 1 && Flipbook->Delay <= SDL_GetTicks() - Flipbook->PrevTick)
+    {
+        Flipbook->Current++;
+        if (Flipbook->Current == Flipbook->Count)
+        {
+            Flipbook->Current = 0;
+        }
+        Flipbook->PrevTick = SDL_GetTicks();
+    }
+
+    return Flipbook->Textures[Flipbook->Current];
+}
+
+slayTexture* slayLoopFlipbook(slayFlipbook* Flipbook)
 {
     if (Flipbook->Delay <= SDL_GetTicks() - Flipbook->PrevTick)
     {

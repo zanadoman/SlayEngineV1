@@ -197,5 +197,7 @@ struct flipbookStruct
 };
 
 slayFlipbook* slayNewFlipbook(slayEngine* Engine, uint32 Delay, uint64 Count, char* Paths, ...);
-slayTexture* slayTurnFlipbook(slayFlipbook* Flipbook);
+uint8 slayResetFlipbook(slayFlipbook* Flipbook);
+slayTexture* slayPlayFlipbook(slayFlipbook* Flipbook);
+slayTexture* slayLoopFlipbook(slayFlipbook* Flipbook);
 uint8 slayDestroyFlipbook(slayFlipbook* Flipbook);

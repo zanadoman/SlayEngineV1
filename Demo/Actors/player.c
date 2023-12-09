@@ -188,15 +188,15 @@ uint8 updatePlayer(slayEngine* Engine, player* Player, array Platforms)
     //Flipbooks
     if (!Player->Alive)
     {
-        Player->TextureCurrent = slayTurnFlipbook(Player->FlipbookStunned);
+        Player->TextureCurrent = slayLoopFlipbook(Player->FlipbookStunned);
     }
     else if (Player->AccelerationX == 0 && Player->AccelerationY == 0)
     {
-        Player->TextureCurrent = slayTurnFlipbook(Player->FlipbookIdle);
+        Player->TextureCurrent = slayLoopFlipbook(Player->FlipbookIdle);
     }
     else if (Player->AccelerationX != 0 && Player->AccelerationY == 0)
     {
-        Player->TextureCurrent = slayTurnFlipbook(Player->FlipbookRun);
+        Player->TextureCurrent = slayLoopFlipbook(Player->FlipbookRun);
     }
     else if (Player->AccelerationY < 0)
     {
