@@ -9,8 +9,11 @@ uint8 slayVectorLength(double X1, double Y1, double X2, double Y2, double* Lengt
 
 uint8 slayVectorTranslate(double X1, double Y1, double* X2, double* Y2, double Length, double Angle)
 {
-    *X2 = X1 + Length * cos(Angle * PI / 180);
-    *Y2 = Y1 + Length * sin(Angle * PI / 180);
+    double cache;
+
+    cache = Angle * PI / 180;
+    *X2 = X1 + Length * cos(cache);
+    *Y2 = Y1 + Length * sin(cache);
 
     return 0;
 }
