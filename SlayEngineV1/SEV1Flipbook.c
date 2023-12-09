@@ -47,10 +47,6 @@ slayTexture* slayPlayFlipbook(slayFlipbook* Flipbook)
     if (Flipbook->Current != Flipbook->Count - 1 && Flipbook->Delay <= SDL_GetTicks() - Flipbook->PrevTick)
     {
         Flipbook->Current++;
-        if (Flipbook->Current == Flipbook->Count)
-        {
-            Flipbook->Current = 0;
-        }
         Flipbook->PrevTick = SDL_GetTicks();
     }
 
