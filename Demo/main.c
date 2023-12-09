@@ -11,7 +11,7 @@ uint8 main(uint8 argc, char* *argv)
 
     loadScene0(Engine);
 
-    while (slayEvent(Engine))
+    while (slayUpdate(Engine))
     {
         slayUpdateDeltaTime(Engine);
 

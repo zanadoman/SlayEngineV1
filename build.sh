@@ -23,7 +23,8 @@ else
         gcc -c $(git diff --name-only | grep "\.c")
         if [ $? != 0 ]
         then
-            echo "${RED}Pre-compilation failed!${ENDCOLOR}"
+            echo -e "${RED}Pre-compilation failed!${ENDCOLOR}"
+            rm *.o
             exit 1
         fi
         mv *.o Compiled

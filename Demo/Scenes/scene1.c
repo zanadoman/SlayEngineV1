@@ -8,12 +8,12 @@ uint8 updateScene1(slayEngine* Engine, scene1* Scene)
         return 1;
     }
     //2
-    slayThreadStart(Engine, 0, updatePlayerThread);
-    slayThreadStart(Engine, 1, updateEagleThread);
-    slayThreadStart(Engine, 2, updateProjectileThread);
-    slayThreadWaitExit(Engine, 0);
-    slayThreadWaitExit(Engine, 1);
-    slayThreadWaitExit(Engine, 2);
+    slayThreadStart(Engine, PLAYER, updatePlayerThread);
+    slayThreadStart(Engine, EAGLE, updateEagleThread);
+    slayThreadStart(Engine, PROJECTILE, updateProjectileThread);
+    slayThreadWaitExit(Engine, PLAYER);
+    slayThreadWaitExit(Engine, EAGLE);
+    slayThreadWaitExit(Engine, PROJECTILE);
     //3
 
     return 0;

@@ -1,6 +1,6 @@
 #include "SlayEngineV1.h"
 
-logic slayEvent(slayEngine* Engine)
+logic slayUpdate(slayEngine* Engine)
 {
     slayMouseMovement(Engine);
     slayMouseButtons(Engine);
