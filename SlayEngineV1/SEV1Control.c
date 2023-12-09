@@ -1,7 +1,11 @@
 #include "SlayEngineV1.h"
 
+uint8 slayUpdateDeltaTime(slayEngine* Engine);
+
 logic slayUpdate(slayEngine* Engine)
 {
+    slayUpdateDeltaTime(Engine);
+
     slayMouseMovement(Engine);
     slayMouseButtons(Engine);
     Engine->Mouse->Wheel = 0;

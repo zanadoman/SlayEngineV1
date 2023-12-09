@@ -13,8 +13,6 @@ uint8 main(uint8 argc, char* *argv)
 
     while (slayUpdate(Engine))
     {
-        slayUpdateDeltaTime(Engine);
-
         updateQueue(Engine);
         renderQueue(Engine);
 

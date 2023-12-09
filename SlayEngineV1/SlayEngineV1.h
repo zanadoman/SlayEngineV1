@@ -48,7 +48,6 @@ slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Scene
 
 #define slayGetTicks SDL_GetTicks
 logic slayUpdate(slayEngine* Engine);
-uint8 slayUpdateDeltaTime(slayEngine* Engine);
 uint8 slayCapFPS(slayEngine* Engine);
 sint64 slayRandom(sint64 Min, sint64 Max, double Seed);
 
