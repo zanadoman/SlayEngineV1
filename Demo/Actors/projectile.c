@@ -141,6 +141,7 @@ uint8 eagleProjectile(slayEngine* Engine, array Projectiles, eagle* Eagle, playe
 
     slayVectorLength(Eagle->X + Eagle->Width / 2, Eagle->Y + Eagle->Height / 2, Player->X + Player->CenterX, Player->Y + Player->CenterY, &length);
     slayVectorAngle(Eagle->X + Eagle->Width / 2, Eagle->Y + Eagle->Height / 2, Player->X + Player->CenterX, Player->Y + Player->CenterY, &angle);
+    
     if (length <= Eagle->AttackRange && Eagle->ReloadTime < slayGetTicks() - Eagle->ReloadTick && ((Eagle->Facing == -1 && 90 < angle && angle < 270) || (Eagle->Facing == 1 && (270 < angle || angle < 90))))
     {
         for (uint16 i = 0; i <  Platforms->Length; i++)
@@ -164,6 +165,8 @@ uint8 eagleProjectile(slayEngine* Engine, array Projectiles, eagle* Eagle, playe
             }
         }
     }
+
+    return 0;
 }
 
 uint8 destroyProjectiles(array Projectiles)
