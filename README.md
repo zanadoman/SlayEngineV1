@@ -22,7 +22,7 @@ while keeping the game's aspect ratio by using black bars.
 
 # Wiki
 
-## Common
+## Engine
 
 ### slayEngine* slayNewEngine()
 Creates a new engine instance\
@@ -33,13 +33,10 @@ Arguments: window title, window width and height, number of scenes and number of
 ### uint32 slayGetTicks()
 Return the number of miliseconds since the engine initialized
 
-### logic slayEvent()
-Handles the window closing and updates the mouse state
+### logic slayUpdate()
+Controls the game loop, handles window events, updates the mouse state and delta time
 
-### uint16 slayUpdateDeltaTime(slayEngine* Engine)
-Updates the delta time
-
-### uint16 slayCapFPS(slayEngine* Engine)
+### uint8 slayCapFPS(slayEngine* Engine)
 Caps FPS by the value defined at engine initialization, you can change it by modifying Engine.MaxFPS
 
 ### sint64 slayRandom()
@@ -64,20 +61,20 @@ It can load a .ttf file and turn it into a slayFont*
 ### void slayUnloadFont()
 For unloading a font
 
-### uint16 slayRenderStart()
+### uint8 slayRenderStart()
 You need to start every render session with this function
 
-### uint16 slayRenderEnd()
+### uint8 slayRenderEnd()
 You need to end every render session by calling this function
 
-### uint16 slayRender***()
+### uint8 slayRender***()
 With these functions you can render something to the screen with absolute positions\
 For textures and texts you can set the rotation and (slayFlipNONE, slayFlipHORIZONTAL, slayFlipVERTICAL) both vertical and horizontal flipping with a | operator.
 
-### uint16 slayRender***Camera()
+### uint8 slayRender***Camera()
 This time the rendering process will apply the perspective of the camera to the position and the size of the object to be rendered
 
-### uint16 slayRender3D***Camera()
+### uint8 slayRender3D***Camera()
 With this rendering function you can create fake 3D effect by stacking multiple layers behind each other
 
 ## Audio
@@ -91,16 +88,19 @@ It can load a .wav and turn it into a slaySound*
 ### void slayUnloadSound()
 For unloading a sound
 
-### uint16 slayPlaySound()
+### uint8 slayPlaySound()
 It can play a sound on a channel, you can set the volume for the left and right track separately and you can loop the sound if you want it
 
-### uint16 slayPlaySoundTicks()
+### uint8 slayPlaySoundTicks()
 With this function you can cap the length of the sound in ticks
+
+### sint32 slayStopSound()
+This function halts given channel
 
 ## Inputs
 
-### uint8 slayKey()
-You can query the state of all keyboard buttons and LMB, MMB, RMB
+### logic slayKey()
+You can query the state of all keyboard buttons and LMB, MMB, RMB, WHEEL_UP, WHEEL_DOWN
 
 ## Mouse
 
@@ -116,21 +116,24 @@ You should use this function if you want to interact with something that lives i
 
 ## Vector
 
-### uint16 slayVectorLength()
+### uint8 slayVectorLength()
 This function returns the length of a vector defined by two coordinates into a double*
 
-### uint16 slayVectorTranslate()
+### uint8 slayVectorTranslate()
 This function creates a vector from an initial point, length and angle then outputs the coordinates of the terminal point into two double*
 
-### uint16 slayVectorAngle()
+### uint8 slayVectorAngle()
 This function returns the angle of a vector defined by two coordinates into a double*
+
+### logic slayVectorRayCast()
+Cast a ray between two coordinates and check if the ray is obstructed by something or not
 
 ## Hitbox
 
 ### slayHitbox* slayNewHitbox()
 You can create new hitboxes with this function
 
-### uint8 slayCollision()
+### slayColls slayCollision()
 This function checks the collision between two hitboxes and returns the collision value in a 8bit bitmask
 
 ### Collision values
@@ -151,22 +154,39 @@ Other values:\
 
 ## Camera
 
-### uint16 slaySetCamera()
+### uint8 slaySetCamera()
 You can change the properties of the camera with this function, you can attach it to an ingame object or a fixed coordinate, you can also set zoom level
 
-### uint16 slayApplyCamera()
+### uint8 slayApplyCamera()
 This function can apply the perspective of the camera to a slayObject*
 
 ## Thread
 
-### uint16 slayThreadStart()
+### uint8 slayThreadStart()
 You can start any function in a new thread with the engine as argument
 
-### uint16 slayThreadWaitExit()
+### uint8 slayThreadWaitExit()
 Pauses your program until the thread with the given ID returns
 
 ### slayThreadExit;
 You should put this command at the end of each thread function
+
+## Flipbook
+
+### slayFlipbook* slayNewFlipbook()
+Create a new flipbook, with the given delay (ms), and textures
+
+### uint8 slayResetFlipbook()
+Reset flipbook to the first page
+
+### slayTexture* slayPlayFlipbook()
+Play flipbook until the last texture
+
+### slayTexture* slayLoopFlipbook()
+Loop a flipbook
+
+### uint8 slayDestroyFlipbook()
+Deallocate the flipbook from the memory
 
 # Samples
 
@@ -175,26 +195,24 @@ You should put this command at the end of each thread function
 \
 #undef main\
 \
-uint16 main(uint64 argc, char\* \*argv)\
+uint8 main(uint8 argc, char\* \*argv)\
 {\
 &emsp;slayEngine\* Engine;\
 \
 &emsp;Engine = slayNewEngine("SlayEngineV1 DEMO", 1920, 1080, 1, 2, 165);\
 &emsp;loadQueue(Engine);\
 \
-&emsp;Engine->CurrentScene = 0;\
+&emsp;loadScene0(Engine);\
 \
-&emsp;while(slayEvent(Engine))\
+&emsp;while (slayUpdate(Engine))\
 &emsp;{\
-&emsp;&emsp;slayUpdateDeltaTime(Engine);\
-\
 &emsp;&emsp;updateQueue(Engine);\
 &emsp;&emsp;renderQueue(Engine);\
 \
 &emsp;&emsp;slayCapFPS(Engine);\
 &emsp;}\
 \
-&emsp;saveQueue(Engine);\
+&emsp;unloadSceneCurrent(Engine);\
 \
 &emsp;return 0;\
 }

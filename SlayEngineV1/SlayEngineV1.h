@@ -47,6 +47,7 @@ slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Scene
 //Control____________________________________________________________
 
 #define slayGetTicks SDL_GetTicks
+
 logic slayUpdate(slayEngine* Engine);
 uint8 slayCapFPS(slayEngine* Engine);
 sint64 slayRandom(sint64 Min, sint64 Max, double Seed);
@@ -84,11 +85,13 @@ uint8 slayRender3DTextCamera(slayEngine* Engine, slayFont* Font, char* Character
 //Audio______________________________________________________________
 
 #define slaySound Mix_Chunk
-#define slayStopSound Mix_HaltChannel
+
 slaySound* slayLoadSound(char* Path);
 #define slayUnloadSound Mix_FreeChunk
+
 uint8 slayPlaySound(slaySound* Sound, sint16 Channel, uint8 Volume, uint8 Left, uint8 Right, sint16 Loops);
 uint8 slayPlaySoundTicks(slaySound* Sound, sint16 Channel, uint8 Volume, uint8 Left, uint8 Right, sint16 Loops, uint32 Ticks);
+#define slayStopSound Mix_HaltChannel
 
 //Inputs_____________________________________________________________
 
@@ -178,9 +181,9 @@ uint8 slayApplyCamera(slayEngine* Engine, slayObject* Object, double X, double Y
 
 //Thread_____________________________________________________________
 
-#define slayThreadExit pthread_exit(NULL)
 uint8 slayThreadStart(slayEngine* Engine, uint64 ID, void* Function);
 uint8 slayThreadWaitExit(slayEngine* Engine, uint64 ID);
+#define slayThreadExit pthread_exit(NULL)
 
 //Flipbook___________________________________________________________
 
