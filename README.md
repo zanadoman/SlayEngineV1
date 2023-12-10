@@ -200,7 +200,7 @@ uint8 main(uint8 argc, char\* \*argv)\
 &emsp;slayEngine\* Engine;\
 \
 &emsp;Engine = slayNewEngine("SlayEngineV1 DEMO", 1920, 1080, 1, 2, 165);\
-&emsp;loadQueue(Engine);\
+&emsp;loadGame(Engine);\
 \
 &emsp;loadScene0(Engine);\
 \
