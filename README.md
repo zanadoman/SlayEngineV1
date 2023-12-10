@@ -204,8 +204,8 @@ uint8 main(uint8 argc, char\* \*argv)\
 \
 &emsp;&emsp;&emsp;loadScene0(Engine);\
 \
-&emsp;while (slayUpdate(Engine))\
-&emsp;{\
+&emsp;&emsp;&emsp;while (slayUpdate(Engine))\
+&emsp;&emsp;&emsp;{\
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;updateQueue(Engine);\
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;renderQueue(Engine);\
 \
