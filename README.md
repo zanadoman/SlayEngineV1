@@ -197,24 +197,24 @@ Deallocate the flipbook from the memory
 \
 uint8 main(uint8 argc, char\* \*argv)\
 {\
-&emsp;slayEngine\* Engine;\
+&emsp;&emsp;&emsp;slayEngine\* Engine;\
 \
-&emsp;Engine = slayNewEngine("SlayEngineV1 DEMO", 1920, 1080, 1, 2, 165);\
-&emsp;loadGame(Engine);\
+&emsp;&emsp;&emsp;Engine = slayNewEngine("SlayEngineV1 DEMO", 1920, 1080, 1, 2, 165);\
+&emsp;&emsp;&emsp;loadGame(Engine);\
 \
-&emsp;loadScene0(Engine);\
+&emsp;&emsp;&emsp;loadScene0(Engine);\
 \
 &emsp;while (slayUpdate(Engine))\
 &emsp;{\
-&emsp;&emsp;updateQueue(Engine);\
-&emsp;&emsp;renderQueue(Engine);\
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;updateQueue(Engine);\
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;renderQueue(Engine);\
 \
-&emsp;&emsp;slayCapFPS(Engine);\
-&emsp;}\
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;slayCapFPS(Engine);\
+&emsp;&emsp;&emsp;}\
 \
-&emsp;unloadSceneCurrent(Engine);\
+&emsp;&emsp;&emsp;unloadSceneCurrent(Engine);\
 \
-&emsp;return 0;\
+&emsp;&emsp;&emsp;return 0;\
 }
 
 ### Render queue
