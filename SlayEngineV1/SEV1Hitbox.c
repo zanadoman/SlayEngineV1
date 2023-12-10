@@ -35,10 +35,10 @@ slayColls slayCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2)
     Hitbox1LowerRightX = Hitbox1->LowerRightX + *Hitbox1->ObjectX;
     Hitbox1LowerRightY = Hitbox1->LowerRightY + *Hitbox1->ObjectY;
 
-    Hitbox2UpperLeftX = Hitbox2->UpperLeftX + (sint32)round(*Hitbox2->ObjectX);
-    Hitbox2UpperLeftY = Hitbox2->UpperLeftY + (sint32)round(*Hitbox2->ObjectY);
-    Hitbox2LowerRightX = Hitbox2->LowerRightX + (sint32)round(*Hitbox2->ObjectX);
-    Hitbox2LowerRightY = Hitbox2->LowerRightY + (sint32)round(*Hitbox2->ObjectY);
+    Hitbox2UpperLeftX = Hitbox2->UpperLeftX + *Hitbox2->ObjectX;
+    Hitbox2UpperLeftY = Hitbox2->UpperLeftY + *Hitbox2->ObjectY;
+    Hitbox2LowerRightX = Hitbox2->LowerRightX + *Hitbox2->ObjectX;
+    Hitbox2LowerRightY = Hitbox2->LowerRightY + *Hitbox2->ObjectY;
 
     result = 0;
     if (((Hitbox1UpperLeftX <= Hitbox2LowerRightX && Hitbox2LowerRightX <= Hitbox1LowerRightX) && (Hitbox1UpperLeftY <= Hitbox2LowerRightY && Hitbox2LowerRightY <= Hitbox1LowerRightY)) || ((Hitbox2UpperLeftX <= Hitbox1UpperLeftX && Hitbox1UpperLeftX <= Hitbox2LowerRightX) && (Hitbox2UpperLeftY <= Hitbox1UpperLeftY && Hitbox1UpperLeftY <= Hitbox2LowerRightY)))
