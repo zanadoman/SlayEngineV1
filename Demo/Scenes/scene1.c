@@ -111,7 +111,7 @@ uint8 loadScene1(slayEngine* Engine)
         scene->Player->Y = slayGetJSONKey(save, "Y")->ValueNumber;
         scene->Player->Facing = slayGetJSONKey(save, "Facing")->ValueNumber;
         
-        slayUnloadJSON(save);
+        slayDestroyJSON(save);
     }
     else
     {
@@ -160,7 +160,7 @@ uint8 unloadScene1(slayEngine* Engine)
     slayAddJSONKeyNumber(save, "Facing", scene->Player->Facing);
 
     slaySaveJSON(save, "saves/scene1_player.json");
-    slayUnloadJSON(save);
+    slayDestroyJSON(save);
 
     //Pause
     destroyPause(scene->Pause);
