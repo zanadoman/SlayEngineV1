@@ -43,8 +43,8 @@ uint8 slaySaveJSON(slayJSON* JSON, char* Path)
     
     raw = cJSON_Print(JSON);
     fputs(raw, file);
-    fclose(file);
     free(raw);
+    fclose(file);
 
     return 0;
 }
