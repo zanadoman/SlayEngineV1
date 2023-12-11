@@ -1,3 +1,9 @@
+/*
+**json ellenőrzése
+**Egér kurzor pont/grab
+**Egér kurzor textúra point/grab
+*/
+
 #include "game.h"
 
 #undef main
