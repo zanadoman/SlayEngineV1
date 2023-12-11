@@ -4,6 +4,7 @@
 #include "inc/SDL_mixer.h"
 
 #include "NeoTypes/NeoTypes.h"
+#include "cJSON/cJSON.h"
 #include <pthread.h>
 
 typedef struct slayEngineStruct slayEngine;

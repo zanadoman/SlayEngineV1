@@ -6,7 +6,7 @@ ENDCOLOR="\e[0m"
 
 if [[ ! -z $1 && $1 == "-a" ]] || [[ ! -z $1 && $1 == "--all" ]]
 then
-    gcc -c Demo/*.c Demo/Actors/*.c Demo/Scenes/*.c SlayEngineV1/*.c SlayEngineV1/NeoTypes/*.c
+    gcc -c Demo/*.c Demo/Actors/*.c Demo/Scenes/*.c SlayEngineV1/*.c SlayEngineV1/NeoTypes/*.c SlayEngineV1/cJSON/*.c
     if [ $? != 0 ]
     then
         echo -e "${RED}Re-compilation failed!${ENDCOLOR}"
