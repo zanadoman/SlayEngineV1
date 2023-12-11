@@ -209,7 +209,11 @@ uint8 slayDestroyFlipbook(slayFlipbook* Flipbook);
 
 #define slayJSON cJSON
 
+#define slayAddJSONKeyNumber cJSON_AddNumberToObject
+#define slayAddJSONKeyString cJSON_AddStringToObject
 #define slayGetJSONKey cJSON_GetObjectItem
 
+#define slayNewJSON cJSON_CreateObject
 slayJSON* slayLoadJSON(char* Path);
 uint8 slaySaveJSON(cJSON* JSON, char* Path);
+#define slayUnloadJSON cJSON_Delete

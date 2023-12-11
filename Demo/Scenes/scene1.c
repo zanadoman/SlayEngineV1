@@ -75,7 +75,7 @@ uint8 renderScene1(slayEngine* Engine, scene1* Scene)
 uint8 loadScene1(slayEngine* Engine)
 {
     scene1* scene;
-    array save;
+    slayJSON* save;
 
     //Scene
     Engine->Scenes->Values[1] = malloc(sizeof(scene1));
@@ -104,22 +104,21 @@ uint8 loadScene1(slayEngine* Engine)
     //Player
     scene->Player = newPlayer(Engine, SDL_SCANCODE_A, SDL_SCANCODE_D, SDL_SCANCODE_SPACE, SDL_SCANCODE_LMB);
 
-    save = arrNew(0);
-    if (fileRead("saves/scene1.txt", save) && save->Length == 3)
+    save = slayLoadJSON("saves/scene1_player.json");
+    if (save != NULL)
     {
-        scene->Player->X = STRtoDOUBLE(((string)save->Values[0])->String, NULL);
-        scene->Player->Y = STRtoDOUBLE(((string)save->Values[1])->String, NULL);
-        scene->Player->Facing = STRtoDOUBLE(((string)save->Values[2])->String, NULL);
-        strPurge(save->Values[0]);
-        strPurge(save->Values[1]);
-        strPurge(save->Values[2]);
+        scene->Player->X = slayGetJSONKey(save, "X")->ValueNumber;
+        scene->Player->Y = slayGetJSONKey(save, "Y")->ValueNumber;
+        scene->Player->Facing = slayGetJSONKey(save, "Facing")->ValueNumber;
+        
+        slayUnloadJSON(save);
     }
     else
     {
         scene->Player->X = 367;
         scene->Player->Y = 386;
+        scene->Player->Facing = 1;
     }
-    arrPurge(save);
 
     scene->Player->MinX = -200;
     scene->Player->MaxX = 1000;
@@ -149,23 +148,17 @@ uint8 loadScene1(slayEngine* Engine)
 uint8 unloadScene1(slayEngine* Engine)
 {
     scene1* scene;
-    array save;
+    slayJSON* save;
 
     scene = Engine->Scenes->Values[1];
 
     //Save
-    save = arrNew(3);
-    save->Values[0] = strNew();
-    save->Values[1] = strNew();
-    save->Values[2] = strNew();
-    DOUBLEtoSTR(scene->Player->X, save->Values[0]);
-    DOUBLEtoSTR(scene->Player->Y, save->Values[1]);
-    SINTtoSTR(scene->Player->Facing, save->Values[2]);
-    fileWrite(save, "saves/scene1.txt");
-    strPurge(save->Values[0]);
-    strPurge(save->Values[1]),
-    strPurge(save->Values[2]);
-    arrPurge(save);
+    save = slayNewJSON();
+    slayAddJSONKeyNumber(save, "X", scene->Player->X);
+    slayAddJSONKeyNumber(save, "Y", scene->Player->Y);
+    slayAddJSONKeyNumber(save, "Facing", scene->Player->Facing);
+    slaySaveJSON(save, "saves/scene1_player.json");
+    slayUnloadJSON(save);
 
     //Pause
     destroyPause(scene->Pause);

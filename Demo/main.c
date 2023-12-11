@@ -11,12 +11,6 @@ uint8 main(uint8 argc, char* *argv)
 
     loadScene0(Engine);
 
-    slayJSON* save = slayLoadJSON("saves/test.json");
-    printf("%s\n", slayGetJSONKey(save, "name")->valuestring);
-    printf("%d\n", slayGetJSONKey(save, "age")->valueint);
-    printf("%s\n", slayGetJSONKey(save, "city")->valuestring);
-    printf("%lf\n", slayGetJSONKey(save, "score")->valuedouble);
-
     while (slayUpdate(Engine))
     {
         updateQueue(Engine);

@@ -112,11 +112,10 @@ typedef struct cJSON
     int type;
 
     /* The item's string, if type==cJSON_String  and type == cJSON_Raw */
-    char *valuestring;
+    char *ValueString;
     /* writing to valueint is DEPRECATED, use cJSON_SetNumberValue instead */
-    int valueint;
     /* The item's number, if type==cJSON_Number */
-    double valuedouble;
+    double ValueNumber;
 
     /* The item's name string, if this item is the child of, or is in the list of subitems of an object. */
     char *string;
