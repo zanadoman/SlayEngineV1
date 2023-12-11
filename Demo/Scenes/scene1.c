@@ -154,9 +154,11 @@ uint8 unloadScene1(slayEngine* Engine)
 
     //Save
     save = slayNewJSON();
+    
     slayAddJSONKeyNumber(save, "X", scene->Player->X);
     slayAddJSONKeyNumber(save, "Y", scene->Player->Y);
     slayAddJSONKeyNumber(save, "Facing", scene->Player->Facing);
+
     slaySaveJSON(save, "saves/scene1_player.json");
     slayUnloadJSON(save);
 
