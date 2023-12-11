@@ -1,2 +1,2 @@
-Linux/saves/*
-Windows/saves/*
+Linux/saves/*.json
+Windows/saves/*.json
