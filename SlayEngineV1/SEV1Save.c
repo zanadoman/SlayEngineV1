@@ -1,29 +1,29 @@
 #include "SlayEngineV1.h"
 
-cJSON* slaySaveLoad(char* SavePath)
+cJSON* slayLoadJSON(char* Path)
 {
     cJSON* result;
 
-    FILE* save;
+    FILE* file;
     string raw;
 
-    save = fopen(SavePath, "r");
-    if (save == NULL)
+    file = fopen(Path, "r");
+    if (file == NULL)
     {
         return NULL;
     }
 
     raw = strNew();
-    while (!feof(save))
+    while (!feof(file))
     {
-        strAppend(raw, fgetc(save));
+        strAppend(raw, fgetc(file));
     }
-    fclose(save);
+    fclose(file);
 
     result = cJSON_Parse(raw->String);
+    strPurge(raw);
     if (result == NULL)
     {
-        cJSON_Delete(result);
         return NULL;
     }
 

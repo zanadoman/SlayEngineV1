@@ -204,3 +204,8 @@ uint8 slayResetFlipbook(slayFlipbook* Flipbook);
 slayTexture* slayPlayFlipbook(slayFlipbook* Flipbook);
 slayTexture* slayLoopFlipbook(slayFlipbook* Flipbook);
 uint8 slayDestroyFlipbook(slayFlipbook* Flipbook);
+
+//Save_______________________________________________________________
+
+#define slayGetJSONKey cJSON_GetObjectItem
+cJSON* slayLoadJSON(char* Path);
