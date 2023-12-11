@@ -1,6 +1,6 @@
 #include "SlayEngineV1.h"
 
-cJSON* slayLoadJSON(char* Path)
+slayJSON* slayLoadJSON(char* Path)
 {
     cJSON* result;
 
@@ -28,4 +28,23 @@ cJSON* slayLoadJSON(char* Path)
     }
 
     return result;
+}
+
+uint8 slaySaveJSON(slayJSON* JSON, char* Path)
+{
+    FILE* file;
+    char* raw;
+
+    file = fopen(Path, "w");
+    if (file == NULL)
+    {
+        return 1;
+    }
+    
+    raw = cJSON_Print(JSON);
+    fputs(raw, file);
+    fclose(file);
+    cJSON_free(raw);
+
+    return 0;
 }

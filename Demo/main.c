@@ -11,7 +11,7 @@ uint8 main(uint8 argc, char* *argv)
 
     loadScene0(Engine);
 
-    cJSON* save = slayLoadJSON("saves/test.json");
+    slayJSON* save = slayLoadJSON("saves/test.json");
     printf("%s\n", slayGetJSONKey(save, "name")->valuestring);
     printf("%d\n", slayGetJSONKey(save, "age")->valueint);
     printf("%s\n", slayGetJSONKey(save, "city")->valuestring);
