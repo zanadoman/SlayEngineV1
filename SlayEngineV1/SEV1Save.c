@@ -15,7 +15,7 @@ slayJSON* slayLoadJSON(char* Path)
 
     raw = strNew();
     while (!feof(file))
-    {
+    { 
         strAppend(raw, fgetc(file));
     }
     fclose(file);
