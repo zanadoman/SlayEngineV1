@@ -205,7 +205,7 @@ slayTexture* slayPlayFlipbook(slayFlipbook* Flipbook);
 slayTexture* slayLoopFlipbook(slayFlipbook* Flipbook);
 uint8 slayDestroyFlipbook(slayFlipbook* Flipbook);
 
-//Save_______________________________________________________________
+//JSON_______________________________________________________________
 
 #define slayJSON cJSON
 
