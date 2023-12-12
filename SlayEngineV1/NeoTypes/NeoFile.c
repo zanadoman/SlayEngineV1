@@ -13,18 +13,39 @@ logic fileRead(char* FilePath, array Lines)
     }
 
     line = strNew();
+    if (line == NULL)
+    {
+        fclose(file);
+        return false;
+    }
     while (!feof(file))
     {
         character = fgetc(file);
 
         if (character != '\n')
         {
-            strAppend(line, character);
+            if (strAppend(line, character) == false)
+            {
+                strPurge(line);
+                fclose(file);
+                return false;
+            }
         }
         else
         {
-            arrInsert(Lines, Lines->Length, line);
+            if (arrInsert(Lines, Lines->Length, line) == 1)
+            {
+                strPurge(line);
+                fclose(file);
+                return false;
+            }
+            
             line = strNew();
+            if (line == NULL)
+            {
+                fclose(file);
+                return false;
+            }
         }
     }
     strPurge(line);
