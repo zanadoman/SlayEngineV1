@@ -103,7 +103,7 @@ CJSON_PUBLIC(char *) cJSON_GetStringValue(const cJSON * const item)
         return NULL;
     }
 
-    return item->ValueString;
+    return item->valuestring;
 }
 
 CJSON_PUBLIC(double) cJSON_GetNumberValue(const cJSON * const item)
@@ -113,7 +113,7 @@ CJSON_PUBLIC(double) cJSON_GetNumberValue(const cJSON * const item)
         return (double) NAN;
     }
 
-    return item->ValueNumber;
+    return item->valuedouble;
 }
 
 /* This is a safeguard to prevent copy-pasters from using incompatible C and header files */
@@ -260,9 +260,9 @@ CJSON_PUBLIC(void) cJSON_Delete(cJSON *item)
         {
             cJSON_Delete(item->child);
         }
-        if (!(item->type & cJSON_IsReference) && (item->ValueString != NULL))
+        if (!(item->type & cJSON_IsReference) && (item->valuestring != NULL))
         {
-            global_hooks.deallocate(item->ValueString);
+            global_hooks.deallocate(item->valuestring);
         }
         if (!(item->type & cJSON_StringIsConst) && (item->string != NULL))
         {
@@ -356,36 +356,70 @@ loop_end:
         return false; /* parse_error */
     }
 
-    item->ValueNumber = number;
+    item->valuedouble = number;
+
+    /* use saturation in case of overflow */
+    if (number >= INT_MAX)
+    {
+        item->valueint = INT_MAX;
+    }
+    else if (number <= (double)INT_MIN)
+    {
+        item->valueint = INT_MIN;
+    }
+    else
+    {
+        item->valueint = (int)number;
+    }
+
     item->type = cJSON_Number;
 
     input_buffer->offset += (size_t)(after_end - number_c_string);
     return true;
 }
 
-CJSON_PUBLIC(char*) cJSON_SetValueString(cJSON *object, const char *ValueString)
+/* don't ask me, but the original cJSON_SetNumberValue returns an integer or double */
+CJSON_PUBLIC(double) cJSON_SetNumberHelper(cJSON *object, double number)
+{
+    if (number >= INT_MAX)
+    {
+        object->valueint = INT_MAX;
+    }
+    else if (number <= (double)INT_MIN)
+    {
+        object->valueint = INT_MIN;
+    }
+    else
+    {
+        object->valueint = (int)number;
+    }
+
+    return object->valuedouble = number;
+}
+
+CJSON_PUBLIC(char*) cJSON_SetValuestring(cJSON *object, const char *valuestring)
 {
     char *copy = NULL;
-    /* if object's type is not cJSON_String or is cJSON_IsReference, it should not set ValueString */
+    /* if object's type is not cJSON_String or is cJSON_IsReference, it should not set valuestring */
     if (!(object->type & cJSON_String) || (object->type & cJSON_IsReference))
     {
         return NULL;
     }
-    if (strlen(ValueString) <= strlen(object->ValueString))
+    if (strlen(valuestring) <= strlen(object->valuestring))
     {
-        strcpy(object->ValueString, ValueString);
-        return object->ValueString;
+        strcpy(object->valuestring, valuestring);
+        return object->valuestring;
     }
-    copy = (char*) cJSON_strdup((const unsigned char*)ValueString, &global_hooks);
+    copy = (char*) cJSON_strdup((const unsigned char*)valuestring, &global_hooks);
     if (copy == NULL)
     {
         return NULL;
     }
-    if (object->ValueString != NULL)
+    if (object->valuestring != NULL)
     {
-        cJSON_free(object->ValueString);
+        cJSON_free(object->valuestring);
     }
-    object->ValueString = copy;
+    object->valuestring = copy;
 
     return copy;
 }
@@ -511,7 +545,7 @@ static cJSON_bool compare_double(double a, double b)
 static cJSON_bool print_number(const cJSON * const item, printbuffer * const output_buffer)
 {
     unsigned char *output_pointer = NULL;
-    double d = item->ValueNumber;
+    double d = item->valuedouble;
     int length = 0;
     size_t i = 0;
     unsigned char number_buffer[26] = {0}; /* temporary buffer to print the number into */
@@ -528,6 +562,10 @@ static cJSON_bool print_number(const cJSON * const item, printbuffer * const out
     {
         length = sprintf((char*)number_buffer, "null");
     }
+	else if(d == (double)item->valueint)
+	{
+		length = sprintf((char*)number_buffer, "%d", item->valueint);
+	}
     else
     {
         /* Try 15 decimal places of precision to avoid nonsignificant nonzero digits */
@@ -839,7 +877,7 @@ static cJSON_bool parse_string(cJSON * const item, parse_buffer * const input_bu
     *output_pointer = '\0';
 
     item->type = cJSON_String;
-    item->ValueString = (char*)output;
+    item->valuestring = (char*)output;
 
     input_buffer->offset = (size_t) (input_end - input_buffer->content);
     input_buffer->offset++;
@@ -985,7 +1023,7 @@ static cJSON_bool print_string_ptr(const unsigned char * const input, printbuffe
 /* Invoke print_string_ptr (which is useful) on an item. */
 static cJSON_bool print_string(const cJSON * const item, printbuffer * const p)
 {
-    return print_string_ptr((unsigned char*)item->ValueString, p);
+    return print_string_ptr((unsigned char*)item->valuestring, p);
 }
 
 /* Predeclare these prototypes. */
@@ -1293,6 +1331,14 @@ static cJSON_bool parse_value(cJSON * const item, parse_buffer * const input_buf
         input_buffer->offset += 5;
         return true;
     }
+    /* true */
+    if (can_read(input_buffer, 4) && (strncmp((const char*)buffer_at_offset(input_buffer), "true", 4) == 0))
+    {
+        item->type = cJSON_True;
+        item->valueint = 1;
+        input_buffer->offset += 4;
+        return true;
+    }
     /* string */
     if (can_access_at_index(input_buffer, 0) && (buffer_at_offset(input_buffer)[0] == '\"'))
     {
@@ -1362,18 +1408,18 @@ static cJSON_bool print_value(const cJSON * const item, printbuffer * const outp
         case cJSON_Raw:
         {
             size_t raw_length = 0;
-            if (item->ValueString == NULL)
+            if (item->valuestring == NULL)
             {
                 return false;
             }
 
-            raw_length = strlen(item->ValueString) + sizeof("");
+            raw_length = strlen(item->valuestring) + sizeof("");
             output = ensure(output_buffer, raw_length);
             if (output == NULL)
             {
                 return false;
             }
-            memcpy(output, item->ValueString, raw_length);
+            memcpy(output, item->valuestring, raw_length);
             return true;
         }
 
@@ -1617,9 +1663,9 @@ static cJSON_bool parse_object(cJSON * const item, parse_buffer * const input_bu
         }
         buffer_skip_whitespace(input_buffer);
 
-        /* swap ValueString and string, because we parsed the name */
-        current_item->string = current_item->ValueString;
-        current_item->ValueString = NULL;
+        /* swap valuestring and string, because we parsed the name */
+        current_item->string = current_item->valuestring;
+        current_item->valuestring = NULL;
 
         if (cannot_access_at_index(input_buffer, 0) || (buffer_at_offset(input_buffer)[0] != ':'))
         {
@@ -2386,7 +2432,21 @@ CJSON_PUBLIC(cJSON *) cJSON_CreateNumber(double num)
     if(item)
     {
         item->type = cJSON_Number;
-        item->ValueNumber = num;
+        item->valuedouble = num;
+
+        /* use saturation in case of overflow */
+        if (num >= INT_MAX)
+        {
+            item->valueint = INT_MAX;
+        }
+        else if (num <= (double)INT_MIN)
+        {
+            item->valueint = INT_MIN;
+        }
+        else
+        {
+            item->valueint = (int)num;
+        }
     }
 
     return item;
@@ -2398,8 +2458,8 @@ CJSON_PUBLIC(cJSON *) cJSON_CreateString(const char *string)
     if(item)
     {
         item->type = cJSON_String;
-        item->ValueString = (char*)cJSON_strdup((const unsigned char*)string, &global_hooks);
-        if(!item->ValueString)
+        item->valuestring = (char*)cJSON_strdup((const unsigned char*)string, &global_hooks);
+        if(!item->valuestring)
         {
             cJSON_Delete(item);
             return NULL;
@@ -2415,7 +2475,7 @@ CJSON_PUBLIC(cJSON *) cJSON_CreateStringReference(const char *string)
     if (item != NULL)
     {
         item->type = cJSON_String | cJSON_IsReference;
-        item->ValueString = (char*)cast_away_const(string);
+        item->valuestring = (char*)cast_away_const(string);
     }
 
     return item;
@@ -2448,8 +2508,8 @@ CJSON_PUBLIC(cJSON *) cJSON_CreateRaw(const char *raw)
     if(item)
     {
         item->type = cJSON_Raw;
-        item->ValueString = (char*)cJSON_strdup((const unsigned char*)raw, &global_hooks);
-        if(!item->ValueString)
+        item->valuestring = (char*)cJSON_strdup((const unsigned char*)raw, &global_hooks);
+        if(!item->valuestring)
         {
             cJSON_Delete(item);
             return NULL;
@@ -2663,11 +2723,12 @@ CJSON_PUBLIC(cJSON *) cJSON_Duplicate(const cJSON *item, cJSON_bool recurse)
     }
     /* Copy over all vars */
     newitem->type = item->type & (~cJSON_IsReference);
-    newitem->ValueNumber = item->ValueNumber;
-    if (item->ValueString)
+    newitem->valueint = item->valueint;
+    newitem->valuedouble = item->valuedouble;
+    if (item->valuestring)
     {
-        newitem->ValueString = (char*)cJSON_strdup((unsigned char*)item->ValueString, &global_hooks);
-        if (!newitem->ValueString)
+        newitem->valuestring = (char*)cJSON_strdup((unsigned char*)item->valuestring, &global_hooks);
+        if (!newitem->valuestring)
         {
             goto fail;
         }
@@ -2961,7 +3022,7 @@ CJSON_PUBLIC(cJSON_bool) cJSON_Compare(const cJSON * const a, const cJSON * cons
             return true;
 
         case cJSON_Number:
-            if (compare_double(a->ValueNumber, b->ValueNumber))
+            if (compare_double(a->valuedouble, b->valuedouble))
             {
                 return true;
             }
@@ -2969,11 +3030,11 @@ CJSON_PUBLIC(cJSON_bool) cJSON_Compare(const cJSON * const a, const cJSON * cons
 
         case cJSON_String:
         case cJSON_Raw:
-            if ((a->ValueString == NULL) || (b->ValueString == NULL))
+            if ((a->valuestring == NULL) || (b->valuestring == NULL))
             {
                 return false;
             }
-            if (strcmp(a->ValueString, b->ValueString) == 0)
+            if (strcmp(a->valuestring, b->valuestring) == 0)
             {
                 return true;
             }
