@@ -1,4 +1,5 @@
 /*
+**Gyorsabb collision detection
 **Egér kurzor pont/grab
 **Egér kurzor textúra point/grab
 */
