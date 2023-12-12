@@ -1,5 +1,0 @@
-Here, you can find and modify the saves.
-
-All saves are stored in a json file for easy access and modification.
-
-This txt file only serves as a placeholder.
