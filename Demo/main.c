@@ -1,7 +1,7 @@
 /*
-**Egér kurzor pont/grab
-**Egér kurzor textúra point/grab
-**BPS??
+**Mouse cursor texture switching
+**Particle system
+**Networking
 */
 
 #include "game.h"
