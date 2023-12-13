@@ -38,7 +38,7 @@ uint8 slayVectorAngle(double X1, double Y1, double X2, double Y2, double* Angle)
     return 0;
 }
 
-logic slayVectorRayCast(double SourceX, double SourceY, double TargetX, double TargetY, slayHitbox* Obstacle)
+logic slayVectorRayCast(double SourceX, double SourceY, double TargetX, double TargetY, slayHitbox* Obstacle, uint16 Size, double Precision)
 {
     double result;
 
@@ -48,7 +48,7 @@ logic slayVectorRayCast(double SourceX, double SourceY, double TargetX, double T
 
     slayVectorAngle(SourceX, SourceY, TargetX, TargetY, &RayAngle);
     slayVectorLength(SourceX, SourceY, TargetX, TargetY, &RayLength);
-    RayHitbox = slayNewHitbox(&SourceX, &SourceY, 0, 0, 0, 0);
+    RayHitbox = slayNewHitbox(&SourceX, &SourceY, -(Size >> 2), -(Size >> 2), (Size >> 2), (Size >> 2));
 
     while (slayCollision(RayHitbox, Obstacle) == 0)
     {

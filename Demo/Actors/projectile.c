@@ -146,7 +146,7 @@ uint8 eagleProjectile(slayEngine* Engine, array Projectiles, eagle* Eagle, playe
     {
         for (uint16 i = 0; i <  Platforms->Length; i++)
         {
-            if (!slayVectorRayCast(Eagle->X + Eagle->Width / 2, Eagle->Y + Eagle->Height / 2, Player->X + Player->CenterX, Player->Y + Player->CenterY, ((platform*)Platforms->Values[i])->Hitbox))
+            if (!slayVectorRayCast(Eagle->X + Eagle->Width / 2, Eagle->Y + Eagle->Height / 2, Player->X + Player->CenterX, Player->Y + Player->CenterY, ((platform*)Platforms->Values[i])->Hitbox, 0, 3))
             {
                 break;
             }
