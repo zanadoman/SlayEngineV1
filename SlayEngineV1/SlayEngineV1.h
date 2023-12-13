@@ -92,17 +92,19 @@ struct slayParticleBatchStruct
     slayParticle* *Particles;
     uint64 Count;
 
-    uint64 MinLifeTime;
-    uint64 MaxLifeTime;
-
-    uint16 MinSize;
-    uint16 MaxSize;
+    uint16 MinWidth;
+    uint16 MaxWidth;
+    uint16 MinHeight;
+    uint16 MaxHeight;
 
     double MinSpeed;
     double MaxSpeed;
 
     double MinAngle;
     double MaxAngle;
+
+    uint64 MinLifeTime;
+    uint64 MaxLifeTime;
 
     SDL_Texture* Texture;
 
@@ -119,11 +121,16 @@ struct slayParticleBatchStruct
 
 struct slayParticleStruct
 {
-    uint64 LifeTime;
+    double X;
+    double Y;
 
-    uint16 Size;
+    uint16 Width;
+    uint16 Height;
+
     double Speed;
     double Angle;
+
+    uint64 LifeTime;
 
     uint8 ColorR;
     uint8 ColorG;
