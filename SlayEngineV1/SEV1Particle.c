@@ -85,10 +85,11 @@ uint8 slayUpdateParticleBatch(slayEngine* Engine, slayParticleBatch* ParticleBat
             {
                 free(ParticleBatch->Particles[i]);
                 ParticleBatch->Particles[i] = NULL;
-                break;
             }
-
-            slayVectorTranslate(ParticleBatch->Particles[i]->X, ParticleBatch->Particles[i]->Y, &ParticleBatch->Particles[i]->X, &ParticleBatch->Particles[i]->Y, ParticleBatch->Particles[i]->Speed * Engine->DeltaTime, ParticleBatch->Particles[i]->Angle);
+            else
+            {
+                slayVectorTranslate(ParticleBatch->Particles[i]->X, ParticleBatch->Particles[i]->Y, &ParticleBatch->Particles[i]->X, &ParticleBatch->Particles[i]->Y, ParticleBatch->Particles[i]->Speed * Engine->DeltaTime, ParticleBatch->Particles[i]->Angle);
+            }
         }
 
         if (ParticleBatch->Particles[i] == NULL)
