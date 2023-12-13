@@ -40,7 +40,13 @@ slayColls slayCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2)
     Hitbox2LowerRightX = Hitbox2->LowerRightX + *Hitbox2->ObjectX;
     Hitbox2LowerRightY = Hitbox2->LowerRightY + *Hitbox2->ObjectY;
 
-    result = 0;
+    result = slayCollNONE;
+
+    if (Hitbox1LowerRightX < Hitbox2UpperLeftX || Hitbox2LowerRightX < Hitbox1UpperLeftX || Hitbox1LowerRightY < Hitbox2UpperLeftY || Hitbox2LowerRightY < Hitbox1UpperLeftY)
+    {
+        return result;
+    }
+
     if (((Hitbox1UpperLeftX <= Hitbox2LowerRightX && Hitbox2LowerRightX <= Hitbox1LowerRightX) && (Hitbox1UpperLeftY <= Hitbox2LowerRightY && Hitbox2LowerRightY <= Hitbox1LowerRightY)) || ((Hitbox2UpperLeftX <= Hitbox1UpperLeftX && Hitbox1UpperLeftX <= Hitbox2LowerRightX) && (Hitbox2UpperLeftY <= Hitbox1UpperLeftY && Hitbox1UpperLeftY <= Hitbox2LowerRightY)))
     {
         result = result | slayCollTOPLEFT;
