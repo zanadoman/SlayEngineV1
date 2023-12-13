@@ -9,6 +9,8 @@
 
 typedef struct slayEngineStruct slayEngine;
 typedef struct slayDisplayStruct slayDisplay;
+typedef struct slayParticleBatchStruct slayParticleBatch;
+typedef struct slayParticleStruct slayParticle;
 typedef struct slayMouseStruct slayMouse;
 typedef struct slayHitboxStruct slayHitbox;
 typedef struct slayCameraStruct slayCamera;
@@ -82,6 +84,53 @@ uint8 slayRender3DTextureCamera(slayEngine* Engine, double X, double Y, uint16 W
 uint8 slayRenderText(slayEngine* Engine, slayFont* Font, char* Characters, double X, double Y, double Size, double Angle, uint8 Flip, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA);
 uint8 slayRenderTextCamera(slayEngine* Engine, slayFont* Font, char* Characters, double X, double Y, double Size, double Angle, uint8 Flip, double Distance, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA);
 uint8 slayRender3DTextCamera(slayEngine* Engine, slayFont* Font, char* Characters, double X, double Y, double Size, double Angle, uint8 Flip, double FirstLayer, double Depth, double Quality, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA);
+
+//Particle___________________________________________________________
+
+struct slayParticleBatchStruct
+{
+    slayParticle* *Particles;
+    uint64 Count;
+
+    uint64 MinLifeTime;
+    uint64 MaxLifeTime;
+
+    uint16 MinSize;
+    uint16 MaxSize;
+
+    double MinSpeed;
+    double MaxSpeed;
+
+    double MinAngle;
+    double MaxAngle;
+
+    SDL_Texture* Texture;
+
+    uint8 MinColorR;
+    uint8 MaxColorR;
+    uint8 MinColorG;
+    uint8 MaxColorG;
+    uint8 MinColorB;
+    uint8 MaxColorB;
+
+    uint8 MinAlpha;
+    uint8 MaxAlpha;
+};
+
+struct slayParticleStruct
+{
+    uint64 LifeTime;
+
+    uint16 Size;
+    double Speed;
+    double Angle;
+
+    uint8 ColorR;
+    uint8 ColorG;
+    uint8 ColorB;
+
+    uint8 Alpha;
+};
 
 //Audio______________________________________________________________
 
