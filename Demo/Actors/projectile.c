@@ -57,7 +57,7 @@ uint8 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, ea
         {
             collision = slayCollision(((projectile*)Projectiles->Values[i])->Hitbox, ((platform*)Platforms->Values[j])->Hitbox);
 
-            if (collision > 0 || (((projectile*)Projectiles->Values[i])->X < ((projectile*)Projectiles->Values[i])->MinX - ((projectile*)Projectiles->Values[i])->Width || ((projectile*)Projectiles->Values[i])->MaxX < ((projectile*)Projectiles->Values[i])->X) || (((projectile*)Projectiles->Values[i])->Y < ((projectile*)Projectiles->Values[i])->MixY - ((projectile*)Projectiles->Values[i])->Height || ((projectile*)Projectiles->Values[i])->MaxY < ((projectile*)Projectiles->Values[i])->Y))
+            if (slayCollNONE < collision || (((projectile*)Projectiles->Values[i])->X < ((projectile*)Projectiles->Values[i])->MinX - ((projectile*)Projectiles->Values[i])->Width || ((projectile*)Projectiles->Values[i])->MaxX < ((projectile*)Projectiles->Values[i])->X) || (((projectile*)Projectiles->Values[i])->Y < ((projectile*)Projectiles->Values[i])->MixY - ((projectile*)Projectiles->Values[i])->Height || ((projectile*)Projectiles->Values[i])->MaxY < ((projectile*)Projectiles->Values[i])->Y))
             {
                 free(((projectile*)Projectiles->Values[i])->Hitbox);
                 arrRemove(Projectiles, i);
@@ -78,7 +78,7 @@ uint8 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, ea
                 if (Eagle->Alive)
                 {
                     collision = slayCollision(((projectile*)Projectiles->Values[i])->Hitbox, Eagle->Hitbox);
-                    if (0 < collision)
+                    if (slayCollNONE < collision)
                     {
                         free(((projectile*)Projectiles->Values[i])->Hitbox);
                         arrRemove(Projectiles, i);
@@ -95,7 +95,7 @@ uint8 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, ea
                 if (Player->Alive)
                 {
                     collision = slayCollision(((projectile*)Projectiles->Values[i])->Hitbox, Player->Hitbox);
-                    if (0 < collision)
+                    if (slayCollNONE < collision)
                     {
                         free(((projectile*)Projectiles->Values[i])->Hitbox);
                         arrRemove(Projectiles, i);
