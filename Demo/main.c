@@ -1,6 +1,7 @@
 /*
 **Egér kurzor pont/grab
 **Egér kurzor textúra point/grab
+**BPS??
 */
 
 #include "game.h"
