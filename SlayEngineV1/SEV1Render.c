@@ -124,6 +124,11 @@ uint8 slayRenderTexture(slayEngine* Engine, double X, double Y, uint16 Width, ui
 {
     SDL_Rect Object;
 
+    if (Texture == NULL)
+    {
+        return 1;
+    }
+
     Object.x = X;
     Object.y = Y;
     Object.w = Width;
@@ -131,12 +136,12 @@ uint8 slayRenderTexture(slayEngine* Engine, double X, double Y, uint16 Width, ui
     
     if ((-Object.w <= Object.x && Object.x <= Engine->Display->Width) && (-Object.h <= Object.y && Object.y <= Engine->Display->Height))
     {
-        if (Texture != NULL && SDL_SetTextureAlphaMod(Texture, Alpha) != 0)
+        if (SDL_SetTextureAlphaMod(Texture, Alpha) != 0)
         {
             printf("ERROR Unable to set TEXTURE_ALPHA_MOD\n");
             exit(1);
         }
-        if (Texture != NULL && SDL_RenderCopyEx(Engine->Display->Renderer, Texture, NULL, &Object, Angle, NULL, Flip) != 0)
+        if (SDL_RenderCopyEx(Engine->Display->Renderer, Texture, NULL, &Object, Angle, NULL, Flip) != 0)
         {
             printf("ERROR Unable to draw TEXTURE\n");
             exit(1);
@@ -150,16 +155,21 @@ uint8 slayRenderTextureCamera(slayEngine* Engine, double X, double Y, uint16 Wid
 {
     SDL_Rect Object;
 
+    if (Texture == NULL)
+    {
+        return 1;
+    }
+
     slayApplyCamera(Engine, &Object, X, Y, Width, Height, Distance);
 
     if ((-Object.w <= Object.x && Object.x <= Engine->Display->Width) && (-Object.h <= Object.y && Object.y <= Engine->Display->Height))
     {
-        if (Texture != NULL && SDL_SetTextureAlphaMod(Texture, Alpha) != 0)
+        if (SDL_SetTextureAlphaMod(Texture, Alpha) != 0)
         {
             printf("ERROR Unable to set TEXTURE_ALPHA_MOD\n");
             exit(1);
         }
-        if (Texture != NULL &&SDL_RenderCopyEx(Engine->Display->Renderer, Texture, NULL, &Object, Angle, NULL, Flip) != 0)
+        if (SDL_RenderCopyEx(Engine->Display->Renderer, Texture, NULL, &Object, Angle, NULL, Flip) != 0)
         {
             printf("ERROR Unable to draw TEXTURE\n");
             exit(1);
@@ -171,6 +181,11 @@ uint8 slayRenderTextureCamera(slayEngine* Engine, double X, double Y, uint16 Wid
 
 uint8 slayRender3DTextureCamera(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, double Angle, uint8 Flip, double FirstLayer, double Depth, double Quality, slayTexture* Texture, uint8 Alpha)
 {
+    if (Texture == NULL)
+    {
+        return 1;
+    }
+
     for (double i = FirstLayer - Depth; i <= FirstLayer; i += Quality)
     {
         slayRenderTextureCamera(Engine, X, Y, Width, Height, Angle, Flip, i, Texture, Alpha);
@@ -185,6 +200,11 @@ uint8 slayRenderText(slayEngine* Engine, slayFont* Font, char* Characters, doubl
     SDL_Surface* surface;
     SDL_Texture* texture;
     SDL_Color color;
+
+    if (Characters[0] == '\0')
+    {
+        return 1;
+    }
 
     color.r = ColorR;
     color.g = ColorG;
@@ -231,6 +251,11 @@ uint8 slayRenderTextCamera(slayEngine* Engine, slayFont* Font, char* Characters,
     SDL_Texture* texture;
     SDL_Color color;
 
+    if (Characters[0] == '\0')
+    {
+        return 1;
+    }
+
     color.r = ColorR;
     color.g = ColorG;
     color.b = ColorB;
@@ -268,6 +293,11 @@ uint8 slayRenderTextCamera(slayEngine* Engine, slayFont* Font, char* Characters,
 
 uint8 slayRender3DTextCamera(slayEngine* Engine, slayFont* Font, char* Characters, double X, double Y, double Size, double Angle, uint8 Flip, double FirstLayer, double Depth, double Quality, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA)
 {
+    if (Characters[0] == '\0')
+    {
+        return 1;
+    }
+
     for (double i = FirstLayer - Depth; i <= FirstLayer; i += Quality)
     {
         slayRenderTextCamera(Engine, Font, Characters, X, Y, Size, Angle, Flip, i, ColorR, ColorG, ColorB, ColorA);
