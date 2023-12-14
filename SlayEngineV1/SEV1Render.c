@@ -120,7 +120,7 @@ uint8 slayRender3DColorCamera(slayEngine* Engine, double X, double Y, uint16 Wid
     return 0;
 }
 
-uint8 slayRenderTexture(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, double Angle, uint8 Flip, slayTexture* Texture, uint8 Alpha)
+uint8 slayRenderTexture(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, double Angle, uint8 Flip, slayTexture* Texture, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 Alpha)
 {
     SDL_Rect Object;
 
@@ -136,6 +136,11 @@ uint8 slayRenderTexture(slayEngine* Engine, double X, double Y, uint16 Width, ui
     
     if ((-Object.w <= Object.x && Object.x <= Engine->Display->Width) && (-Object.h <= Object.y && Object.y <= Engine->Display->Height))
     {
+        if (SDL_SetTextureColorMod(Texture, ColorR, ColorG, ColorB) != 0)
+        {
+            printf("ERROR Unable to set TEXTURE_COLOR_MOD\n");
+            exit(1);
+        }
         if (SDL_SetTextureAlphaMod(Texture, Alpha) != 0)
         {
             printf("ERROR Unable to set TEXTURE_ALPHA_MOD\n");
@@ -151,7 +156,7 @@ uint8 slayRenderTexture(slayEngine* Engine, double X, double Y, uint16 Width, ui
     return 0;
 }
 
-uint8 slayRenderTextureCamera(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, double Angle, uint8 Flip, double Distance, slayTexture* Texture, uint8 Alpha)
+uint8 slayRenderTextureCamera(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, double Angle, uint8 Flip, double Distance, slayTexture* Texture, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 Alpha)
 {
     SDL_Rect Object;
 
@@ -164,6 +169,11 @@ uint8 slayRenderTextureCamera(slayEngine* Engine, double X, double Y, uint16 Wid
 
     if ((-Object.w <= Object.x && Object.x <= Engine->Display->Width) && (-Object.h <= Object.y && Object.y <= Engine->Display->Height))
     {
+        if (SDL_SetTextureColorMod(Texture, ColorR, ColorG, ColorB) != 0)
+        {
+            printf("ERROR Unable to set TEXTURE_COLOR_MOD\n");
+            exit(1);
+        }
         if (SDL_SetTextureAlphaMod(Texture, Alpha) != 0)
         {
             printf("ERROR Unable to set TEXTURE_ALPHA_MOD\n");
@@ -179,7 +189,7 @@ uint8 slayRenderTextureCamera(slayEngine* Engine, double X, double Y, uint16 Wid
     return 0;
 }
 
-uint8 slayRender3DTextureCamera(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, double Angle, uint8 Flip, double FirstLayer, double Depth, double Quality, slayTexture* Texture, uint8 Alpha)
+uint8 slayRender3DTextureCamera(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, double Angle, uint8 Flip, double FirstLayer, double Depth, double Quality, slayTexture* Texture, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 Alpha)
 {
     if (Texture == NULL)
     {
@@ -188,7 +198,7 @@ uint8 slayRender3DTextureCamera(slayEngine* Engine, double X, double Y, uint16 W
 
     for (double i = FirstLayer - Depth; i <= FirstLayer; i += Quality)
     {
-        slayRenderTextureCamera(Engine, X, Y, Width, Height, Angle, Flip, i, Texture, Alpha);
+        slayRenderTextureCamera(Engine, X, Y, Width, Height, Angle, Flip, i, Texture, ColorR, ColorG, ColorB, Alpha);
     }
 
     return 0;

@@ -26,11 +26,11 @@ uint8 renderPlayer(slayEngine* Engine, player* Player)
 {
     if (Player->Facing == 1)
     {
-        slayRenderTextureCamera(Engine, Player->X, Player->Y, Player->Width, Player->Height, 0, slayFlipNONE, 1, Player->TextureCurrent, 255);
+        slayRenderTextureCamera(Engine, Player->X, Player->Y, Player->Width, Player->Height, 0, slayFlipNONE, 1, Player->TextureCurrent, 255, 255, 255, 255);
     }
     else
     {
-        slayRenderTextureCamera(Engine, Player->X, Player->Y, Player->Width, Player->Height, 0, slayFlipHORIZONTAL, 1, Player->TextureCurrent, 255);
+        slayRenderTextureCamera(Engine, Player->X, Player->Y, Player->Width, Player->Height, 0, slayFlipHORIZONTAL, 1, Player->TextureCurrent, 255, 255, 255, 255);
     }
 
     return 0;
@@ -40,11 +40,11 @@ uint8 renderEagle(slayEngine* Engine, eagle* Eagle)
 {
     if (Eagle->Facing == 1)
     {
-        slayRenderTextureCamera(Engine, Eagle->X, Eagle->Y, Eagle->Width, Eagle->Height, 0, slayFlipHORIZONTAL, 1, Eagle->TextureCurrent, 255);
+        slayRenderTextureCamera(Engine, Eagle->X, Eagle->Y, Eagle->Width, Eagle->Height, 0, slayFlipHORIZONTAL, 1, Eagle->TextureCurrent, 255, 255, 255, 255);
     }
     else
     {
-        slayRenderTextureCamera(Engine, Eagle->X, Eagle->Y, Eagle->Width, Eagle->Height, 0, slayFlipNONE, 1, Eagle->TextureCurrent, 255);
+        slayRenderTextureCamera(Engine, Eagle->X, Eagle->Y, Eagle->Width, Eagle->Height, 0, slayFlipNONE, 1, Eagle->TextureCurrent, 255, 255, 255, 255);
     }
 
     return 0;
@@ -56,7 +56,7 @@ uint8 renderPause(slayEngine* Engine, pause* Pause)
 
     for (uint8 i = 0; i < Pause->Buttons->Length; i++)
     {
-        slayRenderTexture(Engine, ((button*)Pause->Buttons->Values[i])->X, ((button*)Pause->Buttons->Values[i])->Y, ((button*)Pause->Buttons->Values[i])->Width, ((button*)Pause->Buttons->Values[i])->Height, 0, slayFlipNONE, ((button*)Pause->Buttons->Values[i])->TextureCurrent, 255);
+        slayRenderTexture(Engine, ((button*)Pause->Buttons->Values[i])->X, ((button*)Pause->Buttons->Values[i])->Y, ((button*)Pause->Buttons->Values[i])->Width, ((button*)Pause->Buttons->Values[i])->Height, 0, slayFlipNONE, ((button*)Pause->Buttons->Values[i])->TextureCurrent, 255, 255, 255, 255);
     }
 
     return 0;

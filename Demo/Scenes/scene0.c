@@ -20,7 +20,7 @@ uint8 renderScene0(slayEngine* Engine, scene0* Scene)
     //Button
     for (uint8 i = 0; i < Scene->Buttons->Length; i++)
     {
-        slayRenderTexture(Engine, ((button*)Scene->Buttons->Values[i])->X, ((button*)Scene->Buttons->Values[i])->Y, ((button*)Scene->Buttons->Values[i])->Width, ((button*)Scene->Buttons->Values[i])->Height, 0, slayFlipNONE, ((button*)Scene->Buttons->Values[i])->TextureCurrent, 255);
+        slayRenderTexture(Engine, ((button*)Scene->Buttons->Values[i])->X, ((button*)Scene->Buttons->Values[i])->Y, ((button*)Scene->Buttons->Values[i])->Width, ((button*)Scene->Buttons->Values[i])->Height, 0, slayFlipNONE, ((button*)Scene->Buttons->Values[i])->TextureCurrent, 255, 255, 255, 255);
     }
 
     return 0;

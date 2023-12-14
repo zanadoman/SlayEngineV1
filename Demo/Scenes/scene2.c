@@ -23,7 +23,7 @@ uint8 updateScene2(slayEngine* Engine, scene2* Scene)
 uint8 renderScene2(slayEngine* Engine, scene2* Scene)
 {
     //Background
-    slayRenderTexture(Engine, 0, 0, Engine->Display->Width, Engine->Display->Height, 0, slayFlipNONE, Scene->TextureBackground, 255);
+    slayRenderTexture(Engine, 0, 0, Engine->Display->Width, Engine->Display->Height, 0, slayFlipNONE, Scene->TextureBackground, 255, 255, 255, 255);
 
     //Hint
     slayRenderTextCamera(Engine, ((game*)Engine->Game)->FontCrazyPixel, "Movement: A/D", -150, -100, 1, 0, slayFlipNONE, 0.5, 0, 0, 0, 255);
@@ -32,7 +32,7 @@ uint8 renderScene2(slayEngine* Engine, scene2* Scene)
     //Platforms
     for (uint8 i = 0; i < Scene->Platforms->Length; i++)
     {
-        slayRender3DTextureCamera(Engine, ((platform*)Scene->Platforms->Values[i])->X, ((platform*)Scene->Platforms->Values[i])->Y, ((platform*)Scene->Platforms->Values[i])->Width, ((platform*)Scene->Platforms->Values[i])->Height, 0, slayFlipNONE, 1.02, 0.04, 0.005, Scene->TexturePlatform, 255);
+        slayRender3DTextureCamera(Engine, ((platform*)Scene->Platforms->Values[i])->X, ((platform*)Scene->Platforms->Values[i])->Y, ((platform*)Scene->Platforms->Values[i])->Width, ((platform*)Scene->Platforms->Values[i])->Height, 0, slayFlipNONE, 1.02, 0.04, 0.005, Scene->TexturePlatform, 255, 255, 255, 255);
     }
 
     //Player

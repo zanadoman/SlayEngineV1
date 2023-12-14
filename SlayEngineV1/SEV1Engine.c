@@ -135,7 +135,7 @@ uint8 slayLogo(slayEngine* Engine)
     logo = slayLoadTexture(Engine, "assets/engine/logo.jpg");
 
     slayRenderStart(Engine);
-    slayRenderTexture(Engine, 0, 0, Engine->Display->Width, Engine->Display->Height, 0, slayFlipNONE, logo, 255);
+    slayRenderTexture(Engine, 0, 0, Engine->Display->Width, Engine->Display->Height, 0, slayFlipNONE, logo, 255, 255, 255, 255);
     slayRenderEnd(Engine);
     SDL_DestroyTexture(logo);
 
