@@ -195,7 +195,7 @@ Deallocate the flipbook from the memory
 \
 #undef main\
 \
-uint8 main(uint8 argc, char\* \*argv)\
+sint32 main(sint32 argc, char\* \*argv)\
 {\
 &emsp;&emsp;&emsp;slayEngine\* Engine;\
 \
