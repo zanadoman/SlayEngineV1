@@ -131,12 +131,12 @@ uint8 slayRenderTexture(slayEngine* Engine, double X, double Y, uint16 Width, ui
     
     if ((-Object.w <= Object.x && Object.x <= Engine->Display->Width) && (-Object.h <= Object.y && Object.y <= Engine->Display->Height))
     {
-        if (SDL_SetTextureAlphaMod(Texture, Alpha) != 0)
+        if (Texture != NULL && SDL_SetTextureAlphaMod(Texture, Alpha) != 0)
         {
             printf("ERROR Unable to set TEXTURE_ALPHA_MOD\n");
             exit(1);
         }
-        if (SDL_RenderCopyEx(Engine->Display->Renderer, Texture, NULL, &Object, Angle, NULL, Flip) != 0)
+        if (Texture != NULL && SDL_RenderCopyEx(Engine->Display->Renderer, Texture, NULL, &Object, Angle, NULL, Flip) != 0)
         {
             printf("ERROR Unable to draw TEXTURE\n");
             exit(1);
@@ -154,12 +154,12 @@ uint8 slayRenderTextureCamera(slayEngine* Engine, double X, double Y, uint16 Wid
 
     if ((-Object.w <= Object.x && Object.x <= Engine->Display->Width) && (-Object.h <= Object.y && Object.y <= Engine->Display->Height))
     {
-        if (SDL_SetTextureAlphaMod(Texture, Alpha) != 0)
+        if (Texture != NULL && SDL_SetTextureAlphaMod(Texture, Alpha) != 0)
         {
             printf("ERROR Unable to set TEXTURE_ALPHA_MOD\n");
             exit(1);
         }
-        if (SDL_RenderCopyEx(Engine->Display->Renderer, Texture, NULL, &Object, Angle, NULL, Flip) != 0)
+        if (Texture != NULL &&SDL_RenderCopyEx(Engine->Display->Renderer, Texture, NULL, &Object, Angle, NULL, Flip) != 0)
         {
             printf("ERROR Unable to draw TEXTURE\n");
             exit(1);
