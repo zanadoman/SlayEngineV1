@@ -7,7 +7,7 @@ slaySound* slayLoadSound(char* Path)
     result = Mix_LoadWAV(Path);
     if (result == NULL)
     {
-        printf("ERROR Unable to load sound: %s\n", Path);
+        printf("ERROR Unable to load SOUND: %s\n", Path);
         exit(1);
     }
 

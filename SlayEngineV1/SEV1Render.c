@@ -9,10 +9,15 @@ slayTexture* slayLoadTexture(slayEngine* Engine, char* Path)
     surface = IMG_Load(Path);
     if (surface == NULL)
     {
-        printf("ERROR Unable to load texture: %s\n", Path);
+        printf("ERROR Unable to load TEXTURE: %s\n", Path);
         exit(1);
     }
     result = SDL_CreateTextureFromSurface(Engine->Display->Renderer, surface);
+    if (result == NULL)
+    {
+        printf("ERROR Unable to process TEXTURE (%s)\n", Path);
+        exit(1);
+    }
     
     SDL_FreeSurface(surface);
 
@@ -26,7 +31,7 @@ slayFont* slayLoadFont(char* Path, uint8 Size)
     result = TTF_OpenFont(Path, Size);
     if (result == NULL)
     {
-        printf("ERROR Unable to load font: %s\n", Path);
+        printf("ERROR Unable to load FONT: %s\n", Path);
         exit(1);
     }
 
@@ -35,8 +40,16 @@ slayFont* slayLoadFont(char* Path, uint8 Size)
 
 uint8 slayRenderStart(slayEngine* Engine)
 {
-    SDL_SetRenderDrawColor(Engine->Display->Renderer, 0, 0, 0, 255);
-    SDL_RenderClear(Engine->Display->Renderer);
+    if (SDL_SetRenderDrawColor(Engine->Display->Renderer, 0, 0, 0, 255) != 0)
+    {
+        printf("ERROR Unable to set RENDERER_COLOR\n");
+        exit(1);
+    }
+    if (SDL_RenderClear(Engine->Display->Renderer) != 0)
+    {
+        printf("ERROR Unable to clear RENDERER\n");
+        exit(1);
+    }
 
     return 0;
 }
@@ -59,8 +72,16 @@ uint8 slayRenderColor(slayEngine* Engine, double X, double Y, uint16 Width, uint
     
     if ((-Object.w <= Object.x && Object.x <= Engine->Display->Width) && (-Object.h <= Object.y && Object.y <= Engine->Display->Height))
     {
-        SDL_SetRenderDrawColor(Engine->Display->Renderer, ColorR, ColorG, ColorB, ColorA);
-        SDL_RenderFillRect(Engine->Display->Renderer, &Object);
+        if (SDL_SetRenderDrawColor(Engine->Display->Renderer, ColorR, ColorG, ColorB, ColorA) != 0)
+        {
+            printf("ERROR Unable to set RENDERER_COLOR (%d, %d, %d, %d)\n", ColorR, ColorG, ColorB, ColorA);
+            exit(1);
+        }
+        if (SDL_RenderFillRect(Engine->Display->Renderer, &Object) != 0)
+        {
+            printf("ERROR Unable to draw RECTANGLE (%d, %d, %d, %d)\n", ColorR, ColorG, ColorB, ColorA);
+            exit(1);
+        }
     }
 
     return 0;
@@ -74,8 +95,16 @@ uint8 slayRenderColorCamera(slayEngine* Engine, double X, double Y, uint16 Width
 
     if ((-Object.w <= Object.x && Object.x <= Engine->Display->Width) && (-Object.h <= Object.y && Object.y <= Engine->Display->Height))
     {
-        SDL_SetRenderDrawColor(Engine->Display->Renderer, ColorR, ColorG, ColorB, ColorA);
-        SDL_RenderFillRect(Engine->Display->Renderer, &Object);
+        if (SDL_SetRenderDrawColor(Engine->Display->Renderer, ColorR, ColorG, ColorB, ColorA) != 0)
+        {
+            printf("ERROR Unable to set RENDERER_COLOR (%d, %d, %d, %d)\n", ColorR, ColorG, ColorB, ColorA);
+            exit(1);
+        }
+        if (SDL_RenderFillRect(Engine->Display->Renderer, &Object) != 0)
+        {
+            printf("ERROR Unable to draw RECTANGLE (%d, %d, %d, %d)\n", ColorR, ColorG, ColorB, ColorA);
+            exit(1);
+        }
     }
 
     return 0;
@@ -102,8 +131,16 @@ uint8 slayRenderTexture(slayEngine* Engine, double X, double Y, uint16 Width, ui
     
     if ((-Object.w <= Object.x && Object.x <= Engine->Display->Width) && (-Object.h <= Object.y && Object.y <= Engine->Display->Height))
     {
-        SDL_SetTextureAlphaMod(Texture, Alpha);
-        SDL_RenderCopyEx(Engine->Display->Renderer, Texture, NULL, &Object, Angle, NULL, Flip);
+        if (SDL_SetTextureAlphaMod(Texture, Alpha) != 0)
+        {
+            printf("ERROR Unable to set TEXTURE_ALPHA_MOD\n");
+            exit(1);
+        }
+        if (SDL_RenderCopyEx(Engine->Display->Renderer, Texture, NULL, &Object, Angle, NULL, Flip) != 0)
+        {
+            printf("ERROR Unable to draw TEXTURE\n");
+            exit(1);
+        }
     }
 
     return 0;
@@ -117,8 +154,16 @@ uint8 slayRenderTextureCamera(slayEngine* Engine, double X, double Y, uint16 Wid
 
     if ((-Object.w <= Object.x && Object.x <= Engine->Display->Width) && (-Object.h <= Object.y && Object.y <= Engine->Display->Height))
     {
-        SDL_SetTextureAlphaMod(Texture, Alpha);
-        SDL_RenderCopyEx(Engine->Display->Renderer, Texture, NULL, &Object, Angle, NULL, Flip);
+        if (SDL_SetTextureAlphaMod(Texture, Alpha) != 0)
+        {
+            printf("ERROR Unable to set TEXTURE_ALPHA_MOD\n");
+            exit(1);
+        }
+        if (SDL_RenderCopyEx(Engine->Display->Renderer, Texture, NULL, &Object, Angle, NULL, Flip) != 0)
+        {
+            printf("ERROR Unable to draw TEXTURE\n");
+            exit(1);
+        }
     }
 
     return 0;
@@ -147,7 +192,17 @@ uint8 slayRenderText(slayEngine* Engine, slayFont* Font, char* Characters, doubl
     color.a = ColorA;
 
     surface = TTF_RenderText_Blended(Font, Characters, color);
+    if (surface == NULL)
+    {
+        printf("ERROR Unable to process TEXT_SURFACE (%s)\n", Characters);
+        exit(1);
+    }
     texture = SDL_CreateTextureFromSurface(Engine->Display->Renderer, surface);
+    if (texture == NULL)
+    {
+        printf("ERROR Unable to process TEXT_TEXTURE (%s)\n", Characters);
+        exit(1);
+    }
 
     Object.x = X;
     Object.y = Y;
@@ -156,7 +211,11 @@ uint8 slayRenderText(slayEngine* Engine, slayFont* Font, char* Characters, doubl
     
     if ((-Object.w <= Object.x && Object.x <= Engine->Display->Width) && (-Object.h <= Object.y && Object.y <= Engine->Display->Height))
     {
-        SDL_RenderCopyEx(Engine->Display->Renderer, texture, NULL, &Object, Angle, NULL, Flip);
+        if (SDL_RenderCopyEx(Engine->Display->Renderer, texture, NULL, &Object, Angle, NULL, Flip) != 0)
+        {
+            printf("ERROR Unable to draw TEXT (%s)\n", Characters);
+            exit(1);
+        }
     }
 
     SDL_FreeSurface(surface);
@@ -178,13 +237,27 @@ uint8 slayRenderTextCamera(slayEngine* Engine, slayFont* Font, char* Characters,
     color.a = ColorA;
 
     surface = TTF_RenderText_Blended(Font, Characters, color);
+    if (surface == NULL)
+    {
+        printf("ERROR Unable to process TEXT_SURFACE (%s)\n", Characters);
+        exit(1);
+    }
     texture = SDL_CreateTextureFromSurface(Engine->Display->Renderer, surface);
+    if (texture == NULL)
+    {
+        printf("ERROR Unable to process TEXT_TEXTURE (%s)\n", Characters);
+        exit(1);
+    }
 
     slayApplyCamera(Engine, &Object, X, Y, surface->w * Size, surface->h * Size, Distance);
     
     if ((-Object.w <= Object.x && Object.x <= Engine->Display->Width) && (-Object.h <= Object.y && Object.y <= Engine->Display->Height))
     {
-        SDL_RenderCopyEx(Engine->Display->Renderer, texture, NULL, &Object, Angle, NULL, Flip);
+        if (SDL_RenderCopyEx(Engine->Display->Renderer, texture, NULL, &Object, Angle, NULL, Flip) != 0)
+        {
+            printf("ERROR Unable to draw TEXT (%s)\n", Characters);
+            exit(1);
+        }
     }
 
     SDL_FreeSurface(surface);

@@ -8,8 +8,18 @@ slayFlipbook* slayNewFlipbook(slayEngine* Engine, uint32 Delay, uint64 Count, ch
     char* PathsTemp;
 
     result = malloc(sizeof(slayFlipbook));
+    if (result == NULL)
+    {
+        printf("ERROR Unable to allocate memory for FLIPBOOK\n");
+        exit(1);
+    }
 
     result->Textures = malloc(sizeof(void*) * Count);
+    if (result->Textures == NULL)
+    {
+        printf("ERROR Unable to allocate memory for FLIPBOOK_TEXTURES\n");
+        exit(1);
+    }
     va_start(PathsArgs, Paths);
     result->Textures[0] = slayLoadTexture(Engine, Paths);
     for (uint64 i = 1; i < Count; i++)

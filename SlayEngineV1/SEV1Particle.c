@@ -5,8 +5,18 @@ slayParticleBatch* newParticleBatch(uint64 Count, uint16 MinWidth, uint16 MaxWid
     slayParticleBatch* result;
 
     result = malloc(sizeof(slayParticleBatch));
+    if (result == NULL)
+    {
+        printf("ERROR Unable to allocate memory for PARTICLE_BATCH\n");
+        exit(1);
+    }
 
     result->Particles = malloc(sizeof(slayParticle*) * Count);
+    if (result->Particles == NULL)
+    {
+        printf("ERROR Unable to allocate memory for PARTICLE_BATCH_PARTICLES\n");
+        exit(1);
+    }
     for (uint64 i = 0; i < Count; i++)
     {
         result->Particles[i] = NULL;
@@ -47,6 +57,11 @@ slayParticle* newParticle(slayParticleBatch* ParticleBatch)
     slayParticle* result;
 
     result = malloc(sizeof(slayParticle));
+    if (result == NULL)
+    {
+        printf("ERROR Unable to allocate memory for PARTICLE\n");
+        exit(1);
+    }
 
     result->Width = slayRandom(ParticleBatch->MinWidth, ParticleBatch->MaxWidth, 1);
     result->Height = slayRandom(ParticleBatch->MinHeight, ParticleBatch->MaxHeight, 2);
@@ -115,6 +130,7 @@ uint8 slayDestroyParticleBatch(slayParticleBatch* ParticleBatch)
     {
         free(ParticleBatch->Particles[i]);
     }
+    SDL_DestroyTexture(ParticleBatch->Texture);
     free(ParticleBatch);
 
     return 0;

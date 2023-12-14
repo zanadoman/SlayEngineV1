@@ -8,19 +8,59 @@ slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Scene
 
     SDL_Surface* icon;
 
-    SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
-    TTF_Init();
-    Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 4096);
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0)
+    {
+        printf("ERROR Unable to initialize SDL");
+        exit(1);
+    }
+    if (TTF_Init() != 0)
+    {
+        printf("ERROR Unable to initialize SDL_TTF");
+        exit(1);
+    }
+    if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 4096) != 0)
+    {
+        printf("ERROR Unable to initialize SDL_MIXER");
+        exit(1);
+    }
 
     result = malloc(sizeof(slayEngine));
+    if (result == NULL)
+    {
+        printf("ERROR Unable to allocate memory for ENGINE\n");
+        exit(1);
+    }
     
     result->Display = malloc(sizeof(slayDisplay));
+    if (result->Display == NULL)
+    {
+        printf("ERROR Unable to allocate memory for DISPLAY\n");
+        exit(1);
+    }
     result->Display->Width = Width;
     result->Display->Height = Height;
     result->Display->Window = SDL_CreateWindow(Title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, result->Display->Width, result->Display->Height, SDL_WINDOW_FULLSCREEN_DESKTOP | SDL_WINDOW_RESIZABLE | SDL_WINDOW_INPUT_GRABBED);
-    result->Display->Renderer = SDL_CreateRenderer(result->Display->Window, -1, SDL_RENDERER_ACCELERATED);  
-    SDL_RenderSetLogicalSize(result->Display->Renderer, Width, Height);
-    SDL_SetRenderDrawBlendMode(result->Display->Renderer, SDL_BLENDMODE_BLEND);
+    if (result->Display->Window == NULL)
+    {
+        printf("ERROR Unable to create WINDOW");
+        exit(1);
+    }
+    result->Display->Renderer = SDL_CreateRenderer(result->Display->Window, -1, SDL_RENDERER_ACCELERATED);
+    if (result->Display->Renderer == NULL)
+    {
+        printf("ERROR Unable to create RENDERER");
+        exit(1);
+    }
+    if (SDL_RenderSetLogicalSize(result->Display->Renderer, Width, Height) != 0)
+    {
+        printf("ERROR Unable to set RENDERER_LOGICAL_SIZE");
+        exit(1);
+    }
+    if (SDL_SetRenderDrawBlendMode(result->Display->Renderer, SDL_BLENDMODE_BLEND) != 0)
+    {
+        printf("ERROR Unable to set RENDERER_BLEND_MODE");
+        exit(1);
+    }
 
     if (IconPath != NULL)
     {
@@ -32,14 +72,29 @@ slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Scene
         }
         else
         {
-            printf("ERROR Unable to load icon: %s\n", IconPath);
+            printf("ERROR Unable to load ICON: %s\n", IconPath);
         }
     }
 
     result->Camera = malloc(sizeof(slayCamera));
+    if (result->Camera == NULL)
+    {
+        printf("ERROR Unable to allocate memory for CAMERA\n");
+        exit(1);
+    }
     result->Mouse = malloc(sizeof(slayMouse));
+    if (result->Mouse == NULL)
+    {
+        printf("ERROR Unable to allocate memory for MOUSE\n");
+        exit(1);
+    }
 
     result->Threads = arrNew(Threads);
+    if (result->Threads == NULL)
+    {
+        printf("ERROR Unable to allocate memory for THREADS\n");
+        exit(1);
+    }
     for (uint64 i = 0; i < result->Threads->Length; i++)
     {
         result->Threads->Values[i] = malloc(sizeof(pthread_t));
@@ -50,6 +105,11 @@ slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Scene
     result->MaxFPS = MaxFPS;
 
     result->Scenes = arrNew(Scenes);
+    if (result->Scenes == NULL)
+    {
+        printf("ERROR Unable to allocate memory for SCENES\n");
+        exit(1);
+    }
     for (uint64 i = 0; i < result->Scenes->Length; i++)
     {
         result->Scenes->Values[i] = NULL;

@@ -5,6 +5,11 @@ slayHitbox* slayNewHitbox(double* ObjectX, double* ObjectY, sint32 UpperLeftX, s
     slayHitbox* result;
 
     result = malloc(sizeof(slayHitbox));
+    if (result == NULL)
+    {
+        printf("ERROR Unable to allocate memory for HITBOX\n");
+        exit(1);
+    }
 
     result->ObjectX = ObjectX;
     result->ObjectY = ObjectY;

@@ -10,22 +10,35 @@ slayJSON* slayLoadJSON(char* Path)
     file = fopen(Path, "r");
     if (file == NULL)
     {
-        return NULL;
+        printf("ERROR Unable to open JSON: %s\n", Path);
+        exit(1);
     }
 
     raw = strNew();
+    if (raw == NULL)
+    {
+        printf("ERROR Unable to allocate memory for JSON_RAW (%s)\n", Path);
+        fclose(file);
+        exit(1);
+    }
     while (!feof(file))
     { 
-        strAppend(raw, fgetc(file));
+        if (strAppend(raw, fgetc(file)) != 0)
+        {
+            printf("ERROR Unable to process JSON_RAW (%s)\n", Path);
+            fclose(file);
+            exit(1);
+        }
     }
     fclose(file);
 
     result = cJSON_Parse(raw->String);
-    strPurge(raw);
     if (result == NULL)
     {
-        return NULL;
+        printf("ERROR Unable to parse JSON (%s)\n", Path);
+        exit(1);
     }
+    strPurge(raw);
 
     return result;
 }
@@ -38,13 +51,23 @@ uint8 slaySaveJSON(slayJSON* JSON, char* Path)
     file = fopen(Path, "w");
     if (file == NULL)
     {
-        return 1;
+        printf("ERROR Unable to open JSON: %s\n", Path);
+        exit(1);
     }
     
     raw = cJSON_Print(JSON);
-    fputs(raw, file);
-    free(raw);
+    if (raw == NULL)
+    {
+        printf("ERROR Unable to process JSON_RAW (%s)\n", Path);
+        exit(1);
+    }
+    if (fputs(raw, file) != 1)
+    {
+        printf("ERROR Unable to write JSON (%s)\n", Path);
+        exit(1);
+    }
     fclose(file);
+    free(raw);
 
     return 0;
 }
