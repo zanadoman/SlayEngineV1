@@ -3,7 +3,7 @@
 **Bloom
 **Shading
 **Mouse cursor texture switching
-**Networking
+**Networking.
 */
 
 #include "game.h"
