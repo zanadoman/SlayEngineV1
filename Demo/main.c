@@ -1,7 +1,6 @@
 /*
 **Particle system
 **Bloom
-**Shading
 **Mouse cursor texture switching
 **Networking
 */
