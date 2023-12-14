@@ -1,6 +1,6 @@
 #include "SlayEngineV1.h"
 
-slayParticleBatch* newParticleBatch(uint64 Count, uint16 MinWidth, uint16 MaxWidth, uint16 MinHeight, uint16 MaxHeight, double MinSpeed, double MaxSpeed, double MinAngle, double MaxAngle, uint64 MinLifeTime, uint64 MaxLifeTime, slayTexture* Texture, uint8 MinColorR, uint8 MaxColorR, uint8 MinColorG, uint8 MaxColorG, uint8 MinColorB, uint8 MaxColorB, uint8 MinAlpha, uint8 MaxAlpha)
+slayParticleBatch* newParticleBatch(slayEngine* Engine, uint64 Count, uint16 MinWidth, uint16 MaxWidth, uint16 MinHeight, uint16 MaxHeight, double MinSpeed, double MaxSpeed, double MinAngle, double MaxAngle, uint64 MinLifeTime, uint64 MaxLifeTime, char* TexturePath, uint8 MinColorR, uint8 MaxColorR, uint8 MinColorG, uint8 MaxColorG, uint8 MinColorB, uint8 MaxColorB, uint8 MinAlpha, uint8 MaxAlpha)
 {
     slayParticleBatch* result;
 
@@ -37,7 +37,7 @@ slayParticleBatch* newParticleBatch(uint64 Count, uint16 MinWidth, uint16 MaxWid
     result->MinLifeTime = MinLifeTime;
     result->MaxLifeTime = MaxLifeTime;
 
-    result->Texture = Texture;
+    result->Texture = slayLoadTexture(Engine, TexturePath);
 
     result->MinColorR = MinColorR;
     result->MaxColorR = MaxColorR;

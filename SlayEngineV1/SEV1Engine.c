@@ -98,6 +98,11 @@ slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Scene
     for (uint64 i = 0; i < result->Threads->Length; i++)
     {
         result->Threads->Values[i] = malloc(sizeof(pthread_t));
+        if (result->Threads->Values[i] == NULL)
+        {
+            printf("ERROR Unable to allocate memory for THREAD\n");
+            exit(1);
+        }
     }
 
     result->PrevTick = 0;
@@ -130,9 +135,9 @@ uint8 slayLogo(slayEngine* Engine)
     logo = slayLoadTexture(Engine, "assets/engine/logo.jpg");
 
     slayRenderStart(Engine);
-    SDL_RenderCopy(Engine->Display->Renderer, logo, NULL, NULL);
-    SDL_DestroyTexture(logo);
+    slayRenderTexture(Engine, 0, 0, Engine->Display->Width, Engine->Display->Height, 0, slayFlipNONE, logo, 255);
     slayRenderEnd(Engine);
+    SDL_DestroyTexture(logo);
 
     SDL_Delay(1500);
 
