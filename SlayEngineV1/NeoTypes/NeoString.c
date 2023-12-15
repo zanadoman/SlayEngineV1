@@ -203,6 +203,11 @@ logic strCompare(char* Characters1, char* Characters2)
 
 uint8 strPurge(string String)
 {
+    if (String == NULL)
+    {
+        return 0;
+    }
+
     free(String->String);
     free(String);
 

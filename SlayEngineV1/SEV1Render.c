@@ -126,7 +126,7 @@ uint8 slayRenderTexture(slayEngine* Engine, double X, double Y, uint16 Width, ui
 
     if (Texture == NULL)
     {
-        return 1;
+        return 0;
     }
 
     Object.x = X;
@@ -162,7 +162,7 @@ uint8 slayRenderTextureCamera(slayEngine* Engine, double X, double Y, uint16 Wid
 
     if (Texture == NULL)
     {
-        return 1;
+        return 0;
     }
 
     slayApplyCamera(Engine, &Object, X, Y, Width, Height, Distance);
@@ -193,7 +193,7 @@ uint8 slayRender3DTextureCamera(slayEngine* Engine, double X, double Y, uint16 W
 {
     if (Texture == NULL)
     {
-        return 1;
+        return 0;
     }
 
     for (double i = FirstLayer - Depth; i <= FirstLayer; i += Quality)

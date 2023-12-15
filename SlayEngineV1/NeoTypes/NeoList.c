@@ -246,6 +246,11 @@ uint8 listPurge(list List)
 {
     listNode tmp;
 
+    if (List == NULL)
+    {
+        return 0;
+    }
+
     tmp = List->Cache->Nodes[0];
     for (listNode i = List->Cache->Nodes[0]->Next; i != NULL; i = i->Next)
     {

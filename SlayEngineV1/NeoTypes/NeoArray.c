@@ -83,6 +83,11 @@ uint8 arrRemove(array Array, uint64 Index)
 
 uint8 arrPurge(array Array)
 {
+    if (Array == NULL)
+    {
+        return 0;
+    }
+
     free(Array->Values);
     free(Array);
 
