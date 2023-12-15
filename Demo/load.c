@@ -2,17 +2,15 @@
 
 uint8 loadGame(slayEngine* Engine)
 {
-    game* game;
     slayJSON* settings;
 
     Engine->Game = malloc(sizeof(game));
-    game = Engine->Game;
 
     settings = slayLoadJSON("saves/settings.json");
 
-    game->FontCrazyPixel = slayLoadFont("assets/crazy-pixel.ttf", 48);
-    game->Volume = slayGetJSONKey(settings, "volume")->ValueNumber;
-    game->TextureProjectile = slayLoadTexture(Engine, "assets/projectile.png");
+    ((game*)Engine->Game)->FontCrazyPixel = slayLoadFont("assets/crazy-pixel.ttf", 48);
+    ((game*)Engine->Game)->Volume = slayGetJSONKey(settings, "volume")->ValueNumber;
+    ((game*)Engine->Game)->TextureProjectile = slayLoadTexture(Engine, "assets/projectile.png");
 
     slayDestroyJSON(settings);
 

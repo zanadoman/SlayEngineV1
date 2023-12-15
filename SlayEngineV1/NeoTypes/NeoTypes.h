@@ -23,7 +23,7 @@ typedef struct listStruct* list;
 typedef struct listCacheStruct* listCache_t;
 typedef struct listNodeStruct* listNode;
 
-//________________NeoTypes.h_______________//
+//_____________________________________________NeoTypes.h____________________________________________//
 
 #define true 1
 #define false 0
@@ -38,14 +38,14 @@ typedef signed int sint32;
 typedef unsigned long uint64;
 typedef signed long sint64;
 
-//________________NeoCast.c________________// COMPLETED
+//_____________________________________________NeoCast.c_____________________________________________// COMPLETED
 
 /*Process a binary value stored in a double as an integer.*/
 uint64 asInt(double Value);
 /*Process a binary value stored in an integer as a double.*/
 double asDouble(uint64 Value);
 
-//________________NeoArray.c_______________// COMPLETED
+//_____________________________________________NeoArray.c____________________________________________// COMPLETED
 
 struct arrayStruct
 {
@@ -82,12 +82,12 @@ Important: if the elements of the array were pointers allocated with a malloc(),
 Note: it's recommended to set the Array's value to NULL after calling this function, it's safe to pass a NULL value to this function.*/
 uint8 arrPurge(array Array);
 
-//_______________NeoString.c_______________ // COMPLETED
+//____________________________________________NeoString.c____________________________________________// COMPLETED
 
 struct stringStruct
 {
     char* String;
-    uint64 Lenght;
+    uint64 Length;
 };
 
 /*Returns the length of a string (char*) with the '\0' included.*/
@@ -122,7 +122,7 @@ logic strCompare(char* Characters1, char* Characters2);
 
 uint8 strPurge(string String);
 
-//________________NeoList.c________________ // COMPLETED
+//_____________________________________________NeoList.c_____________________________________________ // COMPLETED
 
 struct listStruct
 {
@@ -177,7 +177,7 @@ Important: if the elements of the list were pointers allocated with a malloc(), 
 Note: it's recommended to set the List's value to NULL after calling this function, it's safe to pass a NULL value to this function.*/
 uint8 listPurge(list List);
 
-//_______________NeoConvert.c______________ // COMPLETED
+//____________________________________________NeoConvert.c___________________________________________ // COMPLETED
 
 /*Converts a string to an unsigned integer.
 You can check the success of the conversion by passing a logic variable
@@ -209,12 +209,12 @@ The string will be deallocated and reinitialized, if the reinitialization fails 
 Returns 0 on success and 1 on error.*/
 uint8 DOUBLEtoSTR(double Number, string String);
 
-//________________NeoFile.c________________ // COMPLETED
+//_____________________________________________NeoFile.c_____________________________________________ // COMPLETED
 
 /*Reads a text file and puts its lines into an array of strings.
 Returns true on success and false on error.
 Important: failures can lead to memory leaks.
-Note: this function will not clear the values of the passed array, instead it will insert every line as a new sring to the end of the array.*/
+Note: this function will not clear the values of the passed array, instead it will insert every line as a new string to the end of the array.*/
 logic fileRead(char* FilePath, array Lines);
 /*Writes the content of an array of strings line by line into a text file.
 Returns true on success and false on error.

@@ -29,42 +29,42 @@ string strNew()
         return NULL;
     }
     String->String[0] = '\0';
-    String->Lenght = 1;
+    String->Length = 1;
 
     return String;
 }
 
 uint8 strInit(string String, char* Characters)
 {   
-    String->Lenght = strLength(Characters);
+    String->Length = strLength(Characters);
     free(String->String);
-    String->String = malloc(sizeof(char) * String->Lenght);
+    String->String = malloc(sizeof(char) * String->Length);
     if (String->String == NULL)
     {
-        String->Lenght = 0;
+        String->Length = 0;
         return 1;
     }
 
-    for (uint64 i = 0; i < String->Lenght; i++)
+    for (uint64 i = 0; i < String->Length; i++)
     {
         String->String[i] = Characters[i];
     }
-    String->String[String->Lenght - 1] = '\0';
+    String->String[String->Length - 1] = '\0';
 
     return 0;
 }
 
 uint8 strAppend(string String, char Character)
 {
-    String->String = realloc(String->String, String->Lenght + 1);
+    String->String = realloc(String->String, String->Length + 1);
     if (String->String == NULL)
     {
-        String->Lenght = 0;
+        String->Length = 0;
         return 1;
     }
-    String->String[String->Lenght - 1] = Character;
-    String->String[String->Lenght] = '\0';
-    String->Lenght++;
+    String->String[String->Length - 1] = Character;
+    String->String[String->Length] = '\0';
+    String->Length++;
 
     return 0;
 }
@@ -112,7 +112,7 @@ uint8 strConcat(string String, uint64 Count, char* Characters, ...)
 
     free(String->String);
     String->String = StringTMP;
-    String->Lenght = StringLengthTMP;
+    String->Length = StringLengthTMP;
 
     return 0;
 }

@@ -114,7 +114,7 @@ uint8 updatePlayer(slayEngine* Engine, player* Player, array Platforms)
                 Player->AccelerationY = 0;
                 falling = false;
 
-                //Sceen 2 platform generation
+                //Scene 2 platform generation
                 if (Engine->CurrentScene == 2 && 4 < i)
                 {
                     for (uint8 j = 0; j < i - 4; j++)
@@ -178,7 +178,7 @@ uint8 updatePlayer(slayEngine* Engine, player* Player, array Platforms)
         Player->X = Player->MaxX - Player->Width + Player->Hitbox->UpperLeftX;
     }
 
-    //Sceen 2 falling
+    //Scene 2 falling
     if (Engine->CurrentScene == 2 && ((platform*)Platforms->Values[4])->Y + 1000 < Player->Y + Player->Hitbox->UpperLeftY)
     {
         Player->X = ((platform*)Platforms->Values[4])->X + 17;

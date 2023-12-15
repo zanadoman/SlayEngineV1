@@ -139,21 +139,21 @@ uint8 eagleProjectile(slayEngine* Engine, array Projectiles, eagle* Eagle, playe
 {
     double length, angle;
 
-    slayVectorLength(Eagle->X + Eagle->Width / 2, Eagle->Y + Eagle->Height / 2, Player->X + Player->CenterX, Player->Y + Player->CenterY, &length);
-    slayVectorAngle(Eagle->X + Eagle->Width / 2, Eagle->Y + Eagle->Height / 2, Player->X + Player->CenterX, Player->Y + Player->CenterY, &angle);
+    slayVectorLength(Eagle->X + Eagle->Width / 2.0, Eagle->Y + Eagle->Height / 2.0, Player->X + Player->CenterX, Player->Y + Player->CenterY, &length);
+    slayVectorAngle(Eagle->X + Eagle->Width / 2.0, Eagle->Y + Eagle->Height / 2.0, Player->X + Player->CenterX, Player->Y + Player->CenterY, &angle);
     
     if (length <= Eagle->AttackRange && Eagle->ReloadTime < slayGetTicks() - Eagle->ReloadTick && ((Eagle->Facing == -1 && 90 < angle && angle < 270) || (Eagle->Facing == 1 && (270 < angle || angle < 90))))
     {
         for (uint16 i = 0; i <  Platforms->Length; i++)
         {
-            if (!slayVectorRayCast(Eagle->X + Eagle->Width / 2, Eagle->Y + Eagle->Height / 2, Player->X + Player->CenterX, Player->Y + Player->CenterY, ((platform*)Platforms->Values[i])->Hitbox, 0, 3))
+            if (!slayVectorRayCast(Eagle->X + Eagle->Width / 2.0, Eagle->Y + Eagle->Height / 2.0, Player->X + Player->CenterX, Player->Y + Player->CenterY, ((platform*)Platforms->Values[i])->Hitbox, 0, 3))
             {
                 break;
             }
             else if (i == Platforms->Length - 1)
             {
                 Eagle->ReloadTick = slayGetTicks();
-                arrInsert(Projectiles, Projectiles->Length, newProjectile(Eagle->X + Eagle->Width / 2, Eagle->Y + Eagle->Height / 2, Eagle->MinX, Eagle->MaxX, Eagle->MinY, Eagle->MaxY, angle, EAGLE));
+                arrInsert(Projectiles, Projectiles->Length, newProjectile(Eagle->X + Eagle->Width / 2.0, Eagle->Y + Eagle->Height / 2.0, Eagle->MinX, Eagle->MaxX, Eagle->MinY, Eagle->MaxY, angle, EAGLE));
                 if (Player->X < Eagle->X)
                 {
                     slayPlaySound(SoundFire, 1, Volume, 64, 255, 0);
