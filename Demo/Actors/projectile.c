@@ -1,7 +1,7 @@
 #include "../game.h"
 
 uint8 playerProjectile(slayEngine* Engine, array Projectiles, player* Player, slaySound* SoundFire, uint8 Volume);
-uint8 eagleProjectile(slayEngine* Engine, array Projectiles, eagle* Eagle, player* Player, array Platforms, slaySound* SoundFire, uint8 Volume);
+uint8 eagleProjectile(slayEngine* Engine, array Projectiles, eagle* Eagle, player* Player, array Platforms, crate* Crate, slaySound* SoundFire, uint8 Volume);
 
 projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX, double MinY, double MaxY, double Angle, actors Parent)
 {
@@ -42,7 +42,7 @@ uint8 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, ea
     }
     if (Eagle->Alive)
     {
-        eagleProjectile(Engine, Projectiles, Eagle, Player, Platforms, SoundFire, ((game*)Engine->Game)->Volume);
+        eagleProjectile(Engine, Projectiles, Eagle, Player, Platforms, Crate, SoundFire, ((game*)Engine->Game)->Volume);
     }
 
     for (uint16 i = 0; i < Projectiles->Length; i++)
@@ -142,7 +142,7 @@ uint8 playerProjectile(slayEngine* Engine, array Projectiles, player* Player, sl
     return 0;
 }
 
-uint8 eagleProjectile(slayEngine* Engine, array Projectiles, eagle* Eagle, player* Player, array Platforms, slaySound* SoundFire, uint8 Volume)
+uint8 eagleProjectile(slayEngine* Engine, array Projectiles, eagle* Eagle, player* Player, array Platforms, crate* Crate, slaySound* SoundFire, uint8 Volume)
 {
     double length, angle;
 
@@ -155,21 +155,24 @@ uint8 eagleProjectile(slayEngine* Engine, array Projectiles, eagle* Eagle, playe
         {
             if (!slayVectorRayCast(Eagle->X + Eagle->Width / 2.0, Eagle->Y + Eagle->Height / 2.0, Player->X + Player->CenterX, Player->Y + Player->CenterY, ((platform*)Platforms->Values[i])->Hitbox, 0, 3))
             {
-                break;
+                return 1;
             }
-            else if (i == Platforms->Length - 1)
-            {
-                Eagle->ReloadTick = slayGetTicks();
-                arrInsert(Projectiles, Projectiles->Length, newProjectile(Eagle->X + Eagle->Width / 2.0, Eagle->Y + Eagle->Height / 2.0, Eagle->MinX, Eagle->MaxX, Eagle->MinY, Eagle->MaxY, angle, EAGLE));
-                if (Player->X < Eagle->X)
-                {
-                    slayPlaySound(SoundFire, 1, Volume, 64, 255, 0);
-                }
-                else 
-                {
-                    slayPlaySound(SoundFire, 1, Volume, 255, 64, 0);
-                }
-            }
+        }
+
+        if (!slayVectorRayCast(Eagle->X + Eagle->Width / 2.0, Eagle->Y + Eagle->Height / 2.0, Player->X + Player->CenterX, Player->Y + Player->CenterY, Crate->Hitbox, 0, 3))
+        {
+            return 1;
+        }
+        
+        Eagle->ReloadTick = slayGetTicks();
+        arrInsert(Projectiles, Projectiles->Length, newProjectile(Eagle->X + Eagle->Width / 2.0, Eagle->Y + Eagle->Height / 2.0, Eagle->MinX, Eagle->MaxX, Eagle->MinY, Eagle->MaxY, angle, EAGLE));
+        if (Player->X < Eagle->X)
+        {
+            slayPlaySound(SoundFire, 1, Volume, 64, 255, 0);
+        }
+        else 
+        {
+            slayPlaySound(SoundFire, 1, Volume, 255, 64, 0);
         }
     }
 
