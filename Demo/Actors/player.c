@@ -137,7 +137,7 @@ uint8 updatePlayer(slayEngine* Engine, player* Player, array Platforms)
             
             break;
         }
-        else if (((platform*)Platforms->Values[i])->Y <= Player->Y && (collision == slayCollTOPLEFT || collision == slayCollTOP || collision == slayCollTOPRIGHT))
+        else if (((platform*)Platforms->Values[i])->Y + ((platform*)Platforms->Values[i])->Height <= Player->Y && (collision == slayCollTOPLEFT || collision == slayCollTOP || collision == slayCollTOPRIGHT))
         {
             Player->AccelerationY = 0;
             break;
