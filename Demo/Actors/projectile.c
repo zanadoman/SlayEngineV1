@@ -30,7 +30,7 @@ projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX
     return result;
 }
 
-uint8 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, eagle* Eagle, array Platforms, slaySound* SoundFire)
+uint8 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, eagle* Eagle, array Platforms, crate* Crate, slaySound* SoundFire)
 {
     uint8 collision;
     logic destroyed;
@@ -65,6 +65,13 @@ uint8 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, ea
                 i--;
                 break;
             }
+        }
+        if (!destroyed && slayCollision(((projectile*)Projectiles->Values[i])->Hitbox, Crate->Hitbox))
+        {
+            free(((projectile*)Projectiles->Values[i])->Hitbox);
+            arrRemove(Projectiles, i);
+            destroyed = true;
+            i--;
         }
         if (destroyed)
         {

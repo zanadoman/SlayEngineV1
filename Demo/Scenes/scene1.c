@@ -51,6 +51,9 @@ uint8 renderScene1(slayEngine* Engine, scene1* Scene)
         slayRenderTextureCamera(Engine, ((projectile*)Scene->Projectiles->Values[i])->X, ((projectile*)Scene->Projectiles->Values[i])->Y, ((projectile*)Scene->Projectiles->Values[i])->Width, ((projectile*)Scene->Projectiles->Values[i])->Height, ((projectile*)Scene->Projectiles->Values[i])->Angle, slayFlipNONE, 1, ((game*)Engine->Game)->TextureProjectile, 255, 255, 255, 255);
     }
 
+    //Crate
+    slayRenderTextureCamera(Engine, Scene->Crate->X, Scene->Crate->Y, Scene->Crate->Width, Scene->Crate->Height, 0, slayFlipNONE, 1, Scene->Crate->Texture, 255, 255, 255, 255);
+
     //Eagle
     renderEagle(Engine, Scene->Eagle);
 
@@ -97,6 +100,8 @@ uint8 loadScene1(slayEngine* Engine)
     scene->Platforms->Values[2] = newPlatform(200, 350, 100, 30);
     scene->Platforms->Values[3] = newPlatform(350, 250, 100, 30);
     scene->Platforms->Values[4] = newPlatform(500, 150, 100, 30);
+
+    scene->Crate = newCrate(Engine, 550, 490, -200, 940, -500, 600, 60, 60);
 
     //Sounds
     scene->SoundFire = slayLoadSound("assets/player_fire.wav");
@@ -172,6 +177,8 @@ uint8 unloadScene1(slayEngine* Engine)
     slayUnloadTexture(scene->TextureBush);
     slayUnloadTexture(scene->TexturePlatform);
     destroyPlatforms(scene->Platforms);
+
+    destroyCrate(scene->Crate);
 
     //Sounds
     slayUnloadSound(scene->SoundFire);

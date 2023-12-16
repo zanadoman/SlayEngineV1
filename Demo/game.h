@@ -7,6 +7,7 @@ typedef struct gameStruct game;
 typedef struct scene0Struct scene0;
 typedef struct scene1Struct scene1;
 typedef struct scene2Struct scene2;
+typedef struct crateStruct crate;
 typedef struct platformStruct platform;
 typedef struct playerStruct player;
 typedef struct eagleStruct eagle;
@@ -18,6 +19,7 @@ typedef enum
     PLAYER,
     EAGLE,
     PROJECTILE,
+    CRATE,
 } actors;
 
 //Loading____________________________________________________________
@@ -80,6 +82,8 @@ struct scene1Struct
     slayTexture* TextureBush;
     slayTexture* TexturePlatform;
 
+    crate* Crate;
+
     slaySound* SoundFire;
 
     player* Player;
@@ -127,8 +131,31 @@ struct platformStruct
     slayHitbox* Hitbox;
 };
 
+struct crateStruct
+{
+    double X;
+    double Y;
+    double PrevX;
+    double PrevY;
+
+    double MinX;
+    double MaxX;
+    double MinY;
+    double MaxY;
+
+    uint16 Width;
+    uint16 Height;
+
+    slayTexture* Texture;
+
+    slayHitbox* Hitbox;
+};
+
 platform* newPlatform(double X, double Y, uint16 Width, uint16 Height);
+crate* newCrate(slayEngine* Engine, double X, double Y, double MinX, double MaxX, double MinY, double MaxY, uint16 Width, uint16 Height);
+
 uint8 destroyPlatforms(array Platforms);
+uint8 destroyCrate(crate* Crate);
 
 //Button_____________________________________________________________
 
@@ -205,7 +232,7 @@ struct playerStruct
 };
 
 player* newPlayer(slayEngine* Engine, uint16 KeyLeft, uint16 KeyRight, uint16 KeyJump, uint16 KeyFire);
-uint8 updatePlayer(slayEngine* Engine, player* Player, array Platforms);
+uint8 updatePlayer(slayEngine* Engine, player* Player, array Platforms, crate* Crate);
 uint8 destroyPlayer(player* Player);
 
 //Eagle______________________________________________________________
@@ -268,7 +295,7 @@ struct projectileStruct
 };
 
 projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX, double MinY, double MaxY, double Angle, actors Parent);
-uint8 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, eagle* Eagle, array Platforms, slaySound* SoundFire);
+uint8 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, eagle* Eagle, array Platforms, crate* Crate, slaySound* SoundFire);
 uint8 destroyProjectiles(array Projectiles);
 
 //Menu_______________________________________________________________

@@ -14,7 +14,7 @@ uint8 updateScene2(slayEngine* Engine, scene2* Scene)
         slayMouseRelative(true);
     }
     //2
-    updatePlayer(Engine, Scene->Player, Scene->Platforms);
+    updatePlayer(Engine, Scene->Player, Scene->Platforms, NULL);
     //3
 
     return 0;

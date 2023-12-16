@@ -6,6 +6,9 @@ player* newPlayer(slayEngine* Engine, uint16 KeyLeft, uint16 KeyRight, uint16 Ke
 
     result = malloc(sizeof(player));
 
+    result->PrevX = 0;
+    result->PrevY = 0;
+
     result->Width = 66;
     result->Height = 64;
 
@@ -45,7 +48,7 @@ player* newPlayer(slayEngine* Engine, uint16 KeyLeft, uint16 KeyRight, uint16 Ke
     return result;
 }
 
-uint8 updatePlayer(slayEngine* Engine, player* Player, array Platforms)
+uint8 updatePlayer(slayEngine* Engine, player* Player, array Platforms, crate* Crate)
 {
     uint8 collision;
     logic falling;
@@ -141,6 +144,22 @@ uint8 updatePlayer(slayEngine* Engine, player* Player, array Platforms)
         {
             Player->AccelerationY = 0;
             break;
+        }
+    }
+
+    //Crate collision handling
+    if (Crate != NULL)
+    {
+        collision = slayCollision(Player->Hitbox, Crate->Hitbox);
+        slayApplyCollision(collision, Player->PrevX, Player->PrevY, Player->Hitbox, Crate->Hitbox);
+        if (Player->Y + Player->Height <= Crate->Y && (collision == slayCollBOTTOMLEFT || collision == slayCollBOTTOM || collision == slayCollBOTTOMRIGHT))
+        {
+            Player->AccelerationY = 0;
+            falling = false;
+        }
+        else if (Crate->Y + Crate->Height <= Player->Y + Player->Hitbox->UpperLeftY && (collision == slayCollTOPLEFT || collision == slayCollTOP || collision == slayCollTOPRIGHT))
+        {
+            Player->AccelerationY = 0;
         }
     }
 
