@@ -112,7 +112,7 @@ uint8 updatePlayer(slayEngine* Engine, player* Player, array Platforms, crate* C
     for (uint16 i = 0; i < Platforms->Length; i++)
     {
         collision = slayCollision(Player->Hitbox, ((platform*)Platforms->Values[i])->Hitbox);
-        slayApplyCollision(collision, Player->PrevX, Player->PrevY, Player->Hitbox, ((platform*)Platforms->Values[i])->Hitbox);
+        slayApplyCollision(collision, Player->PrevX, Player->PrevY, Player->Hitbox, 0, ((platform*)Platforms->Values[i])->Hitbox, 0, 0, 0, 0, 0);
 
         if (Player->Y + Player->Height <= ((platform*)Platforms->Values[i])->Y && (collision == slayCollBOTTOMLEFT || collision == slayCollBOTTOM || collision == slayCollBOTTOMRIGHT))
         {
@@ -151,7 +151,7 @@ uint8 updatePlayer(slayEngine* Engine, player* Player, array Platforms, crate* C
     if (Crate != NULL)
     {
         collision = slayCollision(Player->Hitbox, Crate->Hitbox);
-        slayApplyCollision(collision, Player->PrevX, Player->PrevY, Player->Hitbox, Crate->Hitbox);
+        slayApplyCollision(collision, Player->PrevX, Player->PrevY, Player->Hitbox, 1, Crate->Hitbox, 1, Crate->MinX, Crate->MaxX, Crate->MinY, Crate->MaxY);
         if (Player->Y + Player->Height <= Crate->Y && (collision == slayCollBOTTOMLEFT || collision == slayCollBOTTOM || collision == slayCollBOTTOMRIGHT))
         {
             Player->AccelerationY = 0;

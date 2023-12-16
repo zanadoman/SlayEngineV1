@@ -72,7 +72,7 @@ slayColls slayCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2)
     return result;
 }
 
-uint8 slayApplyCollision(slayColls Collision, double Hitbox1PrevObjectX, double Hitbox1PrevObjectY, slayHitbox* Hitbox1, slayHitbox* Hitbox2)
+uint8 slayApplyCollision(slayColls Collision, double Hitbox1PrevObjectX, double Hitbox1PrevObjectY, slayHitbox* Hitbox1, double Hitbox1Force, slayHitbox* Hitbox2, double Hitbox2Resistance, double Hitbox2MinX, double Hitbox2MaxX, double Hitbox2MinY, double Hitbox2MaxY)
 {
     double Hitbox1PrevUpperLeftX;
     double Hitbox1PrevUpperLeftY;
@@ -109,62 +109,65 @@ uint8 slayApplyCollision(slayColls Collision, double Hitbox1PrevObjectX, double 
     Hitbox2LowerRightX = Hitbox2->LowerRightX + *Hitbox2->ObjectX;
     Hitbox2LowerRightY = Hitbox2->LowerRightY + *Hitbox2->ObjectY;
 
-    switch(Collision)
+    if (Hitbox1Force <= Hitbox2Resistance)
     {
-        case slayCollLEFT:
-            *Hitbox1->ObjectX += Hitbox2LowerRightX - Hitbox1UpperLeftX;
-            return 0;
-        case slayCollRIGHT:
-            *Hitbox1->ObjectX -= Hitbox1LowerRightX - Hitbox2UpperLeftX;
-            return 0;
-        case slayCollTOP:
-            *Hitbox1->ObjectY += Hitbox2LowerRightY - Hitbox1UpperLeftY;
-            return 0;
-        case slayCollBOTTOM:
-            *Hitbox1->ObjectY -= Hitbox1LowerRightY - Hitbox2UpperLeftY;
-            return 0;
+        switch(Collision)
+        {
+            case slayCollLEFT:
+                *Hitbox1->ObjectX += Hitbox2LowerRightX - Hitbox1UpperLeftX;
+                return 0;
+            case slayCollRIGHT:
+                *Hitbox1->ObjectX -= Hitbox1LowerRightX - Hitbox2UpperLeftX;
+                return 0;
+            case slayCollTOP:
+                *Hitbox1->ObjectY += Hitbox2LowerRightY - Hitbox1UpperLeftY;
+                return 0;
+            case slayCollBOTTOM:
+                *Hitbox1->ObjectY -= Hitbox1LowerRightY - Hitbox2UpperLeftY;
+                return 0;
 
-        case slayCollTOPLEFT:
-            if (Hitbox1PrevUpperLeftX < Hitbox2LowerRightX)
-            {
-                *Hitbox1->ObjectY += Hitbox2LowerRightY - Hitbox1UpperLeftY;
-            }
-            else
-            {
-                *Hitbox1->ObjectX += Hitbox2LowerRightX - Hitbox1UpperLeftX;
-            }
-            return 0;
-        
-        case slayCollTOPRIGHT:
-            if (Hitbox2UpperLeftX < Hitbox1PrevLowerRightX)
-            {
-                *Hitbox1->ObjectY += Hitbox2LowerRightY - Hitbox1UpperLeftY;
-            }
-            else
-            {
-                *Hitbox1->ObjectX -= Hitbox1LowerRightX - Hitbox2UpperLeftX;
-            }
-            return 0;
-        case slayCollBOTTOMLEFT:
-            if (Hitbox1PrevUpperLeftX < Hitbox2LowerRightX)
-            {
-                *Hitbox1->ObjectY -= Hitbox1LowerRightY - Hitbox2UpperLeftY;
-            }
-            else
-            {
-                *Hitbox1->ObjectX += Hitbox2LowerRightX - Hitbox1UpperLeftX;
-            }
-            return 0;
-        case slayCollBOTTOMRIGHT:
-            if (Hitbox2UpperLeftX < Hitbox1PrevLowerRightX)
-            {
-                *Hitbox1->ObjectY -= Hitbox1LowerRightY - Hitbox2UpperLeftY;
-            }
-            else
-            {
-                *Hitbox1->ObjectX -= Hitbox1LowerRightX - Hitbox2UpperLeftX;
-            }
-            return 0;
+            case slayCollTOPLEFT:
+                if (Hitbox1PrevUpperLeftX < Hitbox2LowerRightX)
+                {
+                    *Hitbox1->ObjectY += Hitbox2LowerRightY - Hitbox1UpperLeftY;
+                }
+                else
+                {
+                    *Hitbox1->ObjectX += Hitbox2LowerRightX - Hitbox1UpperLeftX;
+                }
+                return 0;
+            
+            case slayCollTOPRIGHT:
+                if (Hitbox2UpperLeftX < Hitbox1PrevLowerRightX)
+                {
+                    *Hitbox1->ObjectY += Hitbox2LowerRightY - Hitbox1UpperLeftY;
+                }
+                else
+                {
+                    *Hitbox1->ObjectX -= Hitbox1LowerRightX - Hitbox2UpperLeftX;
+                }
+                return 0;
+            case slayCollBOTTOMLEFT:
+                if (Hitbox1PrevUpperLeftX < Hitbox2LowerRightX)
+                {
+                    *Hitbox1->ObjectY -= Hitbox1LowerRightY - Hitbox2UpperLeftY;
+                }
+                else
+                {
+                    *Hitbox1->ObjectX += Hitbox2LowerRightX - Hitbox1UpperLeftX;
+                }
+                return 0;
+            case slayCollBOTTOMRIGHT:
+                if (Hitbox2UpperLeftX < Hitbox1PrevLowerRightX)
+                {
+                    *Hitbox1->ObjectY -= Hitbox1LowerRightY - Hitbox2UpperLeftY;
+                }
+                else
+                {
+                    *Hitbox1->ObjectX -= Hitbox1LowerRightX - Hitbox2UpperLeftX;
+                }
+                return 0;
+        }
     }
 
     return 0;

@@ -216,7 +216,7 @@ struct slayHitboxStruct
 
 slayHitbox* slayNewHitbox(double* ObjectX, double* ObjectY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY);
 slayColls slayCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2);
-uint8 slayApplyCollision(slayColls Collision, double Hitbox1PrevObjectX, double Hitbox1PrevObjectY, slayHitbox* Hitbox1, slayHitbox* Hitbox2);
+uint8 slayApplyCollision(slayColls Collision, double Hitbox1PrevObjectX, double Hitbox1PrevObjectY, slayHitbox* Hitbox1, double Hitbox1Force, slayHitbox* Hitbox2, double Hitbox2Resistance, double Hitbox2MinX, double Hitbox2MaxX, double Hitbox2MinY, double Hitbox2MaxY);
 
 //Camera_____________________________________________________________
 
