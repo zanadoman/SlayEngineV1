@@ -151,7 +151,7 @@ uint8 updatePlayer(slayEngine* Engine, player* Player, array Platforms, crate* C
     if (Crate != NULL)
     {
         collision = slayCollision(Player->Hitbox, Crate->Hitbox);
-        slayApplyCollision(collision, Player->PrevX, Player->PrevY, Player->Hitbox, 1, Crate->Hitbox, 1, Crate->MinX, Crate->MaxX, Crate->MinY, Crate->MaxY);
+        slayApplyCollision(collision, Player->PrevX, Player->PrevY, Player->Hitbox, 1.2, Crate->Hitbox, 1, Crate->MinX, Crate->MaxX, Crate->MinY, Crate->MaxY);
         if (Player->Y + Player->Height <= Crate->Y && (collision == slayCollBOTTOMLEFT || collision == slayCollBOTTOM || collision == slayCollBOTTOMRIGHT))
         {
             Player->AccelerationY = 0;
