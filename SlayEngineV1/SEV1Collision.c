@@ -174,7 +174,6 @@ uint8 slayApplyCollision(slayColls Collision, double Hitbox1PrevObjectX, double 
     else
     {
         ratioCache = Hitbox2Resistance / Hitbox1Force;
-        printf("ratioCache: %lf\n", ratioCache);
 
         switch(Collision)
         {
