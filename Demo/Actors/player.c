@@ -51,6 +51,12 @@ uint8 updatePlayer(slayEngine* Engine, player* Player, array Platforms)
     logic falling;
     double zoom;
 
+    //Applying movement
+    Player->PrevX = Player->X;
+    Player->PrevY = Player->Y;
+    Player->X += Player->Speed * Player->AccelerationX * Engine->DeltaTime;
+    Player->Y += GRAVITY * Player->AccelerationY * Engine->DeltaTime;
+
     //Horizontal movement
     if (Player->Alive && slayKey(Engine, Player->KeyLeft))
     {
@@ -78,7 +84,6 @@ uint8 updatePlayer(slayEngine* Engine, player* Player, array Platforms)
     }
     else
     {
-        //Deacceleration
         if (Player->AccelerationX < 0)
         {
             Player->AccelerationX += Player->DeaccelerationRateX * Engine->DeltaTime;
@@ -96,59 +101,44 @@ uint8 updatePlayer(slayEngine* Engine, player* Player, array Platforms)
             }
         }
     }
-    Player->X += Player->Speed * Player->AccelerationX * Engine->DeltaTime;
 
     //Vertical movement
-    Player->Y += GRAVITY * Player->AccelerationY * Engine->DeltaTime;
     falling = true;
+
+    //Platform collision handling
     for (uint16 i = 0; i < Platforms->Length; i++)
     {
         collision = slayCollision(Player->Hitbox, ((platform*)Platforms->Values[i])->Hitbox);
+        slayApplyCollision(collision, Player->PrevX, Player->PrevY, Player->Hitbox, ((platform*)Platforms->Values[i])->Hitbox);
 
-        if (collision == slayCollBOTTOMLEFT || collision == slayCollBOTTOM || collision == slayCollBOTTOMRIGHT)
+        if (Player->Y + Player->Height <= ((platform*)Platforms->Values[i])->Y && (collision == slayCollBOTTOMLEFT || collision == slayCollBOTTOM || collision == slayCollBOTTOMRIGHT))
         {
             //Ground collision
-            if (Player->AccelerationY >= 0)
-            {
-                Player->Y = ((platform*)Platforms->Values[i])->Y - Player->Hitbox->LowerRightY;
-                Player->AccelerationY = 0;
-                falling = false;
+            Player->AccelerationY = 0;
+            falling = false;
 
-                //Scene 2 platform generation
-                if (Engine->CurrentScene == 2 && 4 < i)
+            //Scene 2 platform generation
+            if (Engine->CurrentScene == 2 && 4 < i)
+            {
+                for (uint8 j = 0; j < i - 4; j++)
                 {
-                    for (uint8 j = 0; j < i - 4; j++)
-                    {
-                        arrInsert(Platforms, Platforms->Length, newPlatform(((platform*)Platforms->Values[Platforms->Length - 1])->X + 200, ((platform*)Platforms->Values[Platforms->Length - 1])->Y + slayRandom(-100, 100, i), 100, 30));
-                        arrRemove(Platforms, 0);
-                    }
-                }
-                else if (Engine->CurrentScene == 2 && i < 4)
-                {
-                    for (uint8 j = 0; j < 4 - i; j++)
-                    {
-                        arrInsert(Platforms, 0, newPlatform(((platform*)Platforms->Values[0])->X - 200, ((platform*)Platforms->Values[0])->Y + slayRandom(-100, 100, i), 100, 30));
-                        arrRemove(Platforms, Platforms->Length - 1);
-                    }
+                    arrInsert(Platforms, Platforms->Length, newPlatform(((platform*)Platforms->Values[Platforms->Length - 1])->X + 200, ((platform*)Platforms->Values[Platforms->Length - 1])->Y + slayRandom(-100, 100, i), 100, 30));
+                    arrRemove(Platforms, 0);
                 }
             }
-            //Side collision
-            else if (collision == slayCollBOTTOMLEFT)
+            else if (Engine->CurrentScene == 2 && i < 4)
             {
-                Player->X = ((platform*)Platforms->Values[i])->X + ((platform*)Platforms->Values[i])->Width - Player->Hitbox->UpperLeftX;
-                Player->AccelerationX = 0;
-            }
-            else if (collision == slayCollBOTTOMRIGHT)
-            {
-                Player->X = ((platform*)Platforms->Values[i])->X - Player->Width + Player->Hitbox->UpperLeftX;
-                Player->AccelerationX = 0;
+                for (uint8 j = 0; j < 4 - i; j++)
+                {
+                    arrInsert(Platforms, 0, newPlatform(((platform*)Platforms->Values[0])->X - 200, ((platform*)Platforms->Values[0])->Y + slayRandom(-100, 100, i), 100, 30));
+                    arrRemove(Platforms, Platforms->Length - 1);
+                }
             }
             
             break;
         }
-        else if (collision == slayCollTOPLEFT || collision == slayCollTOP || collision == slayCollTOPRIGHT)
+        else if (((platform*)Platforms->Values[i])->Y <= Player->Y && (collision == slayCollTOPLEFT || collision == slayCollTOP || collision == slayCollTOPRIGHT))
         {
-            Player->Y = ((platform*)Platforms->Values[i])->Y + ((platform*)Platforms->Values[i])->Height - Player->Hitbox->UpperLeftY;
             Player->AccelerationY = 0;
             break;
         }

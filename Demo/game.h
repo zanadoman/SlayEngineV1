@@ -159,6 +159,8 @@ struct playerStruct
 {
     double X;
     double Y;
+    double PrevX;
+    double PrevY;
 
     double MinX;
     double MaxX;
