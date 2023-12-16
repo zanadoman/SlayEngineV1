@@ -150,7 +150,7 @@ uint8 slayPlaySound(slaySound* Sound, sint16 Channel, uint8 Volume, uint8 Left, 
 uint8 slayPlaySoundTicks(slaySound* Sound, sint16 Channel, uint8 Volume, uint8 Left, uint8 Right, sint16 Loops, uint32 Ticks);
 #define slayStopSound Mix_HaltChannel
 
-//Inputs_____________________________________________________________
+//Input______________________________________________________________
 
 #define SDL_SCANCODE_LMB 513
 #define SDL_SCANCODE_MMB 514
@@ -188,7 +188,7 @@ uint8 slayVectorTranslate(double X1, double Y1, double* X2, double* Y2, double L
 uint8 slayVectorAngle(double X1, double Y1, double X2, double Y2, double* Angle);
 logic slayVectorRayCast(double SourceX, double SourceY, double TargetX, double TargetY, slayHitbox* Obstacle, uint16 Size, double Precision);
 
-//Hitbox_____________________________________________________________
+//Collision__________________________________________________________
 
 typedef enum
 {
