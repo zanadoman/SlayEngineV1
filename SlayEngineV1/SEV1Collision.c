@@ -133,8 +133,13 @@ uint8 slayApplyCollision(slayColls Collision, double Hitbox1PrevObjectX, double 
                 {
                     *Hitbox1->ObjectY += Hitbox2LowerRightY - Hitbox1UpperLeftY;
                 }
+                else if (Hitbox1PrevUpperLeftY < Hitbox2LowerRightY)
+                {
+                    *Hitbox1->ObjectX += Hitbox2LowerRightX - Hitbox1UpperLeftX;
+                }
                 else
                 {
+                    *Hitbox1->ObjectY += Hitbox2LowerRightY - Hitbox1UpperLeftY;
                     *Hitbox1->ObjectX += Hitbox2LowerRightX - Hitbox1UpperLeftX;
                 }
                 return 0;
@@ -144,8 +149,13 @@ uint8 slayApplyCollision(slayColls Collision, double Hitbox1PrevObjectX, double 
                 {
                     *Hitbox1->ObjectY += Hitbox2LowerRightY - Hitbox1UpperLeftY;
                 }
+                else if (Hitbox1PrevUpperLeftY < Hitbox2LowerRightY)
+                {
+                    *Hitbox1->ObjectX -= Hitbox1LowerRightX - Hitbox2UpperLeftX;
+                }
                 else
                 {
+                    *Hitbox1->ObjectY += Hitbox2LowerRightY - Hitbox1UpperLeftY;
                     *Hitbox1->ObjectX -= Hitbox1LowerRightX - Hitbox2UpperLeftX;
                 }
                 return 0;
@@ -154,8 +164,13 @@ uint8 slayApplyCollision(slayColls Collision, double Hitbox1PrevObjectX, double 
                 {
                     *Hitbox1->ObjectY -= Hitbox1LowerRightY - Hitbox2UpperLeftY;
                 }
+                else if (Hitbox2UpperLeftY < Hitbox1PrevLowerRightY)
+                {
+                    *Hitbox1->ObjectX += Hitbox2LowerRightX - Hitbox1UpperLeftX;
+                }
                 else
                 {
+                    *Hitbox1->ObjectY -= Hitbox1LowerRightY - Hitbox2UpperLeftY;
                     *Hitbox1->ObjectX += Hitbox2LowerRightX - Hitbox1UpperLeftX;
                 }
                 return 0;
@@ -164,8 +179,13 @@ uint8 slayApplyCollision(slayColls Collision, double Hitbox1PrevObjectX, double 
                 {
                     *Hitbox1->ObjectY -= Hitbox1LowerRightY - Hitbox2UpperLeftY;
                 }
+                else if (Hitbox2UpperLeftY < Hitbox1PrevLowerRightY)
+                {
+                    *Hitbox1->ObjectX -= Hitbox1LowerRightX - Hitbox2UpperLeftX;
+                }
                 else
                 {
+                    *Hitbox1->ObjectY -= Hitbox1LowerRightY - Hitbox2UpperLeftY;
                     *Hitbox1->ObjectX -= Hitbox1LowerRightX - Hitbox2UpperLeftX;
                 }
                 return 0;
