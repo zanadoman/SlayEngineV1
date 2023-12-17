@@ -28,11 +28,13 @@ uint8 renderPlayer(slayEngine* Engine, player* Player)
 {
     if (Player->Facing == 1)
     {
-        slayRenderTextureCamera(Engine, Player->X, Player->Y, Player->Width, Player->Height, 0, slayFlipNONE, 1, Player->TextureCurrent, 255, 255, 255, 255);
+        slayRenderTextureCamera(Engine, Player->X - 18, Player->Y - 22, 66, 64, 0, slayFlipNONE, 1, Player->TextureCurrent, 255, 255, 255, 255);
+        slayRenderHitboxCamera(Engine, Player->Hitbox, 1);
     }
     else
     {
-        slayRenderTextureCamera(Engine, Player->X, Player->Y, Player->Width, Player->Height, 0, slayFlipHORIZONTAL, 1, Player->TextureCurrent, 255, 255, 255, 255);
+        slayRenderTextureCamera(Engine, Player->X - 18, Player->Y - 22, 66, 64, 0, slayFlipHORIZONTAL, 1, Player->TextureCurrent, 255, 255, 255, 255);
+        slayRenderHitboxCamera(Engine, Player->Hitbox, 1);
     }
 
     return 0;

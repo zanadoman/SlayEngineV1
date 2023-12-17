@@ -137,7 +137,7 @@ uint8 loadScene1(slayEngine* Engine)
     scene->Player->MinY = -500;
     scene->Player->MaxY = 600;
 
-    slaySetCamera(Engine, &scene->Player->X, &scene->Player->Y, 33, 32, -960, -800, 1.5);
+    slaySetCamera(Engine, &scene->Player->X, &scene->Player->Y, scene->Player->CenterX, scene->Player->CenterY, -950, -800, 1.5);
 
     //Eagle
     scene->Eagle = newEagle(Engine);

@@ -461,3 +461,17 @@ uint8 slayApplyCollision(slayColls Collision, slayHitbox* Hitbox1, slayHitbox* H
 
     return 0;
 }
+
+uint8 slayRenderHitbox(slayEngine* Engine, slayHitbox* Hitbox)
+{
+    slayRenderColor(Engine, *Hitbox->ObjectX + Hitbox->UpperLeftX, *Hitbox->ObjectY+ Hitbox->UpperLeftY, Hitbox->LowerRightX - Hitbox->UpperLeftX, Hitbox->LowerRightY - Hitbox->UpperLeftY, 255, 0, 0, 128);
+
+    return 0;
+}
+
+uint8 slayRenderHitboxCamera(slayEngine* Engine, slayHitbox* Hitbox, double Distance)
+{
+    slayRenderColorCamera(Engine, *Hitbox->ObjectX + Hitbox->UpperLeftX, *Hitbox->ObjectY+ Hitbox->UpperLeftY, Hitbox->LowerRightX - Hitbox->UpperLeftX, Hitbox->LowerRightY - Hitbox->UpperLeftY, Distance, 255, 0, 0, 128);
+
+    return 0;
+}

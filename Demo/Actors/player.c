@@ -16,8 +16,8 @@ player* newPlayer(slayEngine* Engine, uint16 KeyLeft, uint16 KeyRight, uint16 Ke
     result->MaxX = 0;
     result->MaxY = 0;
 
-    result->Width = 66;
-    result->Height = 64;
+    result->Width = 30; //66
+    result->Height = 42; //64
 
     result->AccelerationX = 0;
     result->AccelerationRateX = 0.003;
@@ -31,8 +31,8 @@ player* newPlayer(slayEngine* Engine, uint16 KeyLeft, uint16 KeyRight, uint16 Ke
     result->Facing = 1;
     result->ReloadTime = 200;
     result->ReloadTick = 0;
-    result->CenterX = 33;
-    result->CenterY = 43;
+    result->CenterX = 15;
+    result->CenterY = 21;
 
     result->KeyLeft = KeyLeft;
     result->KeyRight = KeyRight;
@@ -45,7 +45,7 @@ player* newPlayer(slayEngine* Engine, uint16 KeyLeft, uint16 KeyRight, uint16 Ke
 
     result->TextureCurrent = NULL;
 
-    result->Hitbox = slayNewHitbox(actPLAYER, &result->X, &result->Y, &result->PrevX, &result->PrevY, 18, 22, 48, 64, 1.2, 1, &result->MinX, &result->MinY, &result->MaxX, &result->MaxY);
+    result->Hitbox = slayNewHitbox(actPLAYER, &result->X, &result->Y, &result->PrevX, &result->PrevY, 0, 0, result->Width, result->Height, 1.2, 1, &result->MinX, &result->MinY, &result->MaxX, &result->MaxY);
 
     return result;
 }
@@ -83,6 +83,16 @@ uint8 updatePlayer(slayEngine* Engine)
     Player->PrevY = Player->Y;
     Player->X += Player->Speed * Player->AccelerationX * Engine->DeltaTime;
     Player->Y += GRAVITY * Player->AccelerationY * Engine->DeltaTime;
+
+    //Clamp player position
+    if (Player->X < Player->MinX)
+    {
+        Player->X = Player->MinX;
+    }
+    else if (Player->MaxX < Player->X + Player->Width)
+    {
+        Player->X = Player->MaxX - Player->Width;
+    }
 
     //Horizontal movement
     if (Player->Alive && slayKey(Engine, Player->KeyLeft))
@@ -164,7 +174,7 @@ uint8 updatePlayer(slayEngine* Engine)
             
             break;
         }
-        else if (((platform*)Platforms->Values[i])->Y + ((platform*)Platforms->Values[i])->Height <= Player->Y + Player->Hitbox->UpperLeftY && (collision == slayCollTOPLEFT || collision == slayCollTOP || collision == slayCollTOPRIGHT))
+        else if (((platform*)Platforms->Values[i])->Y + ((platform*)Platforms->Values[i])->Height <= Player->Y && (collision == slayCollTOPLEFT || collision == slayCollTOP || collision == slayCollTOPRIGHT))
         {
             Player->AccelerationY = 0;
             break;
@@ -181,7 +191,7 @@ uint8 updatePlayer(slayEngine* Engine)
             Player->AccelerationY = 0;
             falling = false;
         }
-        else if (Crate->Y + Crate->Height <= Player->Y + Player->Hitbox->UpperLeftY && (collision == slayCollTOPLEFT || collision == slayCollTOP || collision == slayCollTOPRIGHT))
+        else if (Crate->Y + Crate->Height <= Player->Y && (collision == slayCollTOPLEFT || collision == slayCollTOP || collision == slayCollTOPRIGHT))
         {
             Player->AccelerationY = 0;
         }
@@ -201,18 +211,8 @@ uint8 updatePlayer(slayEngine* Engine)
         Player->AccelerationY = -Player->JumpHeight;
     }
 
-    //Clamp player position
-    if (Player->X < Player->MinX - Player->Hitbox->UpperLeftX)
-    {
-        Player->X = Player->MinX - Player->Hitbox->UpperLeftX;
-    }
-    else if (Player->X > Player->MaxX - Player->Width + Player->Hitbox->UpperLeftX)
-    {
-        Player->X = Player->MaxX - Player->Width + Player->Hitbox->UpperLeftX;
-    }
-
     //Scene 2 falling
-    if (Engine->CurrentScene == 2 && ((platform*)Platforms->Values[4])->Y + 1000 < Player->Y + Player->Hitbox->UpperLeftY)
+    if (Engine->CurrentScene == 2 && ((platform*)Platforms->Values[4])->Y + 1000 < Player->Y)
     {
         Player->X = ((platform*)Platforms->Values[4])->X + 17;
         Player->Y = ((platform*)Platforms->Values[4])->Y - 1064;
