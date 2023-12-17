@@ -151,6 +151,15 @@ uint8 loadScene1(slayEngine* Engine)
     //Projectiles
     scene->Projectiles = arrNew(0);
 
+    //Collision layers
+    scene->PhysicsLayer = arrNew(0);
+    for (uint8 i = 0; i < scene->Platforms->Length; i++)
+    {
+        arrInsert(scene->PhysicsLayer, scene->PhysicsLayer->Length, ((platform*)scene->Platforms)->Hitbox);
+    }
+    arrInsert(scene->PhysicsLayer, scene->PhysicsLayer->Length, scene->Player->Hitbox);
+    arrInsert(scene->PhysicsLayer, scene->PhysicsLayer->Length, scene->Crate->Hitbox);
+
     //Scene
     Engine->CurrentScene = 1;
 
@@ -189,6 +198,9 @@ uint8 unloadScene1(slayEngine* Engine)
 
     //Projectiles
     destroyProjectiles(scene->Projectiles);
+
+    //Collision layers
+    arrPurge(scene->PhysicsLayer);
 
     //Scene
     free(scene);

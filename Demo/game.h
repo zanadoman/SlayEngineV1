@@ -119,6 +119,8 @@ struct scene1Struct
     player* Player;
     eagle* Eagle;
 
+    array PhysicsLayer;
+
     array Projectiles;
 };
 
