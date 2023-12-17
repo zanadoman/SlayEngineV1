@@ -96,10 +96,17 @@ uint8 updatePlayer(slayEngine* Engine)
     {
         Player->X = Player->MaxX - Player->Width;
     }
+    if (Player->Y < Player->MinY)
+    {
+        Player->Y = Player->MinY;
+    }
+    else if (Player->MaxY < Player->Y + Player->Height)
+    {
+        Player->Y = Player->MaxY - Player->Height;
+    }
 
     //Collision
     collision = slayCollision2(Player->Hitbox, PhysicsLayer);
-    slayApplyCollision2(Player->Hitbox, PhysicsLayer);
 
     //Horizontal movement
     if (Player->Alive && slayKey(Engine, Player->KeyLeft))
@@ -171,6 +178,9 @@ uint8 updatePlayer(slayEngine* Engine)
     {
         Player->AccelerationY = -Player->JumpHeight;
     }
+
+    //Applying collision
+    slayApplyCollision2(Player->Hitbox, PhysicsLayer);
 
     //Flipbooks
     if (!Player->Alive)
