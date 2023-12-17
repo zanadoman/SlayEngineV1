@@ -1,9 +1,10 @@
 #include "../game.h"
 
+projectile* newProjectile(actors Parent, double SpawnX, double SpawnY, double MinX, double MaxX, double MinY, double MaxY, double Angle);
 uint8 playerProjectile(slayEngine* Engine, array Projectiles, player* Player, slaySound* SoundFire, uint8 Volume);
 uint8 eagleProjectile(slayEngine* Engine, array Projectiles, eagle* Eagle, player* Player, array Platforms, crate* Crate, slaySound* SoundFire, uint8 Volume);
 
-projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX, double MinY, double MaxY, double Angle, actors Parent)
+projectile* newProjectile(actors Parent, double SpawnX, double SpawnY, double MinX, double MaxX, double MinY, double MaxY, double Angle)
 {
     projectile* result;
 
@@ -25,7 +26,7 @@ projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX
 
     result->Parent = Parent;
 
-    result->Hitbox = slayNewHitbox(&result->X, &result->Y, 3, 0, 4, 4, -1, -1, 0, 0, 0, 0);
+    result->Hitbox = slayNewHitbox(Parent, &result->X, &result->Y, 3, 0, 4, 4, -1, -1, 0, 0, 0, 0);
 
     return result;
 }
@@ -81,7 +82,7 @@ uint8 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, ea
         //Actor collision
         switch (((projectile*)Projectiles->Values[i])->Parent)
         {
-            case PLAYER:
+            case actPLAYER:
                 if (Eagle->Alive)
                 {
                     collision = slayCollision(((projectile*)Projectiles->Values[i])->Hitbox, Eagle->Hitbox);
@@ -98,7 +99,7 @@ uint8 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, ea
                     }
                 }
                 break;
-            case EAGLE:
+            case actEAGLE:
                 if (Player->Alive)
                 {
                     collision = slayCollision(((projectile*)Projectiles->Values[i])->Hitbox, Player->Hitbox);
@@ -134,7 +135,7 @@ uint8 playerProjectile(slayEngine* Engine, array Projectiles, player* Player, sl
         if ((Player->Facing == -1 && 90 < angle && angle < 270) || (Player->Facing == 1 && (270 < angle || angle < 90)))
         {
             Player->ReloadTick = slayGetTicks();
-            arrInsert(Projectiles, Projectiles->Length, newProjectile(Player->X + Player->CenterX, Player->Y + Player->CenterY, Player->MinX, Player->MaxX, Player->MinY, Player->MaxY, angle, PLAYER));
+            arrInsert(Projectiles, Projectiles->Length, newProjectile(actPLAYER, Player->X + Player->CenterX, Player->Y + Player->CenterY, Player->MinX, Player->MaxX, Player->MinY, Player->MaxY, angle));
             slayPlaySound(SoundFire, 1, Volume, 255, 255, 0);
         }
     }
@@ -165,7 +166,7 @@ uint8 eagleProjectile(slayEngine* Engine, array Projectiles, eagle* Eagle, playe
         }
         
         Eagle->ReloadTick = slayGetTicks();
-        arrInsert(Projectiles, Projectiles->Length, newProjectile(Eagle->X + Eagle->Width / 2.0, Eagle->Y + Eagle->Height / 2.0, Eagle->MinX, Eagle->MaxX, Eagle->MinY, Eagle->MaxY, angle, EAGLE));
+        arrInsert(Projectiles, Projectiles->Length, newProjectile(actEAGLE, Eagle->X + Eagle->Width / 2.0, Eagle->Y + Eagle->Height / 2.0, Eagle->MinX, Eagle->MaxX, Eagle->MinY, Eagle->MaxY, angle));
         if (Player->X < Eagle->X)
         {
             slayPlaySound(SoundFire, 1, Volume, 64, 255, 0);

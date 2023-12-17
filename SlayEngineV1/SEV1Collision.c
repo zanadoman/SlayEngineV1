@@ -1,6 +1,6 @@
 #include "SlayEngineV1.h"
 
-slayHitbox* slayNewHitbox(double* ObjectX, double* ObjectY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY, double Force, double Resistance, double MinX, double MinY, double MaxX, double MaxY)
+slayHitbox* slayNewHitbox(uint64 Parent, double* ObjectX, double* ObjectY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY, double Force, double Resistance, double MinX, double MinY, double MaxX, double MaxY)
 {
     slayHitbox* result;
 
@@ -10,6 +10,8 @@ slayHitbox* slayNewHitbox(double* ObjectX, double* ObjectY, sint32 UpperLeftX, s
         printf("ERROR Unable to allocate memory for HITBOX\n");
         exit(1);
     }
+
+    result->Parent = Parent;
 
     result->ObjectX = ObjectX;
     result->ObjectY = ObjectY;

@@ -16,7 +16,7 @@ button* newButton(slayEngine* Engine, double X, double Y, uint16 Width, uint16 H
     result->Height = Height;
 
     result->Pressed = false;
-    result->Hitbox = slayNewHitbox(&result->X, &result->Y, 0, 0, result->Width, result->Height, -1, -1, 0, 0, 0, 0);
+    result->Hitbox = slayNewHitbox(actNONE, &result->X, &result->Y, 0, 0, result->Width, result->Height, -1, -1, 0, 0, 0, 0);
 
     return result;
 }

@@ -43,7 +43,7 @@ player* newPlayer(slayEngine* Engine, uint16 KeyLeft, uint16 KeyRight, uint16 Ke
     result->TextureFall = slayLoadTexture(Engine, "assets/player/fall.png");
     result->TextureCurrent = result->FlipbookIdle->Textures[0];
 
-    result->Hitbox = slayNewHitbox(&result->X, &result->Y, 18, 22, 48, 64, 1.2, 1, 0, 0, 0, 0);
+    result->Hitbox = slayNewHitbox(actPLAYER, &result->X, &result->Y, 18, 22, 48, 64, 1.2, 1, 0, 0, 0, 0);
 
     return result;
 }

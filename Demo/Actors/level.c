@@ -12,7 +12,7 @@ platform* newPlatform(double X, double Y, uint16 Width, uint16 Height)
     result->Width = Width;
     result->Height = Height;
 
-    result->Hitbox = slayNewHitbox(&result->X, &result->Y, 0, 0, result->Width, result->Height, -1, -1, 0, 0, 0, 0);
+    result->Hitbox = slayNewHitbox(actPLATFORM, &result->X, &result->Y, 0, 0, result->Width, result->Height, -1, -1, 0, 0, 0, 0);
 
     return result;
 }
@@ -36,7 +36,7 @@ crate* newCrate(slayEngine* Engine, double X, double Y, double MinX, double MaxX
 
     result->Texture = slayLoadTexture(Engine, "assets/level/crate.png");
 
-    result->Hitbox = slayNewHitbox(&result->X, &result->Y, 0, 0, result->Width, result->Height, 1, 1, MinX, MinY, MaxX, MaxY);
+    result->Hitbox = slayNewHitbox(actCRATE, &result->X, &result->Y, 0, 0, result->Width, result->Height, 1, 1, MinX, MinY, MaxX, MaxY);
 
     return result;
 }

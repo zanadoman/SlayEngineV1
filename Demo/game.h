@@ -16,10 +16,13 @@ typedef struct pauseStruct pause;
 
 typedef enum
 {
-    PLAYER,
-    EAGLE,
-    PROJECTILE,
-    CRATE,
+    actNONE,
+    actPLATFORM,
+    actPLAYER,
+    actEAGLE,
+    actPROJECTILE,
+    actCRATE,
+    actLENGTH
 } actors;
 
 //Loading____________________________________________________________
@@ -294,7 +297,6 @@ struct projectileStruct
     slayHitbox* Hitbox;
 };
 
-projectile* newProjectile(double SpawnX, double SpawnY, double MinX, double MaxX, double MinY, double MaxY, double Angle, actors Parent);
 uint8 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, eagle* Eagle, array Platforms, crate* Crate, slaySound* SoundFire);
 uint8 destroyProjectiles(array Projectiles);
 

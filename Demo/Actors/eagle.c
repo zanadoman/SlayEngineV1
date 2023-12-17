@@ -23,7 +23,7 @@ eagle* newEagle(slayEngine* Engine)
     result->FlipbookDying = slayNewFlipbook(Engine, 150, 7, "assets/eagle/dying/dying1.png", "assets/eagle/dying/dying2.png", "assets/eagle/dying/dying3.png", "assets/eagle/dying/dying4.png", "assets/eagle/dying/dying5.png", "assets/eagle/dying/dying6.png", NULL);
     result->TextureCurrent = result->FlipbookFlying->Textures[0];
 
-    result->Hitbox = slayNewHitbox(&result->X, &result->Y, 0, 0, result->Width, result->Height, -1, -1, 0, 0, 0, 0);
+    result->Hitbox = slayNewHitbox(actEAGLE, &result->X, &result->Y, 0, 0, result->Width, result->Height, -1, -1, 0, 0, 0, 0);
 
     return result;
 }

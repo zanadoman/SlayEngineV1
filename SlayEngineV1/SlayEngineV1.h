@@ -206,6 +206,8 @@ typedef enum
 
 struct slayHitboxStruct
 {
+    uint64 Parent;
+
     double* ObjectX;
     double* ObjectY;
     double ObjectPrevX;
@@ -225,7 +227,7 @@ struct slayHitboxStruct
     double MaxY;
 };
 
-slayHitbox* slayNewHitbox(double* ObjectX, double* ObjectY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY, double Force, double Resistance, double MinX, double MinY, double MaxX, double MaxY);
+slayHitbox* slayNewHitbox(uint64 Parent, double* ObjectX, double* ObjectY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY, double Force, double Resistance, double MinX, double MinY, double MaxX, double MaxY);
 slayColls slayCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2);
 uint8 slayApplyCollision(slayColls Collision, slayHitbox* Hitbox1, slayHitbox* Hitbox2);
 

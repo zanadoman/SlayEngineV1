@@ -14,7 +14,7 @@ sint32 main(sint32 argc, char* *argv)
 {
     slayEngine* Engine;
 
-    Engine = slayNewEngine("SlayEngineV1 DEMO", 1920, 1080, 2, 3, 165, "assets/icon.png");
+    Engine = slayNewEngine("SlayEngineV1 DEMO", 1920, 1080, 2, actLENGTH, 165, "assets/icon.png");
     loadGame(Engine);
 
     loadScene0(Engine);
