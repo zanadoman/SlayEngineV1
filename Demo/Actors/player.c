@@ -43,7 +43,7 @@ player* newPlayer(slayEngine* Engine, uint16 KeyLeft, uint16 KeyRight, uint16 Ke
     result->TextureFall = slayLoadTexture(Engine, "assets/player/fall.png");
     result->TextureCurrent = result->FlipbookIdle->Textures[0];
 
-    result->Hitbox = slayNewHitbox(&result->X, &result->Y, 18, 22, 48, 64);
+    result->Hitbox = slayNewHitbox(&result->X, &result->Y, 18, 22, 48, 64, 1.2, 1, 0, 0, 0, 0);
 
     return result;
 }
@@ -55,8 +55,8 @@ uint8 updatePlayer(slayEngine* Engine, player* Player, array Platforms, crate* C
     double zoom;
 
     //Applying movement
-    Player->PrevX = Player->X;
-    Player->PrevY = Player->Y;
+    Player->Hitbox->ObjectPrevX = Player->X;
+    Player->Hitbox->ObjectPrevY = Player->Y;
     Player->X += Player->Speed * Player->AccelerationX * Engine->DeltaTime;
     Player->Y += GRAVITY * Player->AccelerationY * Engine->DeltaTime;
 
@@ -112,7 +112,7 @@ uint8 updatePlayer(slayEngine* Engine, player* Player, array Platforms, crate* C
     for (uint16 i = 0; i < Platforms->Length; i++)
     {
         collision = slayCollision(Player->Hitbox, ((platform*)Platforms->Values[i])->Hitbox);
-        slayApplyCollision(collision, Player->PrevX, Player->PrevY, Player->Hitbox, 0, ((platform*)Platforms->Values[i])->Hitbox, 0, 0, 0, 0, 0);
+        slayApplyCollision(collision, Player->Hitbox, ((platform*)Platforms->Values[i])->Hitbox);
 
         if (Player->Y + Player->Height <= ((platform*)Platforms->Values[i])->Y && (collision == slayCollBOTTOMLEFT || collision == slayCollBOTTOM || collision == slayCollBOTTOMRIGHT))
         {
@@ -151,7 +151,7 @@ uint8 updatePlayer(slayEngine* Engine, player* Player, array Platforms, crate* C
     if (Crate != NULL)
     {
         collision = slayCollision(Player->Hitbox, Crate->Hitbox);
-        slayApplyCollision(collision, Player->PrevX, Player->PrevY, Player->Hitbox, 1.2, Crate->Hitbox, 1, Crate->MinX, Crate->MaxX, Crate->MinY, Crate->MaxY);
+        slayApplyCollision(collision, Player->Hitbox, Crate->Hitbox);
         if (Player->Y + Player->Height <= Crate->Y && (collision == slayCollBOTTOMLEFT || collision == slayCollBOTTOM || collision == slayCollBOTTOMRIGHT))
         {
             Player->AccelerationY = 0;

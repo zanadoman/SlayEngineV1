@@ -124,6 +124,10 @@ uint8 loadScene1(slayEngine* Engine)
         scene->Player->Y = 386;
         scene->Player->Facing = 1;
     }
+    scene->Player->Hitbox->MinX = -200;
+    scene->Player->Hitbox->MaxX = 1000;
+    scene->Player->Hitbox->MinY = -500;
+    scene->Player->Hitbox->MaxY = 600;
 
     scene->Player->MinX = -200;
     scene->Player->MaxX = 1000;

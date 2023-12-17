@@ -1,6 +1,6 @@
 #include "SlayEngineV1.h"
 
-slayHitbox* slayNewHitbox(double* ObjectX, double* ObjectY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY)
+slayHitbox* slayNewHitbox(double* ObjectX, double* ObjectY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY, double Force, double Resistance, double MinX, double MinY, double MaxX, double MaxY)
 {
     slayHitbox* result;
 
@@ -13,10 +13,21 @@ slayHitbox* slayNewHitbox(double* ObjectX, double* ObjectY, sint32 UpperLeftX, s
 
     result->ObjectX = ObjectX;
     result->ObjectY = ObjectY;
+    result->ObjectPrevX = *ObjectX;
+    result->ObjectPrevY = *ObjectY;
+
     result->UpperLeftX = UpperLeftX;
     result->UpperLeftY = UpperLeftY;
     result->LowerRightX = LowerRightX;
     result->LowerRightY = LowerRightY;
+
+    result->Force = Force;
+    result->Resistance = Resistance;
+
+    result->MinX = MinX;
+    result->MinY = MinY;
+    result->MaxX = MaxX;
+    result->MaxY = MaxY;
 
     return result;
 }
@@ -72,7 +83,7 @@ slayColls slayCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2)
     return result;
 }
 
-uint8 slayApplyCollision(slayColls Collision, double Hitbox1PrevObjectX, double Hitbox1PrevObjectY, slayHitbox* Hitbox1, double Hitbox1Force, slayHitbox* Hitbox2, double Hitbox2Resistance, double Hitbox2MinX, double Hitbox2MaxX, double Hitbox2MinY, double Hitbox2MaxY)
+uint8 slayApplyCollision(slayColls Collision, slayHitbox* Hitbox1, slayHitbox* Hitbox2)
 {
     double angleCache;
     double ratioCache;
@@ -94,13 +105,13 @@ uint8 slayApplyCollision(slayColls Collision, double Hitbox1PrevObjectX, double 
 
     if (Collision == slayCollNONE)
     {
-        return 0;
+        return 1;
     }
 
-    Hitbox1PrevUpperLeftX = Hitbox1->UpperLeftX + Hitbox1PrevObjectX;
-    Hitbox1PrevUpperLeftY = Hitbox1->UpperLeftY + Hitbox1PrevObjectY;
-    Hitbox1PrevLowerRightX = Hitbox1->LowerRightX + Hitbox1PrevObjectX;
-    Hitbox1PrevLowerRightY = Hitbox1->LowerRightY + Hitbox1PrevObjectY;
+    Hitbox1PrevUpperLeftX = Hitbox1->UpperLeftX + Hitbox1->ObjectPrevX;
+    Hitbox1PrevUpperLeftY = Hitbox1->UpperLeftY + Hitbox1->ObjectPrevY;
+    Hitbox1PrevLowerRightX = Hitbox1->LowerRightX + Hitbox1->ObjectPrevX;
+    Hitbox1PrevLowerRightY = Hitbox1->LowerRightY + Hitbox1->ObjectPrevY;
 
     Hitbox1UpperLeftX = Hitbox1->UpperLeftX + *Hitbox1->ObjectX;
     Hitbox1UpperLeftY = Hitbox1->UpperLeftY + *Hitbox1->ObjectY;
@@ -112,7 +123,7 @@ uint8 slayApplyCollision(slayColls Collision, double Hitbox1PrevObjectX, double 
     Hitbox2LowerRightX = Hitbox2->LowerRightX + *Hitbox2->ObjectX;
     Hitbox2LowerRightY = Hitbox2->LowerRightY + *Hitbox2->ObjectY;
 
-    if (Hitbox1Force <= Hitbox2Resistance)
+    if (Hitbox1->Force <= Hitbox2->Resistance || Hitbox1->Force < 0 || Hitbox2->Resistance < 0)
     {
         switch(Collision)
         {
@@ -251,29 +262,29 @@ uint8 slayApplyCollision(slayColls Collision, double Hitbox1PrevObjectX, double 
     }
     else
     {
-        ratioCache = Hitbox2Resistance / Hitbox1Force;
+        ratioCache = Hitbox2->Resistance / Hitbox1->Force;
 
         switch(Collision)
         {
             case slayCollTOP:
                 *Hitbox1->ObjectY += (Hitbox2LowerRightY - Hitbox1UpperLeftY) * ratioCache;
                 *Hitbox2->ObjectY -= (Hitbox2LowerRightY - Hitbox1UpperLeftY) * (1 - ratioCache);
-            return 0;
+            break;
 
             case slayCollBOTTOM:
                 *Hitbox1->ObjectY -= (Hitbox1LowerRightY - Hitbox2UpperLeftY) * ratioCache;
                 *Hitbox2->ObjectY += (Hitbox1LowerRightY - Hitbox2UpperLeftY) * (1 - ratioCache);
-            return 0;
+            break;
 
             case slayCollLEFT:
                 *Hitbox1->ObjectX += (Hitbox2LowerRightX - Hitbox1UpperLeftX) * ratioCache;
                 *Hitbox2->ObjectX -= (Hitbox2LowerRightX - Hitbox1UpperLeftX) * (1 - ratioCache);
-            return 0;
+            break;
 
             case slayCollRIGHT:
                 *Hitbox1->ObjectX -= (Hitbox1LowerRightX - Hitbox2UpperLeftX) * ratioCache;
                 *Hitbox2->ObjectX += (Hitbox1LowerRightX - Hitbox2UpperLeftX) * (1 - ratioCache);
-            return 0;
+            break;
 
             case slayCollTOPLEFT:
                 if (Hitbox1PrevUpperLeftX < Hitbox2LowerRightX)
@@ -309,7 +320,7 @@ uint8 slayApplyCollision(slayColls Collision, double Hitbox1PrevObjectX, double 
                         *Hitbox2->ObjectX -= (Hitbox2LowerRightX - Hitbox1UpperLeftX) * (1 - ratioCache);
                     }
                 }
-            return 0;
+            break;
             
             case slayCollTOPRIGHT:
                 if (Hitbox2UpperLeftX < Hitbox1PrevLowerRightX)
@@ -345,7 +356,7 @@ uint8 slayApplyCollision(slayColls Collision, double Hitbox1PrevObjectX, double 
                         *Hitbox2->ObjectX += (Hitbox1LowerRightX - Hitbox2UpperLeftX) * (1 - ratioCache);
                     }
                 }
-            return 0;
+            break;
 
             case slayCollBOTTOMLEFT:
                 if (Hitbox1PrevUpperLeftX < Hitbox2LowerRightX)
@@ -381,7 +392,7 @@ uint8 slayApplyCollision(slayColls Collision, double Hitbox1PrevObjectX, double 
                         *Hitbox2->ObjectX -= (Hitbox2LowerRightX - Hitbox1UpperLeftX) * (1 - ratioCache);
                     }
                 }
-            return 0;
+            break;
 
             case slayCollBOTTOMRIGHT:
                 if (Hitbox2UpperLeftX < Hitbox1PrevLowerRightX)
@@ -417,7 +428,29 @@ uint8 slayApplyCollision(slayColls Collision, double Hitbox1PrevObjectX, double 
                         *Hitbox2->ObjectX += (Hitbox1LowerRightX - Hitbox2UpperLeftX) * (1 - ratioCache);
                     }
                 }
-            return 0;
+            break;
+        }
+
+        if (*Hitbox2->ObjectX < Hitbox2->MinX)
+        {
+            *Hitbox2->ObjectX += Hitbox2->MinX - *Hitbox2->ObjectX;
+            *Hitbox1->ObjectX += Hitbox2->MinX - *Hitbox2->ObjectX;
+        }
+        else if (Hitbox2->MaxX < *Hitbox2->ObjectX)
+        {
+            *Hitbox2->ObjectX -= *Hitbox2->ObjectX - Hitbox2->MaxX;
+            *Hitbox1->ObjectX -= *Hitbox2->ObjectX - Hitbox2->MaxX;
+        }
+
+        if (*Hitbox2->ObjectY < Hitbox2->MinY)
+        {
+            *Hitbox2->ObjectY += Hitbox2->MinY - *Hitbox2->ObjectY;
+            *Hitbox1->ObjectY += Hitbox2->MinY - *Hitbox2->ObjectY;
+        }
+        else if (Hitbox2->MaxY < *Hitbox2->ObjectY)
+        {
+            *Hitbox2->ObjectY -= *Hitbox2->ObjectY - Hitbox2->MaxY;
+            *Hitbox1->ObjectY -= *Hitbox2->ObjectY - Hitbox2->MaxY;
         }
     }
 
