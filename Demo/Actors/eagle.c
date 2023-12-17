@@ -6,6 +6,14 @@ eagle* newEagle(slayEngine* Engine)
 
     result = malloc(sizeof(eagle));
 
+    result->X = 0;
+    result->Y = 0;
+
+    result->MinX = 0;
+    result->MaxX = 0;
+    result->MinY = 0;
+    result->MaxY = 0;
+
     result->Width = 60;
     result->Height = 60;
 
@@ -19,17 +27,30 @@ eagle* newEagle(slayEngine* Engine)
     result->RespawnTime = 2000;
     result->DeathTick = 0;
 
-    result->FlipbookFlying = slayNewFlipbook(Engine, 150, 6, "assets/eagle/flying/flying1.png", "assets/eagle/flying/flying2.png", "assets/eagle/flying/flying3.png", "assets/eagle/flying/flying4.png", "assets/eagle/flying/flying3.png", "assets/eagle/flying/flying2.png");
-    result->FlipbookDying = slayNewFlipbook(Engine, 150, 7, "assets/eagle/dying/dying1.png", "assets/eagle/dying/dying2.png", "assets/eagle/dying/dying3.png", "assets/eagle/dying/dying4.png", "assets/eagle/dying/dying5.png", "assets/eagle/dying/dying6.png", NULL);
-    result->TextureCurrent = result->FlipbookFlying->Textures[0];
+    result->TextureCurrent = NULL;
 
     result->Hitbox = slayNewHitbox(actEAGLE, &result->X, &result->Y, 0, 0, result->Width, result->Height, -1, -1, 0, 0, 0, 0);
 
     return result;
 }
 
-uint8 updateEagle(slayEngine* Engine, eagle* Eagle)
+uint8 updateEagle(slayEngine* Engine)
 {
+    eagle* Eagle;
+
+    switch (Engine->CurrentScene)
+    {
+        case 0:
+        return 1;
+
+        case 1:
+            Eagle = ((scene1*)Engine->Scenes->Values[1])->Eagle;
+        break;
+
+        case 2:
+        return 1;
+    }
+
     if (Eagle->Alive)
     {
         //Horizontal movement
@@ -46,19 +67,19 @@ uint8 updateEagle(slayEngine* Engine, eagle* Eagle)
         }
 
         //Flipbooks
-        Eagle->TextureCurrent = slayLoopFlipbook(Eagle->FlipbookFlying);
+        Eagle->TextureCurrent = slayLoopFlipbook(((game*)Engine->Game)->Flipbooks->eagleFlying);
     }
     else
     {
         //Flipbooks (Dying)
-        Eagle->TextureCurrent = slayPlayFlipbook(Eagle->FlipbookDying);
+        Eagle->TextureCurrent = slayPlayFlipbook(((game*)Engine->Game)->Flipbooks->eagleDying);
     }
 
     //Respawning
     if (!Eagle->Alive && Eagle->RespawnTime <= slayGetTicks() - Eagle->DeathTick)
     {
         Eagle->Alive = true;
-        slayResetFlipbook(Eagle->FlipbookDying);
+        slayResetFlipbook(((game*)Engine->Game)->Flipbooks->eagleDying);
     }
 
     return 0;
@@ -66,8 +87,6 @@ uint8 updateEagle(slayEngine* Engine, eagle* Eagle)
 
 uint8 destroyEagle(eagle* Eagle)
 {
-    slayDestroyFlipbook(Eagle->FlipbookFlying);
-    slayDestroyFlipbook(Eagle->FlipbookDying);
     free(Eagle->Hitbox);
     free(Eagle);
 

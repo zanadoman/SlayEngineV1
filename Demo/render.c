@@ -7,14 +7,16 @@ uint8 renderQueue(slayEngine* Engine)
     switch (Engine->CurrentScene)
     {
         case 0:
-            renderScene0(Engine, Engine->Scenes->Values[0]);
-            break;
+            renderScene0(Engine);
+        break;
+
         case 1:
-            renderScene1(Engine, Engine->Scenes->Values[1]);
-            break;
+            renderScene1(Engine);
+        break;
+
         case 2:
-            renderScene2(Engine, Engine->Scenes->Values[2]);
-            break;
+            renderScene2(Engine);
+        break;
     }
     
     slayRenderEnd(Engine);

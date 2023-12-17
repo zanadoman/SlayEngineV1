@@ -1,7 +1,11 @@
 #include "../game.h"
 
-uint8 updateScene2(slayEngine* Engine, scene2* Scene)
+uint8 updateScene2(slayEngine* Engine)
 {
+    scene2* Scene;
+
+    Scene = Engine->Scenes->Values[2];
+
     //1
     if (updatePause(Engine, Scene->Pause, &Scene->paused) || Scene->paused)
     {
@@ -14,16 +18,22 @@ uint8 updateScene2(slayEngine* Engine, scene2* Scene)
         slayMouseRelative(true);
     }
     //2
-    updatePlayer(Engine, Scene->Player, Scene->Platforms, NULL);
+    updatePlayer(Engine);
     //3
 
     return 0;
 }
 
-uint8 renderScene2(slayEngine* Engine, scene2* Scene)
+uint8 renderScene2(slayEngine* Engine)
 {
+    game* Game;
+    scene2* Scene;
+
+    Game = Engine->Game;
+    Scene = Engine->Scenes->Values[2];
+
     //Background
-    slayRenderTexture(Engine, 0, 0, Engine->Display->Width, Engine->Display->Height, 0, slayFlipNONE, Scene->TextureBackground, 255, 255, 255, 255);
+    slayRenderTexture(Engine, 0, 0, Engine->Display->Width, Engine->Display->Height, 0, slayFlipNONE, Game->Textures->levelBackground, 255, 255, 255, 255);
 
     //Hint
     slayRenderTextCamera(Engine, ((game*)Engine->Game)->FontCrazyPixel, "Movement: A/D", -150, -100, 1, 0, slayFlipNONE, 0.5, 0, 0, 0, 255);
@@ -32,7 +42,7 @@ uint8 renderScene2(slayEngine* Engine, scene2* Scene)
     //Platforms
     for (uint8 i = 0; i < Scene->Platforms->Length; i++)
     {
-        slayRender3DTextureCamera(Engine, ((platform*)Scene->Platforms->Values[i])->X, ((platform*)Scene->Platforms->Values[i])->Y, ((platform*)Scene->Platforms->Values[i])->Width, ((platform*)Scene->Platforms->Values[i])->Height, 0, slayFlipNONE, 1.02, 0.04, 0.005, Scene->TexturePlatform, 255, 255, 255, 255);
+        slayRender3DTextureCamera(Engine, ((platform*)Scene->Platforms->Values[i])->X, ((platform*)Scene->Platforms->Values[i])->Y, ((platform*)Scene->Platforms->Values[i])->Width, ((platform*)Scene->Platforms->Values[i])->Height, 0, slayFlipNONE, 1.02, 0.04, 0.005, Game->Textures->levelPlatform, 255, 255, 255, 255);
     }
 
     //Player
@@ -64,8 +74,6 @@ uint8 loadScene2(slayEngine* Engine)
     scene->paused = false;
 
     //Level
-    scene->TextureBackground = slayLoadTexture(Engine, "assets/level/background.png");
-    scene->TexturePlatform = slayLoadTexture(Engine, "assets/level/platform.png");
     scene->Platforms = arrNew(9);
     scene->Platforms->Values[0] = newPlatform(-450, 250 + slayRandom(-100, 100, 1), 100, 30);
     scene->Platforms->Values[1] = newPlatform(-250, 250 + slayRandom(-100, 100, 1), 100, 30);
@@ -107,8 +115,6 @@ uint8 unloadScene2(slayEngine* Engine)
     destroyPause(scene->Pause);
 
     //Level
-    slayUnloadTexture(scene->TextureBackground);
-    slayUnloadTexture(scene->TexturePlatform);
     destroyPlatforms(scene->Platforms);
 
     //Player

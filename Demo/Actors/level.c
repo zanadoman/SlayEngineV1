@@ -17,26 +17,26 @@ platform* newPlatform(double X, double Y, uint16 Width, uint16 Height)
     return result;
 }
 
-crate* newCrate(slayEngine* Engine, double X, double Y, double MinX, double MaxX, double MinY, double MaxY, uint16 Width, uint16 Height)
+crate* newCrate(slayEngine* Engine, uint16 Width, uint16 Height)
 {
     crate* result;
 
     result = malloc(sizeof(crate));
 
-    result->X = X;
-    result->Y = Y;
+    result->X = 0;
+    result->Y = 0;
+    result->PrevX = 0;
+    result->PrevY = 0;
 
-    result->MinX = MinX;
-    result->MaxX = MaxX;
-    result->MinY = MinY;
-    result->MaxY = MaxY;
+    result->MinX = 0;
+    result->MinY = 0;
+    result->MaxX = 0;
+    result->MaxY = 0;
 
     result->Width = Width;
     result->Height = Height;
 
-    result->Texture = slayLoadTexture(Engine, "assets/level/crate.png");
-
-    result->Hitbox = slayNewHitbox(actCRATE, &result->X, &result->Y, 0, 0, result->Width, result->Height, 1, 1, MinX, MinY, MaxX, MaxY);
+    result->Hitbox = slayNewHitbox(actCRATE, &result->X, &result->Y, 0, 0, result->Width, result->Height, 1, 1, 0, 0, 0, 0);
 
     return result;
 }
@@ -58,7 +58,6 @@ uint8 destroyPlatforms(array Platforms)
 
 uint8 destroyCrate(crate* Crate)
 {
-    slayUnloadTexture(Crate->Texture);
     free(Crate->Hitbox);
     free(Crate);
 

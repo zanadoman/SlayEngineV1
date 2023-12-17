@@ -6,8 +6,15 @@ player* newPlayer(slayEngine* Engine, uint16 KeyLeft, uint16 KeyRight, uint16 Ke
 
     result = malloc(sizeof(player));
 
+    result->X = 0;
+    result->Y = 0;
     result->PrevX = 0;
     result->PrevY = 0;
+
+    result->MinX = 0;
+    result->MinY = 0;
+    result->MaxX = 0;
+    result->MaxY = 0;
 
     result->Width = 66;
     result->Height = 64;
@@ -36,23 +43,40 @@ player* newPlayer(slayEngine* Engine, uint16 KeyLeft, uint16 KeyRight, uint16 Ke
     result->RespawnTime = 500;
     result->DeathTick = 0;
 
-    result->FlipbookIdle = slayNewFlipbook(Engine, 150, 4, "assets/player/idle/idle1.png", "assets/player/idle/idle2.png", "assets/player/idle/idle3.png", "assets/player/idle/idle4.png");
-    result->FlipbookRun = slayNewFlipbook(Engine, 150, 6, "assets/player/run/run1.png", "assets/player/run/run2.png", "assets/player/run/run3.png", "assets/player/run/run4.png", "assets/player/run/run5.png", "assets/player/run/run6.png");
-    result->FlipbookStunned = slayNewFlipbook(Engine, 150, 2, "assets/player/stunned/stunned1.png", "assets/player/stunned/stunned2.png");
-    result->TextureJump = slayLoadTexture(Engine, "assets/player/jump.png");
-    result->TextureFall = slayLoadTexture(Engine, "assets/player/fall.png");
-    result->TextureCurrent = result->FlipbookIdle->Textures[0];
+    result->TextureCurrent = NULL;
 
     result->Hitbox = slayNewHitbox(actPLAYER, &result->X, &result->Y, 18, 22, 48, 64, 1.2, 1, 0, 0, 0, 0);
 
     return result;
 }
 
-uint8 updatePlayer(slayEngine* Engine, player* Player, array Platforms, crate* Crate)
+uint8 updatePlayer(slayEngine* Engine)
 {
+    player* Player;
+    array Platforms;
+    crate* Crate;
+
     uint8 collision;
     logic falling;
     double zoom;
+
+    switch (Engine->CurrentScene)
+    {
+        case 0:
+        return 1;
+        
+        case 1:
+            Player = ((scene1*)Engine->Scenes->Values[1])->Player;
+            Platforms = ((scene1*)Engine->Scenes->Values[1])->Platforms;
+            Crate = ((scene1*)Engine->Scenes->Values[1])->Crate;
+        break;
+
+        case 2:
+            Player = ((scene2*)Engine->Scenes->Values[2])->Player;
+            Platforms = ((scene2*)Engine->Scenes->Values[2])->Platforms;
+            Crate = NULL;
+        break;
+    }
 
     //Applying movement
     Player->Hitbox->ObjectPrevX = Player->X;
@@ -197,23 +221,23 @@ uint8 updatePlayer(slayEngine* Engine, player* Player, array Platforms, crate* C
     //Flipbooks
     if (!Player->Alive)
     {
-        Player->TextureCurrent = slayLoopFlipbook(Player->FlipbookStunned);
+        Player->TextureCurrent = slayLoopFlipbook(((game*)Engine->Game)->Flipbooks->playerStunned);
     }
     else if (Player->AccelerationX == 0 && Player->AccelerationY == 0)
     {
-        Player->TextureCurrent = slayLoopFlipbook(Player->FlipbookIdle);
+        Player->TextureCurrent = slayLoopFlipbook(((game*)Engine->Game)->Flipbooks->playerIdle);
     }
     else if (Player->AccelerationX != 0 && Player->AccelerationY == 0)
     {
-        Player->TextureCurrent = slayLoopFlipbook(Player->FlipbookRun);
+        Player->TextureCurrent = slayLoopFlipbook(((game*)Engine->Game)->Flipbooks->playerRun);
     }
     else if (Player->AccelerationY < 0)
     {
-        Player->TextureCurrent = Player->TextureJump;
+        Player->TextureCurrent = ((game*)Engine->Game)->Textures->playerJump;
     }
     else
     {
-        Player->TextureCurrent = Player->TextureFall;
+        Player->TextureCurrent = ((game*)Engine->Game)->Textures->playerFall;
     }
 
     //Respawning
@@ -227,11 +251,6 @@ uint8 updatePlayer(slayEngine* Engine, player* Player, array Platforms, crate* C
 
 uint8 destroyPlayer(player* Player)
 {
-    slayDestroyFlipbook(Player->FlipbookIdle);
-    slayDestroyFlipbook(Player->FlipbookRun);
-    slayDestroyFlipbook(Player->FlipbookStunned);
-    slayUnloadTexture(Player->TextureJump);
-    slayUnloadTexture(Player->TextureFall);
     free(Player->Hitbox);
     free(Player);
 

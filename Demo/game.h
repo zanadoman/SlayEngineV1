@@ -2,21 +2,26 @@
 
 #define GRAVITY 0.65
 
-typedef struct buttonStruct button;
 typedef struct gameStruct game;
+typedef struct commonTexturesStruct commonTextures;
+typedef struct commonFlipbooksStruct commonFlipbooks;
+typedef struct commonSoundsStruct commonSounds;
+
 typedef struct scene0Struct scene0;
 typedef struct scene1Struct scene1;
 typedef struct scene2Struct scene2;
+
 typedef struct crateStruct crate;
 typedef struct platformStruct platform;
 typedef struct playerStruct player;
 typedef struct eagleStruct eagle;
 typedef struct projectileStruct projectile;
 typedef struct pauseStruct pause;
+typedef struct buttonStruct button;
 
 typedef enum
 {
-    actNONE,
+    actBUTTON,
     actPLATFORM,
     actPLAYER,
     actEAGLE,
@@ -31,7 +36,38 @@ struct gameStruct
 {
     slayFont* FontCrazyPixel;
     uint8 Volume;
-    slayTexture* TextureProjectile;
+
+    commonTextures* Textures;
+    commonFlipbooks* Flipbooks;
+    commonSounds* Sounds;
+};
+
+struct commonTexturesStruct
+{
+    slayTexture* playerJump;
+    slayTexture* playerFall;
+
+    slayTexture* levelBackground;
+    slayTexture* levelMountain;
+    slayTexture* levelShroom;
+    slayTexture* levelBush;
+    slayTexture* levelPlatform;
+    slayTexture* levelCrate;
+
+    slayTexture* projectile;
+};
+struct commonFlipbooksStruct
+{
+    slayFlipbook* playerIdle;
+    slayFlipbook* playerRun;
+    slayFlipbook* playerStunned;
+
+    slayFlipbook* eagleFlying;
+    slayFlipbook* eagleDying;
+};
+struct commonSoundsStruct
+{
+    slaySound* gunFire;
 };
 
 uint8 loadGame(slayEngine* Engine);
@@ -65,8 +101,8 @@ struct scene0Struct
     array Buttons;   
 };
 
-uint8 updateScene0(slayEngine* Engine, scene0* Scene);
-uint8 renderScene0(slayEngine* Engine, scene0* Scene);
+uint8 updateScene0(slayEngine* Engine);
+uint8 renderScene0(slayEngine* Engine);
 
 uint8 loadScene0(slayEngine* Engine);
 uint8 unloadScene0(slayEngine* Engine);
@@ -79,24 +115,15 @@ struct scene1Struct
     logic paused;
 
     array Platforms;
-    slayTexture* TextureBackground;
-    slayTexture* TextureMountain;
-    slayTexture* TextureShroom;
-    slayTexture* TextureBush;
-    slayTexture* TexturePlatform;
-
     crate* Crate;
-
-    slaySound* SoundFire;
-
     player* Player;
     eagle* Eagle;
 
     array Projectiles;
 };
 
-uint8 updateScene1(slayEngine* Engine, scene1* Scene);
-uint8 renderScene1(slayEngine* Engine, scene1* Scene);
+uint8 updateScene1(slayEngine* Engine);
+uint8 renderScene1(slayEngine* Engine);
 
 uint8 loadScene1(slayEngine* Engine);
 uint8 unloadScene1(slayEngine* Engine);
@@ -109,14 +136,11 @@ struct scene2Struct
     logic paused;
 
     array Platforms;
-    slayTexture* TextureBackground;
-    slayTexture* TexturePlatform;
-
     player* Player;
 };
 
-uint8 updateScene2(slayEngine* Engine, scene2* Scene);
-uint8 renderScene2(slayEngine* Engine, scene2* Scene);
+uint8 updateScene2(slayEngine* Engine);
+uint8 renderScene2(slayEngine* Engine);
 
 uint8 loadScene2(slayEngine* Engine);
 uint8 unloadScene2(slayEngine* Engine);
@@ -142,20 +166,18 @@ struct crateStruct
     double PrevY;
 
     double MinX;
-    double MaxX;
     double MinY;
+    double MaxX;
     double MaxY;
 
     uint16 Width;
     uint16 Height;
 
-    slayTexture* Texture;
-
     slayHitbox* Hitbox;
 };
 
 platform* newPlatform(double X, double Y, uint16 Width, uint16 Height);
-crate* newCrate(slayEngine* Engine, double X, double Y, double MinX, double MaxX, double MinY, double MaxY, uint16 Width, uint16 Height);
+crate* newCrate(slayEngine* Engine, uint16 Width, uint16 Height);
 
 uint8 destroyPlatforms(array Platforms);
 uint8 destroyCrate(crate* Crate);
@@ -193,8 +215,8 @@ struct playerStruct
     double PrevY;
 
     double MinX;
-    double MaxX;
     double MinY;
+    double MaxX;
     double MaxY;
 
     uint16 Width;
@@ -224,18 +246,13 @@ struct playerStruct
     uint16 RespawnTime;
     uint32 DeathTick;
 
-    slayFlipbook* FlipbookIdle;
-    slayFlipbook* FlipbookRun;
-    slayFlipbook* FlipbookStunned;
-    slayTexture* TextureJump;
-    slayTexture* TextureFall;
     slayTexture* TextureCurrent;
 
     slayHitbox* Hitbox;
 };
 
 player* newPlayer(slayEngine* Engine, uint16 KeyLeft, uint16 KeyRight, uint16 KeyJump, uint16 KeyFire);
-uint8 updatePlayer(slayEngine* Engine, player* Player, array Platforms, crate* Crate);
+uint8 updatePlayer(slayEngine* Engine);
 uint8 destroyPlayer(player* Player);
 
 //Eagle______________________________________________________________
@@ -246,8 +263,8 @@ struct eagleStruct
     double Y;
 
     double MinX;
-    double MaxX;
     double MinY;
+    double MaxX;
     double MaxY;
 
     uint16 Width;
@@ -263,15 +280,13 @@ struct eagleStruct
     uint16 RespawnTime;
     uint32 DeathTick;
 
-    slayFlipbook* FlipbookFlying;
-    slayFlipbook* FlipbookDying;
     slayTexture* TextureCurrent;
     
     slayHitbox* Hitbox;
 };
 
 eagle* newEagle(slayEngine* Engine);
-uint8 updateEagle(slayEngine* Engine, eagle* Eagle);
+uint8 updateEagle(slayEngine* Engine);
 uint8 destroyEagle(eagle* Eagle);
 
 //Projectile_________________________________________________________
@@ -282,8 +297,8 @@ struct projectileStruct
     double Y;
 
     double MinX;
+    double MinY;
     double MaxX;
-    double MixY;
     double MaxY;
 
     uint16 Width;
@@ -297,7 +312,7 @@ struct projectileStruct
     slayHitbox* Hitbox;
 };
 
-uint8 updateProjectile(slayEngine* Engine, array Projectiles, player* Player, eagle* Eagle, array Platforms, crate* Crate, slaySound* SoundFire);
+uint8 updateProjectile(slayEngine* Engine);
 uint8 destroyProjectiles(array Projectiles);
 
 //Menu_______________________________________________________________

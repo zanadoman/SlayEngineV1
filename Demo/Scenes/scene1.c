@@ -1,7 +1,11 @@
 #include "../game.h"
 
-uint8 updateScene1(slayEngine* Engine, scene1* Scene)
+uint8 updateScene1(slayEngine* Engine)
 {
+    scene1* Scene;
+
+    Scene = Engine->Scenes->Values[1];
+
     //1
     if (updatePause(Engine, Scene->Pause, &Scene->paused) || Scene->paused)
     {
@@ -19,15 +23,21 @@ uint8 updateScene1(slayEngine* Engine, scene1* Scene)
     return 0;
 }
 
-uint8 renderScene1(slayEngine* Engine, scene1* Scene)
+uint8 renderScene1(slayEngine* Engine)
 {
+    game* Game;
+    scene1* Scene;
+
+    Game = Engine->Game;
+    Scene = Engine->Scenes->Values[1];
+
     //Background
-    slayRenderTexture(Engine, 0, 0, Engine->Display->Width, Engine->Display->Height, 0, slayFlipNONE, Scene->TextureBackground, 255, 255, 255, 255);
+    slayRenderTexture(Engine, 0, 0, Engine->Display->Width, Engine->Display->Height, 0, slayFlipNONE, Game->Textures->levelBackground, 255, 255, 255, 255);
 
     //Mountains
     for (double i = 0; i < 5; i++)
     {
-        slayRenderTextureCamera(Engine, -3560 + 1583 * i, -1000, 1584, 3312, 0, slayFlipNONE, 0.2, Scene->TextureMountain, 255, 255, 255, 255);
+        slayRenderTextureCamera(Engine, -3560 + 1583 * i, -1000, 1584, 3312, 0, slayFlipNONE, 0.2, Game->Textures->levelMountain, 255, 255, 255, 255);
     }
 
     //Hint
@@ -36,23 +46,23 @@ uint8 renderScene1(slayEngine* Engine, scene1* Scene)
     slayRenderTextCamera(Engine, ((game*)Engine->Game)->FontCrazyPixel, "Shoot: LMB", -150, 360, 1, 0, slayFlipNONE, 0.5, 255, 255, 255, 255);
 
     //Shrooms
-    slayRenderTextureCamera(Engine, 210, 320, 32, 30, 0, slayFlipNONE, 0.98, Scene->TextureShroom, 255, 255, 255, 255);
-    slayRenderTextureCamera(Engine, 550, 120, 32, 30, 0, slayFlipNONE, 0.98, Scene->TextureShroom, 255, 255, 255, 255);
+    slayRenderTextureCamera(Engine, 210, 320, 32, 30, 0, slayFlipNONE, 0.98, Game->Textures->levelShroom, 255, 255, 255, 255);
+    slayRenderTextureCamera(Engine, 550, 120, 32, 30, 0, slayFlipNONE, 0.98, Game->Textures->levelShroom, 255, 255, 255, 255);
 
     //Platforms
     for (uint8 i = 0; i < Scene->Platforms->Length; i++)
     {
-        slayRender3DTextureCamera(Engine, ((platform*)Scene->Platforms->Values[i])->X, ((platform*)Scene->Platforms->Values[i])->Y, ((platform*)Scene->Platforms->Values[i])->Width, ((platform*)Scene->Platforms->Values[i])->Height, 0, slayFlipNONE, 1.02, 0.04, 0.005, Scene->TexturePlatform, 255, 255, 255, 255);
+        slayRender3DTextureCamera(Engine, ((platform*)Scene->Platforms->Values[i])->X, ((platform*)Scene->Platforms->Values[i])->Y, ((platform*)Scene->Platforms->Values[i])->Width, ((platform*)Scene->Platforms->Values[i])->Height, 0, slayFlipNONE, 1.02, 0.04, 0.005, Game->Textures->levelPlatform, 255, 255, 255, 255);
     }
 
     //Projectiles
     for (uint16 i = 0; i < Scene->Projectiles->Length; i++)
     {
-        slayRenderTextureCamera(Engine, ((projectile*)Scene->Projectiles->Values[i])->X, ((projectile*)Scene->Projectiles->Values[i])->Y, ((projectile*)Scene->Projectiles->Values[i])->Width, ((projectile*)Scene->Projectiles->Values[i])->Height, ((projectile*)Scene->Projectiles->Values[i])->Angle, slayFlipNONE, 1, ((game*)Engine->Game)->TextureProjectile, 255, 255, 255, 255);
+        slayRenderTextureCamera(Engine, ((projectile*)Scene->Projectiles->Values[i])->X, ((projectile*)Scene->Projectiles->Values[i])->Y, ((projectile*)Scene->Projectiles->Values[i])->Width, ((projectile*)Scene->Projectiles->Values[i])->Height, ((projectile*)Scene->Projectiles->Values[i])->Angle, slayFlipNONE, 1, Game->Textures->projectile, 255, 255, 255, 255);
     }
 
     //Crate
-    slayRenderTextureCamera(Engine, Scene->Crate->X, Scene->Crate->Y, Scene->Crate->Width, Scene->Crate->Height, 0, slayFlipNONE, 1, Scene->Crate->Texture, 255, 255, 255, 255);
+    slayRenderTextureCamera(Engine, Scene->Crate->X, Scene->Crate->Y, Scene->Crate->Width, Scene->Crate->Height, 0, slayFlipNONE, 1, Game->Textures->levelCrate, 255, 255, 255, 255);
 
     //Eagle
     renderEagle(Engine, Scene->Eagle);
@@ -61,7 +71,7 @@ uint8 renderScene1(slayEngine* Engine, scene1* Scene)
     renderPlayer(Engine, Scene->Player);
 
     //Bush
-    slayRenderTextureCamera(Engine, 700, 508, 69, 42, 0, slayFlipNONE, 1.02, Scene->TextureBush, 255, 255, 255, 255);
+    slayRenderTextureCamera(Engine, 700, 508, 69, 42, 0, slayFlipNONE, 1.02, Game->Textures->levelBush, 255, 255, 255, 255);
 
     //Pause
     if (Scene->paused)
@@ -89,11 +99,6 @@ uint8 loadScene1(slayEngine* Engine)
     scene->paused = false;
 
     //Level
-    scene->TextureBackground = slayLoadTexture(Engine, "assets/level/background.png");
-    scene->TextureMountain = slayLoadTexture(Engine, "assets/level/mountain.png");
-    scene->TextureShroom = slayLoadTexture(Engine, "assets/level/shroom.png");
-    scene->TextureBush = slayLoadTexture(Engine, "assets/level/bush.png");
-    scene->TexturePlatform = slayLoadTexture(Engine, "assets/level/platform.png");
     scene->Platforms = arrNew(5);
     scene->Platforms->Values[0] = newPlatform(-200, 550, 1200, 360);
     scene->Platforms->Values[1] = newPlatform(300, 450, 200, 30);
@@ -101,11 +106,18 @@ uint8 loadScene1(slayEngine* Engine)
     scene->Platforms->Values[3] = newPlatform(350, 250, 100, 30);
     scene->Platforms->Values[4] = newPlatform(500, 150, 100, 30);
 
-    scene->Crate = newCrate(Engine, 550, 490, -200, 940, -500, 600, 60, 60);
+    scene->Crate = newCrate(Engine, 60, 60);
+    scene->Crate->X = 550;
+    scene->Crate->Y = 490;
+    scene->Crate->MinX = -200;
+    scene->Crate->MaxX = 940;
+    scene->Crate->MinY = -500;
+    scene->Crate->MaxY = 600;
+    scene->Crate->Hitbox->MinX = -200;
+    scene->Crate->Hitbox->MaxX = 940;
+    scene->Crate->Hitbox->MinY = -500;
+    scene->Crate->Hitbox->MaxY = 600;
 
-    //Sounds
-    scene->SoundFire = slayLoadSound("assets/player_fire.wav");
-    
     //Player
     scene->Player = newPlayer(Engine, SDL_SCANCODE_A, SDL_SCANCODE_D, SDL_SCANCODE_SPACE, SDL_SCANCODE_LMB);
 
@@ -128,7 +140,6 @@ uint8 loadScene1(slayEngine* Engine)
     scene->Player->Hitbox->MaxX = 1000;
     scene->Player->Hitbox->MinY = -500;
     scene->Player->Hitbox->MaxY = 600;
-
     scene->Player->MinX = -200;
     scene->Player->MaxX = 1000;
     scene->Player->MinY = -500;
@@ -141,8 +152,8 @@ uint8 loadScene1(slayEngine* Engine)
     scene->Eagle->X = 370;
     scene->Eagle->Y = 50;
     scene->Eagle->MinX = -200;
-    scene->Eagle->MaxX = 1000;
     scene->Eagle->MinY = -500;
+    scene->Eagle->MaxX = 1000;
     scene->Eagle->MaxY = 600;
     
     //Projectiles
@@ -175,17 +186,8 @@ uint8 unloadScene1(slayEngine* Engine)
     destroyPause(scene->Pause);
 
     //Level
-    slayUnloadTexture(scene->TextureBackground);
-    slayUnloadTexture(scene->TextureMountain);
-    slayUnloadTexture(scene->TextureShroom);
-    slayUnloadTexture(scene->TextureBush);
-    slayUnloadTexture(scene->TexturePlatform);
     destroyPlatforms(scene->Platforms);
-
     destroyCrate(scene->Crate);
-
-    //Sounds
-    slayUnloadSound(scene->SoundFire);
 
     //Player
     destroyPlayer(scene->Player);

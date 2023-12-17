@@ -6,17 +6,19 @@ button* newButton(slayEngine* Engine, double X, double Y, uint16 Width, uint16 H
 
     result = malloc(sizeof(button));
 
-    result->TextureBase = slayLoadTexture(Engine, TextureBase);
-    result->TextureHover = slayLoadTexture(Engine, TextureHover);
-    result->TextureCurrent = result->TextureBase;
-
     result->X = X;
     result->Y = Y;
+
     result->Width = Width;
     result->Height = Height;
 
     result->Pressed = false;
-    result->Hitbox = slayNewHitbox(actNONE, &result->X, &result->Y, 0, 0, result->Width, result->Height, -1, -1, 0, 0, 0, 0);
+
+    result->TextureBase = slayLoadTexture(Engine, TextureBase);
+    result->TextureHover = slayLoadTexture(Engine, TextureHover);
+    result->TextureCurrent = result->TextureBase;
+
+    result->Hitbox = slayNewHitbox(actBUTTON, &result->X, &result->Y, 0, 0, result->Width, result->Height, -1, -1, 0, 0, 0, 0);
 
     return result;
 }

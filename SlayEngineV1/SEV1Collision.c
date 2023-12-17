@@ -127,7 +127,7 @@ uint8 slayApplyCollision(slayColls Collision, slayHitbox* Hitbox1, slayHitbox* H
 
     if (Hitbox1->Force <= Hitbox2->Resistance || Hitbox1->Force < 0 || Hitbox2->Resistance < 0)
     {
-        switch(Collision)
+        switch (Collision)
         {
             case slayCollTOP:
                 *Hitbox1->ObjectY += Hitbox2LowerRightY - Hitbox1UpperLeftY;
@@ -266,7 +266,7 @@ uint8 slayApplyCollision(slayColls Collision, slayHitbox* Hitbox1, slayHitbox* H
     {
         ratioCache = Hitbox2->Resistance / Hitbox1->Force;
 
-        switch(Collision)
+        switch (Collision)
         {
             case slayCollTOP:
                 *Hitbox1->ObjectY += (Hitbox2LowerRightY - Hitbox1UpperLeftY) * ratioCache;
