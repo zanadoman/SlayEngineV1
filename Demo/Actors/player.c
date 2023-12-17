@@ -55,6 +55,7 @@ uint8 updatePlayer(slayEngine* Engine)
     player* Player;
     array Platforms;
     crate* Crate;
+    array PhysicsLayer;
 
     uint8 collision;
     logic falling;
@@ -69,12 +70,14 @@ uint8 updatePlayer(slayEngine* Engine)
             Player = ((scene1*)Engine->Scenes->Values[1])->Player;
             Platforms = ((scene1*)Engine->Scenes->Values[1])->Platforms;
             Crate = ((scene1*)Engine->Scenes->Values[1])->Crate;
+            PhysicsLayer = ((scene1*)Engine->Scenes->Values[1])->PhysicsLayer;
         break;
 
         case 2:
             Player = ((scene2*)Engine->Scenes->Values[2])->Player;
             Platforms = ((scene2*)Engine->Scenes->Values[2])->Platforms;
             Crate = NULL;
+            PhysicsLayer = NULL;
         break;
     }
 
@@ -93,6 +96,10 @@ uint8 updatePlayer(slayEngine* Engine)
     {
         Player->X = Player->MaxX - Player->Width;
     }
+
+    //Collision
+    collision = slayCollision2(Player->Hitbox, PhysicsLayer);
+    slayApplyCollision2(Player->Hitbox, PhysicsLayer);
 
     //Horizontal movement
     if (Player->Alive && slayKey(Engine, Player->KeyLeft))
@@ -142,62 +149,16 @@ uint8 updatePlayer(slayEngine* Engine)
     //Vertical movement
     falling = true;
 
-    //Platform collision handling
-    for (uint16 i = 0; i < Platforms->Length; i++)
+    if ((collision & slayCollBOTTOMLEFT) == slayCollBOTTOMLEFT || (collision & slayCollBOTTOM) == slayCollBOTTOM || (collision & slayCollBOTTOMRIGHT) == slayCollBOTTOMRIGHT)
     {
-        collision = slayCollision(Player->Hitbox, ((platform*)Platforms->Values[i])->Hitbox);
-        slayApplyCollision(collision, Player->Hitbox, ((platform*)Platforms->Values[i])->Hitbox);
-
-        if (Player->Y + Player->Height <= ((platform*)Platforms->Values[i])->Y && (collision == slayCollBOTTOMLEFT || collision == slayCollBOTTOM || collision == slayCollBOTTOMRIGHT))
-        {
-            //Ground collision
-            Player->AccelerationY = 0;
-            falling = false;
-
-            //Scene 2 platform generation
-            if (Engine->CurrentScene == 2 && 4 < i)
-            {
-                for (uint8 j = 0; j < i - 4; j++)
-                {
-                    arrInsert(Platforms, Platforms->Length, newPlatform(((platform*)Platforms->Values[Platforms->Length - 1])->X + 200, ((platform*)Platforms->Values[Platforms->Length - 1])->Y + slayRandom(-100, 100, i), 100, 30));
-                    arrRemove(Platforms, 0);
-                }
-            }
-            else if (Engine->CurrentScene == 2 && i < 4)
-            {
-                for (uint8 j = 0; j < 4 - i; j++)
-                {
-                    arrInsert(Platforms, 0, newPlatform(((platform*)Platforms->Values[0])->X - 200, ((platform*)Platforms->Values[0])->Y + slayRandom(-100, 100, i), 100, 30));
-                    arrRemove(Platforms, Platforms->Length - 1);
-                }
-            }
-            
-            break;
-        }
-        else if (((platform*)Platforms->Values[i])->Y + ((platform*)Platforms->Values[i])->Height <= Player->Y && (collision == slayCollTOPLEFT || collision == slayCollTOP || collision == slayCollTOPRIGHT))
-        {
-            Player->AccelerationY = 0;
-            break;
-        }
+        Player->AccelerationY = 0;
+        falling = false;
+    }
+    else if ((collision & slayCollTOPLEFT) == slayCollTOPLEFT || (collision & slayCollTOP) == slayCollTOP || (collision & slayCollTOPRIGHT) == slayCollTOPRIGHT)
+    {
+        Player->AccelerationY = 0;
     }
 
-    //Crate collision handling
-    if (Crate != NULL)
-    {
-        collision = slayCollision(Player->Hitbox, Crate->Hitbox);
-        slayApplyCollision(collision, Player->Hitbox, Crate->Hitbox);
-        if (Player->Y + Player->Height <= Crate->Y && (collision == slayCollBOTTOMLEFT || collision == slayCollBOTTOM || collision == slayCollBOTTOMRIGHT))
-        {
-            Player->AccelerationY = 0;
-            falling = false;
-        }
-        else if (Crate->Y + Crate->Height <= Player->Y && (collision == slayCollTOPLEFT || collision == slayCollTOP || collision == slayCollTOPRIGHT))
-        {
-            Player->AccelerationY = 0;
-        }
-    }
-
-    //Falling or jumping
     if (falling)
     {
         Player->AccelerationY += Player->DeaccelerationRateY * Engine->DeltaTime;
@@ -209,13 +170,6 @@ uint8 updatePlayer(slayEngine* Engine)
     else if (Player->Alive && slayKey(Engine, Player->KeyJump))
     {
         Player->AccelerationY = -Player->JumpHeight;
-    }
-
-    //Scene 2 falling
-    if (Engine->CurrentScene == 2 && ((platform*)Platforms->Values[4])->Y + 1000 < Player->Y)
-    {
-        Player->X = ((platform*)Platforms->Values[4])->X + 17;
-        Player->Y = ((platform*)Platforms->Values[4])->Y - 1064;
     }
 
     //Flipbooks
