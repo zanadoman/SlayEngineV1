@@ -67,19 +67,19 @@ slayColls slayCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2)
 
     if (((Hitbox1UpperLeftX <= Hitbox2LowerRightX && Hitbox2LowerRightX <= Hitbox1LowerRightX) && (Hitbox1UpperLeftY <= Hitbox2LowerRightY && Hitbox2LowerRightY <= Hitbox1LowerRightY)) || ((Hitbox2UpperLeftX <= Hitbox1UpperLeftX && Hitbox1UpperLeftX <= Hitbox2LowerRightX) && (Hitbox2UpperLeftY <= Hitbox1UpperLeftY && Hitbox1UpperLeftY <= Hitbox2LowerRightY)))
     {
-        result = result | slayCollTOPLEFT;
+        result |= slayCollTOPLEFT;
     }
     if (((Hitbox1UpperLeftX <= Hitbox2UpperLeftX && Hitbox2UpperLeftX <= Hitbox1LowerRightX) && (Hitbox1UpperLeftY <= Hitbox2LowerRightY && Hitbox2LowerRightY <= Hitbox1LowerRightY)) || ((Hitbox2UpperLeftX <= Hitbox1LowerRightX && Hitbox1LowerRightX <= Hitbox2LowerRightX) && (Hitbox2UpperLeftY <= Hitbox1UpperLeftY && Hitbox1UpperLeftY <= Hitbox2LowerRightY)))
     {
-        result = result | slayCollTOPRIGHT;
+        result |= slayCollTOPRIGHT;
     }
     if (((Hitbox1UpperLeftX <= Hitbox2LowerRightX && Hitbox2LowerRightX <= Hitbox1LowerRightX) && (Hitbox1UpperLeftY <= Hitbox2UpperLeftY && Hitbox2UpperLeftY <= Hitbox1LowerRightY)) || ((Hitbox2UpperLeftX <= Hitbox1UpperLeftX && Hitbox1UpperLeftX <= Hitbox2LowerRightX) && (Hitbox2UpperLeftY <= Hitbox1LowerRightY && Hitbox1LowerRightY <= Hitbox2LowerRightY)))
     {
-        result = result | slayCollBOTTOMLEFT;
+        result |= slayCollBOTTOMLEFT;
     }
     if (((Hitbox1UpperLeftX <= Hitbox2UpperLeftX && Hitbox2UpperLeftX <= Hitbox1LowerRightX) && (Hitbox1UpperLeftY <= Hitbox2UpperLeftY && Hitbox2UpperLeftY <= Hitbox1LowerRightY)) || ((Hitbox2UpperLeftX <= Hitbox1LowerRightX && Hitbox1LowerRightX <= Hitbox2LowerRightX) && (Hitbox2UpperLeftY <= Hitbox1LowerRightY && Hitbox1LowerRightY <= Hitbox2LowerRightY)))
     {
-        result = result | slayCollBOTTOMRIGHT;
+        result |= slayCollBOTTOMRIGHT;
     }
 
     return result;
@@ -456,6 +456,34 @@ uint8 slayApplyCollision(slayColls Collision, slayHitbox* Hitbox1, slayHitbox* H
                 *Hitbox2->ObjectY -= *Hitbox2->ObjectY - *Hitbox2->MaxY;
                 *Hitbox1->ObjectY -= *Hitbox2->ObjectY - *Hitbox2->MaxY;
             }
+        }
+    }
+
+    return 0;
+}
+
+slayColls slayCollision2(slayHitbox* Hitbox, array CollisionLayer)
+{
+    slayColls result;
+
+    for (uint64 i = 0; i < CollisionLayer->Length; i++)
+    {
+        if (CollisionLayer->Values[i] != Hitbox)
+        {
+            result |= slayCollision(Hitbox, CollisionLayer->Values[i]);
+        }
+    }
+
+    return result;
+}
+
+uint8 slayApplyCollision2(slayHitbox* Hitbox, array CollisionLayer)
+{
+    for (uint64 i = 0; i < CollisionLayer->Length; i++)
+    {
+        if (CollisionLayer->Values[i] != Hitbox)
+        {
+            slayApplyCollision(slayCollision(Hitbox, CollisionLayer->Values[i]), Hitbox, CollisionLayer->Values[i]);
         }
     }
 

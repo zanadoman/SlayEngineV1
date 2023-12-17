@@ -229,11 +229,14 @@ struct slayHitboxStruct
 
 slayHitbox* slayNewHitbox(uint64 Parent, double* ObjectX, double* ObjectY, double* ObjectPrevX, double* ObjectPrevY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY, double Force, double Resistance, double* MinX, double* MinY, double* MaxX, double* MaxY);
 
-uint8 slayRenderHitbox(slayEngine* Engine, slayHitbox* Hitbox);
-uint8 slayRenderHitboxCamera(slayEngine* Engine, slayHitbox* Hitbox, double Distance);
-
 slayColls slayCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2);
 uint8 slayApplyCollision(slayColls Collision, slayHitbox* Hitbox1, slayHitbox* Hitbox2);
+
+slayColls slayCollision2(slayHitbox* Hitbox, array CollisionLayer);
+uint8 slayApplyCollision2(slayHitbox* Hitbox, array CollisionLayer);
+
+uint8 slayRenderHitbox(slayEngine* Engine, slayHitbox* Hitbox);
+uint8 slayRenderHitboxCamera(slayEngine* Engine, slayHitbox* Hitbox, double Distance);
 
 //Camera_____________________________________________________________
 
