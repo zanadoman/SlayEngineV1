@@ -26,7 +26,7 @@ projectile* newProjectile(actors Parent, double SpawnX, double SpawnY, double Mi
 
     result->Parent = Parent;
 
-    result->Hitbox = slayNewHitbox(Parent, &result->X, &result->Y, 3, 0, 4, 4, -1, -1, 0, 0, 0, 0);
+    result->Hitbox = slayNewHitbox(Parent, &result->X, &result->Y, NULL, NULL, 3, 0, 4, 4, -1, -1, NULL, NULL, NULL, NULL);
 
     return result;
 }

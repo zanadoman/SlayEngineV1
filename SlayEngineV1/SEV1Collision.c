@@ -1,6 +1,6 @@
 #include "SlayEngineV1.h"
 
-slayHitbox* slayNewHitbox(uint64 Parent, double* ObjectX, double* ObjectY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY, double Force, double Resistance, double MinX, double MinY, double MaxX, double MaxY)
+slayHitbox* slayNewHitbox(uint64 Parent, double* ObjectX, double* ObjectY, double* ObjectPrevX, double* ObjectPrevY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY, double Force, double Resistance, double* MinX, double* MinY, double* MaxX, double* MaxY)
 {
     slayHitbox* result;
 
@@ -15,8 +15,8 @@ slayHitbox* slayNewHitbox(uint64 Parent, double* ObjectX, double* ObjectY, sint3
 
     result->ObjectX = ObjectX;
     result->ObjectY = ObjectY;
-    result->ObjectPrevX = *ObjectX;
-    result->ObjectPrevY = *ObjectY;
+    result->ObjectPrevX = ObjectPrevX;
+    result->ObjectPrevY = ObjectPrevY;
 
     result->UpperLeftX = UpperLeftX;
     result->UpperLeftY = UpperLeftY;
@@ -105,15 +105,15 @@ uint8 slayApplyCollision(slayColls Collision, slayHitbox* Hitbox1, slayHitbox* H
     double Hitbox2LowerRightX;
     double Hitbox2LowerRightY;
 
-    if (Collision == slayCollNONE)
+    if (Collision == slayCollNONE || Hitbox1->ObjectPrevX == NULL || Hitbox1->ObjectPrevY == NULL)
     {
         return 1;
     }
 
-    Hitbox1PrevUpperLeftX = Hitbox1->UpperLeftX + Hitbox1->ObjectPrevX;
-    Hitbox1PrevUpperLeftY = Hitbox1->UpperLeftY + Hitbox1->ObjectPrevY;
-    Hitbox1PrevLowerRightX = Hitbox1->LowerRightX + Hitbox1->ObjectPrevX;
-    Hitbox1PrevLowerRightY = Hitbox1->LowerRightY + Hitbox1->ObjectPrevY;
+    Hitbox1PrevUpperLeftX = Hitbox1->UpperLeftX + *Hitbox1->ObjectPrevX;
+    Hitbox1PrevUpperLeftY = Hitbox1->UpperLeftY + *Hitbox1->ObjectPrevY;
+    Hitbox1PrevLowerRightX = Hitbox1->LowerRightX + *Hitbox1->ObjectPrevX;
+    Hitbox1PrevLowerRightY = Hitbox1->LowerRightY + *Hitbox1->ObjectPrevY;
 
     Hitbox1UpperLeftX = Hitbox1->UpperLeftX + *Hitbox1->ObjectX;
     Hitbox1UpperLeftY = Hitbox1->UpperLeftY + *Hitbox1->ObjectY;
@@ -433,26 +433,29 @@ uint8 slayApplyCollision(slayColls Collision, slayHitbox* Hitbox1, slayHitbox* H
             break;
         }
 
-        if (*Hitbox2->ObjectX < Hitbox2->MinX)
+        if (Hitbox2->MinX != NULL && Hitbox2->MinY != NULL && Hitbox2->MaxX != NULL && Hitbox2->MaxY != NULL)
         {
-            *Hitbox2->ObjectX += Hitbox2->MinX - *Hitbox2->ObjectX;
-            *Hitbox1->ObjectX += Hitbox2->MinX - *Hitbox2->ObjectX;
-        }
-        else if (Hitbox2->MaxX < *Hitbox2->ObjectX)
-        {
-            *Hitbox2->ObjectX -= *Hitbox2->ObjectX - Hitbox2->MaxX;
-            *Hitbox1->ObjectX -= *Hitbox2->ObjectX - Hitbox2->MaxX;
-        }
+            if (*Hitbox2->ObjectX < *Hitbox2->MinX)
+            {
+                *Hitbox2->ObjectX += *Hitbox2->MinX - *Hitbox2->ObjectX;
+                *Hitbox1->ObjectX += *Hitbox2->MinX - *Hitbox2->ObjectX;
+            }
+            else if (*Hitbox2->MaxX < *Hitbox2->ObjectX)
+            {
+                *Hitbox2->ObjectX -= *Hitbox2->ObjectX - *Hitbox2->MaxX;
+                *Hitbox1->ObjectX -= *Hitbox2->ObjectX - *Hitbox2->MaxX;
+            }
 
-        if (*Hitbox2->ObjectY < Hitbox2->MinY)
-        {
-            *Hitbox2->ObjectY += Hitbox2->MinY - *Hitbox2->ObjectY;
-            *Hitbox1->ObjectY += Hitbox2->MinY - *Hitbox2->ObjectY;
-        }
-        else if (Hitbox2->MaxY < *Hitbox2->ObjectY)
-        {
-            *Hitbox2->ObjectY -= *Hitbox2->ObjectY - Hitbox2->MaxY;
-            *Hitbox1->ObjectY -= *Hitbox2->ObjectY - Hitbox2->MaxY;
+            if (*Hitbox2->ObjectY < *Hitbox2->MinY)
+            {
+                *Hitbox2->ObjectY += *Hitbox2->MinY - *Hitbox2->ObjectY;
+                *Hitbox1->ObjectY += *Hitbox2->MinY - *Hitbox2->ObjectY;
+            }
+            else if (*Hitbox2->MaxY < *Hitbox2->ObjectY)
+            {
+                *Hitbox2->ObjectY -= *Hitbox2->ObjectY - *Hitbox2->MaxY;
+                *Hitbox1->ObjectY -= *Hitbox2->ObjectY - *Hitbox2->MaxY;
+            }
         }
     }
 

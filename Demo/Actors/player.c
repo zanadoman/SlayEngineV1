@@ -45,7 +45,7 @@ player* newPlayer(slayEngine* Engine, uint16 KeyLeft, uint16 KeyRight, uint16 Ke
 
     result->TextureCurrent = NULL;
 
-    result->Hitbox = slayNewHitbox(actPLAYER, &result->X, &result->Y, 18, 22, 48, 64, 1.2, 1, 0, 0, 0, 0);
+    result->Hitbox = slayNewHitbox(actPLAYER, &result->X, &result->Y, &result->PrevX, &result->PrevY, 18, 22, 48, 64, 1.2, 1, &result->MinX, &result->MinY, &result->MaxX, &result->MaxY);
 
     return result;
 }
@@ -79,8 +79,8 @@ uint8 updatePlayer(slayEngine* Engine)
     }
 
     //Applying movement
-    Player->Hitbox->ObjectPrevX = Player->X;
-    Player->Hitbox->ObjectPrevY = Player->Y;
+    Player->PrevX = Player->X;
+    Player->PrevY = Player->Y;
     Player->X += Player->Speed * Player->AccelerationX * Engine->DeltaTime;
     Player->Y += GRAVITY * Player->AccelerationY * Engine->DeltaTime;
 

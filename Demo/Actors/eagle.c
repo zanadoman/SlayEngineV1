@@ -29,7 +29,7 @@ eagle* newEagle(slayEngine* Engine)
 
     result->TextureCurrent = NULL;
 
-    result->Hitbox = slayNewHitbox(actEAGLE, &result->X, &result->Y, 0, 0, result->Width, result->Height, -1, -1, 0, 0, 0, 0);
+    result->Hitbox = slayNewHitbox(actEAGLE, &result->X, &result->Y, NULL, NULL, 0, 0, result->Width, result->Height, -1, -1, NULL, NULL, NULL, NULL);
 
     return result;
 }

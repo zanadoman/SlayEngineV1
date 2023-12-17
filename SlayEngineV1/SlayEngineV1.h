@@ -210,8 +210,8 @@ struct slayHitboxStruct
 
     double* ObjectX;
     double* ObjectY;
-    double ObjectPrevX;
-    double ObjectPrevY;
+    double* ObjectPrevX;
+    double* ObjectPrevY;
 
     sint32 UpperLeftX;
     sint32 UpperLeftY;
@@ -221,13 +221,13 @@ struct slayHitboxStruct
     double Force;
     double Resistance;
 
-    double MinX;
-    double MaxX;
-    double MinY;
-    double MaxY;
+    double* MinX;
+    double* MaxX;
+    double* MinY;
+    double* MaxY;
 };
 
-slayHitbox* slayNewHitbox(uint64 Parent, double* ObjectX, double* ObjectY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY, double Force, double Resistance, double MinX, double MinY, double MaxX, double MaxY);
+slayHitbox* slayNewHitbox(uint64 Parent, double* ObjectX, double* ObjectY, double* ObjectPrevX, double* ObjectPrevY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY, double Force, double Resistance, double* MinX, double* MinY, double* MaxX, double* MaxY);
 slayColls slayCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2);
 uint8 slayApplyCollision(slayColls Collision, slayHitbox* Hitbox1, slayHitbox* Hitbox2);
 

@@ -48,7 +48,7 @@ logic slayVectorRayCast(double SourceX, double SourceY, double TargetX, double T
 
     slayVectorAngle(SourceX, SourceY, TargetX, TargetY, &RayAngle);
     slayVectorLength(SourceX, SourceY, TargetX, TargetY, &RayLength);
-    RayHitbox = slayNewHitbox(0, &SourceX, &SourceY, -(Size >> 2), -(Size >> 2), (Size >> 2), (Size >> 2), -1, -1, 0, 0, 0, 0);
+    RayHitbox = slayNewHitbox(0, &SourceX, &SourceY, NULL, NULL, -(Size >> 2), -(Size >> 2), (Size >> 2), (Size >> 2), -1, -1, NULL, NULL, NULL, NULL);
 
     while (slayCollision(RayHitbox, Obstacle) == 0)
     {

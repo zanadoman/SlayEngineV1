@@ -12,7 +12,7 @@ platform* newPlatform(double X, double Y, uint16 Width, uint16 Height)
     result->Width = Width;
     result->Height = Height;
 
-    result->Hitbox = slayNewHitbox(actPLATFORM, &result->X, &result->Y, 0, 0, result->Width, result->Height, -1, -1, 0, 0, 0, 0);
+    result->Hitbox = slayNewHitbox(actPLATFORM, &result->X, &result->Y, NULL, NULL, 0, 0, result->Width, result->Height, -1, -1, NULL, NULL, NULL, NULL);
 
     return result;
 }
@@ -36,7 +36,7 @@ crate* newCrate(slayEngine* Engine, uint16 Width, uint16 Height)
     result->Width = Width;
     result->Height = Height;
 
-    result->Hitbox = slayNewHitbox(actCRATE, &result->X, &result->Y, 0, 0, result->Width, result->Height, 1, 1, 0, 0, 0, 0);
+    result->Hitbox = slayNewHitbox(actCRATE, &result->X, &result->Y, &result->PrevX, &result->PrevY, 0, 0, result->Width, result->Height, 1, 1, &result->MinX, &result->MinY, &result->MaxX, &result->MaxY);
 
     return result;
 }

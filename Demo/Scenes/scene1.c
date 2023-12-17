@@ -113,10 +113,6 @@ uint8 loadScene1(slayEngine* Engine)
     scene->Crate->MaxX = 940;
     scene->Crate->MinY = -500;
     scene->Crate->MaxY = 600;
-    scene->Crate->Hitbox->MinX = -200;
-    scene->Crate->Hitbox->MaxX = 940;
-    scene->Crate->Hitbox->MinY = -500;
-    scene->Crate->Hitbox->MaxY = 600;
 
     //Player
     scene->Player = newPlayer(Engine, SDL_SCANCODE_A, SDL_SCANCODE_D, SDL_SCANCODE_SPACE, SDL_SCANCODE_LMB);
@@ -136,10 +132,6 @@ uint8 loadScene1(slayEngine* Engine)
         scene->Player->Y = 386;
         scene->Player->Facing = 1;
     }
-    scene->Player->Hitbox->MinX = -200;
-    scene->Player->Hitbox->MaxX = 1000;
-    scene->Player->Hitbox->MinY = -500;
-    scene->Player->Hitbox->MaxY = 600;
     scene->Player->MinX = -200;
     scene->Player->MaxX = 1000;
     scene->Player->MinY = -500;

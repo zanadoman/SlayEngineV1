@@ -18,7 +18,7 @@ button* newButton(slayEngine* Engine, double X, double Y, uint16 Width, uint16 H
     result->TextureHover = slayLoadTexture(Engine, TextureHover);
     result->TextureCurrent = result->TextureBase;
 
-    result->Hitbox = slayNewHitbox(actBUTTON, &result->X, &result->Y, 0, 0, result->Width, result->Height, -1, -1, 0, 0, 0, 0);
+    result->Hitbox = slayNewHitbox(actBUTTON, &result->X, &result->Y, NULL, NULL, 0, 0, result->Width, result->Height, -1, -1, NULL, NULL, NULL, NULL);
 
     return result;
 }
