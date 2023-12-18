@@ -196,7 +196,6 @@ slayCollision slayGetCollisionDirection(slayHitbox* Hitbox1, slayHitbox* Hitbox2
 {
     uint8 collision;
     slayHitbox* hitbox;
-    double angle;
 
     double Hitbox1PrevUpperLeftX;
     double Hitbox1PrevUpperLeftY;
@@ -242,130 +241,139 @@ slayCollision slayGetCollisionDirection(slayHitbox* Hitbox1, slayHitbox* Hitbox2
     Hitbox2LowerRightX = Hitbox2->LowerRightX + *Hitbox2->ObjectX;
     Hitbox2LowerRightY = Hitbox2->LowerRightY + *Hitbox2->ObjectY;
 
+    if (collision == (slayColl_TOP_LEFT | slayColl_TOP_RIGHT | slayColl_BOT_LEFT | slayColl_BOT_RIGHT))
+    {
+        if ((Hitbox2UpperLeftX <= Hitbox1PrevUpperLeftX && Hitbox1PrevLowerRightX <= Hitbox2LowerRightX) || (Hitbox1PrevUpperLeftX <= Hitbox2UpperLeftX && Hitbox2LowerRightX <= Hitbox1PrevLowerRightX))
+        {
+            if (Hitbox2LowerRightY < Hitbox1PrevUpperLeftY)
+            {
+                return slayColl_TOP;
+            }
+            if (Hitbox1PrevLowerRightY < Hitbox2UpperLeftY)
+            {    
+                return slayColl_BOTTOM;
+            }
+        }
+        if ((Hitbox2UpperLeftY <= Hitbox1PrevUpperLeftY && Hitbox1PrevLowerRightY <= Hitbox2LowerRightY) || (Hitbox1PrevUpperLeftY <= Hitbox2UpperLeftY && Hitbox2LowerRightY <= Hitbox1PrevLowerRightY))
+        {
+            if (Hitbox2LowerRightX < Hitbox1PrevUpperLeftX)
+            {
+                return slayColl_LEFT;
+            }
+            if (Hitbox1PrevLowerRightX < Hitbox2UpperLeftX)
+            {
+                return slayColl_RIGHT;
+            }
+        }
+
+        if (Hitbox2UpperLeftX < Hitbox1PrevUpperLeftX && Hitbox2UpperLeftY < Hitbox1PrevUpperLeftY)
+        {
+            collision = slayColl_TOP_LEFT;
+        }
+        else if (Hitbox1PrevLowerRightX < Hitbox2LowerRightX && Hitbox1PrevUpperLeftY < Hitbox2UpperLeftY)
+        {
+            collision = slayColl_TOP_RIGHT;
+        }
+        else if (Hitbox2UpperLeftX < Hitbox1PrevUpperLeftX && Hitbox2LowerRightY < Hitbox1PrevLowerRightY)
+        {
+            collision = slayColl_BOT_LEFT;
+        }
+        else
+        {
+            collision = slayColl_BOT_RIGHT;
+        }
+    }
+
     switch (collision)
     {
         case slayColl_TOP_LEFT | slayColl_TOP_RIGHT:
-            return slayColl_TOP;
+        return slayColl_TOP;
 
         case slayColl_BOT_LEFT | slayColl_BOT_RIGHT:
-            return slayColl_BOTTOM;
+        return slayColl_BOTTOM;
 
         case slayColl_TOP_LEFT | slayColl_BOT_LEFT:
-            return slayColl_LEFT;
+        return slayColl_LEFT;
 
         case slayColl_TOP_RIGHT | slayColl_BOT_RIGHT:
-            return slayColl_RIGHT;
+        return slayColl_RIGHT;
 
         case slayColl_TOP_LEFT:
             if (Hitbox1PrevUpperLeftX < Hitbox2LowerRightX)
             {
                 return slayColl_TOP;
             }
-            else if (Hitbox1PrevUpperLeftY < Hitbox2LowerRightY)
+            if (Hitbox1PrevUpperLeftY < Hitbox2LowerRightY)
             {
                 return slayColl_LEFT;
             }
-            else
+            if (Hitbox2LowerRightX - Hitbox1UpperLeftX > Hitbox2LowerRightY - Hitbox1UpperLeftY)
             {
-                slayVectorAngle(Hitbox2LowerRightX, Hitbox2LowerRightY, Hitbox1UpperLeftX, Hitbox1UpperLeftY, &angle);
-
-                if (angle < 225)
-                {
-                    return slayColl_TOP;
-                }
-                else if (225 < angle)
-                {
-                    return slayColl_LEFT;
-                }
-                else
-                {
-                    return slayColl_TOP_LEFT;
-                }
+                return slayColl_TOP;
             }
+            if (Hitbox2LowerRightX - Hitbox1UpperLeftX < Hitbox2LowerRightY - Hitbox1UpperLeftY)
+            {
+                return slayColl_LEFT;
+            }
+        return slayColl_TOP_LEFT;
             
         case slayColl_TOP_RIGHT:
             if (Hitbox2UpperLeftX < Hitbox1PrevLowerRightX)
             {
                 return slayColl_TOP;
             }
-            else if (Hitbox1PrevUpperLeftY < Hitbox2LowerRightY)
+            if (Hitbox1PrevUpperLeftY < Hitbox2LowerRightY)
             {
                 return slayColl_RIGHT;
             }
-            else
+            if (Hitbox1LowerRightX - Hitbox2UpperLeftX > Hitbox2LowerRightY - Hitbox1UpperLeftY)
             {
-                slayVectorAngle(Hitbox2UpperLeftX, Hitbox2LowerRightY, Hitbox1LowerRightX, Hitbox1UpperLeftY, &angle);
-
-                if (315 < angle)
-                {
-                    return slayColl_TOP;
-                }
-                else if (angle < 315)
-                {
-                    return slayColl_RIGHT;
-                }
-                else
-                {
-                    return slayColl_TOP_RIGHT;
-                }
+                return slayColl_TOP;
             }
+            if (Hitbox1LowerRightX - Hitbox2UpperLeftX < Hitbox2LowerRightY - Hitbox1UpperLeftY)
+            {
+                return slayColl_RIGHT;
+            }
+        return slayColl_TOP_RIGHT;
 
         case slayColl_BOT_LEFT:
             if (Hitbox1PrevUpperLeftX < Hitbox2LowerRightX)
             {
                 return slayColl_BOTTOM;
             }
-            else if (Hitbox2UpperLeftY < Hitbox1PrevLowerRightY)
+            if (Hitbox2UpperLeftY < Hitbox1PrevLowerRightY)
             {
                 return slayColl_LEFT;
             }
-            else
+            if (Hitbox2LowerRightX - Hitbox1UpperLeftX > Hitbox1LowerRightY - Hitbox2UpperLeftY)
             {
-                slayVectorAngle(Hitbox2UpperLeftX, Hitbox2UpperLeftY, Hitbox1LowerRightX, Hitbox1LowerRightY, &angle);
-
-                if (angle < 45)
-                {
-                    return slayColl_BOTTOM;
-                }
-                else if (45 < angle)
-                {
-                    return slayColl_LEFT;
-                }
-                else
-                {
-                    return slayColl_BOT_LEFT;
-                }
+                return slayColl_BOTTOM;
             }
+            if (Hitbox2LowerRightX - Hitbox1UpperLeftX < Hitbox1LowerRightY - Hitbox2UpperLeftY)
+            {
+                return slayColl_LEFT;
+            }
+        return slayColl_BOT_LEFT;
 
         case slayColl_BOT_RIGHT:
             if (Hitbox2UpperLeftX < Hitbox1PrevLowerRightX)
             {
                 return slayColl_BOTTOM;
             }
-            else if (Hitbox2UpperLeftY < Hitbox1PrevLowerRightY)
+            if (Hitbox2UpperLeftY < Hitbox1PrevLowerRightY)
             {
                 return slayColl_RIGHT;
             }
-            else
+            if (Hitbox1LowerRightX - Hitbox2UpperLeftX > Hitbox1LowerRightY - Hitbox2UpperLeftY)
             {
-                slayVectorAngle(Hitbox2LowerRightX, Hitbox2UpperLeftY, Hitbox1UpperLeftX, Hitbox1LowerRightY, &angle);
-
-                if (135 < angle)
-                {
-                    return slayColl_BOTTOM;
-                }
-                else if (angle < 135)
-                {
-                    return slayColl_RIGHT;
-                }
-                else
-                {
-                    return slayColl_BOT_RIGHT;
-                }
+                return slayColl_BOTTOM;
             }
+            if (Hitbox1LowerRightX - Hitbox2UpperLeftX < Hitbox1LowerRightY - Hitbox2UpperLeftY)
+            {
+                return slayColl_RIGHT;
+            }
+        return slayColl_BOT_RIGHT;
     }
-
-    return slayColl_NONE;
 }
 
 uint8 slayResolveCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2)
