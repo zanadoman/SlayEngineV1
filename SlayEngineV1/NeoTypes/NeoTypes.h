@@ -115,12 +115,14 @@ Important: the number of the strings will be concatenated must be accurate.
 Note: deallocating the target string is not needed, if fails every string will remain intact.*/
 uint8 strConcat(string String, uint64 Count, char* Characters, ...);
 
-
 uint8 strRead(string String);
 uint8 strSplit(array Array, char* Characters, char Character);
 logic strCompare(char* Characters1, char* Characters2);
 
+/*Deallocates a string from the memory.
+Note: it's recommended to set the String's value to NULL after calling this function, it's safe to pass a NULL value to this function.*/
 uint8 strPurge(string String);
+uint8 strPurgeKeepString(string String, char** Characters);
 
 //_____________________________________________NeoList.c_____________________________________________ // COMPLETED
 

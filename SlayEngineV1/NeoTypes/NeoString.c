@@ -17,12 +17,12 @@ string strNew()
 {
     string String;
 
-    String = malloc(sizeof(string));
+    String = (string)malloc(sizeof(string));
     if (String == NULL)
     {
         return NULL;
     }
-    String->String = malloc(sizeof(char) * 1);
+    String->String = (char*)malloc(sizeof(char) * 1);
     if (String->String == NULL)
     {
         free(String);
@@ -38,7 +38,7 @@ uint8 strInit(string String, char* Characters)
 {   
     String->Length = strLength(Characters);
     free(String->String);
-    String->String = malloc(sizeof(char) * String->Length);
+    String->String = (char*)malloc(sizeof(char) * String->Length);
     if (String->String == NULL)
     {
         String->Length = 0;
@@ -56,7 +56,7 @@ uint8 strInit(string String, char* Characters)
 
 uint8 strAppend(string String, char Character)
 {
-    String->String = realloc(String->String, String->Length + 1);
+    String->String = (char*)realloc(String->String, String->Length + 1);
     if (String->String == NULL)
     {
         String->Length = 0;
@@ -87,7 +87,7 @@ uint8 strConcat(string String, uint64 Count, char* Characters, ...)
     StringLengthTMP++;
     va_end(CharactersArgs);
 
-    StringTMP = malloc(sizeof(char) * StringLengthTMP);
+    StringTMP = (char*)malloc(sizeof(char) * StringLengthTMP);
     if (StringTMP == NULL)
     {
         return 1;
@@ -154,14 +154,14 @@ uint8 strSplit(array Array, char* Characters, char Character)
     {
         if (Characters[i] != Character)
         {
-            if (strAppend(result->Values[result->Length - 1], Characters[i]) == 1)
+            if (strAppend((string)result->Values[result->Length - 1], Characters[i]) == 1)
             {
                 return 1;
             }
         }
         else
         {
-            if (strAppend(result->Values[result->Length - 1], '\0') == 1)
+            if (strAppend((string)result->Values[result->Length - 1], '\0') == 1)
             {
                 return 1;
             }
@@ -209,6 +209,14 @@ uint8 strPurge(string String)
     }
 
     free(String->String);
+    free(String);
+
+    return 0;
+}
+
+uint8 strPurgeKeepString(string String, char** Characters)
+{
+    *Characters = String->String;
     free(String);
 
     return 0;

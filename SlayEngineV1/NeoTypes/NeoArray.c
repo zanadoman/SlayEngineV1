@@ -4,12 +4,12 @@ array arrNew(uint64 Length)
 {
     array Array;
 
-    Array = malloc(sizeof(array));
+    Array = (array)malloc(sizeof(array));
     if (Array == NULL)
     {
         return NULL;
     }
-    Array->Values = calloc(Length, sizeof(void*));
+    Array->Values = (void**)calloc(Length, sizeof(void*));
     if (Length != 0 && Array->Values == NULL)
     {
         free(Array);
@@ -25,7 +25,7 @@ uint8 arrInit(array Array, uint64 Length, void* Values, ...)
     va_list ValuesArgs;
 
     free(Array->Values);
-    Array->Values = malloc(sizeof(void*) * Length);
+    Array->Values = (void**)malloc(sizeof(void*) * Length);
     if (Array->Values == NULL)
     {
         Array->Length = 0;
@@ -46,7 +46,7 @@ uint8 arrInit(array Array, uint64 Length, void* Values, ...)
 
 uint8 arrInsert(array Array, uint64 Index, void* Value)
 {
-    Array->Values = realloc(Array->Values, sizeof(void*) * (Array->Length + 1));
+    Array->Values = (void**)realloc(Array->Values, sizeof(void*) * (Array->Length + 1));
     if (Array->Values == NULL)
     {
         Array->Length = 0;
@@ -71,7 +71,7 @@ uint8 arrRemove(array Array, uint64 Index)
     }
 
     Array->Length--;
-    Array->Values = realloc(Array->Values, sizeof(void*) * Array->Length);
+    Array->Values = (void**)realloc(Array->Values, sizeof(void*) * Array->Length);
     if (Array->Length != 0 && Array->Values == NULL)
     {
         Array->Length = 0;

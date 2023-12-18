@@ -31,7 +31,7 @@ uint8 UINTtoSTR(uint64 Number, string String)
     uint64 i;
 
     free(String->String);
-    String->String = malloc(sizeof(char) * 1);
+    String->String = (char*)malloc(sizeof(char) * 1);
     if (String->String == NULL)
     {
         String->Length = 0;
@@ -100,7 +100,7 @@ uint8 SINTtoSTR(sint64 Number, string String)
     uint64 i;
 
     free(String->String);
-    String->String = malloc(sizeof(char) * 1);
+    String->String = (char*)malloc(sizeof(char) * 1);
     if (String->String == NULL)
     {
         String->Length = 0;
@@ -200,7 +200,7 @@ uint8 DOUBLEtoSTR(double Number, string String)
     double fraction;
 
     free(String->String);
-    String->String = malloc(sizeof(char) * 1);
+    String->String = (char*)malloc(sizeof(char) * 1);
     if (String->String == NULL)
     {
         String->Length = 0;
