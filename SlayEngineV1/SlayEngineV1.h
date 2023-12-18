@@ -187,7 +187,7 @@ logic slayCursorCollisionCamera(slayEngine* Engine, slayOverlapbox* Overlapbox, 
 uint8 slayVectorLength(double X1, double Y1, double X2, double Y2, double* Length);
 uint8 slayVectorTranslate(double X1, double Y1, double* X2, double* Y2, double Length, double Angle);
 uint8 slayVectorAngle(double X1, double Y1, double X2, double Y2, double* Angle);
-logic slayVectorRayCast(double SourceX, double SourceY, double TargetX, double TargetY, slayHitbox* Obstacle, uint16 Size, double Precision);
+logic slayVectorRayCast(double SourceX, double SourceY, double TargetX, double TargetY, uint16 Size, double Precision, array OverlapLayer);
 
 //Collision__________________________________________________________
 
@@ -247,7 +247,9 @@ struct slayHitboxStruct
 };
 
 slayHitbox* slayNewHitbox(void* Parent, uint64 ParentType, double* ObjectX, double* ObjectY, double* ObjectPrevX, double* ObjectPrevY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY, uint16 Force, uint16 Resistance, double* MinX, double* MinY, double* MaxX, double* MaxY);
+slayOverlapbox* slayNewOverlapbox(void* Parent, uint64 ParentType, double* ObjectX, double* ObjectY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY);
 
+slayCollision slayGetOverlapState(slayOverlapbox* Overlapbox1, slayOverlapbox* Overlapbox2);
 slayCollision slayGetCollisionState(slayHitbox* Hitbox1, slayHitbox* Hitbox2);
 slayCollision slayGetCollisionDirection(slayHitbox* Hitbox1, slayHitbox* Hitbox2);
 

@@ -38,30 +38,48 @@ uint8 slayVectorAngle(double X1, double Y1, double X2, double Y2, double* Angle)
     return 0;
 }
 
-logic slayVectorRayCast(double SourceX, double SourceY, double TargetX, double TargetY, slayHitbox* Obstacle, uint16 Size, double Precision)
+logic slayVectorRayCast(double SourceX, double SourceY, double TargetX, double TargetY, uint16 Size, double Precision, array OverlapLayer)
 {
     double result;
 
     double RayAngle;
     double RayLength;
-    slayHitbox* RayHitbox;
+    slayCollision overlap;
+    slayOverlapbox* RayOverlapbox;
 
     slayVectorAngle(SourceX, SourceY, TargetX, TargetY, &RayAngle);
     slayVectorLength(SourceX, SourceY, TargetX, TargetY, &RayLength);
-    RayHitbox = slayNewHitbox(0, &SourceX, &SourceY, NULL, NULL, -(Size >> 2), -(Size >> 2), (Size >> 2), (Size >> 2), -1, -1, NULL, NULL, NULL, NULL);
+    RayOverlapbox = slayNewOverlapbox(NULL, 0, &SourceX, &SourceY, -(Size >> 2), -(Size >> 2), (Size >> 2), (Size >> 2));
 
-    while (slayCollision(RayHitbox, Obstacle) == 0)
+    overlap = slayColl_NONE;
+    for (uint64 i = 0; i < OverlapLayer->Length; i++)
+    {
+        if (OverlapLayer->Values[i] != RayOverlapbox)
+        {
+            overlap |= slayGetOverlapState(RayOverlapbox, OverlapLayer->Values[i]);
+        }
+    }
+
+    while (overlap == slayColl_NONE)
     {
         slayVectorTranslate(SourceX, SourceY, &SourceX, &SourceY, 3, RayAngle);
         RayLength -= 3;
 
         if (RayLength <= 0)
         {
-            free(RayHitbox);
+            free(RayOverlapbox);
             return true;
         }
+
+        for (uint64 i = 0; i < OverlapLayer->Length; i++)
+        {
+            if (OverlapLayer->Values[i] != RayOverlapbox)
+            {
+                overlap |= slayGetOverlapState(RayOverlapbox, OverlapLayer->Values[i]);
+            }
+        }
     }
-    free(RayHitbox);
+    free(RayOverlapbox);
 
     return false;
 }

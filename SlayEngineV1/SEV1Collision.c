@@ -55,6 +55,92 @@ slayHitbox* slayNewHitbox(void* Parent, uint64 ParentType, double* ObjectX, doub
     return result;
 }
 
+slayOverlapbox* slayNewOverlapbox(void* Parent, uint64 ParentType, double* ObjectX, double* ObjectY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY)
+{
+    slayOverlapbox* result;
+
+    result = malloc(sizeof(slayOverlapbox));
+    if (result == NULL)
+    {
+        printf("ERROR Unable to allocate memory for OVERLAPBOX\n");
+        exit(1);
+    }
+    if (ObjectX == NULL)
+    {
+        printf("ERROR Unable to create OVERLAPBOX (ObjectX NULL)");
+        exit(1);
+    }
+    if (ObjectY == NULL)
+    {
+        printf("ERROR UNABLE to create OVERLAPBOX (ObjectY NULL)");
+        exit(1);
+    }
+
+    result->Parent = Parent;
+    result->ParentType = ParentType;
+
+    result->ObjectX = ObjectX;
+    result->ObjectY = ObjectY;
+
+    result->UpperLeftX = UpperLeftX;
+    result->UpperLeftY = UpperLeftY;
+    result->LowerRightX = LowerRightX;
+    result->LowerRightY = LowerRightY;
+
+    return result;
+}
+
+slayCollision slayGetOverlapState(slayOverlapbox* Overlapbox1, slayOverlapbox* Overlapbox2)
+{
+    slayCollision result;
+
+    double Overlapbox1UpperLeftX;
+    double Overlapbox1UpperLeftY;
+    double Overlapbox1LowerRightX;
+    double Overlapbox1LowerRightY;
+
+    double Overlapbox2UpperLeftX;
+    double Overlapbox2UpperLeftY;
+    double Overlapbox2LowerRightX;
+    double Overlapbox2LowerRightY;
+
+    Overlapbox1UpperLeftX = Overlapbox1->UpperLeftX + *Overlapbox1->ObjectX;
+    Overlapbox1UpperLeftY = Overlapbox1->UpperLeftY + *Overlapbox1->ObjectY;
+    Overlapbox1LowerRightX = Overlapbox1->LowerRightX + *Overlapbox1->ObjectX;
+    Overlapbox1LowerRightY = Overlapbox1->LowerRightY + *Overlapbox1->ObjectY;
+
+    Overlapbox2UpperLeftX = Overlapbox2->UpperLeftX + *Overlapbox2->ObjectX;
+    Overlapbox2UpperLeftY = Overlapbox2->UpperLeftY + *Overlapbox2->ObjectY;
+    Overlapbox2LowerRightX = Overlapbox2->LowerRightX + *Overlapbox2->ObjectX;
+    Overlapbox2LowerRightY = Overlapbox2->LowerRightY + *Overlapbox2->ObjectY;
+
+    result = slayColl_NONE;
+
+    if (Overlapbox1LowerRightX < Overlapbox2UpperLeftX || Overlapbox2LowerRightX < Overlapbox1UpperLeftX || Overlapbox1LowerRightY < Overlapbox2UpperLeftY || Overlapbox2LowerRightY < Overlapbox1UpperLeftY)
+    {
+        return result;
+    }
+
+    if (((Overlapbox1UpperLeftX <= Overlapbox2LowerRightX && Overlapbox2LowerRightX <= Overlapbox1LowerRightX) && (Overlapbox1UpperLeftY <= Overlapbox2LowerRightY && Overlapbox2LowerRightY <= Overlapbox1LowerRightY)) || ((Overlapbox2UpperLeftX <= Overlapbox1UpperLeftX && Overlapbox1UpperLeftX <= Overlapbox2LowerRightX) && (Overlapbox2UpperLeftY <= Overlapbox1UpperLeftY && Overlapbox1UpperLeftY <= Overlapbox2LowerRightY)))
+    {
+        result |= slayColl_TOP_LEFT;
+    }
+    if (((Overlapbox1UpperLeftX <= Overlapbox2UpperLeftX && Overlapbox2UpperLeftX <= Overlapbox1LowerRightX) && (Overlapbox1UpperLeftY <= Overlapbox2LowerRightY && Overlapbox2LowerRightY <= Overlapbox1LowerRightY)) || ((Overlapbox2UpperLeftX <= Overlapbox1LowerRightX && Overlapbox1LowerRightX <= Overlapbox2LowerRightX) && (Overlapbox2UpperLeftY <= Overlapbox1UpperLeftY && Overlapbox1UpperLeftY <= Overlapbox2LowerRightY)))
+    {
+        result |= slayColl_TOP_RIGHT;
+    }
+    if (((Overlapbox1UpperLeftX <= Overlapbox2LowerRightX && Overlapbox2LowerRightX <= Overlapbox1LowerRightX) && (Overlapbox1UpperLeftY <= Overlapbox2UpperLeftY && Overlapbox2UpperLeftY <= Overlapbox1LowerRightY)) || ((Overlapbox2UpperLeftX <= Overlapbox1UpperLeftX && Overlapbox1UpperLeftX <= Overlapbox2LowerRightX) && (Overlapbox2UpperLeftY <= Overlapbox1LowerRightY && Overlapbox1LowerRightY <= Overlapbox2LowerRightY)))
+    {
+        result |= slayColl_BOT_LEFT;
+    }
+    if (((Overlapbox1UpperLeftX <= Overlapbox2UpperLeftX && Overlapbox2UpperLeftX <= Overlapbox1LowerRightX) && (Overlapbox1UpperLeftY <= Overlapbox2UpperLeftY && Overlapbox2UpperLeftY <= Overlapbox1LowerRightY)) || ((Overlapbox2UpperLeftX <= Overlapbox1LowerRightX && Overlapbox1LowerRightX <= Overlapbox2LowerRightX) && (Overlapbox2UpperLeftY <= Overlapbox1LowerRightY && Overlapbox1LowerRightY <= Overlapbox2LowerRightY)))
+    {
+        result |= slayColl_BOT_RIGHT;
+    }
+
+    return result;
+}
+
 slayCollision slayGetCollisionState(slayHitbox* Hitbox1, slayHitbox* Hitbox2)
 {
     slayCollision result;
