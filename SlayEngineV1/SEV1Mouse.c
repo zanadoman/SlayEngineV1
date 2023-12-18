@@ -40,14 +40,14 @@ uint8 slayMouseButtons(slayEngine* Engine)
     return 0;
 }
 
-logic slayCursorCollision(slayEngine* Engine, slayHitbox* Hitbox)
+logic slayCursorCollision(slayEngine* Engine, slayOverlapbox* Overlapbox)
 {
     SDL_Rect object;
 
-    object.x = (sint32)round(*Hitbox->ObjectX + Hitbox->UpperLeftX);
-    object.y = (sint32)round(*Hitbox->ObjectY + Hitbox->UpperLeftY);
-    object.w = (sint32)round(*Hitbox->ObjectX + Hitbox->LowerRightX) - object.x;
-    object.h = (sint32)round(*Hitbox->ObjectY + Hitbox->LowerRightY) - object.y;
+    object.x = (sint32)round(*Overlapbox->ObjectX + Overlapbox->UpperLeftX);
+    object.y = (sint32)round(*Overlapbox->ObjectY + Overlapbox->UpperLeftY);
+    object.w = (sint32)round(*Overlapbox->ObjectX + Overlapbox->LowerRightX) - object.x;
+    object.h = (sint32)round(*Overlapbox->ObjectY + Overlapbox->LowerRightY) - object.y;
 
     if ((object.x <= Engine->Mouse->X && Engine->Mouse->X <= object.x + object.w) && (object.y <= Engine->Mouse->Y && Engine->Mouse->Y <= object.y + object.h))
     {
@@ -57,11 +57,11 @@ logic slayCursorCollision(slayEngine* Engine, slayHitbox* Hitbox)
     return false;
 }
 
-logic slayCursorCollisionCamera(slayEngine* Engine, slayHitbox* Hitbox, double Distance)
+logic slayCursorCollisionCamera(slayEngine* Engine, slayOverlapbox* Overlapbox, double Distance)
 {
     SDL_Rect object;
 
-    slayApplyCamera(Engine, &object, (sint32)round(*Hitbox->ObjectX + Hitbox->UpperLeftX), (sint32)round(*Hitbox->ObjectY + Hitbox->UpperLeftY), (sint32)round(*Hitbox->ObjectX + Hitbox->LowerRightX) - (sint32)round(*Hitbox->ObjectX + Hitbox->UpperLeftX), (sint32)round(*Hitbox->ObjectY + Hitbox->LowerRightY) - (sint32)round(*Hitbox->ObjectY + Hitbox->UpperLeftY), Distance);
+    slayApplyCamera(Engine, &object, (sint32)round(*Overlapbox->ObjectX + Overlapbox->UpperLeftX), (sint32)round(*Overlapbox->ObjectY + Overlapbox->UpperLeftY), (sint32)round(*Overlapbox->ObjectX + Overlapbox->LowerRightX) - (sint32)round(*Overlapbox->ObjectX + Overlapbox->UpperLeftX), (sint32)round(*Overlapbox->ObjectY + Overlapbox->LowerRightY) - (sint32)round(*Overlapbox->ObjectY + Overlapbox->UpperLeftY), Distance);
 
     if ((object.x <= Engine->Mouse->X && Engine->Mouse->X <= object.x + object.w) && (object.y <= Engine->Mouse->Y && Engine->Mouse->Y <= object.y + object.h))
     {

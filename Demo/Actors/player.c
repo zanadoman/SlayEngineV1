@@ -23,8 +23,8 @@ player* newPlayer(slayEngine* Engine, uint16 KeyLeft, uint16 KeyRight, uint16 Ke
     result->AccelerationRateX = 0.003;
     result->DeaccelerationRateX = 0.005;
     result->AccelerationY = 0;
-    result->AccelerationRateY = 0;
-    result->DeaccelerationRateY = 0.003;
+    result->AccelerationRateY = 0.003;
+    result->DeaccelerationRateY = 0.005;
 
     result->Speed = 0.4;
     result->JumpHeight = 1.1;
@@ -87,29 +87,8 @@ uint8 updatePlayer(slayEngine* Engine)
     Player->X += Player->Speed * Player->AccelerationX * Engine->DeltaTime;
     Player->Y += GRAVITY * Player->AccelerationY * Engine->DeltaTime;
 
-    //Clamp player position
-    if (Player->X < Player->MinX)
-    {
-        Player->X = Player->MinX;
-    }
-    else if (Player->MaxX < Player->X + Player->Width)
-    {
-        Player->X = Player->MaxX - Player->Width;
-    }
-    if (Player->Y < Player->MinY)
-    {
-        Player->Y = Player->MinY;
-    }
-    else if (Player->MaxY < Player->Y + Player->Height)
-    {
-        Player->Y = Player->MaxY - Player->Height;
-    }
-
-    //Collision
-    collision = slayCollision2(Player->Hitbox, PhysicsLayer);
-
     //Horizontal movement
-    if (Player->Alive && slayKey(Engine, Player->KeyLeft))
+    if (Player->Alive && slayKey(Engine, SDL_SCANCODE_LEFT))
     {
         if (Player->AccelerationX > -1)
         {
@@ -121,7 +100,7 @@ uint8 updatePlayer(slayEngine* Engine)
         }
         Player->Facing = -1;
     }
-    else if (Player->Alive && slayKey(Engine, Player->KeyRight))
+    else if (Player->Alive && slayKey(Engine, SDL_SCANCODE_RIGHT))
     {
         if (Player->AccelerationX < 1)
         {
@@ -154,29 +133,48 @@ uint8 updatePlayer(slayEngine* Engine)
     }
 
     //Vertical movement
-    falling = true;
-
-    if ((collision & slayCollBOTTOMLEFT) == slayCollBOTTOMLEFT || (collision & slayCollBOTTOM) == slayCollBOTTOM || (collision & slayCollBOTTOMRIGHT) == slayCollBOTTOMRIGHT)
+    if (Player->Alive && slayKey(Engine, SDL_SCANCODE_UP))
     {
-        Player->AccelerationY = 0;
-        falling = false;
-    }
-    else if ((collision & slayCollTOPLEFT) == slayCollTOPLEFT || (collision & slayCollTOP) == slayCollTOP || (collision & slayCollTOPRIGHT) == slayCollTOPRIGHT)
-    {
-        Player->AccelerationY = 0;
-    }
-
-    if (falling)
-    {
-        Player->AccelerationY += Player->DeaccelerationRateY * Engine->DeltaTime;
-        if (Player->AccelerationY > 1)
+        if (Player->AccelerationY > -1)
         {
-            Player->AccelerationY = 1;
+            Player->AccelerationY -= Player->AccelerationRateY * Engine->DeltaTime;
+            if (Player->AccelerationY < -1)
+            {
+                Player->AccelerationY = -1;
+            }
         }
+        Player->Facing = -1;
     }
-    else if (Player->Alive && slayKey(Engine, Player->KeyJump))
+    else if (Player->Alive && slayKey(Engine, SDL_SCANCODE_DOWN))
     {
-        Player->AccelerationY = -Player->JumpHeight;
+        if (Player->AccelerationY < 1)
+        {
+            Player->AccelerationY += Player->AccelerationRateY * Engine->DeltaTime;
+            if (Player->AccelerationY > 1)
+            {
+                Player->AccelerationY = 1;
+            }
+        }
+        Player->Facing = 1;
+    }
+    else
+    {
+        if (Player->AccelerationY < 0)
+        {
+            Player->AccelerationY += Player->DeaccelerationRateY * Engine->DeltaTime;
+            if (Player->AccelerationY > 0)
+            {
+                Player->AccelerationY = 0;
+            }
+        }
+        else if (Player->AccelerationY > 0)
+        {
+            Player->AccelerationY -= Player->DeaccelerationRateY * Engine->DeltaTime;
+            if (Player->AccelerationY < 0)
+            {
+                Player->AccelerationY = 0;
+            }
+        }
     }
 
     //Applying collision

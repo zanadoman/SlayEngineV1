@@ -12,6 +12,7 @@ typedef struct slayDisplayStruct slayDisplay;
 typedef struct slayParticleBatchStruct slayParticleBatch;
 typedef struct slayParticleStruct slayParticle;
 typedef struct slayMouseStruct slayMouse;
+typedef struct slayOverlapboxStruct slayOverlapbox;
 typedef struct slayHitboxStruct slayHitbox;
 typedef struct slayCameraStruct slayCamera;
 typedef struct flipbookStruct slayFlipbook;
@@ -177,8 +178,8 @@ struct slayMouseStruct
 #define slayMouseRelative SDL_SetRelativeMouseMode
 uint8 slayMouseMovement(slayEngine* Engine);
 uint8 slayMouseButtons(slayEngine* Engine);
-logic slayCursorCollision(slayEngine* Engine, slayHitbox* Hitbox);
-logic slayCursorCollisionCamera(slayEngine* Engine, slayHitbox* Hitbox, double Distance);
+logic slayCursorCollision(slayEngine* Engine, slayOverlapbox* Hitbox);
+logic slayCursorCollisionCamera(slayEngine* Engine, slayOverlapbox* Overlapbox, double Distance);
 
 //Vector_____________________________________________________________
 
@@ -192,21 +193,39 @@ logic slayVectorRayCast(double SourceX, double SourceY, double TargetX, double T
 
 typedef enum
 {
-    slayCollNONE = 0,
-    slayCollTOP = 3,
-    slayCollRIGHT = 10,
-    slayCollBOTTOM = 12,
-    slayCollLEFT = 5,
-    slayCollTOPLEFT = 1,
-    slayCollTOPRIGHT = 2,
-    slayCollBOTTOMLEFT = 4,
-    slayCollBOTTOMRIGHT = 8,
-    slayCollALL = 15
-} slayColls;
+    slayColl_NONE = 0,
+
+    slayColl_TOP_LEFT = 1,
+    slayColl_TOP_RIGHT = 2,
+    slayColl_BOT_LEFT = 4,
+    slayColl_BOT_RIGHT = 8,
+
+    slayColl_TOP = 16,
+    slayColl_BOTTOM = 32,
+    slayColl_LEFT = 64,
+    slayColl_RIGHT = 128,
+
+    slayColl_ERROR = 255
+} slayCollision;
+
+struct slayOverlapboxStruct
+{
+    void* Parent;
+    uint64 ParentType;
+
+    double* ObjectX;
+    double* ObjectY;
+
+    sint32 UpperLeftX;
+    sint32 UpperLeftY;
+    sint32 LowerRightX;
+    sint32 LowerRightY;
+};
 
 struct slayHitboxStruct
 {
-    uint64 Parent;
+    void* Parent;
+    uint64 ParentType;
 
     double* ObjectX;
     double* ObjectY;
@@ -218,8 +237,8 @@ struct slayHitboxStruct
     sint32 LowerRightX;
     sint32 LowerRightY;
 
-    double Force;
-    double Resistance;
+    uint16 Force;
+    uint16 Resistance;
 
     double* MinX;
     double* MaxX;
@@ -227,13 +246,10 @@ struct slayHitboxStruct
     double* MaxY;
 };
 
-slayHitbox* slayNewHitbox(uint64 Parent, double* ObjectX, double* ObjectY, double* ObjectPrevX, double* ObjectPrevY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY, double Force, double Resistance, double* MinX, double* MinY, double* MaxX, double* MaxY);
+slayHitbox* slayNewHitbox(void* Parent, uint64 ParentType, double* ObjectX, double* ObjectY, double* ObjectPrevX, double* ObjectPrevY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY, uint16 Force, uint16 Resistance, double* MinX, double* MinY, double* MaxX, double* MaxY);
 
-slayColls slayCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2);
-uint8 slayApplyCollision(slayColls Collision, slayHitbox* Hitbox1, slayHitbox* Hitbox2);
-
-slayColls slayCollision2(slayHitbox* Hitbox, array CollisionLayer);
-uint8 slayApplyCollision2(slayHitbox* Hitbox, array CollisionLayer);
+slayCollision slayGetCollisionState(slayHitbox* Hitbox1, slayHitbox* Hitbox2);
+slayCollision slayGetCollisionDirection(slayHitbox* Hitbox1, slayHitbox* Hitbox2);
 
 uint8 slayRenderHitbox(slayEngine* Engine, slayHitbox* Hitbox);
 uint8 slayRenderHitboxCamera(slayEngine* Engine, slayHitbox* Hitbox, double Distance);
