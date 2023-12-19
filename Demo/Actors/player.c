@@ -45,7 +45,7 @@ player* newPlayer(slayEngine* Engine, uint16 KeyLeft, uint16 KeyRight, uint16 Ke
 
     result->TextureCurrent = NULL;
 
-    result->Hitbox = slayNewHitbox(result, actPLAYER, &result->X, &result->Y, &result->PrevX, &result->PrevY, 0, 0, result->Width, result->Height, 100, 50, &result->MinX, &result->MinY, &result->MaxX, &result->MaxY);
+    result->Hitbox = slayNewHitbox(result, actPLAYER, &result->X, &result->Y, &result->PrevX, &result->PrevY, 0, 0, result->Width, result->Height, 1, 50, &result->MinX, &result->MinY, &result->MaxX, &result->MaxY);
 
     return result;
 }

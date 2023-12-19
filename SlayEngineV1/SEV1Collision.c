@@ -579,17 +579,31 @@ uint8 slayResolveCollisionLayer(array CollisionLayer)
 {
     logic order;
 
+    for (uint64 i = 0; i < CollisionLayer->Length; i++)
+    {
+        for (uint64 j = 0; j < CollisionLayer->Length; j++)
+        {
+            if (CollisionLayer->Values[i] != CollisionLayer->Values[j])
+            {
+                if (slayResolveCollision(CollisionLayer->Values[i], CollisionLayer->Values[j]) == 1)
+                {
+                    order = false;
+                }
+            }
+        }
+    }
+
     order = false;
     while (!order)
     {
         order = true;
-        for (uint64 i = 0; i < CollisionLayer->Length; i++)
+        for (uint64 i = 1; i <= CollisionLayer->Length; i++)
         {
-            for (uint64 j = 0; j < CollisionLayer->Length; j++)
+            for (uint64 j = 1; j <= CollisionLayer->Length; j++)
             {
-                if (CollisionLayer->Values[i] != CollisionLayer->Values[j])
+                if (CollisionLayer->Values[CollisionLayer->Length - i] != CollisionLayer->Values[CollisionLayer->Length - j])
                 {
-                    if (slayResolveCollision(CollisionLayer->Values[i], CollisionLayer->Values[j]) == 1)
+                    if (slayResolveCollisionOrder(CollisionLayer->Values[CollisionLayer->Length - j], CollisionLayer->Values[CollisionLayer->Length - i]) == 1)
                     {
                         order = false;
                     }

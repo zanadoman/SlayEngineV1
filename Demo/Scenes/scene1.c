@@ -151,11 +151,11 @@ uint8 loadScene1(slayEngine* Engine)
 
     //Collision layer
     scene->PhysicsLayer = arrNew(0);
+    arrInsert(scene->PhysicsLayer, scene->PhysicsLayer->Length, scene->Player->Hitbox);
     for (uint8 i = 0; i < scene->Platforms->Length; i++)
     {
         arrInsert(scene->PhysicsLayer, scene->PhysicsLayer->Length, ((platform*)scene->Platforms->Values[i])->Hitbox);
     }
-    arrInsert(scene->PhysicsLayer, scene->PhysicsLayer->Length, scene->Player->Hitbox);
 
     //Scene
     Engine->CurrentScene = 1;

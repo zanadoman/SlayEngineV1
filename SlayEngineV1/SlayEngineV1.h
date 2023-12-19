@@ -7,7 +7,7 @@
 #include "cJSON/cJSON.h"
 #include <pthread.h>
 
-#define EPSILON 0.000000000001
+#define EPSILON 0.0000000000001
 #define PI 3.141592653589793
 
 typedef struct slayEngineStruct slayEngine;
