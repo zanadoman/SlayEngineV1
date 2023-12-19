@@ -45,7 +45,7 @@ player* newPlayer(slayEngine* Engine, uint16 KeyLeft, uint16 KeyRight, uint16 Ke
 
     result->TextureCurrent = NULL;
 
-    result->Hitbox = slayNewHitbox(actPLAYER, &result->X, &result->Y, &result->PrevX, &result->PrevY, 0, 0, result->Width, result->Height, 1.2, 1, &result->MinX, &result->MinY, &result->MaxX, &result->MaxY);
+    result->Hitbox = slayNewHitbox(result, actPLAYER, &result->X, &result->Y, &result->PrevX, &result->PrevY, 0, 0, result->Width, result->Height, 2, 1, &result->MinX, &result->MinY, &result->MaxX, &result->MaxY);
 
     return result;
 }
@@ -53,13 +53,9 @@ player* newPlayer(slayEngine* Engine, uint16 KeyLeft, uint16 KeyRight, uint16 Ke
 uint8 updatePlayer(slayEngine* Engine)
 {
     player* Player;
-    array Platforms;
-    crate* Crate;
     array PhysicsLayer;
 
-    uint8 collision;
     logic falling;
-    double zoom;
 
     switch (Engine->CurrentScene)
     {
@@ -68,15 +64,11 @@ uint8 updatePlayer(slayEngine* Engine)
         
         case 1:
             Player = ((scene1*)Engine->Scenes->Values[1])->Player;
-            Platforms = ((scene1*)Engine->Scenes->Values[1])->Platforms;
-            Crate = ((scene1*)Engine->Scenes->Values[1])->Crate;
             PhysicsLayer = ((scene1*)Engine->Scenes->Values[1])->PhysicsLayer;
         break;
 
         case 2:
             Player = ((scene2*)Engine->Scenes->Values[2])->Player;
-            Platforms = ((scene2*)Engine->Scenes->Values[2])->Platforms;
-            Crate = NULL;
             PhysicsLayer = NULL;
         break;
     }
@@ -177,8 +169,14 @@ uint8 updatePlayer(slayEngine* Engine)
         }
     }
 
-    //Applying collision
-    slayApplyCollision2(Player->Hitbox, PhysicsLayer);
+
+    for (uint8 i = 0; i < PhysicsLayer->Length; i++)
+    {
+        if (Player->Hitbox != PhysicsLayer->Values[i])
+        {
+            slayResolveCollision(Player->Hitbox, PhysicsLayer->Values[i]);
+        }
+    }
 
     //Flipbooks
     if (!Player->Alive)

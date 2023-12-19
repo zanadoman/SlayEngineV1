@@ -35,7 +35,7 @@ uint8 renderPlayer(slayEngine* Engine, player* Player)
         slayRenderTextureCamera(Engine, Player->X - 18, Player->Y - 22, 66, 64, 0, slayFlipHORIZONTAL, 1, Player->TextureCurrent, 255, 255, 255, 255);
     }
 
-    slayRenderHitboxCamera(Engine, Player->Hitbox, 1);
+    slayRenderHitboxCamera(Engine, Player->Hitbox, 1, 255, 0, 0, 128);
 
     return 0;
 }

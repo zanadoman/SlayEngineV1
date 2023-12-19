@@ -12,31 +12,7 @@ platform* newPlatform(double X, double Y, uint16 Width, uint16 Height)
     result->Width = Width;
     result->Height = Height;
 
-    result->Hitbox = slayNewHitbox(actPLATFORM, &result->X, &result->Y, NULL, NULL, 0, 0, result->Width, result->Height, -1, -1, NULL, NULL, NULL, NULL);
-
-    return result;
-}
-
-crate* newCrate(slayEngine* Engine, uint16 Width, uint16 Height)
-{
-    crate* result;
-
-    result = malloc(sizeof(crate));
-
-    result->X = 0;
-    result->Y = 0;
-    result->PrevX = 0;
-    result->PrevY = 0;
-
-    result->MinX = 0;
-    result->MinY = 0;
-    result->MaxX = 0;
-    result->MaxY = 0;
-
-    result->Width = Width;
-    result->Height = Height;
-
-    result->Hitbox = slayNewHitbox(actCRATE, &result->X, &result->Y, &result->PrevX, &result->PrevY, 0, 0, result->Width, result->Height, 1, 1, &result->MinX, &result->MinY, &result->MaxX, &result->MaxY);
+    result->Hitbox = slayNewHitbox(result, actPLATFORM, &result->X, &result->Y, &result->X, &result->Y, 0, 0, result->Width, result->Height, 100, 100, NULL, NULL, NULL, NULL);
 
     return result;
 }
@@ -52,14 +28,6 @@ uint8 destroyPlatforms(array Platforms)
         free(Platforms->Values[i]);
     }
     arrPurge(Platforms);
-
-    return 0;
-}
-
-uint8 destroyCrate(crate* Crate)
-{
-    free(Crate->Hitbox);
-    free(Crate);
 
     return 0;
 }

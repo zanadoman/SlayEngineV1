@@ -34,6 +34,6 @@ void* updateEagleThread(void* Engine)
 
 void* updateProjectileThread(void* Engine)
 {
-    updateProjectile(Engine);
+    //updateProjectile(Engine);
     slayThreadExit;
 }

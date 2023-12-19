@@ -1,10 +1,10 @@
 #include "../game.h"
 
-projectile* newProjectile(actors Parent, double SpawnX, double SpawnY, double MinX, double MinY, double MaxX, double MaxY, double Angle);
-uint8 playerProjectile(slayEngine* Engine, array Projectiles, player* Player, slaySound* SoundFire, uint8 Volume);
-uint8 eagleProjectile(slayEngine* Engine, array Projectiles, eagle* Eagle, player* Player, array Platforms, crate* Crate, slaySound* SoundFire, uint8 Volume);
+//projectile* newProjectile(actors Parent, double SpawnX, double SpawnY, double MinX, double MinY, double MaxX, double MaxY, double Angle);
+//uint8 playerProjectile(slayEngine* Engine, array Projectiles, player* Player, slaySound* SoundFire, uint8 Volume);
+//uint8 eagleProjectile(slayEngine* Engine, array Projectiles, eagle* Eagle, player* Player, array Platforms, crate* Crate, slaySound* SoundFire, uint8 Volume);
 
-projectile* newProjectile(actors Parent, double SpawnX, double SpawnY, double MinX, double MinY, double MaxX, double MaxY, double Angle)
+/*projectile* newProjectile(actors Parent, double SpawnX, double SpawnY, double MinX, double MinY, double MaxX, double MaxY, double Angle)
 {
     projectile* result;
 
@@ -29,9 +29,9 @@ projectile* newProjectile(actors Parent, double SpawnX, double SpawnY, double Mi
     result->Hitbox = slayNewHitbox(Parent, &result->X, &result->Y, NULL, NULL, 3, 0, 4, 4, -1, -1, NULL, NULL, NULL, NULL);
 
     return result;
-}
+}*/
 
-uint8 updateProjectile(slayEngine* Engine)
+/*uint8 updateProjectile(slayEngine* Engine)
 {
     array Projectiles;
     player* Player;
@@ -145,9 +145,9 @@ uint8 updateProjectile(slayEngine* Engine)
     }
 
     return 0;
-}
+}*/
 
-uint8 playerProjectile(slayEngine* Engine, array Projectiles, player* Player, slaySound* SoundFire, uint8 Volume)
+/*uint8 playerProjectile(slayEngine* Engine, array Projectiles, player* Player, slaySound* SoundFire, uint8 Volume)
 {
     slayObject object;
     double angle;
@@ -166,9 +166,9 @@ uint8 playerProjectile(slayEngine* Engine, array Projectiles, player* Player, sl
     }
 
     return 0;
-}
+}*/
 
-uint8 eagleProjectile(slayEngine* Engine, array Projectiles, eagle* Eagle, player* Player, array Platforms, crate* Crate, slaySound* SoundFire, uint8 Volume)
+/*uint8 eagleProjectile(slayEngine* Engine, array Projectiles, eagle* Eagle, player* Player, array Platforms, crate* Crate, slaySound* SoundFire, uint8 Volume)
 {
     double length, angle;
 
@@ -203,9 +203,9 @@ uint8 eagleProjectile(slayEngine* Engine, array Projectiles, eagle* Eagle, playe
     }
 
     return 0;
-}
+}*/
 
-uint8 destroyProjectiles(array Projectiles)
+/*uint8 destroyProjectiles(array Projectiles)
 {
     for (uint16 i = 0; i < Projectiles->Length; i++)
     {
@@ -218,4 +218,4 @@ uint8 destroyProjectiles(array Projectiles)
     arrPurge(Projectiles);
 
     return 0;
-}
+}*/

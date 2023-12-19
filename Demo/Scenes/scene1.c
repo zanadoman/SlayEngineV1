@@ -19,6 +19,7 @@ uint8 updateScene1(slayEngine* Engine)
     slayThreadWaitExit(Engine, actEAGLE);
     //slayThreadWaitExit(Engine, actPROJECTILE);
     //3
+    //slayResolveCollisionLayer(Scene->PhysicsLayer);
 
     return 0;
 }
@@ -53,6 +54,7 @@ uint8 renderScene1(slayEngine* Engine)
     for (uint8 i = 0; i < Scene->Platforms->Length; i++)
     {
         slayRender3DTextureCamera(Engine, ((platform*)Scene->Platforms->Values[i])->X, ((platform*)Scene->Platforms->Values[i])->Y, ((platform*)Scene->Platforms->Values[i])->Width, ((platform*)Scene->Platforms->Values[i])->Height, 0, slayFlipNONE, 1.02, 0.04, 0.005, Game->Textures->levelPlatform, 255, 255, 255, 255);
+        slayRenderHitboxCamera(Engine, ((platform*)Scene->Platforms->Values[i])->Hitbox, 1, 255, 0, 0, 128);
     }
 
     //Projectiles
@@ -60,9 +62,6 @@ uint8 renderScene1(slayEngine* Engine)
     {
         slayRenderTextureCamera(Engine, ((projectile*)Scene->Projectiles->Values[i])->X, ((projectile*)Scene->Projectiles->Values[i])->Y, ((projectile*)Scene->Projectiles->Values[i])->Width, ((projectile*)Scene->Projectiles->Values[i])->Height, ((projectile*)Scene->Projectiles->Values[i])->Angle, slayFlipNONE, 1, Game->Textures->projectile, 255, 255, 255, 255);
     }
-
-    //Crate
-    slayRenderTextureCamera(Engine, Scene->Crate->X, Scene->Crate->Y, Scene->Crate->Width, Scene->Crate->Height, 0, slayFlipNONE, 1, Game->Textures->levelCrate, 255, 255, 255, 255);
 
     //Eagle
     renderEagle(Engine, Scene->Eagle);
@@ -106,14 +105,6 @@ uint8 loadScene1(slayEngine* Engine)
     scene->Platforms->Values[3] = newPlatform(350, 250, 100, 30);
     scene->Platforms->Values[4] = newPlatform(500, 150, 100, 30);
 
-    scene->Crate = newCrate(Engine, 60, 60);
-    scene->Crate->X = 550;
-    scene->Crate->Y = 490;
-    scene->Crate->MinX = -200;
-    scene->Crate->MaxX = 940;
-    scene->Crate->MinY = -500;
-    scene->Crate->MaxY = 600;
-
     //Player
     scene->Player = newPlayer(Engine, SDL_SCANCODE_A, SDL_SCANCODE_D, SDL_SCANCODE_SPACE, SDL_SCANCODE_LMB);
 
@@ -151,14 +142,13 @@ uint8 loadScene1(slayEngine* Engine)
     //Projectiles
     scene->Projectiles = arrNew(0);
 
-    //Collision layers
+    //Collision layer
     scene->PhysicsLayer = arrNew(0);
-    arrInsert(scene->PhysicsLayer, scene->PhysicsLayer->Length, scene->Player->Hitbox);
     for (uint8 i = 0; i < scene->Platforms->Length; i++)
     {
         arrInsert(scene->PhysicsLayer, scene->PhysicsLayer->Length, ((platform*)scene->Platforms->Values[i])->Hitbox);
     }
-    arrInsert(scene->PhysicsLayer, scene->PhysicsLayer->Length, scene->Crate->Hitbox);
+    arrInsert(scene->PhysicsLayer, scene->PhysicsLayer->Length, scene->Player->Hitbox);
 
     //Scene
     Engine->CurrentScene = 1;
@@ -188,7 +178,6 @@ uint8 unloadScene1(slayEngine* Engine)
 
     //Level
     destroyPlatforms(scene->Platforms);
-    destroyCrate(scene->Crate);
 
     //Player
     destroyPlayer(scene->Player);
@@ -197,10 +186,10 @@ uint8 unloadScene1(slayEngine* Engine)
     destroyEagle(scene->Eagle);
 
     //Projectiles
-    destroyProjectiles(scene->Projectiles);
+    //destroyProjectiles(scene->Projectiles);
 
-    //Collision layers
-    arrPurge(scene->PhysicsLayer);
+    //Physics layer
+    free(scene->PhysicsLayer);
 
     //Scene
     free(scene);

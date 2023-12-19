@@ -29,8 +29,6 @@ eagle* newEagle(slayEngine* Engine)
 
     result->TextureCurrent = NULL;
 
-    result->Hitbox = slayNewHitbox(actEAGLE, &result->X, &result->Y, NULL, NULL, 0, 0, result->Width, result->Height, -1, -1, NULL, NULL, NULL, NULL);
-
     return result;
 }
 
@@ -87,7 +85,6 @@ uint8 updateEagle(slayEngine* Engine)
 
 uint8 destroyEagle(eagle* Eagle)
 {
-    free(Eagle->Hitbox);
     free(Eagle);
 
     return 0;

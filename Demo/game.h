@@ -11,7 +11,6 @@ typedef struct scene0Struct scene0;
 typedef struct scene1Struct scene1;
 typedef struct scene2Struct scene2;
 
-typedef struct crateStruct crate;
 typedef struct platformStruct platform;
 typedef struct playerStruct player;
 typedef struct eagleStruct eagle;
@@ -26,7 +25,7 @@ typedef enum
     actPLAYER,
     actEAGLE,
     actPROJECTILE,
-    actCRATE,
+    
     actLENGTH
 } actors;
 
@@ -52,7 +51,6 @@ struct commonTexturesStruct
     slayTexture* levelShroom;
     slayTexture* levelBush;
     slayTexture* levelPlatform;
-    slayTexture* levelCrate;
 
     slayTexture* projectile;
 };
@@ -115,7 +113,6 @@ struct scene1Struct
     logic paused;
 
     array Platforms;
-    crate* Crate;
     player* Player;
     eagle* Eagle;
 
@@ -160,29 +157,9 @@ struct platformStruct
     slayHitbox* Hitbox;
 };
 
-struct crateStruct
-{
-    double X;
-    double Y;
-    double PrevX;
-    double PrevY;
-
-    double MinX;
-    double MinY;
-    double MaxX;
-    double MaxY;
-
-    uint16 Width;
-    uint16 Height;
-
-    slayHitbox* Hitbox;
-};
-
 platform* newPlatform(double X, double Y, uint16 Width, uint16 Height);
-crate* newCrate(slayEngine* Engine, uint16 Width, uint16 Height);
 
 uint8 destroyPlatforms(array Platforms);
-uint8 destroyCrate(crate* Crate);
 
 //Button_____________________________________________________________
 
@@ -200,7 +177,7 @@ struct buttonStruct
     slayTexture* TextureHover;
     slayTexture* TextureCurrent;
 
-    slayHitbox* Hitbox;
+    slayOverlapbox* Overlapbox;
 };
 
 button* newButton(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, char* TextureBase, char* TextureHover);
@@ -283,8 +260,6 @@ struct eagleStruct
     uint32 DeathTick;
 
     slayTexture* TextureCurrent;
-    
-    slayHitbox* Hitbox;
 };
 
 eagle* newEagle(slayEngine* Engine);

@@ -23,7 +23,6 @@ uint8 loadGame(slayEngine* Engine)
     Game->Textures->levelShroom = slayLoadTexture(Engine, "assets/level/shroom.png");
     Game->Textures->levelBush = slayLoadTexture(Engine, "assets/level/bush.png");
     Game->Textures->levelPlatform = slayLoadTexture(Engine, "assets/level/platform.png");
-    Game->Textures->levelCrate = slayLoadTexture(Engine, "assets/level/crate.png");
 
     Game->Textures->projectile = slayLoadTexture(Engine, "assets/projectile.png");
 

@@ -1,6 +1,5 @@
 #include "SlayEngineV1.h"
 
-uint8 slayResolveCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2);
 uint8 slayResolveCollisionOrder(slayHitbox* Hitbox1, slayHitbox* Hitbox2);
 
 slayHitbox* slayNewHitbox(void* Parent, uint64 ParentType, double* ObjectX, double* ObjectY, double* ObjectPrevX, double* ObjectPrevY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY, uint16 Force, uint16 Resistance, double* MinX, double* MinY, double* MaxX, double* MaxY)
@@ -590,24 +589,24 @@ uint8 slayResolveCollisionLayer(array CollisionLayer)
         }
     }
 
-    order = false;
+    /*order = false;
     while (!order)
     {
         order = true;
-        for (uint64 i = CollisionLayer->Length - 1; 0 <= i; i--)
+        for (uint64 i = 1; i <= CollisionLayer->Length; i++)
         {
-            for (uint64 j = CollisionLayer->Length - 1; 0 <= j; j--)
+            for (uint64 j = 1; j <= CollisionLayer->Length; j++)
             {
-                if (CollisionLayer->Values[i] != CollisionLayer->Values[j])
+                if (CollisionLayer->Values[CollisionLayer->Length - i] != CollisionLayer->Values[CollisionLayer->Length - j])
                 {
-                    if (slayResolveCollisionOrder(CollisionLayer->Values[j], CollisionLayer->Values[i]) == 1)
+                    if (slayResolveCollisionOrder(CollisionLayer->Values[CollisionLayer->Length - j], CollisionLayer->Values[CollisionLayer->Length - i]) == 1)
                     {
                         order = false;
                     }
                 }
             }
         }
-    }
+    }*/
 
     return 0;
 }
