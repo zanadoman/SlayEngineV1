@@ -578,7 +578,7 @@ uint8 slayResolveCollisionLayer(array CollisionLayer)
 {
     logic order;
 
-    for (uint64 i = 0; i < CollisionLayer->Length; i++)
+    /*for (uint64 i = 0; i < CollisionLayer->Length; i++)
     {
         for (uint64 j = 0; j < CollisionLayer->Length; j++)
         {
@@ -587,9 +587,28 @@ uint8 slayResolveCollisionLayer(array CollisionLayer)
                 slayResolveCollision(CollisionLayer->Values[i], CollisionLayer->Values[j]);
             }
         }
+    }*/
+
+    order = false;
+    while (!order)
+    {
+        order = true;
+        for (uint64 i = 0; i < CollisionLayer->Length; i++)
+        {
+            for (uint64 j = 0; j < CollisionLayer->Length; j++)
+            {
+                if (CollisionLayer->Values[i] != CollisionLayer->Values[j])
+                {
+                    if (slayResolveCollision(CollisionLayer->Values[i], CollisionLayer->Values[j]) == 1)
+                    {
+                        order = false;
+                    }
+                }
+            }
+        }
     }
 
-    /*order = false;
+    order = false;
     while (!order)
     {
         order = true;
@@ -606,7 +625,7 @@ uint8 slayResolveCollisionLayer(array CollisionLayer)
                 }
             }
         }
-    }*/
+    }
 
     return 0;
 }

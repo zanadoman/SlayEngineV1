@@ -11,6 +11,13 @@ uint8 updateScene1(slayEngine* Engine)
     {
         return 1;
     }
+
+    for (uint8 i = 0; i < Scene->Platforms->Length; i++)
+    {
+        ((platform*)Scene->Platforms->Values[i])->PrevX  = ((platform*)Scene->Platforms->Values[i])->X;
+        ((platform*)Scene->Platforms->Values[i])->PrevY = ((platform*)Scene->Platforms->Values[i])->Y;
+    }
+
     //2
     slayThreadStart(Engine, actPLAYER, updatePlayerThread);
     slayThreadStart(Engine, actEAGLE, updateEagleThread);
@@ -19,7 +26,7 @@ uint8 updateScene1(slayEngine* Engine)
     slayThreadWaitExit(Engine, actEAGLE);
     //slayThreadWaitExit(Engine, actPROJECTILE);
     //3
-    //slayResolveCollisionLayer(Scene->PhysicsLayer);
+    slayResolveCollisionLayer(Scene->PhysicsLayer);
 
     return 0;
 }

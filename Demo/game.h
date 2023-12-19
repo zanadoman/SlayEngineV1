@@ -150,9 +150,13 @@ struct platformStruct
 {
     double X;
     double Y;
+    double PrevX;
+    double PrevY;
 
     uint16 Width;
     uint16 Height;
+
+    double MinX;
 
     slayHitbox* Hitbox;
 };
