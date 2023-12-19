@@ -7,6 +7,9 @@
 #include "cJSON/cJSON.h"
 #include <pthread.h>
 
+#define EPSILON 2.22045E-16
+#define PI 3.141592653589793
+
 typedef struct slayEngineStruct slayEngine;
 typedef struct slayDisplayStruct slayDisplay;
 typedef struct slayParticleBatchStruct slayParticleBatch;
@@ -183,7 +186,6 @@ logic slayCursorCollisionCamera(slayEngine* Engine, slayOverlapbox* Overlapbox, 
 
 //Vector_____________________________________________________________
 
-#define PI 3.141592653589793
 uint8 slayVectorLength(double X1, double Y1, double X2, double Y2, double* Length);
 uint8 slayVectorTranslate(double X1, double Y1, double* X2, double* Y2, double Length, double Angle);
 uint8 slayVectorAngle(double X1, double Y1, double X2, double Y2, double* Angle);
@@ -253,6 +255,7 @@ logic slayCheckOverlap(slayOverlapbox* Overlapbox1, slayOverlapbox* Overlapbox2)
 logic slayCheckCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2);
 
 slayCollision slayGetCollisionDirection(slayHitbox* Hitbox1, slayHitbox* Hitbox2);
+uint8 slayResolveCollisionLayer(array CollisionLayer);
 
 uint8 slayRenderHitbox(slayEngine* Engine, slayHitbox* Hitbox);
 uint8 slayRenderHitboxCamera(slayEngine* Engine, slayHitbox* Hitbox, double Distance);

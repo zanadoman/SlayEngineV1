@@ -1,5 +1,7 @@
 #include "SlayEngineV1.h"
 
+uint8 slayResolveCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2);
+
 slayHitbox* slayNewHitbox(void* Parent, uint64 ParentType, double* ObjectX, double* ObjectY, double* ObjectPrevX, double* ObjectPrevY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY, uint16 Force, uint16 Resistance, double* MinX, double* MinY, double* MaxX, double* MaxY)
 {
     slayHitbox* result;
@@ -376,39 +378,39 @@ uint8 slayResolveCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2)
         switch (slayGetCollisionDirection(Hitbox1, Hitbox2))
         {
             case slayColl_TOP:
-                *Hitbox1->ObjectY += Hitbox2LowerRightY - Hitbox1UpperLeftY;
+                *Hitbox1->ObjectY += Hitbox2LowerRightY - Hitbox1UpperLeftY + EPSILON;
             return 1;
 
             case slayColl_BOTTOM:
-                *Hitbox1->ObjectY -= Hitbox1LowerRightY - Hitbox2UpperLeftY;
+                *Hitbox1->ObjectY -= Hitbox1LowerRightY - Hitbox2UpperLeftY + EPSILON;
             return 1;
 
             case slayColl_LEFT:
-                *Hitbox1->ObjectX += Hitbox2LowerRightX - Hitbox1UpperLeftX;
+                *Hitbox1->ObjectX += Hitbox2LowerRightX - Hitbox1UpperLeftX + EPSILON;
             return 1;
 
             case slayColl_RIGHT:
-                *Hitbox1->ObjectX -= Hitbox1LowerRightX - Hitbox2UpperLeftX;
+                *Hitbox1->ObjectX -= Hitbox1LowerRightX - Hitbox2UpperLeftX + EPSILON;
             return 1;
 
             case slayColl_TOP_LEFT:
-                *Hitbox1->ObjectY += Hitbox2LowerRightY - Hitbox1UpperLeftY;
-                *Hitbox1->ObjectX += Hitbox2LowerRightX - Hitbox1UpperLeftX;
+                *Hitbox1->ObjectY += Hitbox2LowerRightY - Hitbox1UpperLeftY + EPSILON;
+                *Hitbox1->ObjectX += Hitbox2LowerRightX - Hitbox1UpperLeftX + EPSILON;
             return 1;
 
             case slayColl_TOP_RIGHT:
-                *Hitbox1->ObjectY += Hitbox2LowerRightY - Hitbox1UpperLeftY;
-                *Hitbox1->ObjectX -= Hitbox1LowerRightX - Hitbox2UpperLeftX;
+                *Hitbox1->ObjectY += Hitbox2LowerRightY - Hitbox1UpperLeftY + EPSILON;
+                *Hitbox1->ObjectX -= Hitbox1LowerRightX - Hitbox2UpperLeftX + EPSILON;
             return 1;
 
             case slayColl_BOT_LEFT:
-                *Hitbox1->ObjectY -= Hitbox1LowerRightY - Hitbox2UpperLeftY;
-                *Hitbox1->ObjectX += Hitbox2LowerRightX - Hitbox1UpperLeftX;
+                *Hitbox1->ObjectY -= Hitbox1LowerRightY - Hitbox2UpperLeftY + EPSILON;
+                *Hitbox1->ObjectX += Hitbox2LowerRightX - Hitbox1UpperLeftX + EPSILON;
             return 1;
 
             case slayColl_BOT_RIGHT:
-                *Hitbox1->ObjectY -= Hitbox1LowerRightY - Hitbox2UpperLeftY;
-                *Hitbox1->ObjectX -= Hitbox1LowerRightX - Hitbox2UpperLeftX;
+                *Hitbox1->ObjectY -= Hitbox1LowerRightY - Hitbox2UpperLeftY + EPSILON;
+                *Hitbox1->ObjectX -= Hitbox1LowerRightX - Hitbox2UpperLeftX + EPSILON;
             return 1;
 
             default:
@@ -422,54 +424,54 @@ uint8 slayResolveCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2)
         switch (slayGetCollisionDirection(Hitbox1, Hitbox2))
         {
             case slayColl_TOP:
-                *Hitbox1->ObjectY += (Hitbox2LowerRightY - Hitbox1UpperLeftY) * ratio;
+                *Hitbox1->ObjectY += (Hitbox2LowerRightY - Hitbox1UpperLeftY) * ratio + EPSILON;
                 *Hitbox2->ObjectY -= (Hitbox2LowerRightY - Hitbox1UpperLeftY) * (1 - ratio);
             break;
 
             case slayColl_BOTTOM:
-                *Hitbox1->ObjectY -= (Hitbox1LowerRightY - Hitbox2UpperLeftY) * ratio;
+                *Hitbox1->ObjectY -= (Hitbox1LowerRightY - Hitbox2UpperLeftY) * ratio + EPSILON;
                 *Hitbox2->ObjectY += (Hitbox1LowerRightY - Hitbox2UpperLeftY) * (1 - ratio);
             break;
 
             case slayColl_LEFT:
-                *Hitbox1->ObjectX += (Hitbox2LowerRightX - Hitbox1UpperLeftX) * ratio;
+                *Hitbox1->ObjectX += (Hitbox2LowerRightX - Hitbox1UpperLeftX) * ratio + EPSILON;
                 *Hitbox2->ObjectX -= (Hitbox2LowerRightX - Hitbox1UpperLeftX) * (1 - ratio);
             break;
 
             case slayColl_RIGHT:
-                *Hitbox1->ObjectX -= (Hitbox1LowerRightX - Hitbox2UpperLeftX) * ratio;
+                *Hitbox1->ObjectX -= (Hitbox1LowerRightX - Hitbox2UpperLeftX) * ratio + EPSILON;
                 *Hitbox2->ObjectX += (Hitbox1LowerRightX - Hitbox2UpperLeftX) * (1 - ratio);
             break;
 
             case slayColl_TOP_LEFT:
-                *Hitbox1->ObjectY += (Hitbox2LowerRightY - Hitbox1UpperLeftY) * ratio;
+                *Hitbox1->ObjectY += (Hitbox2LowerRightY - Hitbox1UpperLeftY) * ratio + EPSILON;
                 *Hitbox2->ObjectY -= (Hitbox2LowerRightY - Hitbox1UpperLeftY) * (1 - ratio);
 
-                *Hitbox1->ObjectX += (Hitbox2LowerRightX - Hitbox1UpperLeftX) * ratio;
+                *Hitbox1->ObjectX += (Hitbox2LowerRightX - Hitbox1UpperLeftX) * ratio + EPSILON;
                 *Hitbox2->ObjectX -= (Hitbox2LowerRightX - Hitbox1UpperLeftX) * (1 - ratio);
             break;
 
             case slayColl_TOP_RIGHT:
-                *Hitbox1->ObjectY += (Hitbox2LowerRightY - Hitbox1UpperLeftY) * ratio;
+                *Hitbox1->ObjectY += (Hitbox2LowerRightY - Hitbox1UpperLeftY) * ratio + EPSILON;
                 *Hitbox2->ObjectY -= (Hitbox2LowerRightY - Hitbox1UpperLeftY) * (1 - ratio);
 
-                *Hitbox1->ObjectX -= (Hitbox1LowerRightX - Hitbox2UpperLeftX) * ratio;
+                *Hitbox1->ObjectX -= (Hitbox1LowerRightX - Hitbox2UpperLeftX) * ratio + EPSILON;
                 *Hitbox2->ObjectX += (Hitbox1LowerRightX - Hitbox2UpperLeftX) * (1 - ratio);
             break;
 
             case slayColl_BOT_LEFT:
-                *Hitbox1->ObjectY -= (Hitbox1LowerRightY - Hitbox2UpperLeftY) * ratio;
+                *Hitbox1->ObjectY -= (Hitbox1LowerRightY - Hitbox2UpperLeftY) * ratio + EPSILON;
                 *Hitbox2->ObjectY += (Hitbox1LowerRightY - Hitbox2UpperLeftY) * (1 - ratio);
 
-                *Hitbox1->ObjectX += (Hitbox2LowerRightX - Hitbox1UpperLeftX) * ratio;
+                *Hitbox1->ObjectX += (Hitbox2LowerRightX - Hitbox1UpperLeftX) * ratio + EPSILON;
                 *Hitbox2->ObjectX -= (Hitbox2LowerRightX - Hitbox1UpperLeftX) * (1 - ratio);
             break;
 
             case slayColl_BOT_RIGHT:
-                *Hitbox1->ObjectY -= (Hitbox1LowerRightY - Hitbox2UpperLeftY) * ratio;
+                *Hitbox1->ObjectY -= (Hitbox1LowerRightY - Hitbox2UpperLeftY) * ratio + EPSILON;
                 *Hitbox2->ObjectY += (Hitbox1LowerRightY - Hitbox2UpperLeftY) * (1 - ratio);
 
-                *Hitbox1->ObjectX -= (Hitbox1LowerRightX - Hitbox2UpperLeftX) * ratio;
+                *Hitbox1->ObjectX -= (Hitbox1LowerRightX - Hitbox2UpperLeftX) * ratio + EPSILON;
                 *Hitbox2->ObjectX += (Hitbox1LowerRightX - Hitbox2UpperLeftX) * (1 - ratio);
             break;
 
