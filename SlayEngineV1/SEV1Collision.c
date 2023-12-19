@@ -577,6 +577,8 @@ uint8 slayResolveCollisionOrder(slayHitbox* Hitbox1, slayHitbox* Hitbox2)
 
 uint8 slayResolveCollisionLayer(array CollisionLayer)
 {
+    logic order;
+
     for (uint64 i = 0; i < CollisionLayer->Length; i++)
     {
         for (uint64 j = 0; j < CollisionLayer->Length; j++)
@@ -588,13 +590,21 @@ uint8 slayResolveCollisionLayer(array CollisionLayer)
         }
     }
 
-    for (uint64 i = CollisionLayer->Length - 1; 0 <= i; i--)
+    order = false;
+    while (!order)
     {
-        for (uint64 j = CollisionLayer->Length - 1; 0 <= j; j--)
+        order = true;
+        for (uint64 i = CollisionLayer->Length - 1; 0 <= i; i--)
         {
-            if (CollisionLayer->Values[i] != CollisionLayer->Values[j])
+            for (uint64 j = CollisionLayer->Length - 1; 0 <= j; j--)
             {
-                slayResolveCollisionOrder(CollisionLayer->Values[j], CollisionLayer->Values[i]);
+                if (CollisionLayer->Values[i] != CollisionLayer->Values[j])
+                {
+                    if (slayResolveCollisionOrder(CollisionLayer->Values[j], CollisionLayer->Values[i]) == 1)
+                    {
+                        order = false;
+                    }
+                }
             }
         }
     }
