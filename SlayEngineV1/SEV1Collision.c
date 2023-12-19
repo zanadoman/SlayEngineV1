@@ -504,23 +504,24 @@ uint8 slayResolveCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2)
 
 uint8 slayResolveCollisionLayer(array CollisionLayer)
 {
-    logic disorder;
-
-    disorder = true;
-    while (disorder)
+    for (uint64 i = 0; i < CollisionLayer->Length; i++)
     {
-        disorder = false;
-        for (uint64 i = 0; i < CollisionLayer->Length; i++)
+        for (uint64 j = 0; j < CollisionLayer->Length; j++)
         {
-            for (uint64 j = i + 1; j < CollisionLayer->Length; j++)
+            if (CollisionLayer->Values[i] != CollisionLayer->Values[j])
             {
-                if (CollisionLayer->Values[i] != CollisionLayer->Values[j])
-                {
-                    if (slayResolveCollision(CollisionLayer->Values[i], CollisionLayer->Values[j]) == 1)
-                    {
-                        disorder = true;
-                    }
-                }
+                slayResolveCollision(CollisionLayer->Values[i], CollisionLayer->Values[j]);
+            }
+        }
+    }
+
+    for (uint64 i = CollisionLayer->Length - 1; 0 <= i; i--)
+    {
+        for (uint64 j = CollisionLayer->Length - 1; 0 <= j; j--)
+        {
+            if (CollisionLayer->Values[i] != CollisionLayer->Values[j])
+            {
+                slayResolveCollision(CollisionLayer->Values[i], CollisionLayer->Values[j]);
             }
         }
     }
