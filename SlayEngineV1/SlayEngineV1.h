@@ -257,8 +257,10 @@ logic slayCheckCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2);
 slayCollision slayGetCollisionDirection(slayHitbox* Hitbox1, slayHitbox* Hitbox2);
 uint8 slayResolveCollisionLayer(array CollisionLayer);
 
-uint8 slayRenderHitbox(slayEngine* Engine, slayHitbox* Hitbox);
-uint8 slayRenderHitboxCamera(slayEngine* Engine, slayHitbox* Hitbox, double Distance);
+uint8 slayRenderOverlapbox(slayEngine* Engine, slayOverlapbox* Overlapbox, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA);
+uint8 slayRenderOverlapboxCamera(slayEngine* Engine, slayOverlapbox* Overlapbox, double Distance, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA);
+uint8 slayRenderHitbox(slayEngine* Engine, slayHitbox* Hitbox, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA);
+uint8 slayRenderHitboxCamera(slayEngine* Engine, slayHitbox* Hitbox, double Distance, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA);
 
 //Camera_____________________________________________________________
 

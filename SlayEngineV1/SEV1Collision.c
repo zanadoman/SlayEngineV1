@@ -602,16 +602,30 @@ uint8 slayResolveCollisionLayer(array CollisionLayer)
     return 0;
 }
 
-uint8 slayRenderHitbox(slayEngine* Engine, slayHitbox* Hitbox)
+uint8 slayRenderOverlapbox(slayEngine* Engine, slayOverlapbox* Overlapbox, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA)
 {
-    slayRenderColor(Engine, *Hitbox->ObjectX + Hitbox->UpperLeftX, *Hitbox->ObjectY+ Hitbox->UpperLeftY, Hitbox->LowerRightX - Hitbox->UpperLeftX, Hitbox->LowerRightY - Hitbox->UpperLeftY, 255, 0, 0, 128);
+    slayRenderColor(Engine, *Overlapbox->ObjectX + Overlapbox->UpperLeftX, *Overlapbox->ObjectY + Overlapbox->UpperLeftY, Overlapbox->LowerRightX - Overlapbox->UpperLeftX, Overlapbox->LowerRightY - Overlapbox->UpperLeftY, ColorR, ColorG, ColorB, ColorA);
 
     return 0;
 }
 
-uint8 slayRenderHitboxCamera(slayEngine* Engine, slayHitbox* Hitbox, double Distance)
+uint8 slayRenderOverlapboxCamera(slayEngine* Engine, slayOverlapbox* Overlapbox, double Distance, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA)
 {
-    slayRenderColorCamera(Engine, *Hitbox->ObjectX + Hitbox->UpperLeftX, *Hitbox->ObjectY+ Hitbox->UpperLeftY, Hitbox->LowerRightX - Hitbox->UpperLeftX, Hitbox->LowerRightY - Hitbox->UpperLeftY, Distance, 255, 0, 0, 128);
+    slayRenderColorCamera(Engine, *Overlapbox->ObjectX + Overlapbox->UpperLeftX, *Overlapbox->ObjectY + Overlapbox->UpperLeftY, Overlapbox->LowerRightX - Overlapbox->UpperLeftX, Overlapbox->LowerRightY - Overlapbox->UpperLeftY, Distance, ColorR, ColorG, ColorB, ColorA);
+
+    return 0;
+}
+
+uint8 slayRenderHitbox(slayEngine* Engine, slayHitbox* Hitbox, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA)
+{
+    slayRenderColor(Engine, *Hitbox->ObjectX + Hitbox->UpperLeftX, *Hitbox->ObjectY + Hitbox->UpperLeftY, Hitbox->LowerRightX - Hitbox->UpperLeftX, Hitbox->LowerRightY - Hitbox->UpperLeftY, ColorR, ColorG, ColorB, ColorA);
+
+    return 0;
+}
+
+uint8 slayRenderHitboxCamera(slayEngine* Engine, slayHitbox* Hitbox, double Distance, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA)
+{
+    slayRenderColorCamera(Engine, *Hitbox->ObjectX + Hitbox->UpperLeftX, *Hitbox->ObjectY+ Hitbox->UpperLeftY, Hitbox->LowerRightX - Hitbox->UpperLeftX, Hitbox->LowerRightY - Hitbox->UpperLeftY, Distance, ColorR, ColorG, ColorB, ColorA);
 
     return 0;
 }
