@@ -195,15 +195,15 @@ typedef enum
 {
     slayColl_NONE = 0,
 
-    slayColl_TOP_LEFT = 1,
-    slayColl_TOP_RIGHT = 2,
-    slayColl_BOT_LEFT = 4,
-    slayColl_BOT_RIGHT = 8,
+    slayColl_TOP = 1,
+    slayColl_BOTTOM = 2,
+    slayColl_LEFT = 4,
+    slayColl_RIGHT = 8,
 
-    slayColl_TOP = 16,
-    slayColl_BOTTOM = 32,
-    slayColl_LEFT = 64,
-    slayColl_RIGHT = 128,
+    slayColl_TOP_LEFT = 16,
+    slayColl_TOP_RIGHT = 32,
+    slayColl_BOT_LEFT = 64,
+    slayColl_BOT_RIGHT = 128,
 
     slayColl_ERROR = 255
 } slayCollision;
@@ -249,8 +249,9 @@ struct slayHitboxStruct
 slayHitbox* slayNewHitbox(void* Parent, uint64 ParentType, double* ObjectX, double* ObjectY, double* ObjectPrevX, double* ObjectPrevY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY, uint16 Force, uint16 Resistance, double* MinX, double* MinY, double* MaxX, double* MaxY);
 slayOverlapbox* slayNewOverlapbox(void* Parent, uint64 ParentType, double* ObjectX, double* ObjectY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY);
 
-slayCollision slayGetOverlapState(slayOverlapbox* Overlapbox1, slayOverlapbox* Overlapbox2);
-slayCollision slayGetCollisionState(slayHitbox* Hitbox1, slayHitbox* Hitbox2);
+logic slayCheckOverlap(slayOverlapbox* Overlapbox1, slayOverlapbox* Overlapbox2);
+logic slayCheckCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2);
+
 slayCollision slayGetCollisionDirection(slayHitbox* Hitbox1, slayHitbox* Hitbox2);
 
 uint8 slayRenderHitbox(slayEngine* Engine, slayHitbox* Hitbox);

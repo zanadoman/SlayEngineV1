@@ -90,10 +90,8 @@ slayOverlapbox* slayNewOverlapbox(void* Parent, uint64 ParentType, double* Objec
     return result;
 }
 
-slayCollision slayGetOverlapState(slayOverlapbox* Overlapbox1, slayOverlapbox* Overlapbox2)
+logic slayCheckOverlap(slayOverlapbox* Overlapbox1, slayOverlapbox* Overlapbox2)
 {
-    slayCollision result;
-
     double Overlapbox1UpperLeftX;
     double Overlapbox1UpperLeftY;
     double Overlapbox1LowerRightX;
@@ -114,37 +112,33 @@ slayCollision slayGetOverlapState(slayOverlapbox* Overlapbox1, slayOverlapbox* O
     Overlapbox2LowerRightX = Overlapbox2->LowerRightX + *Overlapbox2->ObjectX;
     Overlapbox2LowerRightY = Overlapbox2->LowerRightY + *Overlapbox2->ObjectY;
 
-    result = slayColl_NONE;
-
     if (Overlapbox1LowerRightX < Overlapbox2UpperLeftX || Overlapbox2LowerRightX < Overlapbox1UpperLeftX || Overlapbox1LowerRightY < Overlapbox2UpperLeftY || Overlapbox2LowerRightY < Overlapbox1UpperLeftY)
     {
-        return result;
+        return false;
     }
 
     if (((Overlapbox1UpperLeftX <= Overlapbox2LowerRightX && Overlapbox2LowerRightX <= Overlapbox1LowerRightX) && (Overlapbox1UpperLeftY <= Overlapbox2LowerRightY && Overlapbox2LowerRightY <= Overlapbox1LowerRightY)) || ((Overlapbox2UpperLeftX <= Overlapbox1UpperLeftX && Overlapbox1UpperLeftX <= Overlapbox2LowerRightX) && (Overlapbox2UpperLeftY <= Overlapbox1UpperLeftY && Overlapbox1UpperLeftY <= Overlapbox2LowerRightY)))
     {
-        result |= slayColl_TOP_LEFT;
+        return true; //top left
     }
     if (((Overlapbox1UpperLeftX <= Overlapbox2UpperLeftX && Overlapbox2UpperLeftX <= Overlapbox1LowerRightX) && (Overlapbox1UpperLeftY <= Overlapbox2LowerRightY && Overlapbox2LowerRightY <= Overlapbox1LowerRightY)) || ((Overlapbox2UpperLeftX <= Overlapbox1LowerRightX && Overlapbox1LowerRightX <= Overlapbox2LowerRightX) && (Overlapbox2UpperLeftY <= Overlapbox1UpperLeftY && Overlapbox1UpperLeftY <= Overlapbox2LowerRightY)))
     {
-        result |= slayColl_TOP_RIGHT;
+        return true; //top right
     }
     if (((Overlapbox1UpperLeftX <= Overlapbox2LowerRightX && Overlapbox2LowerRightX <= Overlapbox1LowerRightX) && (Overlapbox1UpperLeftY <= Overlapbox2UpperLeftY && Overlapbox2UpperLeftY <= Overlapbox1LowerRightY)) || ((Overlapbox2UpperLeftX <= Overlapbox1UpperLeftX && Overlapbox1UpperLeftX <= Overlapbox2LowerRightX) && (Overlapbox2UpperLeftY <= Overlapbox1LowerRightY && Overlapbox1LowerRightY <= Overlapbox2LowerRightY)))
     {
-        result |= slayColl_BOT_LEFT;
+        return true; //bottom left
     }
     if (((Overlapbox1UpperLeftX <= Overlapbox2UpperLeftX && Overlapbox2UpperLeftX <= Overlapbox1LowerRightX) && (Overlapbox1UpperLeftY <= Overlapbox2UpperLeftY && Overlapbox2UpperLeftY <= Overlapbox1LowerRightY)) || ((Overlapbox2UpperLeftX <= Overlapbox1LowerRightX && Overlapbox1LowerRightX <= Overlapbox2LowerRightX) && (Overlapbox2UpperLeftY <= Overlapbox1LowerRightY && Overlapbox1LowerRightY <= Overlapbox2LowerRightY)))
     {
-        result |= slayColl_BOT_RIGHT;
+        return true; //bottom right
     }
 
-    return result;
+    return false;
 }
 
-slayCollision slayGetCollisionState(slayHitbox* Hitbox1, slayHitbox* Hitbox2)
+logic slayCheckCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2)
 {
-    slayCollision result;
-
     double Hitbox1UpperLeftX;
     double Hitbox1UpperLeftY;
     double Hitbox1LowerRightX;
@@ -165,37 +159,34 @@ slayCollision slayGetCollisionState(slayHitbox* Hitbox1, slayHitbox* Hitbox2)
     Hitbox2LowerRightX = Hitbox2->LowerRightX + *Hitbox2->ObjectX;
     Hitbox2LowerRightY = Hitbox2->LowerRightY + *Hitbox2->ObjectY;
 
-    result = slayColl_NONE;
-
     if (Hitbox1LowerRightX < Hitbox2UpperLeftX || Hitbox2LowerRightX < Hitbox1UpperLeftX || Hitbox1LowerRightY < Hitbox2UpperLeftY || Hitbox2LowerRightY < Hitbox1UpperLeftY)
     {
-        return result;
+        return false;
     }
 
     if (((Hitbox1UpperLeftX <= Hitbox2LowerRightX && Hitbox2LowerRightX <= Hitbox1LowerRightX) && (Hitbox1UpperLeftY <= Hitbox2LowerRightY && Hitbox2LowerRightY <= Hitbox1LowerRightY)) || ((Hitbox2UpperLeftX <= Hitbox1UpperLeftX && Hitbox1UpperLeftX <= Hitbox2LowerRightX) && (Hitbox2UpperLeftY <= Hitbox1UpperLeftY && Hitbox1UpperLeftY <= Hitbox2LowerRightY)))
     {
-        result |= slayColl_TOP_LEFT;
+        return true; //top left
     }
     if (((Hitbox1UpperLeftX <= Hitbox2UpperLeftX && Hitbox2UpperLeftX <= Hitbox1LowerRightX) && (Hitbox1UpperLeftY <= Hitbox2LowerRightY && Hitbox2LowerRightY <= Hitbox1LowerRightY)) || ((Hitbox2UpperLeftX <= Hitbox1LowerRightX && Hitbox1LowerRightX <= Hitbox2LowerRightX) && (Hitbox2UpperLeftY <= Hitbox1UpperLeftY && Hitbox1UpperLeftY <= Hitbox2LowerRightY)))
     {
-        result |= slayColl_TOP_RIGHT;
+        return true; //top right
     }
     if (((Hitbox1UpperLeftX <= Hitbox2LowerRightX && Hitbox2LowerRightX <= Hitbox1LowerRightX) && (Hitbox1UpperLeftY <= Hitbox2UpperLeftY && Hitbox2UpperLeftY <= Hitbox1LowerRightY)) || ((Hitbox2UpperLeftX <= Hitbox1UpperLeftX && Hitbox1UpperLeftX <= Hitbox2LowerRightX) && (Hitbox2UpperLeftY <= Hitbox1LowerRightY && Hitbox1LowerRightY <= Hitbox2LowerRightY)))
     {
-        result |= slayColl_BOT_LEFT;
+        return true; //bottom left
     }
     if (((Hitbox1UpperLeftX <= Hitbox2UpperLeftX && Hitbox2UpperLeftX <= Hitbox1LowerRightX) && (Hitbox1UpperLeftY <= Hitbox2UpperLeftY && Hitbox2UpperLeftY <= Hitbox1LowerRightY)) || ((Hitbox2UpperLeftX <= Hitbox1LowerRightX && Hitbox1LowerRightX <= Hitbox2LowerRightX) && (Hitbox2UpperLeftY <= Hitbox1LowerRightY && Hitbox1LowerRightY <= Hitbox2LowerRightY)))
     {
-        result |= slayColl_BOT_RIGHT;
+        return true; //bottom right
     }
 
-    return result;
+    return false;
 }
 
 slayCollision slayGetCollisionDirection(slayHitbox* Hitbox1, slayHitbox* Hitbox2)
 {
-    uint8 collision;
-    slayHitbox* hitbox;
+    slayHitbox* Hitbox1Prev;
 
     double Hitbox1PrevUpperLeftX;
     double Hitbox1PrevUpperLeftY;
@@ -212,19 +203,18 @@ slayCollision slayGetCollisionDirection(slayHitbox* Hitbox1, slayHitbox* Hitbox2
     double Hitbox2LowerRightX;
     double Hitbox2LowerRightY;
 
-    hitbox = slayNewHitbox(NULL, 0, Hitbox1->ObjectPrevX, Hitbox1->ObjectPrevY, Hitbox1->ObjectPrevX, Hitbox1->ObjectPrevY, Hitbox1->UpperLeftX, Hitbox1->UpperLeftY, Hitbox1->LowerRightX, Hitbox1->LowerRightY, 0, 0, 0, 0, 0, 0);
-    collision = slayGetCollisionState(hitbox, Hitbox2);
-    free(hitbox);
-    if (collision != slayColl_NONE)
-    {
-        return slayColl_ERROR;
-    }
-
-    collision = slayGetCollisionState(Hitbox1, Hitbox2);
-    if (collision == slayColl_NONE)
+    if (!slayCheckCollision(Hitbox1, Hitbox2))
     {
         return slayColl_NONE;
     }
+
+    Hitbox1Prev = slayNewHitbox(NULL, 0, Hitbox1->ObjectPrevX, Hitbox1->ObjectPrevY, Hitbox1->ObjectPrevX, Hitbox1->ObjectPrevY, Hitbox1->UpperLeftX, Hitbox1->UpperLeftY, Hitbox1->LowerRightX, Hitbox1->LowerRightY, 0, 0, 0, 0, 0, 0);
+    if (slayCheckCollision(Hitbox1Prev, Hitbox2))
+    {
+        free(Hitbox1Prev);
+        return slayColl_ERROR;
+    }
+    free(Hitbox1Prev);
 
     Hitbox1PrevUpperLeftX = Hitbox1->UpperLeftX + *Hitbox1->ObjectPrevX;
     Hitbox1PrevUpperLeftY = Hitbox1->UpperLeftY + *Hitbox1->ObjectPrevY;
@@ -241,139 +231,115 @@ slayCollision slayGetCollisionDirection(slayHitbox* Hitbox1, slayHitbox* Hitbox2
     Hitbox2LowerRightX = Hitbox2->LowerRightX + *Hitbox2->ObjectX;
     Hitbox2LowerRightY = Hitbox2->LowerRightY + *Hitbox2->ObjectY;
 
-    if (collision == (slayColl_TOP_LEFT | slayColl_TOP_RIGHT | slayColl_BOT_LEFT | slayColl_BOT_RIGHT))
+    if ((Hitbox2UpperLeftX <= Hitbox1PrevUpperLeftX && Hitbox1PrevLowerRightX <= Hitbox2LowerRightX) || (Hitbox1PrevUpperLeftX <= Hitbox2UpperLeftX && Hitbox2LowerRightX <= Hitbox1PrevLowerRightX))
     {
-        if ((Hitbox2UpperLeftX <= Hitbox1PrevUpperLeftX && Hitbox1PrevLowerRightX <= Hitbox2LowerRightX) || (Hitbox1PrevUpperLeftX <= Hitbox2UpperLeftX && Hitbox2LowerRightX <= Hitbox1PrevLowerRightX))
+        if (Hitbox2LowerRightY < Hitbox1PrevUpperLeftY)
         {
-            if (Hitbox2LowerRightY < Hitbox1PrevUpperLeftY)
-            {
-                return slayColl_TOP;
-            }
-            if (Hitbox1PrevLowerRightY < Hitbox2UpperLeftY)
-            {    
-                return slayColl_BOTTOM;
-            }
+            return slayColl_TOP;
         }
-        if ((Hitbox2UpperLeftY <= Hitbox1PrevUpperLeftY && Hitbox1PrevLowerRightY <= Hitbox2LowerRightY) || (Hitbox1PrevUpperLeftY <= Hitbox2UpperLeftY && Hitbox2LowerRightY <= Hitbox1PrevLowerRightY))
-        {
-            if (Hitbox2LowerRightX < Hitbox1PrevUpperLeftX)
-            {
-                return slayColl_LEFT;
-            }
-            if (Hitbox1PrevLowerRightX < Hitbox2UpperLeftX)
-            {
-                return slayColl_RIGHT;
-            }
+        if (Hitbox1PrevLowerRightY < Hitbox2UpperLeftY)
+        {    
+            return slayColl_BOTTOM;
         }
-
-        if (Hitbox2UpperLeftX < Hitbox1PrevUpperLeftX && Hitbox2UpperLeftY < Hitbox1PrevUpperLeftY)
+    }
+    if ((Hitbox2UpperLeftY <= Hitbox1PrevUpperLeftY && Hitbox1PrevLowerRightY <= Hitbox2LowerRightY) || (Hitbox1PrevUpperLeftY <= Hitbox2UpperLeftY && Hitbox2LowerRightY <= Hitbox1PrevLowerRightY))
+    {
+        if (Hitbox2LowerRightX < Hitbox1PrevUpperLeftX)
         {
-            collision = slayColl_TOP_LEFT;
+            return slayColl_LEFT;
         }
-        else if (Hitbox1PrevLowerRightX < Hitbox2LowerRightX && Hitbox1PrevUpperLeftY < Hitbox2UpperLeftY)
+        if (Hitbox1PrevLowerRightX < Hitbox2UpperLeftX)
         {
-            collision = slayColl_TOP_RIGHT;
-        }
-        else if (Hitbox2UpperLeftX < Hitbox1PrevUpperLeftX && Hitbox2LowerRightY < Hitbox1PrevLowerRightY)
-        {
-            collision = slayColl_BOT_LEFT;
-        }
-        else
-        {
-            collision = slayColl_BOT_RIGHT;
+            return slayColl_RIGHT;
         }
     }
 
-    switch (collision)
+    if (Hitbox2UpperLeftX < Hitbox1PrevUpperLeftX && Hitbox2UpperLeftY < Hitbox1PrevUpperLeftY)
     {
-        case slayColl_TOP_LEFT | slayColl_TOP_RIGHT:
-        return slayColl_TOP;
+        if (Hitbox1PrevUpperLeftX <= Hitbox2LowerRightX)
+        {
+            return slayColl_TOP;
+        }
+        if (Hitbox1PrevUpperLeftY <= Hitbox2LowerRightY)
+        {
+            return slayColl_LEFT;
+        }
+        if (Hitbox2LowerRightX - Hitbox1UpperLeftX > Hitbox2LowerRightY - Hitbox1UpperLeftY)
+        {
+            return slayColl_TOP;
+        }
+        if (Hitbox2LowerRightX - Hitbox1UpperLeftX < Hitbox2LowerRightY - Hitbox1UpperLeftY)
+        {
+            return slayColl_LEFT;
+        }
 
-        case slayColl_BOT_LEFT | slayColl_BOT_RIGHT:
-        return slayColl_BOTTOM;
-
-        case slayColl_TOP_LEFT | slayColl_BOT_LEFT:
-        return slayColl_LEFT;
-
-        case slayColl_TOP_RIGHT | slayColl_BOT_RIGHT:
-        return slayColl_RIGHT;
-
-        case slayColl_TOP_LEFT:
-            if (Hitbox1PrevUpperLeftX < Hitbox2LowerRightX)
-            {
-                return slayColl_TOP;
-            }
-            if (Hitbox1PrevUpperLeftY < Hitbox2LowerRightY)
-            {
-                return slayColl_LEFT;
-            }
-            if (Hitbox2LowerRightX - Hitbox1UpperLeftX > Hitbox2LowerRightY - Hitbox1UpperLeftY)
-            {
-                return slayColl_TOP;
-            }
-            if (Hitbox2LowerRightX - Hitbox1UpperLeftX < Hitbox2LowerRightY - Hitbox1UpperLeftY)
-            {
-                return slayColl_LEFT;
-            }
         return slayColl_TOP_LEFT;
-            
-        case slayColl_TOP_RIGHT:
-            if (Hitbox2UpperLeftX < Hitbox1PrevLowerRightX)
-            {
-                return slayColl_TOP;
-            }
-            if (Hitbox1PrevUpperLeftY < Hitbox2LowerRightY)
-            {
-                return slayColl_RIGHT;
-            }
-            if (Hitbox1LowerRightX - Hitbox2UpperLeftX > Hitbox2LowerRightY - Hitbox1UpperLeftY)
-            {
-                return slayColl_TOP;
-            }
-            if (Hitbox1LowerRightX - Hitbox2UpperLeftX < Hitbox2LowerRightY - Hitbox1UpperLeftY)
-            {
-                return slayColl_RIGHT;
-            }
+    }
+    if (Hitbox1PrevLowerRightX < Hitbox2LowerRightX && Hitbox2UpperLeftY < Hitbox1PrevUpperLeftY)
+    {
+        if (Hitbox2UpperLeftX <= Hitbox1PrevLowerRightX)
+        {
+            return slayColl_TOP;
+        }
+        if (Hitbox1PrevUpperLeftY <= Hitbox2LowerRightY)
+        {
+            return slayColl_RIGHT;
+        }
+        if (Hitbox1LowerRightX - Hitbox2UpperLeftX > Hitbox2LowerRightY - Hitbox1UpperLeftY)
+        {
+            return slayColl_TOP;
+        }
+        if (Hitbox1LowerRightX - Hitbox2UpperLeftX < Hitbox2LowerRightY - Hitbox1UpperLeftY)
+        {
+            return slayColl_RIGHT;
+        }
+
         return slayColl_TOP_RIGHT;
+    }
+    if (Hitbox2UpperLeftX < Hitbox1PrevUpperLeftX && Hitbox1PrevLowerRightY < Hitbox2LowerRightY)
+    {
+        if (Hitbox1PrevUpperLeftX <= Hitbox2LowerRightX)
+        {
+            return slayColl_BOTTOM;
+        }
+        if (Hitbox2UpperLeftY <= Hitbox1PrevLowerRightY)
+        {
+            return slayColl_LEFT;
+        }
+        if (Hitbox2LowerRightX - Hitbox1UpperLeftX > Hitbox1LowerRightY - Hitbox2UpperLeftY)
+        {
+            return slayColl_BOTTOM;
+        }
+        if (Hitbox2LowerRightX - Hitbox1UpperLeftX < Hitbox1LowerRightY - Hitbox2UpperLeftY)
+        {
+            return slayColl_LEFT;
+        }
 
-        case slayColl_BOT_LEFT:
-            if (Hitbox1PrevUpperLeftX < Hitbox2LowerRightX)
-            {
-                return slayColl_BOTTOM;
-            }
-            if (Hitbox2UpperLeftY < Hitbox1PrevLowerRightY)
-            {
-                return slayColl_LEFT;
-            }
-            if (Hitbox2LowerRightX - Hitbox1UpperLeftX > Hitbox1LowerRightY - Hitbox2UpperLeftY)
-            {
-                return slayColl_BOTTOM;
-            }
-            if (Hitbox2LowerRightX - Hitbox1UpperLeftX < Hitbox1LowerRightY - Hitbox2UpperLeftY)
-            {
-                return slayColl_LEFT;
-            }
         return slayColl_BOT_LEFT;
+    }
+    if (Hitbox1PrevLowerRightX < Hitbox2LowerRightX && Hitbox1PrevLowerRightY < Hitbox2LowerRightY)
+    {
+        if (Hitbox2UpperLeftX <= Hitbox1PrevLowerRightX)
+        {
+            return slayColl_BOTTOM;
+        }
+        if (Hitbox2UpperLeftY <= Hitbox1PrevLowerRightY)
+        {
+            return slayColl_RIGHT;
+        }
+        if (Hitbox1LowerRightX - Hitbox2UpperLeftX > Hitbox1LowerRightY - Hitbox2UpperLeftY)
+        {
+            return slayColl_BOTTOM;
+        }
+        if (Hitbox1LowerRightX - Hitbox2UpperLeftX < Hitbox1LowerRightY - Hitbox2UpperLeftY)
+        {
+            return slayColl_RIGHT;
+        }
 
-        case slayColl_BOT_RIGHT:
-            if (Hitbox2UpperLeftX < Hitbox1PrevLowerRightX)
-            {
-                return slayColl_BOTTOM;
-            }
-            if (Hitbox2UpperLeftY < Hitbox1PrevLowerRightY)
-            {
-                return slayColl_RIGHT;
-            }
-            if (Hitbox1LowerRightX - Hitbox2UpperLeftX > Hitbox1LowerRightY - Hitbox2UpperLeftY)
-            {
-                return slayColl_BOTTOM;
-            }
-            if (Hitbox1LowerRightX - Hitbox2UpperLeftX < Hitbox1LowerRightY - Hitbox2UpperLeftY)
-            {
-                return slayColl_RIGHT;
-            }
         return slayColl_BOT_RIGHT;
     }
+
+    return slayColl_ERROR;
 }
 
 uint8 slayResolveCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2)
@@ -390,7 +356,7 @@ uint8 slayResolveCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2)
     double Hitbox2LowerRightX;
     double Hitbox2LowerRightY;
 
-    if (slayGetCollisionState(Hitbox1, Hitbox2) == slayColl_NONE)
+    if (!slayCheckCollision(Hitbox1, Hitbox2))
     {
         return 0;
     }
@@ -575,43 +541,3 @@ uint8 slayRenderHitboxCamera(slayEngine* Engine, slayHitbox* Hitbox, double Dist
 
     return 0;
 }
-
-/*switch (collision)
-{
-    case slayCollTOP:
-        *Hitbox1->ObjectY += Hitbox2LowerRightY - Hitbox1UpperLeftY;
-    return 0;
-
-    case slayCollBOTTOM:
-        *Hitbox1->ObjectY -= Hitbox1LowerRightY - Hitbox2UpperLeftY;
-    return 0;
-
-    case slayCollLEFT:
-        *Hitbox1->ObjectX += Hitbox2LowerRightX - Hitbox1UpperLeftX;
-    return 0;
-
-    case slayCollRIGHT:
-        *Hitbox1->ObjectX -= Hitbox1LowerRightX - Hitbox2UpperLeftX;
-    return 0;
-}*/
-
-/*case slayCollTOP:
-                *Hitbox1->ObjectY += (Hitbox2LowerRightY - Hitbox1UpperLeftY) * ratioCache;
-                *Hitbox2->ObjectY -= (Hitbox2LowerRightY - Hitbox1UpperLeftY) * (1 - ratioCache);
-            break;
-
-            case slayCollBOTTOM:
-                *Hitbox1->ObjectY -= (Hitbox1LowerRightY - Hitbox2UpperLeftY) * ratioCache;
-                *Hitbox2->ObjectY += (Hitbox1LowerRightY - Hitbox2UpperLeftY) * (1 - ratioCache);
-            break;
-
-            case slayCollLEFT:
-                *Hitbox1->ObjectX += (Hitbox2LowerRightX - Hitbox1UpperLeftX) * ratioCache;
-                *Hitbox2->ObjectX -= (Hitbox2LowerRightX - Hitbox1UpperLeftX) * (1 - ratioCache);
-            break;
-
-            case slayCollRIGHT:
-                *Hitbox1->ObjectX -= (Hitbox1LowerRightX - Hitbox2UpperLeftX) * ratioCache;
-                *Hitbox2->ObjectX += (Hitbox1LowerRightX - Hitbox2UpperLeftX) * (1 - ratioCache);
-            break;
-*/
