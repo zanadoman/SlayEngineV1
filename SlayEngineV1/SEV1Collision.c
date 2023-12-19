@@ -612,6 +612,12 @@ uint8 slayResolveCollisionLayer(array CollisionLayer)
         }
     }
 
+    for (uint64 i = 0; i < CollisionLayer->Length; i++)
+    {
+        *((slayHitbox*)CollisionLayer->Values[i])->ObjectPrevX = *(((slayHitbox*)CollisionLayer->Values[i])->ObjectX);
+        *((slayHitbox*)CollisionLayer->Values[i])->ObjectPrevY = *(((slayHitbox*)CollisionLayer->Values[i])->ObjectY);
+    }
+
     return 0;
 }
 
