@@ -27,6 +27,8 @@ eagle* newEagle(slayEngine* Engine)
     result->RespawnTime = 2000;
     result->DeathTick = 0;
 
+    result->Hitbox = slayNewHitbox(result, actEAGLE, &result->X, &result->Y, 0, 0, result->Width, result->Height, 100, 200);
+
     result->TextureCurrent = NULL;
 
     return result;
@@ -52,7 +54,7 @@ uint8 updateEagle(slayEngine* Engine)
     if (Eagle->Alive)
     {
         //Horizontal movement
-        Eagle->X += Eagle->Speed * Eagle->Facing * Engine->DeltaTime;
+        //Eagle->X += Eagle->Speed * Eagle->Facing * Engine->DeltaTime;
 
         //Clamp position
         if (Eagle->X < Eagle->MinX)
@@ -85,6 +87,7 @@ uint8 updateEagle(slayEngine* Engine)
 
 uint8 destroyEagle(eagle* Eagle)
 {
+    free(Eagle->Hitbox);
     free(Eagle);
 
     return 0;

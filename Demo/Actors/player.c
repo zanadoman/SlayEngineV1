@@ -26,7 +26,7 @@ player* newPlayer(slayEngine* Engine, uint16 KeyLeft, uint16 KeyRight, uint16 Ke
     result->AccelerationRateY = 0.003;
     result->DeaccelerationRateY = 0.005;
 
-    result->Speed = 1;
+    result->Speed = 0.4;
     result->JumpHeight = 1.1;
     result->Facing = 1;
     result->ReloadTime = 200;
@@ -76,8 +76,6 @@ uint8 updatePlayer(slayEngine* Engine)
     //Applying movement
     Player->X += Player->Speed * Player->AccelerationX * Engine->DeltaTime;
     Player->Y += GRAVITY * Player->AccelerationY * Engine->DeltaTime;
-
-    printf("X: %lf, Y: %lf\n", Player->X, Player->Y);
 
     //Horizontal movement
     if (Player->Alive && slayKey(Engine, SDL_SCANCODE_LEFT))

@@ -263,6 +263,8 @@ struct eagleStruct
     uint16 RespawnTime;
     uint32 DeathTick;
 
+    slayHitbox* Hitbox;
+
     slayTexture* TextureCurrent;
 };
 

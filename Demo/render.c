@@ -51,6 +51,8 @@ uint8 renderEagle(slayEngine* Engine, eagle* Eagle)
         slayRenderTextureCamera(Engine, Eagle->X, Eagle->Y, Eagle->Width, Eagle->Height, 0, slayFlipNONE, 1, Eagle->TextureCurrent, 255, 255, 255, 255);
     }
 
+    slayRenderHitboxCamera(Engine, Eagle->Hitbox, 1, 255, 0, 0, 128);
+
     return 0;
 }
 
