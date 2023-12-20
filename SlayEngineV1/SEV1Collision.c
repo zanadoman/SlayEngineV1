@@ -1,7 +1,8 @@
 #include "SlayEngineV1.h"
 
-uint8 slayResolveCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2);
+uint8 slayResolveCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2, uint64 Hitbox1Force);
 uint8 slayResolveCollisionOrder(slayHitbox* Hitbox1, slayHitbox* Hitbox2);
+uint8 slayNewCollisionBranch(array CollisionLayer, uint64 Root, uint64 RootForce, uint64 CurrentBranch);
 
 slayHitbox* slayNewHitbox(void* Parent, uint64 ParentType, double* ObjectX, double* ObjectY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY, uint16 Force, uint16 Resistance)
 {
@@ -330,7 +331,7 @@ slayCollision slayGetCollisionDirection(slayHitbox* Hitbox1, slayHitbox* Hitbox2
     return slayColl_ERROR;
 }
 
-uint8 slayResolveCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2)
+uint8 slayResolveCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2, uint64 Hitbox1Force)
 {
     double ratio;
 
@@ -359,7 +360,7 @@ uint8 slayResolveCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2)
     Hitbox2LowerRightX = Hitbox2->LowerRightX + *Hitbox2->ObjectX;
     Hitbox2LowerRightY = Hitbox2->LowerRightY + *Hitbox2->ObjectY;
 
-    if (Hitbox1->Force <= Hitbox2->Resistance)
+    if (Hitbox1Force <= Hitbox2->Resistance)
     {
         switch (slayGetCollisionDirection(Hitbox1, Hitbox2))
         {
@@ -405,7 +406,7 @@ uint8 slayResolveCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2)
     }
     else
     {
-        ratio = (double)Hitbox2->Resistance / (double)Hitbox1->Force;
+        ratio = (double)Hitbox2->Resistance / (double)Hitbox1Force;
 
         switch (slayGetCollisionDirection(Hitbox1, Hitbox2))
         {
@@ -537,63 +538,43 @@ uint8 slayResolveCollisionOrder(slayHitbox* Hitbox1, slayHitbox* Hitbox2)
     }
 }
 
+uint8 slayNewCollisionBranch(array CollisionLayer, uint64 Root, uint64 RootForce, uint64 CurrentBranch)
+{
+    for (uint64 NextBranch = 0; NextBranch < CollisionLayer->Length; NextBranch++)
+    {
+        if (NextBranch != Root && NextBranch != CurrentBranch)
+        {
+            if (slayResolveCollision(CollisionLayer->Values[CurrentBranch], CollisionLayer->Values[NextBranch], RootForce) == 1)
+            {
+                if (0 < RootForce - ((slayHitbox*)CollisionLayer->Values[NextBranch])->Force)
+                {
+                    slayNewCollisionBranch(CollisionLayer, Root, RootForce - ((slayHitbox*)CollisionLayer->Values[NextBranch])->Resistance, NextBranch);
+                }
+                slayResolveCollisionOrder(CollisionLayer->Values[CurrentBranch], CollisionLayer->Values[NextBranch]);
+            }
+        }
+    }
+
+    return 0;
+}
+
 uint8 slayResolveCollisionLayer(array CollisionLayer, uint64 Precision)
 {
-    logic order;
-
-    for (uint64 i = 0; i < Precision; i++)
+    for (uint64 Root = 0; Root < CollisionLayer->Length; Root++)
     {
-        order = true;
-
-        for (uint64 j = 0; j < CollisionLayer->Length; j++)
+        for (uint64 NextBranch = 0; NextBranch < CollisionLayer->Length; NextBranch++)
         {
-            for (uint64 k = j; k < CollisionLayer->Length; k++)
+            if (NextBranch != Root)
             {
-                if (CollisionLayer->Values[j] != CollisionLayer->Values[k])
+                if (slayResolveCollision(CollisionLayer->Values[Root], CollisionLayer->Values[NextBranch], ((slayHitbox*)CollisionLayer->Values[Root])->Force) == 1)
                 {
-                    if (slayResolveCollision(CollisionLayer->Values[j], CollisionLayer->Values[k]) == 1)
+                    if (0 < ((slayHitbox*)CollisionLayer->Values[Root])->Force - ((slayHitbox*)CollisionLayer->Values[NextBranch])->Resistance)
                     {
-                        for (uint64 l = 0; l < CollisionLayer->Length; l++)
-                        {
-                            if (CollisionLayer->Values[l] != CollisionLayer->Values[j] && CollisionLayer->Values[l] != CollisionLayer->Values[k])
-                            {
-                                slayResolveCollisionOrder(CollisionLayer->Values[k], CollisionLayer->Values[l]);
-                            }
-                        }
-                        slayResolveCollisionOrder(CollisionLayer->Values[j], CollisionLayer->Values[k]);
-
-                        order = false;
+                        slayNewCollisionBranch(CollisionLayer, Root, ((slayHitbox*)CollisionLayer->Values[Root])->Force - ((slayHitbox*)CollisionLayer->Values[NextBranch])->Resistance, NextBranch);
                     }
+                    slayResolveCollisionOrder(CollisionLayer->Values[Root], CollisionLayer->Values[NextBranch]);
                 }
             }
-        }
-
-        for (uint64 j = 1; j <= CollisionLayer->Length; j++)
-        {
-            for (uint64 k = j; k <= CollisionLayer->Length; k++)
-            {
-                if (CollisionLayer->Values[CollisionLayer->Length - j] != CollisionLayer->Values[CollisionLayer->Length - k])
-                {
-                    if (slayResolveCollision(CollisionLayer->Values[CollisionLayer->Length - j], CollisionLayer->Values[CollisionLayer->Length - k]) == 1)
-                    {
-                        for (uint64 l = 1; l <= CollisionLayer->Length; l++)
-                        {
-                            if (CollisionLayer->Values[CollisionLayer->Length - l] != CollisionLayer->Values[CollisionLayer->Length - j] && CollisionLayer->Values[CollisionLayer->Length - l] != CollisionLayer->Values[CollisionLayer->Length - k])
-                            {
-                                slayResolveCollisionOrder(CollisionLayer->Values[CollisionLayer->Length - k], CollisionLayer->Values[CollisionLayer->Length - l]);
-                            }
-                        }
-                        slayResolveCollisionOrder(CollisionLayer->Values[CollisionLayer->Length - j], CollisionLayer->Values[CollisionLayer->Length - k]);
-
-                        order = false;
-                    }
-                }
-            }
-        }
-
-        if (order)
-        {
-            break;
         }
     }
 

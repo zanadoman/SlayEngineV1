@@ -16,7 +16,7 @@ platform* newPlatform(double X, double Y, uint16 Width, uint16 Height)
 
     result->MinX = 0;
 
-    result->Hitbox = slayNewHitbox(result, actPLATFORM, &result->X, &result->Y, 0, 0, result->Width, result->Height, 100, 50);
+    result->Hitbox = slayNewHitbox(result, actPLATFORM, &result->X, &result->Y, 0, 0, result->Width, result->Height, 400, 50);
 
     return result;
 }
