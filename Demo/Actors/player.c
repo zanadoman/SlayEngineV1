@@ -75,7 +75,7 @@ uint8 updatePlayer(slayEngine* Engine)
 
     //Applying movement
     Player->X += Player->Speed * Player->AccelerationX * Engine->DeltaTime;
-    Player->Y += GRAVITY * Player->AccelerationY * Engine->DeltaTime;
+    Player->Y += Player->Speed * Player->AccelerationY * Engine->DeltaTime;
 
     //Horizontal movement
     if (Player->Alive && slayKey(Engine, SDL_SCANCODE_LEFT))
