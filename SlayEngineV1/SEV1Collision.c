@@ -469,8 +469,19 @@ uint8 slayResolveCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2, uint64 Hitb
 
 uint8 slayResolveCollisionLayer(array CollisionLayer, uint64 Precision)
 {
+    uint64 ForceRequirement;
+
     for (uint64 Root = 0; Root < CollisionLayer->Length; Root++)
     {
+        ForceRequirement = 0;
+        for (uint64 NextBranch = 0; NextBranch < CollisionLayer->Length; NextBranch++)
+        {
+            if (NextBranch != Root && slayCheckCollision(CollisionLayer->Values[NextBranch], CollisionLayer->Values[Root]))
+            {
+                ForceRequirement += ((slayHitbox*)CollisionLayer->Values[NextBranch])->Resistance;
+            }
+        }
+
         for (uint64 NextBranch = 0; NextBranch < CollisionLayer->Length; NextBranch++)
         {
             if (NextBranch != Root)
@@ -479,7 +490,7 @@ uint8 slayResolveCollisionLayer(array CollisionLayer, uint64 Precision)
                 {
                     if (0 < ((slayHitbox*)CollisionLayer->Values[Root])->Force - ((slayHitbox*)CollisionLayer->Values[NextBranch])->Resistance)
                     {
-                        slayNewCollisionBranch(CollisionLayer, Root, ((slayHitbox*)CollisionLayer->Values[Root])->Force - ((slayHitbox*)CollisionLayer->Values[NextBranch])->Resistance, NextBranch);
+                        slayNewCollisionBranch(CollisionLayer, Root, ((slayHitbox*)CollisionLayer->Values[Root])->Force - ForceRequirement, NextBranch);
                     }
                     slayResolveCollision(CollisionLayer->Values[Root], CollisionLayer->Values[NextBranch], 0);
                 }
@@ -498,6 +509,17 @@ uint8 slayResolveCollisionLayer(array CollisionLayer, uint64 Precision)
 
 uint8 slayNewCollisionBranch(array CollisionLayer, uint64 Root, uint64 RootForce, uint64 CurrentBranch)
 {
+    uint64 ForceRequirement;
+
+    ForceRequirement = 0;
+    for (uint64 NextBranch = 0; NextBranch < CollisionLayer->Length; NextBranch++)
+    {
+        if (NextBranch != CurrentBranch && slayCheckCollision(CollisionLayer->Values[NextBranch], CollisionLayer->Values[CurrentBranch]))
+        {
+            ForceRequirement += ((slayHitbox*)CollisionLayer->Values[NextBranch])->Resistance;
+        }
+    }
+
     for (uint64 NextBranch = 0; NextBranch < CollisionLayer->Length; NextBranch++)
     {
         if (NextBranch != Root && NextBranch != CurrentBranch)
@@ -506,7 +528,7 @@ uint8 slayNewCollisionBranch(array CollisionLayer, uint64 Root, uint64 RootForce
             {
                 if (0 < RootForce - ((slayHitbox*)CollisionLayer->Values[NextBranch])->Force)
                 {
-                    slayNewCollisionBranch(CollisionLayer, Root, RootForce - ((slayHitbox*)CollisionLayer->Values[NextBranch])->Resistance, NextBranch);
+                    slayNewCollisionBranch(CollisionLayer, Root, RootForce - ForceRequirement, NextBranch);
                 }
                 slayResolveCollision(CollisionLayer->Values[CurrentBranch], CollisionLayer->Values[NextBranch], 0);
             }
