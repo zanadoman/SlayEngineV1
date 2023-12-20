@@ -26,7 +26,7 @@ player* newPlayer(slayEngine* Engine, uint16 KeyLeft, uint16 KeyRight, uint16 Ke
     result->AccelerationRateY = 0.003;
     result->DeaccelerationRateY = 0.005;
 
-    result->Speed = 0.4;
+    result->Speed = 1;
     result->JumpHeight = 1.1;
     result->Facing = 1;
     result->ReloadTime = 200;
@@ -45,7 +45,7 @@ player* newPlayer(slayEngine* Engine, uint16 KeyLeft, uint16 KeyRight, uint16 Ke
 
     result->TextureCurrent = NULL;
 
-    result->Hitbox = slayNewHitbox(result, actPLAYER, &result->X, &result->Y, &result->PrevX, &result->PrevY, 0, 0, result->Width, result->Height, 100, 50, &result->MinX, &result->MinY, &result->MaxX, &result->MaxY);
+    result->Hitbox = slayNewHitbox(result, actPLAYER, &result->X, &result->Y, 0, 0, result->Width, result->Height, 100, 50);
 
     return result;
 }
@@ -76,6 +76,8 @@ uint8 updatePlayer(slayEngine* Engine)
     //Applying movement
     Player->X += Player->Speed * Player->AccelerationX * Engine->DeltaTime;
     Player->Y += GRAVITY * Player->AccelerationY * Engine->DeltaTime;
+
+    printf("X: %lf, Y: %lf\n", Player->X, Player->Y);
 
     //Horizontal movement
     if (Player->Alive && slayKey(Engine, SDL_SCANCODE_LEFT))

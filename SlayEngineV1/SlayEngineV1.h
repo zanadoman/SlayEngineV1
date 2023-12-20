@@ -7,7 +7,7 @@
 #include "cJSON/cJSON.h"
 #include <pthread.h>
 
-#define EPSILON 0.0000000000001
+#define EPSILON 0.0001
 #define PI 3.141592653589793
 
 typedef struct slayEngineStruct slayEngine;
@@ -231,8 +231,8 @@ struct slayHitboxStruct
 
     double* ObjectX;
     double* ObjectY;
-    double* ObjectPrevX;
-    double* ObjectPrevY;
+    double ObjectPrevX;
+    double ObjectPrevY;
 
     sint32 UpperLeftX;
     sint32 UpperLeftY;
@@ -241,14 +241,9 @@ struct slayHitboxStruct
 
     uint16 Force;
     uint16 Resistance;
-
-    double* MinX;
-    double* MaxX;
-    double* MinY;
-    double* MaxY;
 };
 
-slayHitbox* slayNewHitbox(void* Parent, uint64 ParentType, double* ObjectX, double* ObjectY, double* ObjectPrevX, double* ObjectPrevY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY, uint16 Force, uint16 Resistance, double* MinX, double* MinY, double* MaxX, double* MaxY);
+slayHitbox* slayNewHitbox(void* Parent, uint64 ParentType, double* ObjectX, double* ObjectY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY, uint16 Force, uint16 Resistance);
 slayOverlapbox* slayNewOverlapbox(void* Parent, uint64 ParentType, double* ObjectX, double* ObjectY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY);
 
 logic slayCheckOverlap(slayOverlapbox* Overlapbox1, slayOverlapbox* Overlapbox2);
