@@ -550,7 +550,7 @@ uint8 slayNewCollisionBranch(array CollisionLayer, uint64 Root, uint64 RootForce
                 {
                     slayNewCollisionBranch(CollisionLayer, Root, RootForce - ((slayHitbox*)CollisionLayer->Values[NextBranch])->Resistance, NextBranch);
                 }
-                slayResolveCollisionOrder(CollisionLayer->Values[CurrentBranch], CollisionLayer->Values[NextBranch]);
+                slayResolveCollision(CollisionLayer->Values[CurrentBranch], CollisionLayer->Values[NextBranch], 0);
             }
         }
     }
@@ -572,7 +572,7 @@ uint8 slayResolveCollisionLayer(array CollisionLayer, uint64 Precision)
                     {
                         slayNewCollisionBranch(CollisionLayer, Root, ((slayHitbox*)CollisionLayer->Values[Root])->Force - ((slayHitbox*)CollisionLayer->Values[NextBranch])->Resistance, NextBranch);
                     }
-                    slayResolveCollisionOrder(CollisionLayer->Values[Root], CollisionLayer->Values[NextBranch]);
+                    slayResolveCollision(CollisionLayer->Values[Root], CollisionLayer->Values[NextBranch], 0);
                 }
             }
         }
