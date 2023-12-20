@@ -467,26 +467,6 @@ uint8 slayResolveCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2, uint64 Hitb
     }
 }
 
-uint8 slayNewCollisionBranch(array CollisionLayer, uint64 Root, uint64 RootForce, uint64 CurrentBranch)
-{
-    for (uint64 NextBranch = 0; NextBranch < CollisionLayer->Length; NextBranch++)
-    {
-        if (NextBranch != Root && NextBranch != CurrentBranch)
-        {
-            if (slayResolveCollision(CollisionLayer->Values[CurrentBranch], CollisionLayer->Values[NextBranch], RootForce) == 1)
-            {
-                if (0 < RootForce - ((slayHitbox*)CollisionLayer->Values[NextBranch])->Force)
-                {
-                    slayNewCollisionBranch(CollisionLayer, Root, RootForce - ((slayHitbox*)CollisionLayer->Values[NextBranch])->Resistance, NextBranch);
-                }
-                slayResolveCollision(CollisionLayer->Values[CurrentBranch], CollisionLayer->Values[NextBranch], 0);
-            }
-        }
-    }
-
-    return 0;
-}
-
 uint8 slayResolveCollisionLayer(array CollisionLayer, uint64 Precision)
 {
     for (uint64 Root = 0; Root < CollisionLayer->Length; Root++)
@@ -511,6 +491,26 @@ uint8 slayResolveCollisionLayer(array CollisionLayer, uint64 Precision)
     {
         ((slayHitbox*)CollisionLayer->Values[i])->ObjectPrevX = *(((slayHitbox*)CollisionLayer->Values[i])->ObjectX);
         ((slayHitbox*)CollisionLayer->Values[i])->ObjectPrevY = *(((slayHitbox*)CollisionLayer->Values[i])->ObjectY);
+    }
+
+    return 0;
+}
+
+uint8 slayNewCollisionBranch(array CollisionLayer, uint64 Root, uint64 RootForce, uint64 CurrentBranch)
+{
+    for (uint64 NextBranch = 0; NextBranch < CollisionLayer->Length; NextBranch++)
+    {
+        if (NextBranch != Root && NextBranch != CurrentBranch)
+        {
+            if (slayResolveCollision(CollisionLayer->Values[CurrentBranch], CollisionLayer->Values[NextBranch], RootForce) == 1)
+            {
+                if (0 < RootForce - ((slayHitbox*)CollisionLayer->Values[NextBranch])->Force)
+                {
+                    slayNewCollisionBranch(CollisionLayer, Root, RootForce - ((slayHitbox*)CollisionLayer->Values[NextBranch])->Resistance, NextBranch);
+                }
+                slayResolveCollision(CollisionLayer->Values[CurrentBranch], CollisionLayer->Values[NextBranch], 0);
+            }
+        }
     }
 
     return 0;
