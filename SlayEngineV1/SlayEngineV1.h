@@ -189,7 +189,8 @@ logic slayCursorCollisionCamera(slayEngine* Engine, slayOverlapbox* Overlapbox, 
 uint8 slayVectorLength(double X1, double Y1, double X2, double Y2, double* Length);
 uint8 slayVectorTranslate(double X1, double Y1, double* X2, double* Y2, double Length, double Angle);
 uint8 slayVectorAngle(double X1, double Y1, double X2, double Y2, double* Angle);
-logic slayVectorRayCast(double SourceX, double SourceY, double TargetX, double TargetY, uint16 Size, double Precision, array OverlapLayer);
+logic slayVectorRayCastCoordinate(double SourceX, double SourceY, double TargetX, double TargetY, uint16 Size, double Precision, array OverlapLayer);
+logic slayVectorRayCastOverlapbox(double SourceX, double SourceY, slayOverlapbox* Target, uint16 Size, double Precision, array OverlapLayer);
 
 //Collision__________________________________________________________
 

@@ -38,7 +38,7 @@ uint8 slayVectorAngle(double X1, double Y1, double X2, double Y2, double* Angle)
     return 0;
 }
 
-logic slayVectorRayCast(double SourceX, double SourceY, double TargetX, double TargetY, uint16 Size, double Precision, array OverlapLayer)
+logic slayVectorRayCastCoordinate(double SourceX, double SourceY, double TargetX, double TargetY, uint16 Size, double Precision, array OverlapLayer)
 {
     double RayAngle;
     double RayLength;
@@ -58,6 +58,44 @@ logic slayVectorRayCast(double SourceX, double SourceY, double TargetX, double T
         for (uint64 i = 0; i < OverlapLayer->Length; i++)
         {
             if (slayCheckOverlap(RayOverlapbox, OverlapLayer->Values[i]))
+            {
+                free(RayOverlapbox);
+                return false;
+            }
+        }
+
+        slayVectorTranslate(SourceX, SourceY, &SourceX, &SourceY, Precision, RayAngle);
+        RayLength -= Precision;
+    }
+    free(RayOverlapbox);
+
+    return true;
+}
+
+logic slayVectorRayCastOverlapbox(double SourceX, double SourceY, slayOverlapbox* Target, uint16 Size, double Precision, array OverlapLayer)
+{
+    double TargetX, TargetY;
+    double RayAngle;
+    double RayLength;
+    slayOverlapbox* RayOverlapbox;
+
+    TargetX = *Target->ObjectX + (Target->UpperLeftX + Target->LowerRightX) / 2.0;
+    TargetY = *Target->ObjectY + (Target->UpperLeftY + Target->LowerRightY) / 2.0;
+
+    if (SourceX == TargetX && SourceY == TargetY)
+    {
+        return true;
+    }
+
+    slayVectorAngle(SourceX, SourceY, TargetX, TargetY, &RayAngle);
+    slayVectorLength(SourceX, SourceY, TargetX, TargetY, &RayLength);
+    RayOverlapbox = slayNewOverlapbox(NULL, 0, &SourceX, &SourceY, -(Size >> 2), -(Size >> 2), (Size >> 2), (Size >> 2));
+
+    while (0 < RayLength)
+    {
+        for (uint64 i = 0; i < OverlapLayer->Length; i++)
+        {
+            if (OverlapLayer->Values[i] != Target && slayCheckOverlap(RayOverlapbox, OverlapLayer->Values[i]))
             {
                 free(RayOverlapbox);
                 return false;
