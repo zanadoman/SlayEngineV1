@@ -512,7 +512,7 @@ uint8 slayNewCollisionBranch(array CollisionLayer, uint64 Root, uint64 RootForce
     ForceRequirement = 0;
     for (uint64 NextBranch = 0; NextBranch < CollisionLayer->Length; NextBranch++)
     {
-        if (NextBranch != CurrentBranch && slayCheckCollision(CollisionLayer->Values[NextBranch], CollisionLayer->Values[CurrentBranch]))
+        if (NextBranch != Root && NextBranch != CurrentBranch && slayCheckCollision(CollisionLayer->Values[NextBranch], CollisionLayer->Values[CurrentBranch]))
         {
             ForceRequirement += ((slayHitbox*)CollisionLayer->Values[NextBranch])->Resistance;
         }
