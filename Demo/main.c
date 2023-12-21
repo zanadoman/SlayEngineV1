@@ -1,5 +1,5 @@
 /*
-**Collision layers
+**Collision system
 **Particle system
 **Bloom
 **Mouse cursor texture switching
