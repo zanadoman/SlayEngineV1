@@ -65,15 +65,13 @@ slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Scene
     if (IconPath != NULL)
     {
         icon = IMG_Load(IconPath);
-        if (icon != NULL)
-        {
-            SDL_SetWindowIcon(result->Display->Window, icon);
-            SDL_FreeSurface(icon);
-        }
-        else
+        if (icon == NULL)
         {
             printf("ERROR Unable to load ICON: %s\n", IconPath);
+            exit(1);
         }
+        SDL_SetWindowIcon(result->Display->Window, icon);
+        SDL_FreeSurface(icon);
     }
 
     result->Camera = malloc(sizeof(slayCamera));

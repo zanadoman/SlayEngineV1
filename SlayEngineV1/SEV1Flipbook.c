@@ -80,6 +80,11 @@ slayTexture* slayLoopFlipbook(slayFlipbook* Flipbook)
 
 uint8 slayDestroyFlipbook(slayFlipbook* Flipbook)
 {
+    if (Flipbook == NULL)
+    {
+        return 0;
+    }
+
     for (uint64 i = 0; i < Flipbook->Count; i++)
     {
         SDL_DestroyTexture(Flipbook->Textures[i]);

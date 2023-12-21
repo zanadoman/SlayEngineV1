@@ -1,5 +1,6 @@
 /*
 **Collision system
+**Opening a non existing json kills the engine
 **Particle system
 **Bloom
 **Mouse cursor texture switching
