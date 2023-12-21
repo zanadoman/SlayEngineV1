@@ -200,7 +200,7 @@ slayCollision slayGetCollisionDirection(slayHitbox* Hitbox1, slayHitbox* Hitbox2
     if (slayCheckCollision(Hitbox1Prev, Hitbox2))
     {
         free(Hitbox1Prev);
-        return slayColl_ERROR;
+        return slayColl_NONE;
     }
     free(Hitbox1Prev);
 
@@ -327,11 +327,12 @@ slayCollision slayGetCollisionDirection(slayHitbox* Hitbox1, slayHitbox* Hitbox2
         return slayColl_BOT_RIGHT;
     }
 
-    return slayColl_ERROR;
+    return slayColl_NONE;
 }
 
 uint8 slayResolveCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2, uint64 Hitbox1Force)
 {
+    slayCollision direction;
     double ratio;
 
     double Hitbox1UpperLeftX;
@@ -344,7 +345,8 @@ uint8 slayResolveCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2, uint64 Hitb
     double Hitbox2LowerRightX;
     double Hitbox2LowerRightY;
 
-    if (!slayCheckCollision(Hitbox1, Hitbox2))
+    direction = slayGetCollisionDirection(Hitbox1, Hitbox2);
+    if (direction == slayColl_NONE)
     {
         return 0;
     }
@@ -361,7 +363,7 @@ uint8 slayResolveCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2, uint64 Hitb
 
     if (Hitbox1Force <= Hitbox2->Resistance)
     {
-        switch (slayGetCollisionDirection(Hitbox1, Hitbox2))
+        switch (direction)
         {
             case slayColl_TOP:
                 *Hitbox1->ObjectY += Hitbox2LowerRightY - Hitbox1UpperLeftY + EPSILON;
@@ -398,16 +400,13 @@ uint8 slayResolveCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2, uint64 Hitb
                 *Hitbox1->ObjectY -= Hitbox1LowerRightY - Hitbox2UpperLeftY + EPSILON;
                 *Hitbox1->ObjectX -= Hitbox1LowerRightX - Hitbox2UpperLeftX + EPSILON;
             return 1;
-
-            default:
-            return 0;
         }
     }
     else
     {
         ratio = (double)Hitbox1Force / (Hitbox1Force + Hitbox2->Resistance);
 
-        switch (slayGetCollisionDirection(Hitbox1, Hitbox2))
+        switch (direction)
         {
             case slayColl_TOP:
                 *Hitbox1->ObjectY += (Hitbox2LowerRightY - Hitbox1UpperLeftY) * (1 - ratio) + EPSILON;
@@ -460,9 +459,6 @@ uint8 slayResolveCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2, uint64 Hitb
                 *Hitbox1->ObjectX -= (Hitbox1LowerRightX - Hitbox2UpperLeftX) * (1 - ratio) + EPSILON;
                 *Hitbox2->ObjectX += (Hitbox1LowerRightX - Hitbox2UpperLeftX) * ratio;
             return 1;
-
-            default:
-            return 0;
         }
     }
 }
@@ -476,7 +472,7 @@ uint8 slayResolveCollisionLayer(array CollisionLayer)
         ForceRequirement = 0;
         for (uint64 NextBranch = 0; NextBranch < CollisionLayer->Length; NextBranch++)
         {
-            if (NextBranch != Root && slayCheckCollision(CollisionLayer->Values[NextBranch], CollisionLayer->Values[Root]))
+            if (NextBranch != Root && slayGetCollisionDirection(CollisionLayer->Values[Root], CollisionLayer->Values[NextBranch]) != slayColl_NONE)
             {
                 ForceRequirement += ((slayHitbox*)CollisionLayer->Values[NextBranch])->Resistance;
             }
@@ -512,7 +508,7 @@ uint8 slayNewCollisionBranch(array CollisionLayer, uint64 Root, uint64 RootForce
     ForceRequirement = 0;
     for (uint64 NextBranch = 0; NextBranch < CollisionLayer->Length; NextBranch++)
     {
-        if (NextBranch != Root && NextBranch != CurrentBranch && slayCheckCollision(CollisionLayer->Values[NextBranch], CollisionLayer->Values[CurrentBranch]))
+        if (NextBranch != Root && NextBranch != CurrentBranch && slayGetCollisionDirection(CollisionLayer->Values[CurrentBranch], CollisionLayer->Values[NextBranch]) != slayColl_NONE)
         {
             ForceRequirement += ((slayHitbox*)CollisionLayer->Values[NextBranch])->Resistance;
         }

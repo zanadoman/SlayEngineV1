@@ -205,9 +205,7 @@ typedef enum
     slayColl_TOP_LEFT = 16,
     slayColl_TOP_RIGHT = 32,
     slayColl_BOT_LEFT = 64,
-    slayColl_BOT_RIGHT = 128,
-
-    slayColl_ERROR = 255
+    slayColl_BOT_RIGHT = 128
 } slayCollision;
 
 struct slayOverlapboxStruct
