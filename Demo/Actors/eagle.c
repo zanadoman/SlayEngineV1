@@ -54,7 +54,7 @@ uint8 updateEagle(slayEngine* Engine)
     if (Eagle->Alive)
     {
         //Horizontal movement
-        //agle->X += Eagle->Speed * Eagle->Facing * Engine->DeltaTime;
+        Eagle->X += Eagle->Speed * Eagle->Facing * Engine->DeltaTime;
 
         //Clamp position
         if (Eagle->X < Eagle->MinX)
