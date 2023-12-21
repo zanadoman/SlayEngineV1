@@ -467,7 +467,7 @@ uint8 slayResolveCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2, uint64 Hitb
     }
 }
 
-uint8 slayResolveCollisionLayer(array CollisionLayer, uint64 Precision)
+uint8 slayResolveCollisionLayer(array CollisionLayer)
 {
     uint64 ForceRequirement;
 

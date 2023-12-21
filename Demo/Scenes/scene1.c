@@ -20,7 +20,7 @@ uint8 updateScene1(slayEngine* Engine)
     slayThreadWaitExit(Engine, actEAGLE);
     //slayThreadWaitExit(Engine, actPROJECTILE);
     //3
-    slayResolveCollisionLayer(Scene->PhysicsLayer, 255);
+    slayResolveCollisionLayer(Scene->PhysicsLayer);
 
     return 0;
 }
