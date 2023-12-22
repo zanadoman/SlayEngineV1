@@ -6,7 +6,7 @@ ENDCOLOR="\e[0m"
 
 if [[ ! -z $1 && $1 == "-a" ]] || [[ ! -z $1 && $1 == "--all" ]]
 then
-    gcc -c Demo/*.c Demo/Actors/*.c Demo/Scenes/*.c SlayEngineV1/*.c SlayEngineV1/NeoTypes/*.c SlayEngineV1/cJSON/*.c -m64
+    gcc -c $(find . -name '*.c')
     if [ $? != 0 ]
     then
         echo -e "${RED}Re-compilation failed!${ENDCOLOR}"
@@ -20,7 +20,7 @@ else
     git diff --name-only | grep "\.c" 1> /dev/null
     if [ $? == 0 ]
     then
-        gcc -c $(git diff --name-only | grep "\.c") -m64
+        gcc -c $(git diff --name-only | grep "\.c")
         if [ $? != 0 ]
         then
             echo -e "${RED}Pre-compilation failed!${ENDCOLOR}"
@@ -34,7 +34,7 @@ else
     fi
 fi
 
-gcc -o Linux/bin Compiled/*.o -m64 -Wl,-rpath=. -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lm
+gcc -o Linux/bin Compiled/*.o -Wl,-rpath=. -LSlayEngineV1/Libraries -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lNeoTypes -lcJSON -lm
 if [ $? != 0 ]
 then
     echo -e "${RED}Compilation failed!${ENDCOLOR}"

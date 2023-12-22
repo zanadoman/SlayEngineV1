@@ -1,10 +1,10 @@
-#include "inc/SDL.h"
-#include "inc/SDL_image.h"
-#include "inc/SDL_ttf.h"
-#include "inc/SDL_mixer.h"
+#include "Includes/SDL.h"
+#include "Includes/SDL_image.h"
+#include "Includes/SDL_ttf.h"
+#include "Includes/SDL_mixer.h"
 
-#include "NeoTypes/NeoTypes.h"
-#include "cJSON/cJSON.h"
+#include "Includes/NeoTypes.h"
+#include "Includes/cJSON.h"
 #include <pthread.h>
 
 #define EPSILON 0.0001
