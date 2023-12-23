@@ -34,7 +34,7 @@ else
     fi
 fi
 
-gcc -o Linux/bin Compiled/*.o -Wl,-rpath=. -LSlayEngineV1/Libraries -lfreetype -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lNeoTypes -lcJSON -lm
+gcc -o Linux/bin.out Compiled/*.o -Wl,-rpath=. -LSlayEngineV1/Libraries -lfreetype -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lNeoTypes -lcJSON -lm
 if [ $? != 0 ]
 then
     echo -e "${RED}Compilation failed!${ENDCOLOR}"
@@ -44,7 +44,7 @@ else
 fi
 
 cd Linux
-./bin
+./bin.out
 if [ $? == 0 ]
 then
     echo -e "${GREEN}Run successful!${ENDCOLOR}"
