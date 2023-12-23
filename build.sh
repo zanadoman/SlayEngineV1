@@ -57,7 +57,7 @@ else
     echo -e "${GREEN}Compilation successful!${ENDCOLOR}"
 fi
 
-cd Linux
+cd Builds/Linux
 ./bin.out
 if [ $? == 0 ]
 then
