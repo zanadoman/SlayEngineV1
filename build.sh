@@ -1,8 +1,23 @@
 #!/bin/sh
 
-RED="\e[31m"
-GREEN="\e[32m"
+RED="\e[91m"
+GREEN="\e[92m"
+BLUE="\e[94m"
 ENDCOLOR="\e[0m"
+
+if [[ ! -z $1 && $1 == "-w" ]] || [[ ! -z $1 && $1 == "--windows" ]]
+then
+    echo -e "${BLUE}WINDOWS MODE${ENDCOLOR}"
+    x86_64-w64-mingw32-gcc -o Windows/bin.exe $(find . -name '*.c') -WL,-rpath=. -LSlayEngineV1/Libraries/Windows -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lNeoTypes -lcJSON -lm
+    if [ $? == 0 ]
+    then
+        echo -e "${GREEN}Build successful!${ENDCOLOR}"
+        exit 0
+    else
+        echo -e "${RED}Build failed!${ENDCOLOR}"
+        exit 1
+    fi
+fi
 
 if [[ ! -z $1 && $1 == "-a" ]] || [[ ! -z $1 && $1 == "--all" ]]
 then
