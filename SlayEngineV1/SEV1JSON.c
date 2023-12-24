@@ -61,11 +61,7 @@ uint8 slaySaveJSON(slayJSON* JSON, char* Path)
         printf("ERROR Unable to process JSON_RAW (%s)\n", Path);
         exit(1);
     }
-    if (fputs(raw, file) != 1)
-    {
-        printf("ERROR Unable to write JSON (%s)\n", Path);
-        exit(1);
-    }
+    fputs(raw, file);
     fclose(file);
     free(raw);
 
