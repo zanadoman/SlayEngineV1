@@ -1,6 +1,6 @@
 /*
 **Collision system
-**replace cJSON
+**replace pthread
 **Opening a non existing json kills the engine
 **Particle system
 **Bloom
