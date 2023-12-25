@@ -14,8 +14,6 @@ uint8 slayThreadStart(slayEngine* Engine, uint64 ID, void* Function)
         }
     }
 
-    printf("%d\n", Engine->Threads->Length);
-
     Engine->Threads->Values[ID] = SDL_CreateThread(Function, "THREAD", Engine);
     if (Engine->Threads->Values[ID] == NULL)
     {
