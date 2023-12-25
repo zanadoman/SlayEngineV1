@@ -5,7 +5,6 @@
 
 #include "Includes/NeoTypes.h"
 #include "Includes/cJSON.h"
-#include <pthread.h>
 
 #define EPSILON 0.0001
 #define PI 3.141592653589793
@@ -49,7 +48,7 @@ struct slayDisplayStruct
     SDL_Event Event;
 };
 
-slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Scenes, uint64 Threads, uint16 MaxFPS, char* IconPath);
+slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Scenes, uint16 MaxFPS, char* IconPath);
 
 //Control____________________________________________________________
 
@@ -279,7 +278,6 @@ uint8 slayApplyCamera(slayEngine* Engine, slayObject* Object, double X, double Y
 
 uint8 slayThreadStart(slayEngine* Engine, uint64 ID, void* Function);
 uint8 slayThreadWaitExit(slayEngine* Engine, uint64 ID);
-#define slayThreadExit pthread_exit(NULL)
 
 //Flipbook___________________________________________________________
 

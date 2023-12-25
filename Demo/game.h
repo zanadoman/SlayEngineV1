@@ -75,9 +75,9 @@ uint8 unloadSceneCurrent(slayEngine* Engine);
 
 uint8 updateQueue(slayEngine* Engine);
 
-void* updatePlayerThread(void* Engine);
-void* updateEagleThread(void* Engine);
-void* updateProjectileThread(void* Engine);
+int updatePlayerThread(void* Engine);
+int updateEagleThread(void* Engine);
+int updateProjectileThread(void* Engine);
 
 //Render queue_______________________________________________________
 

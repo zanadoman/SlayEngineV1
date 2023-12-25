@@ -2,7 +2,7 @@
 
 uint8 slayLogo(slayEngine* Engine);
 
-slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Scenes, uint64 Threads, uint16 MaxFPS, char* IconPath)
+slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Scenes, uint16 MaxFPS, char* IconPath)
 {
     slayEngine* result;
 
@@ -87,20 +87,11 @@ slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Scene
         exit(1);
     }
 
-    result->Threads = arrNew(Threads);
+    result->Threads = arrNew(0);
     if (result->Threads == NULL)
     {
         printf("ERROR Unable to allocate memory for THREADS\n");
         exit(1);
-    }
-    for (uint64 i = 0; i < result->Threads->Length; i++)
-    {
-        result->Threads->Values[i] = malloc(sizeof(pthread_t));
-        if (result->Threads->Values[i] == NULL)
-        {
-            printf("ERROR Unable to allocate memory for THREAD\n");
-            exit(1);
-        }
     }
 
     result->PrevTick = 0;

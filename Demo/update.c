@@ -20,20 +20,20 @@ uint8 updateQueue(slayEngine* Engine)
     return 0;
 }
 
-void* updatePlayerThread(void* Engine)
+int updatePlayerThread(void* Engine)
 {
     updatePlayer(Engine);
-    slayThreadExit;
+    return 0;
 }
 
-void* updateEagleThread(void* Engine)
+int updateEagleThread(void* Engine)
 {
     updateEagle(Engine);
-    slayThreadExit;
+    return 0;
 }
 
-void* updateProjectileThread(void* Engine)
+int updateProjectileThread(void* Engine)
 {
     //updateProjectile(Engine);
-    slayThreadExit;
+    return 0;
 }
