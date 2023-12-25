@@ -7,7 +7,7 @@ ENDCOLOR="\e[0m"
 
 if [[ ! -z $1 && $1 == "-w" ]] || [[ ! -z $1 && $1 == "--windows" ]]
 then
-    i686-w64-mingw32-gcc -o Builds/Windows/bin.exe $(find . -name '*.c') -mwindows -LSlayEngineV1/Libraries/Windows -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lNeoTypes -lcJSON -lm
+    x86_64-w64-mingw32-gcc -o Builds/Windows/bin.exe $(find . -name '*.c') -mwindows -LSlayEngineV1/Libraries/Windows -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lNeoTypes -lcJSON -lm
     if [ $? == 0 ]
     then
         echo -e "${BLUE}Windows ${GREEN}build successful!${ENDCOLOR}"
