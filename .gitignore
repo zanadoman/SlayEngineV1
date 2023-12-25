@@ -1,4 +1,4 @@
 *.o
 !Compiled/*.o
 
-!settings.json
+Builds/Linux/saves/scene1_player.json
