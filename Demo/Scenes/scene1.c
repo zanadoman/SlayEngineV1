@@ -13,13 +13,17 @@ uint8 updateScene1(slayEngine* Engine)
     }
 
     //2
-    slayThreadStart(Engine, actPLAYER, updatePlayerThread);
-    slayThreadStart(Engine, actEAGLE, updateEagleThread);
+    //slayThreadStart(Engine, actPLAYER, updatePlayerThread);
+    //slayThreadStart(Engine, actEAGLE, updateEagleThread);
     //slayThreadStart(Engine, actPROJECTILE, updateProjectileThread);
-    slayThreadWaitExit(Engine, actPLAYER);
-    slayThreadWaitExit(Engine, actEAGLE);
+    //slayThreadWaitExit(Engine, actPLAYER);
+    //slayThreadWaitExit(Engine, actEAGLE);
     //slayThreadWaitExit(Engine, actPROJECTILE);
     //3
+
+    updatePlayer(Engine);
+    slayResolveCollisionLayer(Scene->PhysicsLayer);
+    updateEagle(Engine);
     slayResolveCollisionLayer(Scene->PhysicsLayer);
 
     return 0;
