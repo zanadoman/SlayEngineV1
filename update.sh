@@ -8,7 +8,7 @@ ENDCOLOR="\e[0m"
 echo "Updating NeoTypes"
 
 echo -e "${BLUE}NeoTypes.h${ENDCOLOR}"
-curl -s "https://github.com/zanadoman/NeoTypes/blob/main/Source/NeoTypes.h" -o SlayEngineV1/Includes/NeoTypes.h
+curl -s "https://github.com/zanadoman/NeoTypes/raw/main/Source/NeoTypes.h" -o SlayEngineV1/Includes/NeoTypes.h
 if [ $? == 0 ]
 then
     echo -e "${GREEN}NeoTypes.h updated!${ENDCOLOR}"
@@ -17,7 +17,7 @@ else
 fi
 
 echo -e "${BLUE}libNeoTypes.a (Linux)${ENDCOLOR}"
-curl -s "https://github.com/zanadoman/NeoTypes/blob/main/Linux%20(x86_64)/libNeoTypes.a" -o SlayEngineV1/Libraries/Linux/libNeoTypes.a
+curl -s "https://github.com/zanadoman/NeoTypes/raw/main/Linux%20(x86_64)/libNeoTypes.a" -o SlayEngineV1/Libraries/Linux/libNeoTypes.a
 if [ $? == 0 ]
 then
     echo -e "${GREEN}libNeoTypes.a (Linux) updated!${ENDCOLOR}"
@@ -26,7 +26,7 @@ else
 fi
 
 echo -e "${BLUE}libNeoTypes.a (Windows)${ENDCOLOR}"
-curl -s "https://github.com/zanadoman/NeoTypes/blob/main/Windows%20(x86_64)/libNeoTypes.a" -o SlayEngineV1/Libraries/Windows/libNeoTypes.a
+curl -s "https://github.com/zanadoman/NeoTypes/raw/main/Windows%20(x86_64)/libNeoTypes.a" -o SlayEngineV1/Libraries/Windows/libNeoTypes.a
 if [ $? == 0 ]
 then
     echo -e "${GREEN}libNeoTypes.a (Windows) updated!${ENDCOLOR}"
