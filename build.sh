@@ -11,7 +11,16 @@ then
     if [ $? == 0 ]
     then
         echo -e "${BLUE}Windows ${GREEN}build successful!${ENDCOLOR}"
-        exit 0
+        cd Builds/Windows
+        wine64 bin.exe
+        if [ $? == 0 ]
+        then
+            echo -e "${BLUE}Windows ${GREEN}run successful!${ENDCOLOR}"
+            exit 0
+        else
+            echo -e "${BLUE}Windows ${RED}run failed!${ENDCOLOR}"
+            exit 1
+        fi
     else
         echo -e "${BLUE}Windows ${RED}build failed!${ENDCOLOR}"
         exit 1
