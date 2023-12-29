@@ -228,14 +228,18 @@ uint8 DOUBLEtoSTR(double Number, string String);
 Returns true on success and false on error.
 Important: failures can lead to memory leaks.
 Note: this function will not clear the values of the passed array, instead it will insert every line as a new string to the end of the array.*/
-logic fileRead(char* FilePath, array Lines);
+uint8 fileRead(char* FilePath, array Lines);
 /*Writes the content of an array of strings line by line into a text file.
 Returns true on success and false on error.
 Note: every element of the passed array needs to a be a string.*/
-logic fileWrite(array Lines, char* FilePath);
+uint8 fileWrite(array Lines, char* FilePath);
 
 //____________________________________________NeoMemory.c____________________________________________//
 
 /*Copies a block of memory.
 Returns the address of the copied memory or NULL if the source is NULL or fails.*/
 void* memCopy(void* Source, uint64 Size);
+uint8 memCopyTo(void* Source, void* Destination, uint64 Size);
+void* memLoad(char* FilePath, uint64 Size);
+uint8 memLoadTo(char* FilePath, void* Destination, uint64 Size);
+uint8 memSave(void* Area, uint64 Size, char* FilePath);
