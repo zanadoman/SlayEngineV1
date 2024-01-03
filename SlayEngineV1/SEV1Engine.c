@@ -8,9 +8,15 @@ slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Scene
 
     SDL_Surface* icon;
 
+    if (Title == NULL)
+    {
+        printf("slayNewEngine(): Title must not be NULL\nParams: Title: %p, Width: %d, Height: %d, Scenes: %lld, MaxFPS: %d, IconPath: %p\n", Title, Width, Height, Scenes, MaxFPS, IconPath);
+        exit(1);
+    }
+
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0)
     {
-        printf("ERROR Unable to initialize SDL");
+        printf("slayNewEngine(): SDL_Init() failed\nParams: Title: %s, Width: %d, Height: %d, Scenes: %lld, MaxFPS: %d, IconPath: %s\n", Title, Width, Height, Scenes, MaxFPS, IconPath);
         exit(1);
     }
     if (TTF_Init() != 0)
