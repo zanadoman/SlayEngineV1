@@ -3,6 +3,42 @@
 uint8 slayResolveCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2, uint64 Hitbox1Force);
 uint8 slayNewCollisionBranch(array CollisionLayer, uint64 Root, uint64 RootForce, uint64 CurrentBranch);
 
+slayOverlapbox* slayNewOverlapbox(void* Parent, uint64 ParentType, double* ObjectX, double* ObjectY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY)
+{
+    slayOverlapbox* result;
+
+    if (ObjectX == NULL)
+    {
+        printf("slayNewOverlapbox(): ObjectX must not be NULL\nParams: Parent: %p, ParentType: %lld, ObjectX: %p, ObjectY: %p, UpperleftX: %d, UpperLeftY: %d, LowerRightX: %d, LowerRightY: %d\n", Parent, ParentType, ObjectX, ObjectY, UpperLeftX, UpperLeftY, LowerRightX, LowerRightY);
+        exit(1);
+    }
+    if (ObjectY == NULL)
+    {
+        printf("slayNewOverlapbox(): ObjectY must not be NULL\nParams: Parent: %p, ParentType: %lld, ObjectX: %lf, ObjectY: %p, UpperleftX: %d, UpperLeftY: %d, LowerRightX: %d, LowerRightY: %d\n", Parent, ParentType, *ObjectX, ObjectY, UpperLeftX, UpperLeftY, LowerRightX, LowerRightY);
+        exit(1);
+    }
+
+    result = malloc(sizeof(slayOverlapbox));
+    if (result == NULL)
+    {
+        printf("slayNewOverlapbox(): Memory allocation failed\nParams: Parent %p, ParentType: %lld, ObjectX: %lf, ObjectY: %lf, UpperleftX: %d, UpperLeftY: %d, LowerRightX: %d, LowerRightY: %d\n", Parent, ParentType, *ObjectX, *ObjectY, UpperLeftX, UpperLeftY, LowerRightX, LowerRightY);
+        exit(1);
+    }
+
+    result->Parent = Parent;
+    result->ParentType = ParentType;
+
+    result->ObjectX = ObjectX;
+    result->ObjectY = ObjectY;
+
+    result->UpperLeftX = UpperLeftX;
+    result->UpperLeftY = UpperLeftY;
+    result->LowerRightX = LowerRightX;
+    result->LowerRightY = LowerRightY;
+
+    return result;
+}
+
 slayHitbox* slayNewHitbox(void* Parent, uint64 ParentType, double* ObjectX, double* ObjectY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY, uint16 Force, uint16 Resistance)
 {
     slayHitbox* result;
@@ -40,42 +76,6 @@ slayHitbox* slayNewHitbox(void* Parent, uint64 ParentType, double* ObjectX, doub
 
     result->Force = Force;
     result->Resistance = Resistance;
-
-    return result;
-}
-
-slayOverlapbox* slayNewOverlapbox(void* Parent, uint64 ParentType, double* ObjectX, double* ObjectY, sint32 UpperLeftX, sint32 UpperLeftY, sint32 LowerRightX, sint32 LowerRightY)
-{
-    slayOverlapbox* result;
-
-    if (ObjectX == NULL)
-    {
-        printf("slayNewOverlapbox(): ObjectX must not be NULL\nParams: Parent: %p, ParentType: %lld, ObjectX: %p, ObjectY: %p, UpperleftX: %d, UpperLeftY: %d, LowerRightX: %d, LowerRightY: %d\n", Parent, ParentType, ObjectX, ObjectY, UpperLeftX, UpperLeftY, LowerRightX, LowerRightY);
-        exit(1);
-    }
-    if (ObjectY == NULL)
-    {
-        printf("slayNewOverlapbox(): ObjectY must not be NULL\nParams: Parent: %p, ParentType: %lld, ObjectX: %lf, ObjectY: %p, UpperleftX: %d, UpperLeftY: %d, LowerRightX: %d, LowerRightY: %d\n", Parent, ParentType, *ObjectX, ObjectY, UpperLeftX, UpperLeftY, LowerRightX, LowerRightY);
-        exit(1);
-    }
-
-    result = malloc(sizeof(slayOverlapbox));
-    if (result == NULL)
-    {
-        printf("slayNewOverlapbox(): Memory allocation failed\nParams: Parent %p, ParentType: %lld, ObjectX: %lf, ObjectY: %lf, UpperleftX: %d, UpperLeftY: %d, LowerRightX: %d, LowerRightY: %d\n", Parent, ParentType, *ObjectX, *ObjectY, UpperLeftX, UpperLeftY, LowerRightX, LowerRightY);
-        exit(1);
-    }
-
-    result->Parent = Parent;
-    result->ParentType = ParentType;
-
-    result->ObjectX = ObjectX;
-    result->ObjectY = ObjectY;
-
-    result->UpperLeftX = UpperLeftX;
-    result->UpperLeftY = UpperLeftY;
-    result->LowerRightX = LowerRightX;
-    result->LowerRightY = LowerRightY;
 
     return result;
 }
