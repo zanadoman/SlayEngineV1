@@ -27,6 +27,11 @@ uint8 slayPlaySound(slaySound* Sound, sint16 Channel, uint8 Volume, uint8 Left, 
         printf("slayPlaySound(): Sound must not be NULL\nParams: Sound: %p, Channel: %d, Volume: %d, Left: %d, Right: %d, Loops: %d\n", Sound, Channel, Volume, Left, Right, Loops);
         exit(1);
     }
+    if (Channel < -1)
+    {
+        printf("slayPlaySound(): Channel must not be less than -1\nParams: Sound: %p, Channel: %d, Volume: %d, Left: %d, Right: %d, Loops: %d\n", Sound, Channel, Volume, Left, Right, Loops);
+        exit(1);
+    }
     if (Loops < -1)
     {
         printf("slayPlaySound(): Loops must not be less than -1\nParams: Sound: %p, Channel: %d, Volume: %d, Left: %d, Right: %d, Loops: %d\n", Sound, Channel, Volume, Left, Right, Loops);
@@ -41,7 +46,7 @@ uint8 slayPlaySound(slaySound* Sound, sint16 Channel, uint8 Volume, uint8 Left, 
     }
     if (Mix_SetPanning(Channel, Left, Right) == 0)
     {
-        printf("slayPlaySound(): Unable to set Sound Panning\nParams: Sound: %p, Channel: %d, Volume: %d, Left: %d, Right: %d, Loops: %d\n", Sound, Channel, Volume, Left, Right, Loops);
+        printf("slayPlaySound(): Unable to set Channel Panning\nParams: Sound: %p, Channel: %d, Volume: %d, Left: %d, Right: %d, Loops: %d\n", Sound, Channel, Volume, Left, Right, Loops);
         exit (1);
     }
 
@@ -53,6 +58,11 @@ uint8 slayPlaySoundTicks(slaySound* Sound, sint16 Channel, uint8 Volume, uint8 L
     if (Sound == NULL)
     {
         printf("slayPlaySoundTicks(): Sound must not be NULL\nParams: Sound: %p, Channel: %d, Volume: %d, Left: %d, Right: %d, Loops: %d, Ticks: %d\n", Sound, Channel, Volume, Left, Right, Loops, Ticks);
+        exit(1);
+    }
+    if (Channel < -1)
+    {
+        printf("slayPlaySoundTicks(): Channel must not be less than -1\nParams: Sound: %p, Channel: %d, Volume: %d, Left: %d, Right: %d, Loops: %d, Ticks: %d\n", Sound, Channel, Volume, Left, Right, Loops, Ticks);
         exit(1);
     }
     if (Loops < -1)
@@ -69,7 +79,7 @@ uint8 slayPlaySoundTicks(slaySound* Sound, sint16 Channel, uint8 Volume, uint8 L
     }
     if (Mix_SetPanning(Channel, Left, Right) == 0)
     {
-        printf("slayPlaySoundTicks(): Unable to set Sound Panning\nParams: Sound: %p, Channel: %d, Volume: %d, Left: %d, Right: %d, Loops: %d, Ticks: %d\n", Sound, Channel, Volume, Left, Right, Loops, Ticks);
+        printf("slayPlaySoundTicks(): Unable to set Channel Panning\nParams: Sound: %p, Channel: %d, Volume: %d, Left: %d, Right: %d, Loops: %d, Ticks: %d\n", Sound, Channel, Volume, Left, Right, Loops, Ticks);
         exit (1);
     }
 
