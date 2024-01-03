@@ -7,20 +7,21 @@ slayHitbox* slayNewHitbox(void* Parent, uint64 ParentType, double* ObjectX, doub
 {
     slayHitbox* result;
 
-    result = malloc(sizeof(slayHitbox));
-    if (result == NULL)
-    {
-        printf("ERROR Unable to allocate memory for HITBOX\n");
-        exit(1);
-    }
     if (ObjectX == NULL)
     {
-        printf("ERROR Unable to create HITBOX (ObjectX NULL)");
+        printf("slayNewHitbox(): ObjectX must not be NULL\nParams: Parent: %p, ParentType: %lld, ObjectX: %p, ObjectY: %p, UpperleftX: %d, UpperLeftY: %d, LowerRightX: %d, LowerRightY: %d, Force: %d, Resistance: %d\n", Parent, ParentType, ObjectX, ObjectY, UpperLeftX, UpperLeftY, LowerRightX, LowerRightY, Force, Resistance);
         exit(1);
     }
     if (ObjectY == NULL)
     {
-        printf("ERROR UNABLE to create HITBOX (ObjectY NULL)");
+        printf("slayNewHitbox(): ObjectY must not be NULL\nParams: Parent: %p, ParentType: %lld, ObjectX: %lf, ObjectY: %p, UpperleftX: %d, UpperLeftY: %d, LowerRightX: %d, LowerRightY: %d, Force: %d, Resistance: %d\n", Parent, ParentType, *ObjectX, ObjectY, UpperLeftX, UpperLeftY, LowerRightX, LowerRightY, Force, Resistance);
+        exit(1);
+    }
+
+    result = malloc(sizeof(slayHitbox));
+    if (result == NULL)
+    {
+        printf("slayNewHitbox(): Memory allocation failed\nParams: Parent: %p, ParentType: %lld, ObjectX: %lf, ObjectY: %lf, UpperleftX: %d, UpperLeftY: %d, LowerRightX: %d, LowerRightY: %d, Force: %d, Resistance: %d\n", Parent, ParentType, *ObjectX, *ObjectY, UpperLeftX, UpperLeftY, LowerRightX, LowerRightY, Force, Resistance);
         exit(1);
     }
 
@@ -47,20 +48,21 @@ slayOverlapbox* slayNewOverlapbox(void* Parent, uint64 ParentType, double* Objec
 {
     slayOverlapbox* result;
 
-    result = malloc(sizeof(slayOverlapbox));
-    if (result == NULL)
-    {
-        printf("ERROR Unable to allocate memory for OVERLAPBOX\n");
-        exit(1);
-    }
     if (ObjectX == NULL)
     {
-        printf("ERROR Unable to create OVERLAPBOX (ObjectX NULL)");
+        printf("slayNewOverlapbox(): ObjectX must not be NULL\nParams: Parent: %p, ParentType: %lld, ObjectX: %p, ObjectY: %p, UpperleftX: %d, UpperLeftY: %d, LowerRightX: %d, LowerRightY: %d\n", Parent, ParentType, ObjectX, ObjectY, UpperLeftX, UpperLeftY, LowerRightX, LowerRightY);
         exit(1);
     }
     if (ObjectY == NULL)
     {
-        printf("ERROR UNABLE to create OVERLAPBOX (ObjectY NULL)");
+        printf("slayNewOverlapbox(): ObjectY must not be NULL\nParams: Parent: %p, ParentType: %lld, ObjectX: %lf, ObjectY: %p, UpperleftX: %d, UpperLeftY: %d, LowerRightX: %d, LowerRightY: %d\n", Parent, ParentType, *ObjectX, ObjectY, UpperLeftX, UpperLeftY, LowerRightX, LowerRightY);
+        exit(1);
+    }
+
+    result = malloc(sizeof(slayOverlapbox));
+    if (result == NULL)
+    {
+        printf("slayNewOverlapbox(): Memory allocation failed\nParams: Parent %p, ParentType: %lld, ObjectX: %lf, ObjectY: %lf, UpperleftX: %d, UpperLeftY: %d, LowerRightX: %d, LowerRightY: %d\n", Parent, ParentType, *ObjectX, *ObjectY, UpperLeftX, UpperLeftY, LowerRightX, LowerRightY);
         exit(1);
     }
 
