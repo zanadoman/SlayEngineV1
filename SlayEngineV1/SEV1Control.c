@@ -4,6 +4,12 @@ uint8 slayUpdateDeltaTime(slayEngine* Engine);
 
 logic slayUpdate(slayEngine* Engine)
 {
+    if (Engine == NULL)
+    {
+        printf("slayUpdate(): Engine must not be NULL\nParams: Engine %p\n", Engine);
+        exit(1);
+    }
+
     slayUpdateDeltaTime(Engine);
 
     slayMouseMovement(Engine);
@@ -51,6 +57,12 @@ logic slayUpdate(slayEngine* Engine)
 
 uint8 slayUpdateDeltaTime(slayEngine* Engine)
 {
+    if (Engine == NULL)
+    {
+        printf("slayUpdateDeltaTime(): Engine must not be NULL\nParams: Engine %p\n", Engine);
+        exit(1);
+    }
+
     Engine->DeltaTime = SDL_GetTicks() - Engine->PrevTick;
     if (Engine->DeltaTime > 40)
     {
@@ -65,6 +77,12 @@ uint8 slayCapFPS(slayEngine* Engine)
 {
     sint64 delay;
 
+    if (Engine == NULL)
+    {
+        printf("slayCapFPS(): Engine must not be NULL\nParams: Engine %p\n", Engine);
+        exit(1);
+    }
+
     delay = (sint64)round((Engine->PrevTick + 1000.0 / Engine->MaxFPS) - SDL_GetTicks());
     if (delay > 0)
     {
@@ -76,5 +94,11 @@ uint8 slayCapFPS(slayEngine* Engine)
 
 sint64 slayRandom(sint64 Min, sint64 Max, double Seed)
 {
+    if (Max <= Min)
+    {
+        printf("slayRandom(): Min must not be more than or equal to Max\nParams: Min %lld, Max %lld, Seed %lf\n", Min, Max, Seed);
+        exit(1);
+    }
+
     return (sint64)round(SDL_GetTicks() / Seed) % (Max - Min) + Min;
 }
