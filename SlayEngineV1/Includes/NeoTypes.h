@@ -3,32 +3,12 @@
 #include <stdarg.h>
 #include <math.h>
 
-/*Dynamically sized array with 8 byte (void*) values.
-Get or set the value of an element in an array: Array->Values[index].
-Get the length of an array: Array->Length.
-Note: every array function starts with the "arr" keyword.*/
-typedef struct arrayStruct* array;
-
-/*Dynamically sized ASCII string.
-Get the string of a string: String->String.
-Get the length of a string: String->Length.
-Note: '\0' is included in the length of the string, every string function starts with the "str" keyword.*/
-typedef struct stringStruct* string;
-
-/*List with 8 byte (void*) values.
-Get or set the value of an element in a list: listGet(List, index)->Value.
-Get the length of a list: List->Length.
-Note: every list function starts with the "list" keyword.*/
-typedef struct listStruct* list;
-typedef struct listCacheStruct* listCache_t;
-typedef struct listNodeStruct* listNode;
-
 //_____________________________________________NeoTypes.h____________________________________________//
 
 #define true 1
 #define false 0
-/*Also known as bool or boolean.*/
-typedef char logic;
+/*Logical variable just like bool or boolean.*/
+typedef unsigned char logic;
 typedef unsigned char uint8;
 typedef signed char sint8;
 typedef unsigned short uint16;
@@ -38,50 +18,53 @@ typedef signed int sint32;
 typedef unsigned long long uint64;
 typedef signed long long sint64;
 
-//_____________________________________________NeoCast.c_____________________________________________//
+#define ARRAY_SIZE (sizeof(void*) + sizeof(uint64))
+/*Dynamically sized Array, with insertion and deletion capabilities.*/
+typedef struct arrayStruct* array;
+#define STRING_SIZE (sizeof(void*) + sizeof(uint64))
+/*String that holds String and Length data.*/
+typedef struct stringStruct* string;
 
-/*Process a binary value stored in a double as an unsigned integer.*/
-uint64 asUINT(double Value);
-/*Process a binary value stored in a double as a signed integer.*/
-sint64 asSINT(double Value);
-/*Process a binary value stored in an integer as a double.*/
-double asDOUBLE(uint64 Value);
+/*Universal data type for NeoTypes.*/
+typedef union
+{
+    logic Logic;
+
+    uint64 uInt;
+    sint64 sInt;
+    double Double;
+
+    array Array;
+    string String;
+
+    void* Pointer;
+} NeoTypes;
 
 //_____________________________________________NeoArray.c____________________________________________//
 
 struct arrayStruct
 {
-    void* *Values;
+    NeoTypes* Values;
     uint64 Length;
 };
 
-/*Creates a new array with the given length.
-Returns the address of the array or NULL if fails.
-Warning: calling this function on an initialized array can cause memory leaks, before calling this function second time you must use arrPurge().
-Important: you must always initialize an array with this function before use.*/
+/*Creates a new Array with the given Length.
+Returns the address of the newly allocated Array.
+You must initialize every Array with this function before use.*/
 array arrNew(uint64 Length);
-/*Clears the elements of the given array and initializes it with the new ones.
-Returns 0 on success and 1 on error.
-Warning: if fails the Array->Values will be NULL and the Array->Length will be 0.
-Important: if the previous elements of the array were pointers allocated with a malloc(), calloc() or realloc() it's recommended to first call free() on those pointers to avoid memory leaks.
-Note: this function can not replace the arrNew() function.*/
-uint8 arrInit(array Array, uint64 Length, void* Values, ...);
-
-/*Inserts a new element into an array.
-To add a new element to the end of an array you must use Array->Length as index.
-Returns 0 on success and 1 on error.
-Warning: if fails the Array->Values will be NULL and the Array->Length will be 0.
-Important: failures can lead to memory leaks.*/
-uint8 arrInsert(array Array, uint64 Index, void* Value);
-/*Removes an element from an array at the given index.
-Returns 0 on success and 1 on error.
-Warning: if fails the Array->Values will be NULL and the Array->Length will be 0.
-Important: if the element to be removed is a pointer allocated with a malloc(), calloc() or realloc() it's recommended to call free() on it to avoid memory leaks, failures can lead to memory leaks.*/
+/*Returns an Element from the Array at the given Index.
+Assign a value to an Element: arrElement(Array, Index)->uInt = 10;
+Get a value from an Element: uint8 a = arrElement(Array, Index)->uInt;*/
+NeoTypes* arrElement(array Array, uint64 Index);
+/*Inserts a new Element to the Array at the given Index.
+Returns the address of the new Element.
+The default value of the new Element is 0.
+Set the value of the new Element: arrInsert(Array, Index)->uInt = 10;*/
+NeoTypes* arrInsert(array Array, uint64 Index);
+/*Removes an element from the Array at the given Index.*/
 uint8 arrRemove(array Array, uint64 Index);
-
-/*Deallocates an array from the memory with all of its elements.
-Important: if the elements of the array were pointers allocated with a malloc(), calloc() or realloc() it's recommended to first call free() on those pointers to avoid memory leaks.
-Note: it's recommended to set the Array's value to NULL after calling this function, it's safe to pass a NULL value to this function.*/
+/*Frees the Array from the memory with all of its Elements.
+It is safe to pass NULL to this function.*/
 uint8 arrPurge(array Array);
 
 //____________________________________________NeoString.c____________________________________________//
@@ -92,154 +75,76 @@ struct stringStruct
     uint64 Length;
 };
 
-/*Returns the length of a string (char*) with the '\0' included.*/
+/*Returns the Length of the String (char*) with the '\0' included.*/
 uint64 strLength(char* Characters);
-
-/*Creates a new string, the String->String will be "\0" and the String->Length will be 1.
-Returns the address of the string or NULL if fails.
-Warning: calling this function on an initialized string can cause memory leaks, before calling this function second time you must use strPurge().
-Important: you must always initialize a string with this function before use.*/
+/*Creates a new String, the String->String will be "\0" and the String->Length will be 1.
+Returns the address of the newly allocated String.
+You must initialize every String with this function before use.*/
 string strNew();
-/*Clears the string of the given string and initializes it with the new one.
-Returns 0 on success and 1 on error.
-Warning: if fails the String->String will be NULL and the String->Length will be 0.
-Note: this function can not replace the strNew() function.*/
+/*Replaces the String->String of the String with the given String (char*).*/
 uint8 strInit(string String, char* Characters);
-
-/*Appends a new character to the end of the string.
-Returns 0 on success and 1 on error.
-Warning: if fails the String->String will be NULL and the String->Length will be 0.
-Important: failures can lead to memory leaks.*/
+/*Appends the given Character to the end of the String.*/
 uint8 strAppend(string String, char Character);
-/*Concatenates two or more strings into one string.
-Returns 0 on success and 1 on error.
-Important: the number of the strings will be concatenated must be accurate.
-Note: deallocating the target string is not needed, if fails every string will remain intact.*/
+/*Concatenates two or more Strings (char*) into one String.
+The number of the Strings (char*) to be concatenated must be accurate.*/
 uint8 strConcat(string String, uint64 Count, char* Characters, ...);
-
-/*Reads the contents of standard input until '\n' and stores it in a string.
-Returns 0 on success and 1 on error.
-Warning: if fails the String->String will be NULL and the String->Length will be 0.
-Important: failures can lead to memory leaks.*/
+/*Reads the content of standard input until '\n' and stores it in a String.*/
 uint8 strRead(string String);
-/*Splits a string into an array of strings by the given character.
-You can access a particular string from the array: ((string)Array->Values[index])->String.
-Returns 0 on success and 1 on error.
-Warning: if fails the result array may be broken and must be fixed manually using arrPurge() and arrNew().
-Important: failures can lead to memory leaks.*/
+/*Splits the String (char*) into an Array by the given Character.*/
 uint8 strSplit(array Array, char* Characters, char Character);
-/*Compares two strings character by character and returns true if they are equal.*/
+/*Compares two Strings (char*) Character by Character and returns true if they are equal or false if they differ.*/
 logic strCompare(char* Characters1, char* Characters2);
-
-/*Deallocates a string from the memory.
-Note: it's recommended to set the String's value to NULL after calling this function, it's safe to pass a NULL value to this function.*/
+/*Frees the String from the memory and its String->String value.
+It is safe to pass NULL to this function.*/
 uint8 strPurge(string String);
-
-//_____________________________________________NeoList.c_____________________________________________//
-
-struct listStruct
-{
-    listCache_t Cache;
-    uint64 Length;
-};
-struct listCacheStruct
-{
-    listNode* Nodes;
-    uint64 Size;
-    uint64 Coverage;
-};
-struct listNodeStruct
-{
-    listNode Next;
-    void* Value;
-};
-
-/*Creates a new empty list.
-Returns the address of the list or NULL if fails.
-Warning: calling this function on an initialized list can cause memory leaks, before calling this function second time you must use listPurge().
-Important: you must always initialize a list with this function before use.*/
-list listNew();
-
-/*Inserts a new element into a list.
-To add a new element to the end of a list you must use List->Length as index.
-Returns 0 on success and 1 on error.
-Warning: if fails the insertion will be cancelled and the list remains intact.
-Note: always resets the cache.*/
-uint8 listInsert(list List, uint64 Index, void* Value);
-/*Removes an element from a list at the given index.
-Returns 0 on success and 1 on error.
-Warning: if fails the List->Cache->Nodes will be NULL and the other values of the List->Cache will be 0.
-Important: if the element to be removed is a pointer allocated with a malloc(), calloc() or realloc() it's recommended to call free() on it to avoid memory leaks, failures can lead to memory leaks.
-Note: always resets the cache.*/
-uint8 listRemove(list List, uint64 Index);
-
-/*Returns the indexed node from a list.
-You can get or set the value of the node with: Node->Value.*/
-listNode listGet(list List, uint64 Index);
-/*Generates cache for a list.
-Cacheing is recommended when a list is long enough to slow down the program.
-Too few cacheing will make the list slower, too much cacheing will consume more memory.
-NumberOfCachePoint: List->Length / CacheCoverage.
-Returns 0 on success and 1 on error.
-Warning: if fails the List->Cache->Nodes will be NULL and the other values of the List->Cache will be 0.
-Important: failures can lead to memory leaks.*/
-uint8 listCache(list List, uint64 CacheCoverage);
-
-/*Deallocates a list from the memory with all of its elements.
-Important: if the elements of the list were pointers allocated with a malloc(), calloc() or realloc() it's recommended to first call free() on those pointers to avoid memory leaks.
-Note: it's recommended to set the List's value to NULL after calling this function, it's safe to pass a NULL value to this function.*/
-uint8 listPurge(list List);
 
 //____________________________________________NeoConvert.c___________________________________________//
 
-/*Converts a string to an unsigned integer.
-You can check the success of the conversion by passing a logic variable
-by reference, it's safe to pass NULL if error handling is not needed.
-If it fails it will return a 0 as result.*/
+/*Converts the String to an Unsigned Integer.
+You can check the Success of the conversion by passing a Logic variable by reference, it is safe to pass NULL if Error handling is not needed.
+If it fails it will return 0 as result.*/
 uint64 STRtoUINT(char* Characters, logic* Success);
-/*Converts an unsigned integer to a string.
-The string will be deallocated and reinitialized, if the reinitialization fails the String->String will be NULL and the String->Length will be 0.
-Returns 0 on success and 1 on error.*/
+/*Converts an Unsigned Integer to String.
+Returns 0 on Success or 1 on Error.*/
 uint8 UINTtoSTR(uint64 Number, string String);
-
-/*Converts a string to a signed integer.
-You can check the success of the conversion by passing a logic variable
-by reference, it's safe to pass NULL if error handling is not needed.
-If it fails it will return a 0 as result.*/
+/*Converts the String to a Signed Integer.
+You can check the Success of the conversion by passing a Logic variable by reference, it is safe to pass NULL if Error handling is not needed.
+If it fails it will return 0 as result.*/
 sint64 STRtoSINT(char* Characters, logic* Success);
-/*Converts a signed integer to a string.
-The string will be deallocated and reinitialized, if the reinitialization fails the String->String will be NULL and the String->Length will be 0.
-Returns 0 on success and 1 on error.*/
+/*Converts a Signed Integer to String.
+Returns 0 on Success or 1 on Error.*/
 uint8 SINTtoSTR(sint64 Number, string String);
-
-/*Converts a string to a double.
-You can check the success of the conversion by passing a logic variable
-by reference, it's safe to pass NULL if error handling is not needed.
-If it fails it will return a 0 as result.*/
+/*Converts the String to a Double.
+You can check the Success of the conversion by passing a Logic variable by reference, it is safe to pass NULL if Error handling is not needed.
+If it fails it will return 0 as result.*/
 double STRtoDOUBLE(char* Characters, logic* Success);
-/*Converts a double to a string.
-The string will be deallocated and reinitialized, if the reinitialization fails the String->String will be NULL and the String->Length will be 0.
-Returns 0 on success and 1 on error.*/
+/*Converts a Double to String.
+Returns 0 on Success or 1 on Error.*/
 uint8 DOUBLEtoSTR(double Number, string String);
 
 //_____________________________________________NeoFile.c_____________________________________________//
 
-/*Reads a text file and puts its lines into an array of strings.
-Returns true on success and false on error.
-Important: failures can lead to memory leaks.
-Note: this function will not clear the values of the passed array, instead it will insert every line as a new string to the end of the array.*/
+/*Reads the content of a text file and puts its lines into an Array.
+Returns 0 on Success or 1 on Error.*/
 uint8 fileRead(char* FilePath, array Lines);
-/*Writes the content of an array of strings line by line into a text file.
-Returns true on success and false on error.
-Note: every element of the passed array needs to a be a string.*/
+/*Writes the content of an Array of Strings line by line into a text file.
+Returns 0 on Success or 1 on Error.*/
 uint8 fileWrite(array Lines, char* FilePath);
 
 //____________________________________________NeoMemory.c____________________________________________//
 
-/*Copies a block of memory.
-Returns the address of the copied memory or NULL if the source is NULL or fails.*/
+/*Copies a block of memory.\
+Returns the address of the copied memory or NULL if Size was 0.*/
 void* memCopy(void* Source, uint64 Size);
+/*Copies a block of memory to the given Destination.
+You must preallocate the Destination to the correct Size.*/
 uint8 memCopyTo(void* Source, void* Destination, uint64 Size);
+/*Loads data to the memory from a file.
+Returns the address of the loaded data or NULL if Size was 0.*/
 void* memLoad(char* FilePath, uint64 Size);
+/*Loads data to the given Destination.
+You must preallocate the Destination to the correct Size.*/
 uint8 memLoadTo(char* FilePath, void* Destination, uint64 Size);
-uint8 memSave(void* Area, uint64 Size, char* FilePath);
+/*Saves data from the memory into a file.
+Returns 0 on Success or 1 on Error.*/
+uint8 memSave(void* Source, uint64 Size, char* FilePath);
