@@ -215,6 +215,17 @@ slayCollision slayGetCollisionDirection(slayHitbox* Hitbox1, slayHitbox* Hitbox2
     double Hitbox2LowerRightX;
     double Hitbox2LowerRightY;
 
+    if (Hitbox1 == NULL)
+    {
+        printf("slayGetCollisionDirection(): Hitbox1 must not be NULL\nParams: Hitbox1: %p, Hitbox2: %p\n", Hitbox1, Hitbox2);
+        exit(1);
+    }
+    if (Hitbox2 == NULL)
+    {
+        printf("slayGetCollisionDirection(): Hitbox2 must not be NULL\nParams: Hitbox1: %p, Hitbox2: %p\n", Hitbox1, Hitbox2);
+        exit(1);
+    }
+
     if (!slayCheckCollision(Hitbox1, Hitbox2))
     {
         return slayColl_NONE;
@@ -368,6 +379,17 @@ uint8 slayResolveCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2, uint64 Hitb
     double Hitbox2UpperLeftY;
     double Hitbox2LowerRightX;
     double Hitbox2LowerRightY;
+
+    if (Hitbox1 == NULL)
+    {
+        printf("slayResolveCollision(): Hitbox1 must not be NULL\nParams: Hitbox1: %p, Hitbox2: %p\n", Hitbox1, Hitbox2);
+        exit(1);
+    }
+    if (Hitbox2 == NULL)
+    {
+        printf("slayResolveCollision(): Hitbox2 must not be NULL\nParams: Hitbox1: %p, Hitbox2: %p\n", Hitbox1, Hitbox2);
+        exit(1);
+    }
 
     direction = slayGetCollisionDirection(Hitbox1, Hitbox2);
     if (direction == slayColl_NONE)
