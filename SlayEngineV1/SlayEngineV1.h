@@ -4,7 +4,6 @@
 #include "Includes/SDL_mixer.h"
 
 #include "Includes/NeoTypes.h"
-#include "Includes/cJSON.h"
 
 #define EPSILON 0.0001
 #define PI 3.141592653589793
@@ -297,18 +296,3 @@ uint8 slayResetFlipbook(slayFlipbook* Flipbook);
 slayTexture* slayPlayFlipbook(slayFlipbook* Flipbook);
 slayTexture* slayLoopFlipbook(slayFlipbook* Flipbook);
 uint8 slayDestroyFlipbook(slayFlipbook* Flipbook);
-
-//JSON_______________________________________________________________
-
-#define slayJSON cJSON
-
-#define slayAddJSONKeyNumber cJSON_AddNumberToObject
-#define slayAddJSONKeyString cJSON_AddStringToObject
-#define slayRemoveJSONKey cJSON_DeleteItemFromObject
-#define slayGetJSONKey cJSON_GetObjectItem
-
-#define slayNewJSON cJSON_CreateObject
-#define slayDestroyJSON cJSON_Delete
-
-slayJSON* slayLoadJSON(char* Path);
-uint8 slaySaveJSON(cJSON* JSON, char* Path);
