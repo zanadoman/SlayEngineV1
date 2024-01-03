@@ -16,31 +16,31 @@ slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Scene
 
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0)
     {
-        printf("slayNewEngine(): SDL_Init() failed\nParams: Title: %s, Width: %d, Height: %d, Scenes: %lld, MaxFPS: %d, IconPath: %s\n", Title, Width, Height, Scenes, MaxFPS, IconPath);
+        printf("slayNewEngine(): SDL_Init() failed\nParams: Title: %s, Width: %d, Height: %d, Scenes: %lld, MaxFPS: %d, IconPath: %p\n", Title, Width, Height, Scenes, MaxFPS, IconPath);
         exit(1);
     }
     if (TTF_Init() != 0)
     {
-        printf("ERROR Unable to initialize SDL_TTF");
+        printf("slayNewEngine(): TTF_Init() failed\nParams: Title: %s, Width: %d, Height: %d, Scenes: %lld, MaxFPS: %d, IconPath: %p\n", Title, Width, Height, Scenes, MaxFPS, IconPath);
         exit(1);
     }
     if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 4096) != 0)
     {
-        printf("ERROR Unable to initialize SDL_MIXER");
+        printf("slayNewEngine(): Mix_OpenAudio() failed\nParams: Title: %s, Width: %d, Height: %d, Scenes: %lld, MaxFPS: %d, IconPath: %p\n", Title, Width, Height, Scenes, MaxFPS, IconPath);
         exit(1);
     }
 
     result = malloc(sizeof(slayEngine));
     if (result == NULL)
     {
-        printf("ERROR Unable to allocate memory for ENGINE\n");
+        printf("slayNewEngine(): Memory allocation failed (result)\nParams: Title: %s, Width: %d, Height: %d, Scenes: %lld, MaxFPS: %d, IconPath: %p\n", Title, Width, Height, Scenes, MaxFPS, IconPath);
         exit(1);
     }
     
     result->Display = malloc(sizeof(slayDisplay));
     if (result->Display == NULL)
     {
-        printf("ERROR Unable to allocate memory for DISPLAY\n");
+        printf("slayNewEngine(): Memory allocation failed (result->Display)\nParams: Title: %s, Width: %d, Height: %d, Scenes: %lld, MaxFPS: %d, IconPath: %p\n", Title, Width, Height, Scenes, MaxFPS, IconPath);
         exit(1);
     }
     result->Display->Width = Width;
@@ -48,23 +48,23 @@ slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Scene
     result->Display->Window = SDL_CreateWindow(Title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, result->Display->Width, result->Display->Height, SDL_WINDOW_FULLSCREEN_DESKTOP | SDL_WINDOW_RESIZABLE | SDL_WINDOW_INPUT_GRABBED);
     if (result->Display->Window == NULL)
     {
-        printf("ERROR Unable to create WINDOW");
+        printf("slayNewEngine(): SDL_CreateWindow() failed\nParams: Title: %s, Width: %d, Height: %d, Scenes: %lld, MaxFPS: %d, IconPath: %p\n", Title, Width, Height, Scenes, MaxFPS, IconPath);
         exit(1);
     }
     result->Display->Renderer = SDL_CreateRenderer(result->Display->Window, -1, SDL_RENDERER_ACCELERATED);
     if (result->Display->Renderer == NULL)
     {
-        printf("ERROR Unable to create RENDERER");
+        printf("slayNewEngine(): SDL_CreateRenderer() failed\nParams: Title: %s, Width: %d, Height: %d, Scenes: %lld, MaxFPS: %d, IconPath: %p\n", Title, Width, Height, Scenes, MaxFPS, IconPath);
         exit(1);
     }
     if (SDL_RenderSetLogicalSize(result->Display->Renderer, Width, Height) != 0)
     {
-        printf("ERROR Unable to set RENDERER_LOGICAL_SIZE");
+        printf("slayNewEngine(): SDL_RenderSetLogicalSize() failed\nParams: Title: %s, Width: %d, Height: %d, Scenes: %lld, MaxFPS: %d, IconPath: %p\n", Title, Width, Height, Scenes, MaxFPS, IconPath);
         exit(1);
     }
     if (SDL_SetRenderDrawBlendMode(result->Display->Renderer, SDL_BLENDMODE_BLEND) != 0)
     {
-        printf("ERROR Unable to set RENDERER_BLEND_MODE");
+        printf("slayNewEngine(): SDL_SetRenderDrawBlendMode() failed\nParams: Title: %s, Width: %d, Height: %d, Scenes: %lld, MaxFPS: %d, IconPath: %p\n", Title, Width, Height, Scenes, MaxFPS, IconPath);
         exit(1);
     }
 
@@ -73,7 +73,7 @@ slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Scene
         icon = IMG_Load(IconPath);
         if (icon == NULL)
         {
-            printf("ERROR Unable to load ICON: %s\n", IconPath);
+            printf("slayNewEngine(): Icon loading failed\nParams: Title: %s, Width: %d, Height: %d, Scenes: %lld, MaxFPS: %d, IconPath: %s\n", Title, Width, Height, Scenes, MaxFPS, IconPath);
             exit(1);
         }
         SDL_SetWindowIcon(result->Display->Window, icon);
@@ -83,37 +83,23 @@ slayEngine* slayNewEngine(char* Title, uint16 Width, uint16 Height, uint64 Scene
     result->Camera = malloc(sizeof(slayCamera));
     if (result->Camera == NULL)
     {
-        printf("ERROR Unable to allocate memory for CAMERA\n");
+        printf("slayNewEngine(): Memory allocation failed (result->Camera)\nParams: Title: %s, Width: %d, Height: %d, Scenes: %lld, MaxFPS: %d, IconPath: %p\n", Title, Width, Height, Scenes, MaxFPS, IconPath);
         exit(1);
     }
     result->Mouse = malloc(sizeof(slayMouse));
     if (result->Mouse == NULL)
     {
-        printf("ERROR Unable to allocate memory for MOUSE\n");
+        printf("slayNewEngine(): Memory allocation failed (result->Mouse)\nParams: Title: %s, Width: %d, Height: %d, Scenes: %lld, MaxFPS: %d, IconPath: %p\n", Title, Width, Height, Scenes, MaxFPS, IconPath);
         exit(1);
     }
 
     result->Threads = arrNew(0);
-    if (result->Threads == NULL)
-    {
-        printf("ERROR Unable to allocate memory for THREADS\n");
-        exit(1);
-    }
 
     result->PrevTick = 0;
     result->DeltaTime = 0;
     result->MaxFPS = MaxFPS;
 
     result->Scenes = arrNew(Scenes);
-    if (result->Scenes == NULL)
-    {
-        printf("ERROR Unable to allocate memory for SCENES\n");
-        exit(1);
-    }
-    for (uint64 i = 0; i < result->Scenes->Length; i++)
-    {
-        result->Scenes->Values[i] = NULL;
-    }
     result->CurrentScene = 0;
 
     result->Game = NULL;
@@ -127,7 +113,18 @@ uint8 slayLogo(slayEngine* Engine)
 {
     SDL_Texture* logo;
 
+    if (Engine == NULL)
+    {
+        printf("slayLogo(): Engine must not be NULL\nParams: Engine: %p\n", Engine);
+        exit(1);
+    }
+
     logo = slayLoadTexture(Engine, "assets/engine/logo.jpg");
+    if (logo == NULL)
+    {
+        printf("slayLogo(): slayLoadTexture() failed\nParams: Engine: %p\n", Engine);
+        exit(1);
+    }
 
     slayRenderStart(Engine);
     slayRenderTexture(Engine, 0, 0, Engine->Display->Width, Engine->Display->Height, 0, slayFlipNONE, logo, 255, 255, 255, 255);
