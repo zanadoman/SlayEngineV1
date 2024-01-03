@@ -590,6 +590,27 @@ uint8 slayNewCollisionBranch(array CollisionLayer, uint64 Root, uint64 RootForce
 
 uint8 slayRenderOverlapbox(slayEngine* Engine, slayOverlapbox* Overlapbox, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA)
 {
+    if (Engine == NULL)
+    {
+        printf("slayRenderOverlapbox(): Engine must not be NULL\nParams: Engine: %p, Overlapbox: %p, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Overlapbox, ColorR, ColorG, ColorB, ColorA);
+        exit(1);
+    }
+    if (Overlapbox == NULL)
+    {
+        printf("slayRenderOverlapbox(): Overlapbox must not be NULL\nParams: Engine: %p, Overlapbox: %p, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Overlapbox, ColorR, ColorG, ColorB, ColorA);
+        exit(1);
+    }
+    if (Overlapbox->ObjectX == NULL)
+    {
+        printf("slayRenderOverlapBox(): Overlapbox->ObjectX must not be NULL\nParams: Engine %p, Overlapbox: %p, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Overlapbox, ColorR, ColorG, ColorB, ColorA);
+        exit(1);
+    }
+    if (Overlapbox->ObjectY == NULL)
+    {
+        printf("slayRenderOverlapBox(): Overlapbox->ObjectY must not be NULL\nParams: Engine %p, Overlapbox: %p, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Overlapbox, ColorR, ColorG, ColorB, ColorA);
+        exit(1);
+    }
+
     slayRenderColor(Engine, *Overlapbox->ObjectX + Overlapbox->UpperLeftX, *Overlapbox->ObjectY + Overlapbox->UpperLeftY, Overlapbox->LowerRightX - Overlapbox->UpperLeftX, Overlapbox->LowerRightY - Overlapbox->UpperLeftY, ColorR, ColorG, ColorB, ColorA);
 
     return 0;
@@ -597,6 +618,42 @@ uint8 slayRenderOverlapbox(slayEngine* Engine, slayOverlapbox* Overlapbox, uint8
 
 uint8 slayRenderOverlapboxCamera(slayEngine* Engine, slayOverlapbox* Overlapbox, double Distance, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA)
 {
+    if (Engine == NULL)
+    {
+        printf("slayRenderOverlapboxCamera(): Engine must not be NULL\nParams: Engine: %p, Overlapbox: %p, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Overlapbox, Distance, ColorR, ColorG, ColorB, ColorA);
+        exit(1);
+    }
+    if (Engine->Camera->OriginX == NULL)
+    {
+        printf("slayRenderOverlapBoxCamera(): Engine->Camera->OriginX must not be NULL\nParams: Engine: %p, Overlapbox: %p, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Overlapbox, Distance, ColorR, ColorG, ColorB, ColorA);
+        exit(1);
+    }
+    if (Engine->Camera->OriginY == NULL)
+    {
+        printf("slayRenderOverlapBoxCamera(): Engine->Camera->OriginY must not be NULL\nParams: Engine: %p, Overlapbox: %p, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Overlapbox, Distance, ColorR, ColorG, ColorB, ColorA);
+        exit(1);
+    }
+    if (Overlapbox == NULL)
+    {
+        printf("slayRenderOverlapBoxCamera(): Overlapbox must not be NULL\nParams: Engine: %p, Overlapbox: %p, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Overlapbox, Distance, ColorR, ColorG, ColorB, ColorA);
+        exit(1);
+    }
+    if (Overlapbox->ObjectX == NULL)
+    {
+        printf("slayRenderOverlapBoxCamera(): Overlapbox->ObjectX must not be NULL\n Engine: %p, Overlapbox: %p, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Overlapbox, Distance, ColorR, ColorG, ColorB, ColorA);
+        exit(1);
+    }
+    if (Overlapbox->ObjectY == NULL)
+    {
+        printf("slayRenderOverlapBoxCamera(): Overlapbox->ObjectY must not be NULL\n Engine: %p, Overlapbox: %p, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Overlapbox, Distance, ColorR, ColorG, ColorB, ColorA);
+        exit(1);
+    }
+    if (Distance <= 0)
+    {
+        printf("slayRenderOverlapBoxCamera(): Distance must not be less than or equal to 0\n Engine: %p, Overlapbox: %p, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Overlapbox, Distance, ColorR, ColorG, ColorB, ColorA);
+        exit(1);
+    }
+
     slayRenderColorCamera(Engine, *Overlapbox->ObjectX + Overlapbox->UpperLeftX, *Overlapbox->ObjectY + Overlapbox->UpperLeftY, Overlapbox->LowerRightX - Overlapbox->UpperLeftX, Overlapbox->LowerRightY - Overlapbox->UpperLeftY, Distance, ColorR, ColorG, ColorB, ColorA);
 
     return 0;
