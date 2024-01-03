@@ -14,12 +14,12 @@ uint8 slaySetCamera(slayEngine* Engine, double* OriginX, double* OriginY, double
     }
     if (OriginY == NULL)
     {
-        printf("slaySetCamera(): OriginY must not be NULL\nParams: Engine: %p, OriginX: %p, OriginY: %p, CenterX: %lf, CenterY: %lf, RelativeX: %lf, RelativeY: %lf, Zoom: %lf\n", Engine, OriginX, OriginY, CenterX, CenterY, RelativeX, RelativeY, Zoom);
+        printf("slaySetCamera(): OriginY must not be NULL\nParams: Engine: %p, OriginX: %lf, OriginY: %p, CenterX: %lf, CenterY: %lf, RelativeX: %lf, RelativeY: %lf, Zoom: %lf\n", Engine, *OriginX, OriginY, CenterX, CenterY, RelativeX, RelativeY, Zoom);
         return 1;
     }
     if (Zoom <= 0)
     {
-        printf("slaySetCamera(): Zoom must not be less than or equal to 0\nParams: Engine: %p, OriginX: %p, OriginY: %p, CenterX: %lf, CenterY: %lf, RelativeX: %lf, RelativeY: %lf, Zoom: %lf\n", Engine, OriginX, OriginY, CenterX, CenterY, RelativeX, RelativeY, Zoom);
+        printf("slaySetCamera(): Zoom must not be less than or equal to 0\nParams: Engine: %p, OriginX: %lf, OriginY: %lf, CenterX: %lf, CenterY: %lf, RelativeX: %lf, RelativeY: %lf, Zoom: %lf\n", Engine, *OriginX, *OriginY, CenterX, CenterY, RelativeX, RelativeY, Zoom);
         return 1;
     }
 
