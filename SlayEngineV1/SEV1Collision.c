@@ -691,37 +691,37 @@ uint8 slayRenderHitboxCamera(slayEngine* Engine, slayHitbox* Hitbox, double Dist
 {
     if (Engine == NULL)
     {
-        printf("slayRenderHitboxCamera(): Engine must not be NULL\nParams: Engine: %p, Hitbox: %p, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Overlapbox, Distance, ColorR, ColorG, ColorB, ColorA);
+        printf("slayRenderHitboxCamera(): Engine must not be NULL\nParams: Engine: %p, Hitbox: %p, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Hitbox, Distance, ColorR, ColorG, ColorB, ColorA);
         exit(1);
     }
     if (Engine->Camera->OriginX == NULL)
     {
-        printf("slayRenderHitboxCamera(): Engine->Camera->OriginX must not be NULL\nParams: Engine: %p, Hitbox: %p, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Overlapbox, Distance, ColorR, ColorG, ColorB, ColorA);
+        printf("slayRenderHitboxCamera(): Engine->Camera->OriginX must not be NULL\nParams: Engine: %p, Hitbox: %p, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Hitbox, Distance, ColorR, ColorG, ColorB, ColorA);
         exit(1);
     }
     if (Engine->Camera->OriginY == NULL)
     {
-        printf("slayRenderHitboxCamera(): Engine->Camera->OriginY must not be NULL\nParams: Engine: %p, Hitbox: %p, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Overlapbox, Distance, ColorR, ColorG, ColorB, ColorA);
+        printf("slayRenderHitboxCamera(): Engine->Camera->OriginY must not be NULL\nParams: Engine: %p, Hitbox: %p, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Hitbox, Distance, ColorR, ColorG, ColorB, ColorA);
         exit(1);
     }
     if (Hitbox == NULL)
     {
-        printf("slayRenderHitboxCamera(): Hitbox must not be NULL\nParams: Engine: %p, Hitbox: %p, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Overlapbox, Distance, ColorR, ColorG, ColorB, ColorA);
+        printf("slayRenderHitboxCamera(): Hitbox must not be NULL\nParams: Engine: %p, Hitbox: %p, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Hitbox, Distance, ColorR, ColorG, ColorB, ColorA);
         exit(1);
     }
     if (Hitbox->ObjectX == NULL)
     {
-        printf("slayRenderHitboxCamera(): Hitbox->ObjectX must not be NULL\n Engine: %p, Hitbox: %p, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Overlapbox, Distance, ColorR, ColorG, ColorB, ColorA);
+        printf("slayRenderHitboxCamera(): Hitbox->ObjectX must not be NULL\n Engine: %p, Hitbox: %p, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Hitbox, Distance, ColorR, ColorG, ColorB, ColorA);
         exit(1);
     }
     if (Hitbox->ObjectY == NULL)
     {
-        printf("slayRenderHitboxCamera(): Hitbox->ObjectY must not be NULL\n Engine: %p, Hitbox: %p, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Overlapbox, Distance, ColorR, ColorG, ColorB, ColorA);
+        printf("slayRenderHitboxCamera(): Hitbox->ObjectY must not be NULL\n Engine: %p, Hitbox: %p, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Hitbox, Distance, ColorR, ColorG, ColorB, ColorA);
         exit(1);
     }
     if (Distance <= 0)
     {
-        printf("slayRenderHitboxCamera(): Distance must not be less than or equal to 0\n Engine: %p, Hitbox: %p, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Overlapbox, Distance, ColorR, ColorG, ColorB, ColorA);
+        printf("slayRenderHitboxCamera(): Distance must not be less than or equal to 0\n Engine: %p, Hitbox: %p, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Hitbox, Distance, ColorR, ColorG, ColorB, ColorA);
         exit(1);
     }
 
