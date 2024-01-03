@@ -524,30 +524,30 @@ uint8 slayResolveCollisionLayer(array CollisionLayer)
         ForceRequirement = 0;
         for (uint64 NextBranch = 0; NextBranch < CollisionLayer->Length; NextBranch++)
         {
-            if (NextBranch != Root && slayGetCollisionDirection(CollisionLayer->Values[Root], CollisionLayer->Values[NextBranch]) != slayColl_NONE)
+            if (NextBranch != Root && slayGetCollisionDirection(CollisionLayer->Values[Root].Pointer, CollisionLayer->Values[NextBranch].Pointer) != slayColl_NONE)
             {
-                ForceRequirement += ((slayHitbox*)CollisionLayer->Values[NextBranch])->Resistance;
+                ForceRequirement += ((slayHitbox*)CollisionLayer->Values[NextBranch].Pointer)->Resistance;
             }
         }
 
         for (uint64 NextBranch = 0; NextBranch < CollisionLayer->Length; NextBranch++)
         {
-            if (NextBranch != Root && ((slayHitbox*)CollisionLayer->Values[Root])->Force <= ForceRequirement)
+            if (NextBranch != Root && ((slayHitbox*)CollisionLayer->Values[Root].Pointer)->Force <= ForceRequirement)
             {
-                slayResolveCollision(CollisionLayer->Values[Root], CollisionLayer->Values[NextBranch], 0);
+                slayResolveCollision(CollisionLayer->Values[Root].Pointer, CollisionLayer->Values[NextBranch].Pointer, 0);
             }
-            else if (NextBranch != Root && slayResolveCollision(CollisionLayer->Values[Root], CollisionLayer->Values[NextBranch], ((slayHitbox*)CollisionLayer->Values[NextBranch])->Resistance + ((slayHitbox*)CollisionLayer->Values[Root])->Force - ForceRequirement) == 0)
+            else if (NextBranch != Root && slayResolveCollision(CollisionLayer->Values[Root].Pointer, CollisionLayer->Values[NextBranch].Pointer, ((slayHitbox*)CollisionLayer->Values[NextBranch].Pointer)->Resistance + ((slayHitbox*)CollisionLayer->Values[Root].Pointer)->Force - ForceRequirement) == 0)
             {
-                slayNewCollisionBranch(CollisionLayer, Root, ((slayHitbox*)CollisionLayer->Values[Root])->Force - ForceRequirement, NextBranch);
-                slayResolveCollision(CollisionLayer->Values[Root], CollisionLayer->Values[NextBranch], 0);
+                slayNewCollisionBranch(CollisionLayer, Root, ((slayHitbox*)CollisionLayer->Values[Root].Pointer)->Force - ForceRequirement, NextBranch);
+                slayResolveCollision(CollisionLayer->Values[Root].Pointer, CollisionLayer->Values[NextBranch].Pointer, 0);
             }
         }
     }
 
     for (uint64 i = 0; i < CollisionLayer->Length; i++)
     {
-        ((slayHitbox*)CollisionLayer->Values[i])->ObjectPrevX = *(((slayHitbox*)CollisionLayer->Values[i])->ObjectX);
-        ((slayHitbox*)CollisionLayer->Values[i])->ObjectPrevY = *(((slayHitbox*)CollisionLayer->Values[i])->ObjectY);
+        ((slayHitbox*)CollisionLayer->Values[i].Pointer)->ObjectPrevX = *(((slayHitbox*)CollisionLayer->Values[i].Pointer)->ObjectX);
+        ((slayHitbox*)CollisionLayer->Values[i].Pointer)->ObjectPrevY = *(((slayHitbox*)CollisionLayer->Values[i].Pointer)->ObjectY);
     }
 
     return 0;
@@ -566,9 +566,9 @@ uint8 slayNewCollisionBranch(array CollisionLayer, uint64 Root, uint64 RootForce
     ForceRequirement = 0;
     for (uint64 NextBranch = 0; NextBranch < CollisionLayer->Length; NextBranch++)
     {
-        if (NextBranch != Root && NextBranch != CurrentBranch && slayGetCollisionDirection(CollisionLayer->Values[CurrentBranch], CollisionLayer->Values[NextBranch]) != slayColl_NONE)
+        if (NextBranch != Root && NextBranch != CurrentBranch && slayGetCollisionDirection(CollisionLayer->Values[CurrentBranch].Pointer, CollisionLayer->Values[NextBranch].Pointer) != slayColl_NONE)
         {
-            ForceRequirement += ((slayHitbox*)CollisionLayer->Values[NextBranch])->Resistance;
+            ForceRequirement += ((slayHitbox*)CollisionLayer->Values[NextBranch].Pointer)->Resistance;
         }
     }
 
@@ -576,12 +576,12 @@ uint8 slayNewCollisionBranch(array CollisionLayer, uint64 Root, uint64 RootForce
     {
         if (NextBranch != Root && NextBranch != CurrentBranch && RootForce <= ForceRequirement)
         {
-            slayResolveCollision(CollisionLayer->Values[CurrentBranch], CollisionLayer->Values[NextBranch], 0);
+            slayResolveCollision(CollisionLayer->Values[CurrentBranch].Pointer, CollisionLayer->Values[NextBranch].Pointer, 0);
         }
-        else if (NextBranch != Root && NextBranch != CurrentBranch && slayResolveCollision(CollisionLayer->Values[CurrentBranch], CollisionLayer->Values[NextBranch], ((slayHitbox*)CollisionLayer->Values[NextBranch])->Resistance + RootForce - ForceRequirement) == 0)
+        else if (NextBranch != Root && NextBranch != CurrentBranch && slayResolveCollision(CollisionLayer->Values[CurrentBranch].Pointer, CollisionLayer->Values[NextBranch].Pointer, ((slayHitbox*)CollisionLayer->Values[NextBranch].Pointer)->Resistance + RootForce - ForceRequirement) == 0)
         {
             slayNewCollisionBranch(CollisionLayer, Root, RootForce - ForceRequirement, NextBranch);
-            slayResolveCollision(CollisionLayer->Values[CurrentBranch], CollisionLayer->Values[NextBranch], 0);
+            slayResolveCollision(CollisionLayer->Values[CurrentBranch].Pointer, CollisionLayer->Values[NextBranch].Pointer, 0);
         }
     }
 
