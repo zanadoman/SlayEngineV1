@@ -92,6 +92,17 @@ logic slayCheckOverlap(slayOverlapbox* Overlapbox1, slayOverlapbox* Overlapbox2)
     double Overlapbox2LowerRightX;
     double Overlapbox2LowerRightY;
 
+    if (Overlapbox1 == NULL)
+    {
+        printf("slayCheckOverlap(): Overlapbox1 must not be NULL\nParams: Overlapbox1: %p, Overlapbox2: %p\n", Overlapbox1, Overlapbox2);
+        exit(1);
+    }
+    if (Overlapbox2 == NULL)
+    {
+        printf("slayCheckOverlap(): Overlapbox2 must not be NULL\nParams: Overlapbox1: %p, Overlapbox2: %p\n", Overlapbox1, Overlapbox2);
+        exit(1);
+    }
+
     Overlapbox1UpperLeftX = Overlapbox1->UpperLeftX + *Overlapbox1->ObjectX;
     Overlapbox1UpperLeftY = Overlapbox1->UpperLeftY + *Overlapbox1->ObjectY;
     Overlapbox1LowerRightX = Overlapbox1->LowerRightX + *Overlapbox1->ObjectX;
@@ -138,6 +149,17 @@ logic slayCheckCollision(slayHitbox* Hitbox1, slayHitbox* Hitbox2)
     double Hitbox2UpperLeftY;
     double Hitbox2LowerRightX;
     double Hitbox2LowerRightY;
+
+    if (Hitbox1 == NULL)
+    {
+        printf("slayCheckCollision(): Hitbox1 must not be NULL\nParams: Hitbox1: %p, Hitbox2: %p\n", Hitbox1, Hitbox2);
+        exit(1);
+    }
+    if (Hitbox2 == NULL)
+    {
+        printf("slayCheckCollision(): Hitbox2 must not be NULL\nParams: Hitbox1: %p, Hitbox2: %p\n", Hitbox1, Hitbox2);
+        exit(1);
+    }
 
     Hitbox1UpperLeftX = Hitbox1->UpperLeftX + *Hitbox1->ObjectX;
     Hitbox1UpperLeftY = Hitbox1->UpperLeftY + *Hitbox1->ObjectY;
