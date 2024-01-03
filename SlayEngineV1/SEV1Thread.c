@@ -2,15 +2,12 @@
 
 uint8 slayThreadStart(slayEngine* Engine, uint64 ID, void* Function)
 {
-    if (Engine->Threads->Length <= ID)
+    for (uint64 i = Engine->Threads->Length; i <= ID; i++)
     {
-        for (uint64 i = Engine->Threads->Length; i <= ID; i++)
+        if (arrInsert(Engine->Threads, i, NULL) != 0)
         {
-            if (arrInsert(Engine->Threads, i, NULL) != 0)
-            {
-                printf("ERROR Unable to expand THREADS_%ld\n", ID);
-                exit(1);
-            }
+            printf("ERROR Unable to expand THREADS_%ld\n", ID);
+            exit(1);
         }
     }
 
