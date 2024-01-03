@@ -16,19 +16,15 @@ sint32 main(sint32 argc, char* *argv)
     slayEngine* Engine;
 
     Engine = slayNewEngine("SlayEngineV1 DEMO", 1920, 1080, 3, 165, "assets/icon.png");
-    loadGame(Engine);
-
-    loadScene0(Engine);
 
     while (slayUpdate(Engine))
     {
-        updateQueue(Engine);
-        renderQueue(Engine);
+        slayRenderStart(Engine);
+        slayRenderColor(Engine, 0, 0, Engine->Display->Width, Engine->Display->Height, 0, 64, 0, 255);
+        slayRenderEnd(Engine);
 
         slayCapFPS(Engine);
     }
-
-    unloadSceneCurrent(Engine);
 
     return 0;
 }
