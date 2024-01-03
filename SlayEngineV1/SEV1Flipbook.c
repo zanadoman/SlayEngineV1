@@ -7,17 +7,28 @@ slayFlipbook* slayNewFlipbook(slayEngine* Engine, uint32 Delay, uint64 Count, ch
     va_list PathsArgs;
     char* PathsTemp;
 
+    if (Engine == NULL)
+    {
+        printf("slayNewFlipbook(): Engine must not be NULL\nParams: Engine: %p, Delay: %d, Count: %lld, Paths: %p\n", Engine, Delay, Count, Paths);
+        exit(1);
+    }
+    if (Count == 0)
+    {
+        printf("slayNewFlipbook(): Count must be greater than 0\nParams: Engine: %p, Delay: %d, Count: %lld, Paths: %p\n", Engine, Delay, Count, Paths);
+        exit(1);
+    }
+
     result = malloc(sizeof(slayFlipbook));
     if (result == NULL)
     {
-        printf("ERROR Unable to allocate memory for FLIPBOOK\n");
+        printf("slayNewFlipbook(): Memory allocation failed (result)\nParams: Engine: %p, Delay: %d, Count: %lld, Paths: %p\n", Engine, Delay, Count, Paths);
         exit(1);
     }
 
     result->Textures = malloc(sizeof(void*) * Count);
     if (result->Textures == NULL)
     {
-        printf("ERROR Unable to allocate memory for FLIPBOOK_TEXTURES\n");
+        printf("slayNewFlipbook(): Memory allocation failed (result->Textures)\nParams: Engine: %p, Delay: %d, Count: %lld, Paths: %p\n", Engine, Delay, Count, Paths);
         exit(1);
     }
     va_start(PathsArgs, Paths);
@@ -47,6 +58,12 @@ slayFlipbook* slayNewFlipbook(slayEngine* Engine, uint32 Delay, uint64 Count, ch
 
 uint8 slayResetFlipbook(slayFlipbook* Flipbook)
 {
+    if (Flipbook == NULL)
+    {
+        printf("slayResetFlipbook(): Flipbook must not be NULL\nParams: Flipbook: %p\n", Flipbook);
+        exit(1);
+    }
+
     Flipbook->Current = -1;
 
     return 0;
@@ -54,6 +71,12 @@ uint8 slayResetFlipbook(slayFlipbook* Flipbook)
 
 slayTexture* slayPlayFlipbook(slayFlipbook* Flipbook)
 {
+    if (Flipbook == NULL)
+    {
+        printf("slayPlayFlipbook(): Flipbook must not be NULL\nParams: Flipbook: %p\n", Flipbook);
+        exit(1);
+    }
+
     if (Flipbook->Current != Flipbook->Count - 1 && Flipbook->Delay <= SDL_GetTicks() - Flipbook->PrevTick)
     {
         Flipbook->Current++;
@@ -65,6 +88,12 @@ slayTexture* slayPlayFlipbook(slayFlipbook* Flipbook)
 
 slayTexture* slayLoopFlipbook(slayFlipbook* Flipbook)
 {
+    if (Flipbook == NULL)
+    {
+        printf("slayLoopFlipbook(): Flipbook must not be NULL\nParams: Flipbook: %p\n", Flipbook);
+        exit(1);
+    }
+
     if (Flipbook->Delay <= SDL_GetTicks() - Flipbook->PrevTick)
     {
         Flipbook->Current++;
