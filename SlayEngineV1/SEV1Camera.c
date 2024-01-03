@@ -45,6 +45,16 @@ uint8 slayApplyCamera(slayEngine* Engine, slayObject* Object, double X, double Y
         printf("slayApplyCamera(): Engine must not be NULL\nParams: Engine: %p, Object: %p, X: %lf, Y: %lf, Width: %d, Height: %d, Distance: %lf\n", Engine, Object, X, Y, Width, Height, Distance);
         return 1;
     }
+    if (Engine->Camera->OriginX == NULL)
+    {
+        printf("slayApplyCamera(): Engine->Camera->OriginX must not be NULL\nParams: Engine: %p, Object: %p, X: %lf, Y: %lf, Width: %d, Height: %d, Distance: %lf\n", Engine, Object, X, Y, Width, Height, Distance);
+        return 1;
+    }
+    if (Engine->Camera->OriginY == NULL)
+    {
+        printf("slayApplyCamera(): Engine->Camera->OriginY must not be NULL\nParams: Engine: %p, Object: %p, X: %lf, Y: %lf, Width: %d, Height: %d, Distance: %lf\n", Engine, Object, X, Y, Width, Height, Distance);
+        return 1;
+    }
     if (Object == NULL)
     {
         printf("slayApplyCamera(): Object must not be NULL\nParams: Engine: %p, Object: %p, X: %lf, Y: %lf, Width: %d, Height: %d, Distance: %lf\n", Engine, Object, X, Y, Width, Height, Distance);
