@@ -513,6 +513,12 @@ uint8 slayResolveCollisionLayer(array CollisionLayer)
 {
     uint64 ForceRequirement;
 
+    if (CollisionLayer == NULL)
+    {
+        printf("slayResolveCollisionLayer(): CollisionLayer must not be NULL\nParams: %p\n", CollisionLayer);
+        exit(1);
+    }
+
     for (uint64 Root = 0; Root < CollisionLayer->Length; Root++)
     {
         ForceRequirement = 0;
@@ -550,6 +556,12 @@ uint8 slayResolveCollisionLayer(array CollisionLayer)
 uint8 slayNewCollisionBranch(array CollisionLayer, uint64 Root, uint64 RootForce, uint64 CurrentBranch)
 {
     uint64 ForceRequirement;
+
+    if (CollisionLayer == NULL)
+    {
+        printf("slayResolveCollisionLayer(): CollisionLayer must not be NULL\nParams: %p\n", CollisionLayer);
+        exit(1);
+    }
 
     ForceRequirement = 0;
     for (uint64 NextBranch = 0; NextBranch < CollisionLayer->Length; NextBranch++)
