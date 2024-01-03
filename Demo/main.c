@@ -1,6 +1,6 @@
 /*
 **Collision system
-**Opening a non existing json kills the engine
+**Text render height by pixel
 **Particle system
 **Bloom
 **Mouse cursor texture switching
