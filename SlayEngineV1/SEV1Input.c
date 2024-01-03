@@ -2,6 +2,12 @@
 
 logic slayKey(slayEngine* Engine, uint16 Key)
 {
+    if (Engine == NULL)
+    {
+        printf("slayKey(): Engine must not be NULL\nParams: Engine: %p, Key: %d\n", Engine, Key);
+        exit(1);
+    }
+
     if (Key == SDL_SCANCODE_RMB)
     {
         return Engine->Mouse->RMB;
