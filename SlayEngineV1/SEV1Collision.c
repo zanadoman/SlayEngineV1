@@ -661,6 +661,27 @@ uint8 slayRenderOverlapboxCamera(slayEngine* Engine, slayOverlapbox* Overlapbox,
 
 uint8 slayRenderHitbox(slayEngine* Engine, slayHitbox* Hitbox, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA)
 {
+    if (Engine == NULL)
+    {
+        printf("slayRenderHitbox(): Engine must not be NULL\nParams: Engine: %p, Hitbox: %p, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Hitbox, ColorR, ColorG, ColorB, ColorA);
+        exit(1);
+    }
+    if (Hitbox == NULL)
+    {
+        printf("slayRenderHitbox(): Hitbox must not be NULL\nParams: Engine: %p, Hitbox: %p, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Hitbox, ColorR, ColorG, ColorB, ColorA);
+        exit(1);
+    }
+    if (Hitbox->ObjectX == NULL)
+    {
+        printf("slayRenderHitBox(): Hitbox->ObjectX must not be NULL\nParams: Engine %p, Hitbox: %p, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Hitbox, ColorR, ColorG, ColorB, ColorA);
+        exit(1);
+    }
+    if (Hitbox->ObjectY == NULL)
+    {
+        printf("slayRenderHitBox(): Hitbox->ObjectY must not be NULL\nParams: Engine %p, Hitbox: %p, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Hitbox, ColorR, ColorG, ColorB, ColorA);
+        exit(1);
+    }
+
     slayRenderColor(Engine, *Hitbox->ObjectX + Hitbox->UpperLeftX, *Hitbox->ObjectY + Hitbox->UpperLeftY, Hitbox->LowerRightX - Hitbox->UpperLeftX, Hitbox->LowerRightY - Hitbox->UpperLeftY, ColorR, ColorG, ColorB, ColorA);
 
     return 0;
@@ -668,6 +689,42 @@ uint8 slayRenderHitbox(slayEngine* Engine, slayHitbox* Hitbox, uint8 ColorR, uin
 
 uint8 slayRenderHitboxCamera(slayEngine* Engine, slayHitbox* Hitbox, double Distance, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA)
 {
+    if (Engine == NULL)
+    {
+        printf("slayRenderHitboxCamera(): Engine must not be NULL\nParams: Engine: %p, Hitbox: %p, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Overlapbox, Distance, ColorR, ColorG, ColorB, ColorA);
+        exit(1);
+    }
+    if (Engine->Camera->OriginX == NULL)
+    {
+        printf("slayRenderHitboxCamera(): Engine->Camera->OriginX must not be NULL\nParams: Engine: %p, Hitbox: %p, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Overlapbox, Distance, ColorR, ColorG, ColorB, ColorA);
+        exit(1);
+    }
+    if (Engine->Camera->OriginY == NULL)
+    {
+        printf("slayRenderHitboxCamera(): Engine->Camera->OriginY must not be NULL\nParams: Engine: %p, Hitbox: %p, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Overlapbox, Distance, ColorR, ColorG, ColorB, ColorA);
+        exit(1);
+    }
+    if (Hitbox == NULL)
+    {
+        printf("slayRenderHitboxCamera(): Hitbox must not be NULL\nParams: Engine: %p, Hitbox: %p, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Overlapbox, Distance, ColorR, ColorG, ColorB, ColorA);
+        exit(1);
+    }
+    if (Hitbox->ObjectX == NULL)
+    {
+        printf("slayRenderHitboxCamera(): Hitbox->ObjectX must not be NULL\n Engine: %p, Hitbox: %p, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Overlapbox, Distance, ColorR, ColorG, ColorB, ColorA);
+        exit(1);
+    }
+    if (Hitbox->ObjectY == NULL)
+    {
+        printf("slayRenderHitboxCamera(): Hitbox->ObjectY must not be NULL\n Engine: %p, Hitbox: %p, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Overlapbox, Distance, ColorR, ColorG, ColorB, ColorA);
+        exit(1);
+    }
+    if (Distance <= 0)
+    {
+        printf("slayRenderHitboxCamera(): Distance must not be less than or equal to 0\n Engine: %p, Hitbox: %p, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Overlapbox, Distance, ColorR, ColorG, ColorB, ColorA);
+        exit(1);
+    }
+
     slayRenderColorCamera(Engine, *Hitbox->ObjectX + Hitbox->UpperLeftX, *Hitbox->ObjectY+ Hitbox->UpperLeftY, Hitbox->LowerRightX - Hitbox->UpperLeftX, Hitbox->LowerRightY - Hitbox->UpperLeftY, Distance, ColorR, ColorG, ColorB, ColorA);
 
     return 0;
