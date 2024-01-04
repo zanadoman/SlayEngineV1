@@ -20,13 +20,13 @@ slayTexture* slayLoadTexture(slayEngine* Engine, char* Path)
     surface = IMG_Load(Path);
     if (surface == NULL)
     {
-        printf("slayLoadTexture(): IMG_Load failed\nParams: Engine: %p, Path: %s\n", Engine, Path);
+        printf("slayLoadTexture(): IMG_Load() failed\nParams: Engine: %p, Path: %s\n", Engine, Path);
         exit(1);
     }
     result = SDL_CreateTextureFromSurface(Engine->Display->Renderer, surface);
     if (result == NULL)
     {
-        printf("slayLoadTexture(): SDL_CreateTextureFromSurface failed\nParams: Engine: %p, Path: %s\n", Engine, Path);
+        printf("slayLoadTexture(): SDL_CreateTextureFromSurface() failed\nParams: Engine: %p, Path: %s\n", Engine, Path);
         exit(1);
     }
     
@@ -48,7 +48,7 @@ slayFont* slayLoadFont(char* Path, uint8 Size)
     result = TTF_OpenFont(Path, Size);
     if (result == NULL)
     {
-        printf("slayLoadFont(): TTF_OpenFont failed\nParams: Path: %s, Size: %d\n", Path, Size);
+        printf("slayLoadFont(): TTF_OpenFont() failed\nParams: Path: %s, Size: %d\n", Path, Size);
         exit(1);
     }
 
@@ -65,12 +65,12 @@ uint8 slayRenderStart(slayEngine* Engine)
 
     if (SDL_SetRenderDrawColor(Engine->Display->Renderer, 0, 0, 0, 255) != 0)
     {
-        printf("slayRenderStart(): SDL_SetRenderDrawColor failed\nParams: Engine: %p\n", Engine);
+        printf("slayRenderStart(): SDL_SetRenderDrawColor() failed\nParams: Engine: %p\n", Engine);
         exit(1);
     }
     if (SDL_RenderClear(Engine->Display->Renderer) != 0)
     {
-        printf("slayRenderStart(): SDL_RenderClear failed\nParams: Engine: %p\n", Engine);
+        printf("slayRenderStart(): SDL_RenderClear() failed\nParams: Engine: %p\n", Engine);
         exit(1);
     }
 
@@ -109,12 +109,12 @@ uint8 slayRenderColor(slayEngine* Engine, double X, double Y, uint16 Width, uint
     {
         if (SDL_SetRenderDrawColor(Engine->Display->Renderer, ColorR, ColorG, ColorB, ColorA) != 0)
         {
-            printf("slayRenderColor(): SDL_SetRenderDrawColor failed\nParams: Engine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, X, Y, Width, Height, ColorR, ColorG, ColorB, ColorA);
+            printf("slayRenderColor(): SDL_SetRenderDrawColor() failed\nParams: Engine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, X, Y, Width, Height, ColorR, ColorG, ColorB, ColorA);
             exit(1);
         }
         if (SDL_RenderFillRect(Engine->Display->Renderer, &Object) != 0)
         {
-            printf("slayRenderColor(): SDL_RenderFillRect failed\nParams: Engine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, X, Y, Width, Height, ColorR, ColorG, ColorB, ColorA);
+            printf("slayRenderColor(): SDL_RenderFillRect() failed\nParams: Engine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, X, Y, Width, Height, ColorR, ColorG, ColorB, ColorA);
             exit(1);
         }
     }
@@ -143,12 +143,12 @@ uint8 slayRenderColorCamera(slayEngine* Engine, double X, double Y, uint16 Width
     {
         if (SDL_SetRenderDrawColor(Engine->Display->Renderer, ColorR, ColorG, ColorB, ColorA) != 0)
         {
-            printf("slayRenderColorCamera(): SDL_SetRenderDrawColor failed\nParams: Engine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, X, Y, Width, Height, Distance, ColorR, ColorG, ColorB, ColorA);
+            printf("slayRenderColorCamera(): SDL_SetRenderDrawColor() failed\nParams: Engine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, X, Y, Width, Height, Distance, ColorR, ColorG, ColorB, ColorA);
             exit(1);
         }
         if (SDL_RenderFillRect(Engine->Display->Renderer, &Object) != 0)
         {
-            printf("slayRenderColorCamera(): SDL_RenderFillRect failed\nParams: Engine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, X, Y, Width, Height, Distance, ColorR, ColorG, ColorB, ColorA);
+            printf("slayRenderColorCamera(): SDL_RenderFillRect() failed\nParams: Engine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, X, Y, Width, Height, Distance, ColorR, ColorG, ColorB, ColorA);
             exit(1);
         }
     }
@@ -210,17 +210,17 @@ uint8 slayRenderTexture(slayEngine* Engine, double X, double Y, uint16 Width, ui
     {
         if (SDL_SetTextureColorMod(Texture, ColorR, ColorG, ColorB) != 0)
         {
-            printf("slayRenderTexture(): SDL_SetTextureColorMod failed\nParams: Engine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, Angle: %lf, Flip: %d, Texture: %p, ColorR: %d, ColorG: %d, ColorB: %d, Alpha: %d\n", Engine, X, Y, Width, Height, Angle, Flip, Texture, ColorR, ColorG, ColorB, Alpha);
+            printf("slayRenderTexture(): SDL_SetTextureColorMod() failed\nParams: Engine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, Angle: %lf, Flip: %d, Texture: %p, ColorR: %d, ColorG: %d, ColorB: %d, Alpha: %d\n", Engine, X, Y, Width, Height, Angle, Flip, Texture, ColorR, ColorG, ColorB, Alpha);
             exit(1);
         }
         if (SDL_SetTextureAlphaMod(Texture, Alpha) != 0)
         {
-            printf("slayRenderTexture(): SDL_SetTextureAlphaMod failed\nParams: Engine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, Angle: %lf, Flip: %d, Texture: %p, ColorR: %d, ColorG: %d, ColorB: %d, Alpha: %d\n", Engine, X, Y, Width, Height, Angle, Flip, Texture, ColorR, ColorG, ColorB, Alpha);
+            printf("slayRenderTexture(): SDL_SetTextureAlphaMod() failed\nParams: Engine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, Angle: %lf, Flip: %d, Texture: %p, ColorR: %d, ColorG: %d, ColorB: %d, Alpha: %d\n", Engine, X, Y, Width, Height, Angle, Flip, Texture, ColorR, ColorG, ColorB, Alpha);
             exit(1);
         }
         if (SDL_RenderCopyEx(Engine->Display->Renderer, Texture, NULL, &Object, Angle, NULL, Flip) != 0)
         {
-            printf("slayRenderTexture(): SDL_RenderCopyEx failed\nParams: Engine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, Angle: %lf, Flip: %d, Texture: %p, ColorR: %d, ColorG: %d, ColorB: %d, Alpha: %d\n", Engine, X, Y, Width, Height, Angle, Flip, Texture, ColorR, ColorG, ColorB, Alpha);
+            printf("slayRenderTexture(): SDL_RenderCopyEx() failed\nParams: Engine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, Angle: %lf, Flip: %d, Texture: %p, ColorR: %d, ColorG: %d, ColorB: %d, Alpha: %d\n", Engine, X, Y, Width, Height, Angle, Flip, Texture, ColorR, ColorG, ColorB, Alpha);
             exit(1);
         }
     }
@@ -254,17 +254,17 @@ uint8 slayRenderTextureCamera(slayEngine* Engine, double X, double Y, uint16 Wid
     {
         if (SDL_SetTextureColorMod(Texture, ColorR, ColorG, ColorB) != 0)
         {
-            printf("slayRenderTextureCamera(): SDL_SetTextureColorMod failed\nParams: Engine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, Angle: %lf, Flip: %d, Distance: %lf, Texture: %p, ColorR: %d, ColorG: %d, ColorB: %d, Alpha: %d\n", Engine, X, Y, Width, Height, Angle, Flip, Distance, Texture, ColorR, ColorG, ColorB, Alpha);
+            printf("slayRenderTextureCamera(): SDL_SetTextureColorMod() failed\nParams: Engine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, Angle: %lf, Flip: %d, Distance: %lf, Texture: %p, ColorR: %d, ColorG: %d, ColorB: %d, Alpha: %d\n", Engine, X, Y, Width, Height, Angle, Flip, Distance, Texture, ColorR, ColorG, ColorB, Alpha);
             exit(1);
         }
         if (SDL_SetTextureAlphaMod(Texture, Alpha) != 0)
         {
-            printf("slayRenderTextureCamera(): SDL_SetTextureAlphaMod failed\nParams: Engine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, Angle: %lf, Flip: %d, Distance: %lf, Texture: %p, ColorR: %d, ColorG: %d, ColorB: %d, Alpha: %d\n", Engine, X, Y, Width, Height, Angle, Flip, Distance, Texture, ColorR, ColorG, ColorB, Alpha);
+            printf("slayRenderTextureCamera(): SDL_SetTextureAlphaMod() failed\nParams: Engine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, Angle: %lf, Flip: %d, Distance: %lf, Texture: %p, ColorR: %d, ColorG: %d, ColorB: %d, Alpha: %d\n", Engine, X, Y, Width, Height, Angle, Flip, Distance, Texture, ColorR, ColorG, ColorB, Alpha);
             exit(1);
         }
         if (SDL_RenderCopyEx(Engine->Display->Renderer, Texture, NULL, &Object, Angle, NULL, Flip) != 0)
         {
-            printf("slayRenderTextureCamera(): SDL_RenderCopyEx failed\nParams: Engine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, Angle: %lf, Flip: %d, Distance: %lf, Texture: %p, ColorR: %d, ColorG: %d, ColorB: %d, Alpha: %d\n", Engine, X, Y, Width, Height, Angle, Flip, Distance, Texture, ColorR, ColorG, ColorB, Alpha);
+            printf("slayRenderTextureCamera(): SDL_RenderCopyEx() failed\nParams: Engine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, Angle: %lf, Flip: %d, Distance: %lf, Texture: %p, ColorR: %d, ColorG: %d, ColorB: %d, Alpha: %d\n", Engine, X, Y, Width, Height, Angle, Flip, Distance, Texture, ColorR, ColorG, ColorB, Alpha);
             exit(1);
         }
     }
@@ -340,13 +340,13 @@ uint8 slayRenderText(slayEngine* Engine, slayFont* Font, char* Characters, doubl
     surface = TTF_RenderText_Blended(Font, Characters, color);
     if (surface == NULL)
     {
-        printf("slayRenderText(): TTF_RenderText_Blended failed\nParams: Engine: %p, Font: %p, Characters: %s, X: %lf, Y: %lf, Size: %d, Angle: %lf, Flip: %d, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Font, Characters, X, Y, Size, Angle, Flip, ColorR, ColorG, ColorB, ColorA);
+        printf("slayRenderText(): TTF_RenderText_Blended() failed\nParams: Engine: %p, Font: %p, Characters: %s, X: %lf, Y: %lf, Size: %d, Angle: %lf, Flip: %d, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Font, Characters, X, Y, Size, Angle, Flip, ColorR, ColorG, ColorB, ColorA);
         exit(1);
     }
     texture = SDL_CreateTextureFromSurface(Engine->Display->Renderer, surface);
     if (texture == NULL)
     {
-        printf("slayRenderText(): SDL_CreateTextureFromSurface failed\nParams: Engine: %p, Font: %p, Characters: %s, X: %lf, Y: %lf, Size: %d, Angle: %lf, Flip: %d, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Font, Characters, X, Y, Size, Angle, Flip, ColorR, ColorG, ColorB, ColorA);
+        printf("slayRenderText(): SDL_CreateTextureFromSurface() failed\nParams: Engine: %p, Font: %p, Characters: %s, X: %lf, Y: %lf, Size: %d, Angle: %lf, Flip: %d, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Font, Characters, X, Y, Size, Angle, Flip, ColorR, ColorG, ColorB, ColorA);
         exit(1);
     }
 
@@ -360,7 +360,7 @@ uint8 slayRenderText(slayEngine* Engine, slayFont* Font, char* Characters, doubl
     {
         if (SDL_RenderCopyEx(Engine->Display->Renderer, texture, NULL, &Object, Angle, NULL, Flip) != 0)
         {
-            printf("slayRenderText(): SDL_RenderCopyEx failed\nParams: Engine: %p, Font: %p, Characters: %s, X: %lf, Y: %lf, Size: %d, Angle: %lf, Flip: %d, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Font, Characters, X, Y, Size, Angle, Flip, ColorR, ColorG, ColorB, ColorA);
+            printf("slayRenderText(): SDL_RenderCopyEx() failed\nParams: Engine: %p, Font: %p, Characters: %s, X: %lf, Y: %lf, Size: %d, Angle: %lf, Flip: %d, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Font, Characters, X, Y, Size, Angle, Flip, ColorR, ColorG, ColorB, ColorA);
             exit(1);
         }
     }
@@ -379,6 +379,22 @@ uint8 slayRenderTextCamera(slayEngine* Engine, slayFont* Font, char* Characters,
     SDL_Color color;
     double cache;
 
+    if (Engine == NULL)
+    {
+        printf("slayRenderTextCamera(): Engine must not be NULL\nParams: Engine: %p, Font: %p, Character: %p, X: %lf, Y: %lf, Size: %d, Angle: %lf, Flip: %d, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Font, Characters, X, Y, Size, Angle, Flip, Distance, ColorR, ColorG, ColorB, ColorA);
+        exit(1);
+    }
+    if (Font == NULL)
+    {
+        printf("slayRenderTextCamera(): Font must not be NULL\nParams: Engine: %p, Font: %p, Character: %p, X: %lf, Y: %lf, Size: %d, Angle: %lf, Flip: %d, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Font, Characters, X, Y, Size, Angle, Flip, Distance, ColorR, ColorG, ColorB, ColorA);
+        exit(1);
+    }
+    if (Distance <= 0)
+    {
+        printf("slayRenderTextCamera(): Distance must not be less than or equal to 0\nParams: Engine: %p, Font: %p, Character: %p, X: %lf, Y: %lf, Size: %d, Angle: %lf, Flip: %d, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Font, Characters, X, Y, Size, Angle, Flip, Distance, ColorR, ColorG, ColorB, ColorA);
+        exit(1);
+    }
+
     if (Characters == NULL || Characters[0] == '\0')
     {
         return 1;
@@ -392,13 +408,13 @@ uint8 slayRenderTextCamera(slayEngine* Engine, slayFont* Font, char* Characters,
     surface = TTF_RenderText_Blended(Font, Characters, color);
     if (surface == NULL)
     {
-        printf("ERROR Unable to process TEXT_SURFACE (%s)\n", Characters);
+        printf("slayRenderTextCamera(): TTF_RenderText_Blended() failed\nParams: Engine: %p, Font: %p, Character: %s, X: %lf, Y: %lf, Size: %d, Angle: %lf, Flip: %d, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Font, Characters, X, Y, Size, Angle, Flip, Distance, ColorR, ColorG, ColorB, ColorA);
         exit(1);
     }
     texture = SDL_CreateTextureFromSurface(Engine->Display->Renderer, surface);
     if (texture == NULL)
     {
-        printf("ERROR Unable to process TEXT_TEXTURE (%s)\n", Characters);
+        printf("slayRenderTextCamera(): SDL_CreateTextureFromSurface() failed\nParams: Engine: %p, Font: %p, Character: %s, X: %lf, Y: %lf, Size: %d, Angle: %lf, Flip: %d, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Font, Characters, X, Y, Size, Angle, Flip, Distance, ColorR, ColorG, ColorB, ColorA);
         exit(1);
     }
 
@@ -409,7 +425,7 @@ uint8 slayRenderTextCamera(slayEngine* Engine, slayFont* Font, char* Characters,
     {
         if (SDL_RenderCopyEx(Engine->Display->Renderer, texture, NULL, &Object, Angle, NULL, Flip) != 0)
         {
-            printf("ERROR Unable to draw TEXT (%s)\n", Characters);
+            printf("slayRenderTextCamera(): SDL_RenderCopyEx() failed\nParams: Engine: %p, Font: %p, Character: %s, X: %lf, Y: %lf, Size: %d, Angle: %lf, Flip: %d, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Font, Characters, X, Y, Size, Angle, Flip, Distance, ColorR, ColorG, ColorB, ColorA);
             exit(1);
         }
     }
@@ -422,6 +438,32 @@ uint8 slayRenderTextCamera(slayEngine* Engine, slayFont* Font, char* Characters,
 
 uint8 slayRender3DTextCamera(slayEngine* Engine, slayFont* Font, char* Characters, double X, double Y, uint16 Size, double Angle, uint8 Flip, double FirstLayer, double Depth, double Quality, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA)
 {
+    if (Engine == NULL)
+    {
+        printf("slayRender3DTextCamera(): Engine must not be NULL\nParams: Engine: %p, Font: %p, Characters: %p, X: %lf, Y: %lf, Size: %d, Angle: %lf, Flip: %d, FirstLayer: %lf, Depth: %lf, Quality: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Font, Characters, X, Y, Size, Angle, Flip, FirstLayer, Depth, Quality, ColorR, ColorG, ColorB, ColorA);
+        exit(1);
+    }
+    if (Font == NULL)
+    {
+        printf("slayRender3DTextCamera(): Font must not be NULL\nParams: Engine: %p, Font: %p, Characters: %p, X: %lf, Y: %lf, Size: %d, Angle: %lf, Flip: %d, FirstLayer: %lf, Depth: %lf, Quality: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Font, Characters, X, Y, Size, Angle, Flip, FirstLayer, Depth, Quality, ColorR, ColorG, ColorB, ColorA);
+        exit(1);
+    }
+    if (FirstLayer <= 0)
+    {
+        printf("slayRender3DTextCamera(): FirstLayer must not be less than or equal to 0\nParams: Engine: %p, Font: %p, Characters: %p, X: %lf, Y: %lf, Size: %d, Angle: %lf, Flip: %d, FirstLayer: %lf, Depth: %lf, Quality: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Font, Characters, X, Y, Size, Angle, Flip, FirstLayer, Depth, Quality, ColorR, ColorG, ColorB, ColorA);
+        exit(1);
+    }
+    if (FirstLayer <= Depth)
+    {
+        printf("slayRender3DTextCamera(): Depth must not be more than or equal to FirstLayer\nParams: Engine: %p, Font: %p, Characters: %p, X: %lf, Y: %lf, Size: %d, Angle: %lf, Flip: %d, FirstLayer: %lf, Depth: %lf, Quality: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Font, Characters, X, Y, Size, Angle, Flip, FirstLayer, Depth, Quality, ColorR, ColorG, ColorB, ColorA);
+        exit(1);
+    }
+    if (Quality <= 0)
+    {
+        printf("slayRender3DTextCamera(): Quality must not be less than or equal to 0\nParams: Engine: %p, Font: %p, Characters: %p, X: %lf, Y: %lf, Size: %d, Angle: %lf, Flip: %d, FirstLayer: %lf, Depth: %lf, Quality: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Font, Characters, X, Y, Size, Angle, Flip, FirstLayer, Depth, Quality, ColorR, ColorG, ColorB, ColorA);
+        exit(1);
+    }
+
     if (Characters == NULL || Characters[0] == '\0')
     {
         return 1;
