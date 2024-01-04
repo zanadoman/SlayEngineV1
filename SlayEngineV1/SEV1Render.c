@@ -190,6 +190,12 @@ uint8 slayRenderTexture(slayEngine* Engine, double X, double Y, uint16 Width, ui
 {
     SDL_Rect Object;
 
+    if (Engine == NULL)
+    {
+        printf("slayRenderTexture(): Engine must not be NULL\nParams: Engine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, Angle: %lf, Flip: %d, Texture: %p, ColorR: %d, ColorG: %d, ColorB: %d, Alpha: %d\n", Engine, X, Y, Width, Height, Angle, Flip, Texture, ColorR, ColorG, ColorB, Alpha);
+        exit(1);
+    }
+
     if (Texture == NULL)
     {
         return 0;
@@ -204,17 +210,17 @@ uint8 slayRenderTexture(slayEngine* Engine, double X, double Y, uint16 Width, ui
     {
         if (SDL_SetTextureColorMod(Texture, ColorR, ColorG, ColorB) != 0)
         {
-            printf("ERROR Unable to set TEXTURE_COLOR_MOD\n");
+            printf("slayRenderTexture(): SDL_SetTextureColorMod failed\nParams: Engine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, Angle: %lf, Flip: %d, Texture: %p, ColorR: %d, ColorG: %d, ColorB: %d, Alpha: %d\n", Engine, X, Y, Width, Height, Angle, Flip, Texture, ColorR, ColorG, ColorB, Alpha);
             exit(1);
         }
         if (SDL_SetTextureAlphaMod(Texture, Alpha) != 0)
         {
-            printf("ERROR Unable to set TEXTURE_ALPHA_MOD\n");
+            printf("slayRenderTexture(): SDL_SetTextureAlphaMod failed\nParams: Engine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, Angle: %lf, Flip: %d, Texture: %p, ColorR: %d, ColorG: %d, ColorB: %d, Alpha: %d\n", Engine, X, Y, Width, Height, Angle, Flip, Texture, ColorR, ColorG, ColorB, Alpha);
             exit(1);
         }
         if (SDL_RenderCopyEx(Engine->Display->Renderer, Texture, NULL, &Object, Angle, NULL, Flip) != 0)
         {
-            printf("ERROR Unable to draw TEXTURE\n");
+            printf("slayRenderTexture(): SDL_RenderCopyEx failed\nParams: Engine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, Angle: %lf, Flip: %d, Texture: %p, ColorR: %d, ColorG: %d, ColorB: %d, Alpha: %d\n", Engine, X, Y, Width, Height, Angle, Flip, Texture, ColorR, ColorG, ColorB, Alpha);
             exit(1);
         }
     }
@@ -225,6 +231,17 @@ uint8 slayRenderTexture(slayEngine* Engine, double X, double Y, uint16 Width, ui
 uint8 slayRenderTextureCamera(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, double Angle, uint8 Flip, double Distance, slayTexture* Texture, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 Alpha)
 {
     SDL_Rect Object;
+
+    if (Engine == NULL)
+    {
+        printf("slayRenderTextureCamera(): Engine must not be NULL\nParams: Engine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, Angle: %lf, Flip: %d, Distance: %lf, Texture: %p, ColorR: %d, ColorG: %d, ColorB: %d, Alpha: %d\n", Engine, X, Y, Width, Height, Angle, Flip, Distance, Texture, ColorR, ColorG, ColorB, Alpha);
+        exit(1);
+    }
+    if (Distance <= 0)
+    {
+        printf("slayRenderTextureCamera(): Distance must not be less than or equal to 0\nParams: Engine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, Angle: %lf, Flip: %d, Distance: %lf, Texture: %p, ColorR: %d, ColorG: %d, ColorB: %d, Alpha: %d\n", Engine, X, Y, Width, Height, Angle, Flip, Distance, Texture, ColorR, ColorG, ColorB, Alpha);
+        exit(1);
+    }
 
     if (Texture == NULL)
     {
@@ -237,17 +254,17 @@ uint8 slayRenderTextureCamera(slayEngine* Engine, double X, double Y, uint16 Wid
     {
         if (SDL_SetTextureColorMod(Texture, ColorR, ColorG, ColorB) != 0)
         {
-            printf("ERROR Unable to set TEXTURE_COLOR_MOD\n");
+            printf("slayRenderTextureCamera(): SDL_SetTextureColorMod failed\nParams: Engine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, Angle: %lf, Flip: %d, Distance: %lf, Texture: %p, ColorR: %d, ColorG: %d, ColorB: %d, Alpha: %d\n", Engine, X, Y, Width, Height, Angle, Flip, Distance, Texture, ColorR, ColorG, ColorB, Alpha);
             exit(1);
         }
         if (SDL_SetTextureAlphaMod(Texture, Alpha) != 0)
         {
-            printf("ERROR Unable to set TEXTURE_ALPHA_MOD\n");
+            printf("slayRenderTextureCamera(): SDL_SetTextureAlphaMod failed\nParams: Engine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, Angle: %lf, Flip: %d, Distance: %lf, Texture: %p, ColorR: %d, ColorG: %d, ColorB: %d, Alpha: %d\n", Engine, X, Y, Width, Height, Angle, Flip, Distance, Texture, ColorR, ColorG, ColorB, Alpha);
             exit(1);
         }
         if (SDL_RenderCopyEx(Engine->Display->Renderer, Texture, NULL, &Object, Angle, NULL, Flip) != 0)
         {
-            printf("ERROR Unable to draw TEXTURE\n");
+            printf("slayRenderTextureCamera(): SDL_RenderCopyEx failed\nParams: Engine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, Angle: %lf, Flip: %d, Distance: %lf, Texture: %p, ColorR: %d, ColorG: %d, ColorB: %d, Alpha: %d\n", Engine, X, Y, Width, Height, Angle, Flip, Distance, Texture, ColorR, ColorG, ColorB, Alpha);
             exit(1);
         }
     }
@@ -257,6 +274,27 @@ uint8 slayRenderTextureCamera(slayEngine* Engine, double X, double Y, uint16 Wid
 
 uint8 slayRender3DTextureCamera(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, double Angle, uint8 Flip, double FirstLayer, double Depth, double Quality, slayTexture* Texture, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 Alpha)
 {
+    if (Engine == NULL)
+    {
+        printf("slayRender3DTextureCamera(): Engine must not be NULL\nEngine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, Angle: %lf, Flip: %d, FirstLayer: %lf, Depth: %lf, Quality: %lf, Texture %p, ColorR: %d, ColorG: %d, ColorB: %d, Alpha: %d\n", Engine, X, Y, Width, Height, Angle, Flip, FirstLayer, Depth, Quality, Texture, ColorR, ColorG, ColorB, Alpha);
+        exit(1);
+    }
+    if (FirstLayer <= 0)
+    {
+        printf("slayRender3DTextureCamera(): FirstLayer must not be less than or equal to 0\nEngine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, Angle: %lf, Flip: %d, FirstLayer: %lf, Depth: %lf, Quality: %lf, Texture %p, ColorR: %d, ColorG: %d, ColorB: %d, Alpha: %d\n", Engine, X, Y, Width, Height, Angle, Flip, FirstLayer, Depth, Quality, Texture, ColorR, ColorG, ColorB, Alpha);
+        exit(1);
+    }
+    if (FirstLayer <= Depth)
+    {
+        printf("slayRender3DTextureCamera(): Depth must not be more than or equal to FirstLayer\nEngine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, Angle: %lf, Flip: %d, FirstLayer: %lf, Depth: %lf, Quality: %lf, Texture %p, ColorR: %d, ColorG: %d, ColorB: %d, Alpha: %d\n", Engine, X, Y, Width, Height, Angle, Flip, FirstLayer, Depth, Quality, Texture, ColorR, ColorG, ColorB, Alpha);
+        exit(1);
+    }
+    if (Quality <= 0)
+    {
+        printf("slayRender3DTextureCamera(): Quality must not be less than or equal to 0\nEngine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, Angle: %lf, Flip: %d, FirstLayer: %lf, Depth: %lf, Quality: %lf, Texture %p, ColorR: %d, ColorG: %d, ColorB: %d, Alpha: %d\n", Engine, X, Y, Width, Height, Angle, Flip, FirstLayer, Depth, Quality, Texture, ColorR, ColorG, ColorB, Alpha);
+        exit(1);
+    }
+
     if (Texture == NULL)
     {
         return 0;
