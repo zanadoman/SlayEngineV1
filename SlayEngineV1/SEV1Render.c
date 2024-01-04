@@ -6,16 +6,27 @@ slayTexture* slayLoadTexture(slayEngine* Engine, char* Path)
 
     SDL_Surface* surface;
 
+    if (Engine == NULL)
+    {
+        printf("slayLoadTexture(): Engine must not be NULL\nParams: Engine: %p, Path: %p\n", Engine, Path);
+        exit(1);
+    }
+    if (Path == NULL)
+    {
+        printf("slayLoadTexture(): Path must not be NULL\nParams: Engine: %p, Path: %p\n", Engine, Path);
+        exit(1);
+    }
+
     surface = IMG_Load(Path);
     if (surface == NULL)
     {
-        printf("ERROR Unable to load TEXTURE: %s\n", Path);
+        printf("slayLoadTexture(): IMG_Load failed\nParams: Engine: %p, Path: %s\n", Engine, Path);
         exit(1);
     }
     result = SDL_CreateTextureFromSurface(Engine->Display->Renderer, surface);
     if (result == NULL)
     {
-        printf("ERROR Unable to process TEXTURE (%s)\n", Path);
+        printf("slayLoadTexture(): SDL_CreateTextureFromSurface failed\nParams: Engine: %p, Path: %s\n", Engine, Path);
         exit(1);
     }
     
@@ -28,10 +39,16 @@ slayFont* slayLoadFont(char* Path, uint8 Size)
 {
     TTF_Font* result;
 
+    if (Path == NULL)
+    {
+        printf("slayLoadFont(): Path must not be NULL\nParams: Path: %p, Size: %d\n", Path, Size);
+        exit(1);
+    }
+
     result = TTF_OpenFont(Path, Size);
     if (result == NULL)
     {
-        printf("ERROR Unable to load FONT: %s\n", Path);
+        printf("slayLoadFont(): TTF_OpenFont failed\nParams: Path: %s, Size: %d\n", Path, Size);
         exit(1);
     }
 
@@ -40,14 +57,20 @@ slayFont* slayLoadFont(char* Path, uint8 Size)
 
 uint8 slayRenderStart(slayEngine* Engine)
 {
+    if (Engine == NULL)
+    {
+        printf("slayRenderStart(): Engine must not be NULL\nParams: Engine: %p\n", Engine);
+        exit(1);
+    }
+
     if (SDL_SetRenderDrawColor(Engine->Display->Renderer, 0, 0, 0, 255) != 0)
     {
-        printf("ERROR Unable to set RENDERER_COLOR\n");
+        printf("slayRenderStart(): SDL_SetRenderDrawColor failed\nParams: Engine: %p\n", Engine);
         exit(1);
     }
     if (SDL_RenderClear(Engine->Display->Renderer) != 0)
     {
-        printf("ERROR Unable to clear RENDERER\n");
+        printf("slayRenderStart(): SDL_RenderClear failed\nParams: Engine: %p\n", Engine);
         exit(1);
     }
 
@@ -56,6 +79,12 @@ uint8 slayRenderStart(slayEngine* Engine)
 
 uint8 slayRenderEnd(slayEngine* Engine)
 {
+    if (Engine == NULL)
+    {
+        printf("slayRenderEnd(): Engine must not be NULL\nParams: Engine: %p\n", Engine);
+        exit(1);
+    }
+
     SDL_RenderPresent(Engine->Display->Renderer);
 
     return 0;
