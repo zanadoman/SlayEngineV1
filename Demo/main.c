@@ -1,5 +1,4 @@
 /*
-**Text render height by pixel
 **Particle system
 **Bloom
 **Mouse cursor texture switching
