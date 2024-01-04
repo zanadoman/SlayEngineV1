@@ -316,7 +316,18 @@ uint8 slayRenderText(slayEngine* Engine, slayFont* Font, char* Characters, doubl
     SDL_Color color;
     double cache;
 
-    if (Characters[0] == '\0')
+    if (Engine == NULL)
+    {
+        printf("slayRenderText(): Engine must not be NULL\nParams: Engine: %p, Font: %p, Characters: %p, X: %lf, Y: %lf, Size: %d, Angle: %lf, Flip: %d, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Font, Characters, X, Y, Size, Angle, Flip, ColorR, ColorG, ColorB, ColorA);
+        exit(1);
+    }
+    if (Font == NULL)
+    {
+        printf("slayRenderText(): Font must not be NULL\nParams: Engine: %p, Font: %p, Characters: %p, X: %lf, Y: %lf, Size: %d, Angle: %lf, Flip: %d, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Font, Characters, X, Y, Size, Angle, Flip, ColorR, ColorG, ColorB, ColorA);
+        exit(1);
+    }
+
+    if (Characters == NULL || Characters[0] == '\0')
     {
         return 1;
     }
@@ -329,13 +340,13 @@ uint8 slayRenderText(slayEngine* Engine, slayFont* Font, char* Characters, doubl
     surface = TTF_RenderText_Blended(Font, Characters, color);
     if (surface == NULL)
     {
-        printf("ERROR Unable to process TEXT_SURFACE (%s)\n", Characters);
+        printf("slayRenderText(): TTF_RenderText_Blended failed\nParams: Engine: %p, Font: %p, Characters: %s, X: %lf, Y: %lf, Size: %d, Angle: %lf, Flip: %d, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Font, Characters, X, Y, Size, Angle, Flip, ColorR, ColorG, ColorB, ColorA);
         exit(1);
     }
     texture = SDL_CreateTextureFromSurface(Engine->Display->Renderer, surface);
     if (texture == NULL)
     {
-        printf("ERROR Unable to process TEXT_TEXTURE (%s)\n", Characters);
+        printf("slayRenderText(): SDL_CreateTextureFromSurface failed\nParams: Engine: %p, Font: %p, Characters: %s, X: %lf, Y: %lf, Size: %d, Angle: %lf, Flip: %d, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Font, Characters, X, Y, Size, Angle, Flip, ColorR, ColorG, ColorB, ColorA);
         exit(1);
     }
 
@@ -349,7 +360,7 @@ uint8 slayRenderText(slayEngine* Engine, slayFont* Font, char* Characters, doubl
     {
         if (SDL_RenderCopyEx(Engine->Display->Renderer, texture, NULL, &Object, Angle, NULL, Flip) != 0)
         {
-            printf("ERROR Unable to draw TEXT (%s)\n", Characters);
+            printf("slayRenderText(): SDL_RenderCopyEx failed\nParams: Engine: %p, Font: %p, Characters: %s, X: %lf, Y: %lf, Size: %d, Angle: %lf, Flip: %d, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, Font, Characters, X, Y, Size, Angle, Flip, ColorR, ColorG, ColorB, ColorA);
             exit(1);
         }
     }
@@ -368,7 +379,7 @@ uint8 slayRenderTextCamera(slayEngine* Engine, slayFont* Font, char* Characters,
     SDL_Color color;
     double cache;
 
-    if (Characters[0] == '\0')
+    if (Characters == NULL || Characters[0] == '\0')
     {
         return 1;
     }
@@ -411,7 +422,7 @@ uint8 slayRenderTextCamera(slayEngine* Engine, slayFont* Font, char* Characters,
 
 uint8 slayRender3DTextCamera(slayEngine* Engine, slayFont* Font, char* Characters, double X, double Y, uint16 Size, double Angle, uint8 Flip, double FirstLayer, double Depth, double Quality, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA)
 {
-    if (Characters[0] == '\0')
+    if (Characters == NULL || Characters[0] == '\0')
     {
         return 1;
     }
