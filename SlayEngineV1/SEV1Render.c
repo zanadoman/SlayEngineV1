@@ -94,6 +94,12 @@ uint8 slayRenderColor(slayEngine* Engine, double X, double Y, uint16 Width, uint
 {
     SDL_Rect Object;
 
+    if (Engine == NULL)
+    {
+        printf("slayRenderColor(): Engine must not be NULL\nParams: Engine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, X, Y, Width, Height, ColorR, ColorG, ColorB, ColorA);
+        exit(1);
+    }
+
     Object.x = X;
     Object.y = Y;
     Object.w = Width;
@@ -103,12 +109,12 @@ uint8 slayRenderColor(slayEngine* Engine, double X, double Y, uint16 Width, uint
     {
         if (SDL_SetRenderDrawColor(Engine->Display->Renderer, ColorR, ColorG, ColorB, ColorA) != 0)
         {
-            printf("ERROR Unable to set RENDERER_COLOR (%d, %d, %d, %d)\n", ColorR, ColorG, ColorB, ColorA);
+            printf("slayRenderColor(): SDL_SetRenderDrawColor failed\nParams: Engine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, X, Y, Width, Height, ColorR, ColorG, ColorB, ColorA);
             exit(1);
         }
         if (SDL_RenderFillRect(Engine->Display->Renderer, &Object) != 0)
         {
-            printf("ERROR Unable to draw RECTANGLE (%d, %d, %d, %d)\n", ColorR, ColorG, ColorB, ColorA);
+            printf("slayRenderColor(): SDL_RenderFillRect failed\nParams: Engine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, X, Y, Width, Height, ColorR, ColorG, ColorB, ColorA);
             exit(1);
         }
     }
@@ -120,18 +126,29 @@ uint8 slayRenderColorCamera(slayEngine* Engine, double X, double Y, uint16 Width
 {
     SDL_Rect Object;
 
+    if (Engine == NULL)
+    {
+        printf("slayRenderColorCamera(): Engine must not be NULL\nParams: Engine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, X, Y, Width, Height, Distance, ColorR, ColorG, ColorB, ColorA);
+        exit(1);
+    }
+    if (Distance <= 0)
+    {
+        printf("slayRenderColorCamera(): Distance must not be less than or equal to 0\nParams: Engine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, X, Y, Width, Height, Distance, ColorR, ColorG, ColorB, ColorA);
+        exit(1);
+    }
+
     slayApplyCamera(Engine, &Object, X, Y, Width, Height, Distance);
 
     if ((-Object.w <= Object.x && Object.x <= Engine->Display->Width) && (-Object.h <= Object.y && Object.y <= Engine->Display->Height))
     {
         if (SDL_SetRenderDrawColor(Engine->Display->Renderer, ColorR, ColorG, ColorB, ColorA) != 0)
         {
-            printf("ERROR Unable to set RENDERER_COLOR (%d, %d, %d, %d)\n", ColorR, ColorG, ColorB, ColorA);
+            printf("slayRenderColorCamera(): SDL_SetRenderDrawColor failed\nParams: Engine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, X, Y, Width, Height, Distance, ColorR, ColorG, ColorB, ColorA);
             exit(1);
         }
         if (SDL_RenderFillRect(Engine->Display->Renderer, &Object) != 0)
         {
-            printf("ERROR Unable to draw RECTANGLE (%d, %d, %d, %d)\n", ColorR, ColorG, ColorB, ColorA);
+            printf("slayRenderColorCamera(): SDL_RenderFillRect failed\nParams: Engine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, Distance: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, X, Y, Width, Height, Distance, ColorR, ColorG, ColorB, ColorA);
             exit(1);
         }
     }
@@ -141,6 +158,26 @@ uint8 slayRenderColorCamera(slayEngine* Engine, double X, double Y, uint16 Width
 
 uint8 slayRender3DColorCamera(slayEngine* Engine, double X, double Y, uint16 Width, uint16 Height, double FirstLayer, double Depth, double Quality, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA)
 {
+    if (Engine == NULL)
+    {
+        printf("slayRender3DColorCamera(): Engine must not be NULL\nParams: Engine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, FirstLayer: %lf, Depth: %lf, Quality: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, X, Y, Width, Height, FirstLayer, Depth, Quality, ColorR, ColorG, ColorB, ColorA);
+        exit(1);
+    }
+    if (FirstLayer <= 0)
+    {
+        printf("slayRender3DColorCamera(): FirstLayer must not be less than or equal to 0\nParams: Engine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, FirstLayer: %lf, Depth: %lf, Quality: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, X, Y, Width, Height, FirstLayer, Depth, Quality, ColorR, ColorG, ColorB, ColorA);
+        exit(1);
+    }
+    if (FirstLayer <= Depth)
+    {
+        printf("slayRender3DColorCamera(): Depth must not be more than or equal to FirstLayer\nParams: Engine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, FirstLayer: %lf, Depth: %lf, Quality: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, X, Y, Width, Height, FirstLayer, Depth, Quality, ColorR, ColorG, ColorB, ColorA);
+    }
+    if (Quality <= 0)
+    {
+        printf("slayRender3DColorCamera(): Quality must not be less than or equal to 0\nParams: Engine: %p, X: %lf, Y: %lf, Width: %d, Height: %d, FirstLayer: %lf, Depth: %lf, Quality: %lf, ColorR: %d, ColorG: %d, ColorB: %d, ColorA: %d\n", Engine, X, Y, Width, Height, FirstLayer, Depth, Quality, ColorR, ColorG, ColorB, ColorA);
+        exit(1);
+    }
+
     for (double i = FirstLayer - Depth; i <= FirstLayer; i += Quality)
     {
         slayRenderColorCamera(Engine, X, Y, Width, Height, i, ColorR, ColorG, ColorB, ColorA);
