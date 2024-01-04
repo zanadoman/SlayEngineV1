@@ -204,12 +204,13 @@ uint8 slayRender3DTextureCamera(slayEngine* Engine, double X, double Y, uint16 W
     return 0;
 }
 
-uint8 slayRenderText(slayEngine* Engine, slayFont* Font, char* Characters, double X, double Y, double Size, double Angle, uint8 Flip, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA)
+uint8 slayRenderText(slayEngine* Engine, slayFont* Font, char* Characters, double X, double Y, uint16 Size, double Angle, uint8 Flip, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA)
 {
     SDL_Rect Object;
     SDL_Surface* surface;
     SDL_Texture* texture;
     SDL_Color color;
+    double cache;
 
     if (Characters[0] == '\0')
     {
@@ -234,10 +235,11 @@ uint8 slayRenderText(slayEngine* Engine, slayFont* Font, char* Characters, doubl
         exit(1);
     }
 
+    cache = (double)Size / (double)surface->h;
     Object.x = X;
     Object.y = Y;
-    Object.w = surface->w * Size;
-    Object.h = surface->h * Size;
+    Object.w = surface->w * cache;
+    Object.h = surface->h * cache;
     
     if ((-Object.w <= Object.x && Object.x <= Engine->Display->Width) && (-Object.h <= Object.y && Object.y <= Engine->Display->Height))
     {
@@ -254,12 +256,13 @@ uint8 slayRenderText(slayEngine* Engine, slayFont* Font, char* Characters, doubl
     return 0;
 }
 
-uint8 slayRenderTextCamera(slayEngine* Engine, slayFont* Font, char* Characters, double X, double Y, double Size, double Angle, uint8 Flip, double Distance, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA)
+uint8 slayRenderTextCamera(slayEngine* Engine, slayFont* Font, char* Characters, double X, double Y, uint16 Size, double Angle, uint8 Flip, double Distance, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA)
 {
     SDL_Rect Object;
     SDL_Surface* surface;
     SDL_Texture* texture;
     SDL_Color color;
+    double cache;
 
     if (Characters[0] == '\0')
     {
@@ -284,7 +287,8 @@ uint8 slayRenderTextCamera(slayEngine* Engine, slayFont* Font, char* Characters,
         exit(1);
     }
 
-    slayApplyCamera(Engine, &Object, X, Y, surface->w * Size, surface->h * Size, Distance);
+    cache = (double)Size / (double)surface->h;
+    slayApplyCamera(Engine, &Object, X, Y, surface->w * cache, surface->h * cache, Distance);
     
     if ((-Object.w <= Object.x && Object.x <= Engine->Display->Width) && (-Object.h <= Object.y && Object.y <= Engine->Display->Height))
     {
@@ -301,7 +305,7 @@ uint8 slayRenderTextCamera(slayEngine* Engine, slayFont* Font, char* Characters,
     return 0;
 }
 
-uint8 slayRender3DTextCamera(slayEngine* Engine, slayFont* Font, char* Characters, double X, double Y, double Size, double Angle, uint8 Flip, double FirstLayer, double Depth, double Quality, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA)
+uint8 slayRender3DTextCamera(slayEngine* Engine, slayFont* Font, char* Characters, double X, double Y, uint16 Size, double Angle, uint8 Flip, double FirstLayer, double Depth, double Quality, uint8 ColorR, uint8 ColorG, uint8 ColorB, uint8 ColorA)
 {
     if (Characters[0] == '\0')
     {

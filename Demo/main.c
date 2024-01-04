@@ -1,5 +1,4 @@
 /*
-**Collision system
 **Text render height by pixel
 **Particle system
 **Bloom
