@@ -277,6 +277,7 @@ uint8 slayApplyCamera(slayEngine* Engine, slayObject* Object, double X, double Y
 
 uint8 slayThreadStart(slayEngine* Engine, uint64 ID, void* Function);
 uint8 slayThreadWaitExit(slayEngine* Engine, uint64 ID);
+uint8 slayThreadClearBuffer(slayEngine* Engine);
 
 //Flipbook___________________________________________________________
 

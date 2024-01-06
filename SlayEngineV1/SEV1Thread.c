@@ -40,3 +40,17 @@ uint8 slayThreadWaitExit(slayEngine* Engine, uint64 ID)
 
     return 0;
 }
+
+uint8 slayThreadClearBuffer(slayEngine* Engine)
+{
+    if (Engine == NULL)
+    {
+        printf("slayThreadClearBuffer(): Engine must not be NULL\nParams: Engine: %p\n", Engine);
+        exit(1);
+    }
+
+    arrPurge(Engine->Threads);
+    Engine->Threads = arrNew(0);
+
+    return 0;
+}
